@@ -1,5 +1,5 @@
 <?php
-session_start();teste
+session_start();
 
 include_once("bd.inc");
 
