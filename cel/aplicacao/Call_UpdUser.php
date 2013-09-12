@@ -47,7 +47,7 @@ $senha = $row[4];
             nome = form.nome.value;
             email = form.email.value;
 
-            if (login == "")
+            if (login === "")
             {
                 alert("Por favor, digite o seu Login.")
                 form.login.focus()
