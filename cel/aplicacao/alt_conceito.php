@@ -9,7 +9,7 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 
-chkUser("index.php"); // Checa se o usuario foi autenticado
+chkUser("index.php");
 // Conecta ao SGBD
 $r = bd_connect() or die("Erro ao conectar ao SGBD");
 
@@ -69,18 +69,18 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
                     </tr>
                     <input type="hidden" name="id_conceitos" value="<?= $result['id_conceito'] ?>">
                     <td>Nome:</td>
-    <? $result['nome'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['nome']); ?>
+                    <? $result['nome'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['nome']); ?>
                     <input type="hidden" name="nome" value="<?= $result['nome'] ?>">
                     <td><input disabled maxlength="128" name="nome2" size="48" type="text" value="<?= $result['nome'] ?>"></td>
                     <tr>
                         <td>Descricao:</td>
-    <? $result['descricao'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['descricao']); ?>
+                        <? $result['descricao'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['descricao']); ?>
 
                         <td><textarea name="descricao" cols="48" rows="3"><?= $result['descricao'] ?></textarea></td>
                     </tr>
                     <tr>
                         <td>Namespace:</td>
-                    <? $result['namespace'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['namespace']); ?>
+                        <? $result['namespace'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['namespace']); ?>
                         <td><textarea name="namespace" cols="48" rows="3"><?= $result['namespace'] ?></textarea></td>
                     </tr>
                     <tr>
@@ -88,7 +88,7 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
                         <td><textarea name="justificativa" cols="48" rows="2"></textarea></td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="2" height="60"><input name="submit" type="submit" value="Alterar Cen�rio" onClick="updateOpener()"></td>
+                        <td align="center" colspan="2" height="60"><input name="submit" type="submit" value="Alterar Cen�rio" onClick="updateOpener();"></td>
                     </tr>
                 </table>
             </form>
