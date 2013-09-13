@@ -1,7 +1,5 @@
 <?php
 
-// Escapa os metacaracteres do PHP
-
 function escapa_metacaracteres($string) {
     $string = ereg_replace("[][{}()*+?.\\^$|]", "\\\\0", $string);
     return $string;

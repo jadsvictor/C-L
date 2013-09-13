@@ -4,17 +4,6 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-//chkUser("index.php");        // Cenario: controle de acesso
-//Cen�rio  -  Remover Projeto 
-//Objetivo:	   Permitir ao Administrador do projeto remover um projeto
-//Contexto:	   Um Administrador de projeto deseja remover um determinado projeto da base de dados
-//                 Pr�-Condi��o: Login, Ser administrador do projeto selecionado.  
-//Atores:	   Administrador
-//Recursos:	   Sistema, dados do projeto, base de dados
-//Epis�dios:   O Administrador clica na op��o �remover projeto� encontrada no menu superior.
-//             O sistema disponibiliza uma tela para o administrador ter certeza de que esta removendo o projeto correto.
-//             O Administrador clica no link de remo��o.
-//             O sistema chama a p�gina que remover� o projeto do banco de dados.
 ?>
 <html>
     <head>
@@ -22,12 +11,11 @@ include("httprequest.inc");
     </head>
 <?php
 $id_projeto = $_SESSION['id_projeto_corrente'];
-$id_usuario = $_SESSION['id_usuario_corrente'];
 
 $r = bd_connect() or die("Erro ao conectar ao SGBD");
-$qv = "SELECT * FROM projeto WHERE id_projeto = '$id_projeto' ";
-$qvr = mysql_query($qv) or die("Erro ao enviar a query de select no projeto");
-$resultArrayProjeto = mysql_fetch_array($qvr);
+$seleciona_projeto = "SELECT * FROM projeto WHERE id_projeto = '$id_projeto' ";
+$query_seleciona_projeto = mysql_query($seleciona_projeto) or die("Erro ao enviar a query de select no projeto");
+$resultArrayProjeto = mysql_fetch_array($query_seleciona_projeto);
 $nome_Projeto = $resultArrayProjeto[1];
 $data_Projeto = $resultArrayProjeto[2];
 $descricao_Projeto = $resultArrayProjeto[3];
@@ -37,26 +25,32 @@ $descricao_Projeto = $resultArrayProjeto[3];
 
         <p><br>
         </p>
-        <table width="100%" border="0">
+       table{
+        width="100%" border="0";
+       }
+       td{
+        width="29%";
+       }
+        <table>
             <tr> 
-                <td width="29%"><b>Nome do Projeto:</b></td>
-                <td width="29%"><b>Data de cria&ccedil;&atilde;o</b></td>
-                <td width="42%"><b>Descri&ccedil;&atilde;o</b></td>
+                <td><b>Nome do Projeto:</b></td>
+                <td><b>Data de criacao do projeto;o</b></td>
+                <td><b>Descricao do projeto;o</b></td>
             </tr>
             <tr> 
-                <td width="29%"><?php echo $nome_Projeto; ?></td>
-                <td width="29%"><?php echo $data_Projeto; ?></td>
-                <td width="42%"><?php echo $descricao_Projeto; ?></td>
+                <td><?php echo $nome_Projeto; ?></td>
+                <td><?php echo $data_Projeto; ?></td>
+                <td><?php echo $descricao_Projeto; ?></td>
             </tr>
         </table>
         <br><br>
-    <center><b>Cuidado!O projeto ser� apagado para todos seus usu�rios!</b></center>
+    <center><b>Cuidado!O projeto sera apagado para todos seus usuarios!</b></center>
     <p><br>
+    </p>
     <center><a href="remove_projeto_base.php">Apagar o projeto</a></center> 
-</p>
-<p>
-    <i><a href="showSource.php?file=remove_projeto.php">Veja o c�digo fonte!</a></i> 
-</p>
+    <p>
+    <i><a href="showSource.php?file=remove_projeto.php">Veja o codigo fonte!</a></i> 
+    </p>
 </body>
 </html>
 
