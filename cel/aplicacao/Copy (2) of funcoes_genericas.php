@@ -2,12 +2,6 @@
 include_once("bd.inc");
 include_once("bd_class.php");
 
-/*
-  if (!(class_exists("PGDB"))) {
-  include("bd_class.php");
-  }
- */
-
 /* chkUser(): checa se o usu�rio acessando foi autenticado (presen�a da vari�vel de sess�o
   $id_usuario_corrente). Caso ele j� tenha sido autenticado, continua-se com a execu��o do
   script. Caso contr�rio, abre-se uma janela de logon. */
@@ -29,13 +23,12 @@ if (!(function_exists("chkUser"))) {
     }
 
 }
-###################################################################
-# Insere um cenario no banco de dados.
-# Recebe o id_projeto, titulo, objetivo, contexto, atores, recursos, excecao e episodios. (1.1)
-# Insere os valores do lexico na tabela CENARIO. (1.2)
-# Devolve o id_cenario. (1.4)
-#
-###################################################################
+
+// Insere um cenario no banco de dados.
+// Recebe o id_projeto, titulo, objetivo, contexto, atores, recursos, excecao e episodios. (1.1)
+// Insere os valores do lexico na tabela CENARIO. (1.2)
+// Devolve o id_cenario. (1.4)
+
 if (!(function_exists("inclui_cenario"))) {
 
     function inclui_cenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios) {
@@ -52,14 +45,13 @@ if (!(function_exists("inclui_cenario"))) {
     }
 
 }
-###################################################################
-# Insere um lexico no banco de dados.
-# Recebe o id_projeto, nome, no��o, impacto e os sinonimos. (1.1)
-# Insere os valores do lexico na tabela LEXICO. (1.2)
-# Insere todos os sinonimos na tabela SINONIMO. (1.3)
-# Devolve o id_lexico. (1.4)
-#
-###################################################################
+
+// Insere um lexico no banco de dados.
+// Recebe o id_projeto, nome, no��o, impacto e os sinonimos. (1.1)
+// Insere os valores do lexico na tabela LEXICO. (1.2)
+// Insere todos os sinonimos na tabela SINONIMO. (1.3)
+// Devolve o id_lexico. (1.4)
+
 if (!(function_exists("inclui_lexico"))) {
 
     function inclui_lexico($id_projeto, $nome, $nocao, $impacto, $sinonimos, $classificacao) {
@@ -91,14 +83,13 @@ if (!(function_exists("inclui_lexico"))) {
     }
 
 }
-###################################################################
-# Insere um projeto no banco de dados.
-# Recebe o nome e descricao. (1.1)
-# Verifica se este usuario ja possui um projeto com esse nome. (1.2)
-# Caso nao possua, insere os valores na tabela PROJETO. (1.3)
-# Devolve o id_cprojeto. (1.4)
-#
-###################################################################
+
+//Insere um projeto no banco de dados.
+//Recebe o nome e descricao. (1.1)
+//Verifica se este usuario ja possui um projeto com esse nome. (1.2)
+//Caso nao possua, insere os valores na tabela PROJETO. (1.3)
+//Devolve o id_cprojeto. (1.4)
+
 if (!(function_exists("inclui_projeto"))) {
 
     function inclui_projeto($nome, $descricao) {
@@ -162,31 +153,6 @@ if (!(function_exists("replace_skip_tags"))) {
         $subject_tmp3 = preg_replace("/>(.*)(" . $search . ")abcdef(.*)</Ui", ">$1$2$3<", $subject_tmp2);
         ?>
         <?php
-        /*
-          $arquivo = fopen("teste_BUG_expressao_regular.txt","a") ;
-
-          fprintf($arquivo , "subject_tmp3: ") ;
-          is_array($subject_tmp3)? fprintf($arquivo, print_r($subject_tmp3)) : fprint($arquivo, $subject_tmp3) ;
-          fprintf($arquivo, "\n");
-
-          fprintf($arquivo , "subject_tmp2: ") ;
-          is_array($subject_tmp2)? fprintf($arquivo, print_r($subject_tmp2)) : fprint($arquivo, $subject_tmp2) ;
-          fprintf($arquivo, "\n");
-
-          fprintf($arquivo , "subject_tmp: ") ;
-          is_array($subject_tmp)? fprintf($arquivo, print_r($subject_tmp)) : fprint($arquivo, $subject_tmp) ;
-          fprintf($arquivo, "\n");
-
-          fprintf($arquivo , "search: ") ;
-          is_array($search)? fprintf($arquivo, print_r($search)) : fprint($arquivo, $search) ;
-          fprintf($arquivo, "\n");
-
-          fprintf($arquivo , "subject: ") ;
-          is_array($subject)? fprintf($arquivo, print_r($subject)) : fprint($arquivo, $subject) ;
-          fprintf($arquivo, "\n\n\n");
-
-          fclose($arquivo) ;
-         */
         ?>
 
         <?
@@ -245,8 +211,6 @@ if (!(function_exists("simple_query"))) {
     }
 
 }
-
-
 
 // Para a correta inclusao de um cenario, uma serie de procedimentos
 // precisam ser tomados (relativos ao requisito 'navegacao circular'):
@@ -522,8 +486,7 @@ if (!(function_exists("adicionar_lexico"))) {
             while ($result2 = mysql_fetch_array($qrr)) {
 
                 $result_m2 = replace_skip_tags($sinonimos[$i], $result2, "l", $id_incluido);
-                if (//$result2['titulo'] != $result_m2['titulo']        ||
-                        $result2['objetivo'] != $result_m2['objetivo'] ||
+                if ($result2['objetivo'] != $result_m2['objetivo'] ||
                         $result2['contexto'] != $result_m2['contexto'] ||
                         $result2['atores'] != $result_m2['atores'] ||
                         $result2['recursos'] != $result_m2['recursos'] ||
@@ -549,13 +512,10 @@ if (!(function_exists("adicionar_lexico"))) {
                   VALUES (" . $result2['id_cenario'] . ", $id_incluido)";
 
                         mysql_query($q) or die("Erro ao enviar a query de INSERT 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-                    } //if
-                }//if
-            }//while
-        } //for
-
-
-
+                    }
+                }
+            }
+        }
 
         $qlo = "SELECT id_lexico, nome, nocao, impacto, tipo
           FROM lexico
@@ -572,8 +532,6 @@ if (!(function_exists("adicionar_lexico"))) {
 		                  nocao = '" . $result_m['nocao'] . "',
 		                  impacto = '" . $result_m['impacto'] . "'
 		                  WHERE id_lexico = '" . $result['id_lexico'] . "'";
-                // echo($nome)."   ";
-                //  echo($result_m['nocao'])."   ";
 
                 mysql_query($q) or die("Erro ao enviar a query de update no LEXICO 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
                 $qLex = "SELECT * FROM lextolex WHERE id_lexico_from = " . $result['id_lexico'] . " AND id_lexico_to = $id_incluido";
@@ -581,8 +539,6 @@ if (!(function_exists("adicionar_lexico"))) {
                 $resultArraylex = mysql_fetch_array($qrLex);
 
                 if ($resultArraylex == false) {
-
-
                     $q = "INSERT INTO lextolex (id_lexico_from, id_lexico_to)
 		                  VALUES (" . $result['id_lexico'] . ", $id_incluido)";
 
@@ -611,8 +567,8 @@ if (!(function_exists("adicionar_lexico"))) {
                 // Atualiza a definicao de $nocao e $impacto
                 $nocao = $nocao_m;
                 $impacto = $impacto_m;
-            }   // if
-        }   // while
+            }
+        }
         //lexico para lexico
 
         $ql = "SELECT id_lexico, nome, nocao, impacto
@@ -648,10 +604,10 @@ if (!(function_exists("adicionar_lexico"))) {
 	                     VALUES (" . $resultl['id_lexico'] . ", $id_incluido)";
 
                         mysql_query($q) or die("Erro ao enviar a query de insert no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-                    }//if
-                }    //if
-            }//while
-        }//for
+                    }
+                }
+            }
+        }
         //sinonimos ja existentes
 
         $qSinonimos = "SELECT nome, id_lexico FROM sinonimo WHERE id_projeto = $id_projeto AND id_lexico != $id_incluido AND id_pedidolex = 0";
@@ -667,60 +623,15 @@ if (!(function_exists("adicionar_lexico"))) {
             $nomesSinonimos[] = $rowSinonimo["nome"];
             $id_lexicoSinonimo[] = $rowSinonimo["id_lexico"];
         }
-
-
-
-
-        //////PROBLEMAS/////
-        /*
-          $qlIncluido = "SELECT id_lexico, nome, nocao, impacto
-          FROM lexico
-          WHERE id_projeto = $id_projeto
-          AND id_lexico = $id_incluido";
-
-
-          $count = count($nomesSinonimos);
-          for ($i = 0; $i < $count; $i++)
-          {
-          // echo ($nomesSinonimos[$i])."    ";
-          $qrr = mysql_query($qlIncluido) or die("Erro ao enviar a query de select no Lexico 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-          while ($resultlne = mysql_fetch_array($qrr)) {
-          $result_mlne = replace_skip_tags($nomesSinonimos[$i], $resultlne, "l", $id_lexicoSinonimo[$i]);
-          if ($resultlne['nocao'] != $result_mlne['nocao'] ||
-          $resultlne['impacto'] != $result_mlne['impacto']) {
-          $qup = "UPDATE lexico SET
-          nocao = '" . $result_mlne['nocao'] . "',
-          impacto = '" . $result_mlne['impacto'] . "'
-          WHERE id_lexico = " . $id_incluido;
-          ?><script>alert('<?=$resultlne['nocao']?>');</script><?php
-          mysql_query($qup) or die("Erro ao enviar a query de update 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-          //echo ($nomesSinonimos[$i])."    ";
-          //echo ($result_mlne['nocao'])."    ";
-
-          $qLex = "SELECT * FROM lextolex WHERE id_lexico_to = $id_lexicoSinonimo[$i] AND id_lexico_from = $id_incluido ";
-          $qrLex = mysql_query($qLex) or die("Erro ao enviar a query de select no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-          $resultArraylex = mysql_fetch_array($qrLex);
-
-          if ( $resultArraylex == false )
-          {
-          $q = "INSERT INTO lextolex (id_lexico_to, id_lexico_from)
-          VALUES ( $id_lexicoSinonimo[$i], $id_incluido) ";
-          mysql_query($q) or die("Erro ao enviar a query de insert 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-          }
-
-          }//if
-          }//while
-          }//for
-         */
     }
 
 }
 
 
-###################################################################
-# Essa funcao recebe um id de cenario e remove todos os seus
-# links e relacionamentos existentes.
-###################################################################
+
+//Essa funcao recebe um id de cenario e remove todos os seus
+//links e relacionamentos existentes.
+
 if (!(function_exists("removeCenario"))) {
 
     function removeCenario($id_projeto, $id_cenario) {
@@ -732,31 +643,19 @@ if (!(function_exists("removeCenario"))) {
         $sql5 = new QUERY($DB);
         $sql6 = new QUERY($DB);
         $sql7 = new QUERY($DB);
-        # Este select procura o cenario a ser removido
-        # dentro do projeto
-        //print("<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto and id_cenario = $id_cenario");
+        // Este select procura o cenario a ser removido dentro do projeto
         $sql2->execute("SELECT * FROM cenario WHERE id_projeto = $id_projeto and id_cenario = $id_cenario");
         if ($sql2->getntuples() == 0) {
             //echo "<BR> Cenario nao existe para esse projeto." ;
         } else {
             $record = $sql2->gofirst();
             $tituloCenario = $record['titulo'];
-            # tituloCenario = Nome do cenario com id = $id_cenario
         }
-        # [ATENCAO] Essa query pode ser melhorada com um join
-        //print("<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
-        /*  $sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $tituloCenario");
-          if ($sql->getntuples() == 0){
-          echo "<BR> Projeto n�o possui cenarios." ;
-          }else{ */
         $qr = "SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $id_cenario";
         //echo($qr)."          ";
         $qrr = mysql_query($qr) or die("Erro ao enviar a query de SELECT<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         while ($result = mysql_fetch_array($qrr)) {
-            # Percorre todos os cenarios tirando as tag do cenario
-            # a ser removido
-            //$record = $sql->gofirst ();
-            //while($record !='LAST_RECORD_REACHED'){
+
             $idCenarioRef = $result['id_cenario'];
             $tituloAnterior = $result['titulo'];
             $objetivoAnterior = $result['objetivo'];
@@ -765,51 +664,33 @@ if (!(function_exists("removeCenario"))) {
             $recursosAnterior = $result['recursos'];
             $episodiosAnterior = $result['episodios'];
             $excecaoAnterior = $result['excecao'];
-            #echo        "/<a title=\"Cen�rio\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
-            #$episodiosAnterior = "<a title=\"Cen�rio\" href=\"main.php?t=c&id=38\">robin</a>" ;
-            /* "'<a title=\"Cen�rio\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
             $tiratag = "'<[\/\!]*?[^<>]*?>'si";
-            //$tiratagreplace = "";
-            //$tituloCenario = preg_replace($tiratag,$tiratagreplace,$tituloCenario);
+
             $regexp = "/<a[^>]*?>($tituloCenario)<\/a>/mi"; //rever
             $replace = "$1";
-            //echo($episodiosAnterior)."   ";
-            //$tituloAtual = $tituloAnterior ;
-            //*$tituloAtual  = preg_replace($regexp,$replace,$tituloAnterior);*/
+
             $objetivoAtual = preg_replace($regexp, $replace, $objetivoAnterior);
             $contextoAtual = preg_replace($regexp, $replace, $contextoAnterior);
             $atoresAtual = preg_replace($regexp, $replace, $atoresAnterior);
             $recursosAtual = preg_replace($regexp, $replace, $recursosAnterior);
             $episodiosAtual = preg_replace($regexp, $replace, $episodiosAnterior);
             $excecaoAtual = preg_replace($regexp, $replace, $excecaoAnterior);
-            /* echo "ant:".$episodiosAtual ;
-              echo "<br>" ;
-              echo "dep:".$episodiosAnterior ; */
-            // echo($tituloCenario)."   ";
-            // echo($episodiosAtual)."  ";
-            //print ("<br>update cenario set objetivo = '$objetivoAtual',contexto = '$contextoAtual',atores = '$atoresAtual',recursos = '$recursosAtual',episodios = '$episodiosAtual' where id_cenario = $idCenarioRef ");
             $sql7->execute("update cenario set objetivo = '$objetivoAtual',contexto = '$contextoAtual',atores = '$atoresAtual',recursos = '$recursosAtual', episodios = '$episodiosAtual', excecao = '$excecaoAtual' where id_cenario = $idCenarioRef ");
-
-            //$record = $sql->gonext() ;
-            // }
         }
-        # Remove o relacionamento entre o cenario a ser removido
-        # e outros cenarios que o referenciam
+        //Remove o relacionamento entre o cenario a ser removido e outros cenarios que o referenciam
         $sql3->execute("DELETE FROM centocen WHERE id_cenario_from = $id_cenario");
         $sql4->execute("DELETE FROM centocen WHERE id_cenario_to = $id_cenario");
-        # Remove o relacionamento entre o cenario a ser removido
-        # e o seu lexico
+        //Remove o relacionamento entre o cenario a ser removido e o seu lexico
         $sql5->execute("DELETE FROM centolex WHERE id_cenario = $id_cenario");
-        # Remove o cenario escolhido
+        //Remove o cenario escolhido
         $sql6->execute("DELETE FROM cenario WHERE id_cenario = $id_cenario");
     }
 
 }
 
-###################################################################
-# Essa funcao recebe um id de lexico e remove todos os seus
-# links e relacionamentos existentes em todas as tabelas do banco.
-###################################################################
+// Essa funcao recebe um id de lexico e remove todos os seus
+// links e relacionamentos existentes em todas as tabelas do banco.
+
 if (!(function_exists("removeLexico"))) {
 
     function removeLexico($id_projeto, $id_lexico) {
@@ -818,23 +699,20 @@ if (!(function_exists("removeLexico"))) {
         $update = new QUERY($DB);
         $delete = new QUERY($DB);
 
-        # Este select procura o lexico a ser removido
-        # dentro do projeto
+        //Este select procura o lexico a ser removido dentro do projeto
         $sql->execute("SELECT * FROM lexico WHERE id_projeto = $id_projeto and id_lexico = $id_lexico ");
         if ($sql->getntuples() == 0) {
             //echo "<BR> Lexico nao existe para esse projeto." ;
         } else {
             $record = $sql->gofirst();
             $nomeLexico = $record['nome'];
-            # nomeLexico = Nome do lexico com id = $id_lexico
         }
-        # [ATENCAO] Essa query pode ser melhorada com um join
+
         $sql->execute("SELECT * FROM lexico WHERE id_projeto = $id_projeto ");
         if ($sql->getntuples() == 0) {
             //echo "<BR> Projeto n�o possui lexicos ainda." ;
         } else {
-            # Percorre todos os lexicos tirando as tag do lexico
-            # a ser removido
+            //Percorre todos os lexicos tirando as tag do lexico a ser removido
             $record = $sql->gofirst();
             while ($record != 'LAST_RECORD_REACHED') {
                 $idLexicoRef = $record['id_lexico'];
@@ -844,20 +722,17 @@ if (!(function_exists("removeLexico"))) {
                 $replace = "$1";
                 $nocaoAtual = preg_replace($regexp, $replace, $nocaoAnterior);
                 $impactoAtual = preg_replace($regexp, $replace, $impactoAnterior);
-                //print ("<br>update lexico set nocao = '$nocaoAtual',impacto = '$impactoAtual' where id_lexico = $idLexicoRef ");
                 $update->execute("update lexico set nocao = '$nocaoAtual',impacto = '$impactoAtual' where id_lexico = $idLexicoRef ");
                 $record = $sql->gonext();
             }
         }
 
         // retira os links do lexico dos cenarios
-        # [ATENCAO] Essa query pode ser melhorada com um join
         $sql->execute("SELECT * FROM cenario WHERE id_projeto = $id_projeto ");
         if ($sql->getntuples() == 0) {
             //echo "<BR> Projeto n�o possui cenarios." ;
         } else {
-            # Percorre todos os cenarios tirando as tag do lexico
-            # a ser removido
+            //Percorre todos os cenarios tirando as tag do lexico a ser removido
             $record = $sql->gofirst();
             while ($record != 'LAST_RECORD_REACHED') {
                 $idCenarioRef = $record['id_cenario'];
@@ -877,8 +752,8 @@ if (!(function_exists("removeLexico"))) {
                 $excecaoAtual = preg_replace($regexp, $replace, $excecaoAnterior);
                 $update->execute("update cenario set objetivo = '$objetivoAtual',contexto = '$contextoAtual', atores = '$atoresAtual', recursos = '$recursosAtual', episodios = '$episodiosAtual', excecao = '$excecaoAtual' where id_cenario = $idCenarioRef ");
                 $record = $sql->gonext();
-            }//while
-        }//if
+            }
+        }
         //pega os sinonimos deste lexico
         $qSinonimos = "SELECT * FROM sinonimo WHERE id_projeto = $id_projeto AND id_lexico = $id_lexico";
 
@@ -896,11 +771,9 @@ if (!(function_exists("removeLexico"))) {
         for ($i = 0; $i < $count; $i++) {
             $sql->execute("SELECT * FROM lexico WHERE id_projeto = $id_projeto ");
             if ($sql->getntuples() == 0) {
-                //echo "<BR> Projeto n�o possui lexicos -ainda." ;
+                //echo "<BR> Projeto n�o possui lexicos ainda." ;
             } else {
-                # Percorre todos os lexicos tirando as tag do sinonimo
-                # a ser removido
-                //echo($sinonimo)."   ";
+                # Percorre todos os lexicos tirando as tag do sinonimo a ser removido
                 $record = $sql->gofirst();
                 $sinonimoProcura = $nomesSinonimos[$i];
                 while ($record != 'LAST_RECORD_REACHED') {
@@ -911,7 +784,6 @@ if (!(function_exists("removeLexico"))) {
                     $replace = "$1";
                     $nocaoAtual = preg_replace($regexp, $replace, $nocaoAnterior);
                     $impactoAtual = preg_replace($regexp, $replace, $impactoAnterior);
-                    //print ("<br>update lexico set nocao = '$nocaoAtual',impacto = '$impactoAtual' where id_lexico = $idLexicoRef ");
                     $update->execute("update lexico set nocao = '$nocaoAtual',impacto = '$impactoAtual' where id_lexico = $idLexicoRef ");
                     $record = $sql->gonext();
                 }
@@ -923,13 +795,11 @@ if (!(function_exists("removeLexico"))) {
         $count = count($nomesSinonimos);
         for ($i = 0; $i < $count; $i++) {
 
-            # [ATENCAO] Essa query pode ser melhorada com um join
             $sql->execute("SELECT * FROM cenario WHERE id_projeto = $id_projeto ");
             if ($sql->getntuples() == 0) {
-                //echo "<BR> Projeto n�o possui lexicos -- ainda." ;
+                
             } else {
-                # Percorre todos os cenarios tirando as tag do lexico
-                # a ser removido
+                //Percorre todos os cenarios tirando as tag do lexico a ser removido
                 $record = $sql->gofirst();
                 while ($record != 'LAST_RECORD_REACHED') {
                     $idCenarioRef = $record['id_cenario'];
@@ -950,49 +820,12 @@ if (!(function_exists("removeLexico"))) {
                     $excecaoAtual = preg_replace($regexp, $replace, $excecaoAnterior);
                     $update->execute("update cenario set objetivo = '$objetivoAtual',contexto = '$contextoAtual', atores = '$atoresAtual', recursos = '$recursosAtual', episodios = '$episodiosAtual', excecao = '$excecaoAtual' where id_cenario = $idCenarioRef ");
                     $record = $sql->gonext();
-                }//while
-            }//if
-        }//for
+                }
+            }
+        }
 
-
-
-
-        /*   # Procura pelo possivel cenario que ele define
-          # remove sua tag e relacionamento
-          //print ("<br>cenario<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
-          //$sql->execute ("SELECT * FROM cenario WHERE titulo like '%<a title=\"L�xico\" href=\"main.php?t=l&id=$id_lexico\">$nomeLexico</a>%'");
-          $sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto");
-
-          if($sql->getntuples() != 0){
-          $record = $sql->gofirst ();
-          while($record !='LAST_RECORD_REACHED'){
-          //$record = $sql->gofirst ();
-          $idCenarioRef = $record['id_cenario'] ;
-          $tituloAnterior = $record['titulo'] ;
-          $objetivoAnterior = $record['objetivo'] ;
-          $atoresAnterior = $record['atores'] ;
-          $contextoAnterior = $record['contexto'] ;
-          $recursosAnterior = $record['recursos'] ;
-          $excecaoAnterior = $record['excecao'] ;
-          $episodiosAnterior = $record['episodios'] ;
-          $tiratag = "'<[\/\!]*?[^<>]*?>'si" ;
-          $tiratagreplace = "";
-          $tituloAtual = preg_replace($tiratag,$tiratagreplace,$tituloAnterior);
-          $objetivoAtual = preg_replace($tiratag,$tiratagreplace,$objetivoAnterior);
-          $contextoAtual = preg_replace($tiratag,$tiratagreplace,$contextoAnterior);
-          $atoresAtual = preg_replace($tiratag,$tiratagreplace,$atoresAnterior);
-          $recursosAtual = preg_replace($tiratag,$tiratagreplace,$recursosAnterior);
-          $excecaoAtual = preg_replace($tiratag,$tiratagreplace,$excecaoAnterior);
-          $episodiosAtual = preg_replace($tiratag,$tiratagreplace,$episodiosAnterior);
-          //print("<br>i update cenario set titulo = '$tituloAtual',objetivo = '$objetivoAtual',atores = '$atoresAtual',recursos = '$recursosAtual', episodios = '$episodiosAtual' where id_cenario = $idCenarioRef ");
-          $update->execute ("update cenario set titulo = '$tituloAtual',objetivo = '$objetivoAtual',contexto = '$contextoAtual',excecao = '$excecaoAtual', atores = '$atoresAtual',recursos = '$recursosAtual', episodios = '$episodiosAtual' where id_cenario = $idCenarioRef ") ;
-          $delete->execute ("DELETE FROM centolex WHERE id_cenario = $idCenarioRef") ;
-          $record = $sql->gonext() ;
-          }
-          } */
-
-        # Remove o relacionamento entre o lexico a ser removido
-        # e outros lexicos que o referenciam
+        // Remove o relacionamento entre o lexico a ser removido
+        //e outros lexicos que o referenciam
         $delete->execute("DELETE FROM lextolex WHERE id_lexico_from = $id_lexico");
         $delete->execute("DELETE FROM lextolex WHERE id_lexico_to = $id_lexico");
         $delete->execute("DELETE FROM centolex WHERE id_lexico = $id_lexico");
@@ -1004,10 +837,9 @@ if (!(function_exists("removeLexico"))) {
 
 }
 
-###################################################################
-# Essa funcao recebe um id de conceito e remove todos os seus
-# links e relacionamentos existentes.
-###################################################################
+// Essa funcao recebe um id de conceito e remove todos os seus
+// links e relacionamentos existentes.
+
 if (!(function_exists("removeConceito"))) {
 
     function removeConceito($id_projeto, $id_conceito) {
@@ -1019,58 +851,35 @@ if (!(function_exists("removeConceito"))) {
         $sql5 = new QUERY($DB);
         $sql6 = new QUERY($DB);
         $sql7 = new QUERY($DB);
-        # Este select procura o cenario a ser removido
-        # dentro do projeto
+        // Este select procura o cenario a ser removido
+        // dentro do projeto
 
         $sql2->execute("SELECT * FROM conceito WHERE id_projeto = $id_projeto and id_conceito = $id_conceito");
         if ($sql2->getntuples() == 0) {
-            //echo "<BR> Cenario nao existe para esse projeto." ;
+            
         } else {
             $record = $sql2->gofirst();
             $nomeConceito = $record['nome'];
-            # tituloCenario = Nome do cenario com id = $id_cenario
         }
-        # [ATENCAO] Essa query pode ser melhorada com um join
-        //print("<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
-        /*  $sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $tituloCenario");
-          if ($sql->getntuples() == 0){
-          echo "<BR> Projeto n�o possui cenarios." ;
-          }else{ */
+
         $qr = "SELECT * FROM conceito WHERE id_projeto = $id_projeto AND id_conceito != $id_conceito";
-        //echo($qr)."          ";
         $qrr = mysql_query($qr) or die("Erro ao enviar a query de SELECT<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         while ($result = mysql_fetch_array($qrr)) {
-            # Percorre todos os cenarios tirando as tag do conceito
-            # a ser removido
-            //$record = $sql->gofirst ();
-            //while($record !='LAST_RECORD_REACHED'){
+
             $idConceitoRef = $result['id_conceito'];
             $nomeAnterior = $result['nome'];
             $descricaoAnterior = $result['descricao'];
             $namespaceAnterior = $result['namespace'];
-            #echo        "/<a title=\"Cen�rio\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
-            #$episodiosAnterior = "<a title=\"Cen�rio\" href=\"main.php?t=c&id=38\">robin</a>" ;
-            /* "'<a title=\"Cen�rio\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
+
             $tiratag = "'<[\/\!]*?[^<>]*?>'si";
-            //$tiratagreplace = "";
-            //$tituloCenario = preg_replace($tiratag,$tiratagreplace,$tituloCenario);
+
             $regexp = "/<a[^>]*?>($nomeConceito)<\/a>/mi"; //rever
             $replace = "$1";
-            //echo($episodiosAnterior)."   ";
-            //$tituloAtual = $tituloAnterior ;
-            //*$tituloAtual = preg_replace($regexp,$replace,$tituloAnterior);*/
+
             $descricaoAtual = preg_replace($regexp, $replace, $descricaoAnterior);
             $namespaceAtual = preg_replace($regexp, $replace, $namespaceAnterior);
-            /* echo "ant:".$episodiosAtual ;
-              echo "<br>" ;
-              echo "dep:".$episodiosAnterior ; */
-            // echo($tituloCenario)."   ";
-            // echo($episodiosAtual)."  ";
-            //print ("<br>update cenario set objetivo = '$objetivoAtual',contexto = '$contextoAtual',atores = '$atoresAtual',recursos = '$recursosAtual',episodios = '$episodiosAtual' where id_cenario = $idCenarioRef ");
-            $sql7->execute("update conceito set descricao = '$descricaoAtual', namespace = '$namespaceAtual' where id_conceito = $idConceitoRef ");
 
-            //$record = $sql->gonext() ;
-            // }
+            $sql7->execute("update conceito set descricao = '$descricaoAtual', namespace = '$namespaceAtual' where id_conceito = $idConceitoRef ");
         }
 
         # Remove o conceito escolhido
@@ -1079,10 +888,9 @@ if (!(function_exists("removeConceito"))) {
     }
 
 }
-###################################################################
-# Essa funcao recebe um id de relacao e remove todos os seus
-# links e relacionamentos existentes.
-###################################################################
+
+//Essa funcao recebe um id de relacao e remove todos os seus
+//links e relacionamentos existentes.
 if (!(function_exists("removeRelacao"))) {
 
     function removeRelacao($id_projeto, $id_relacao) {
@@ -1097,17 +905,16 @@ if (!(function_exists("removeRelacao"))) {
 
 }
 
-###################################################################
-# Funcao faz um select na tabela lexico.
-# Para inserir um novo lexico, deve ser verificado se ele ja existe,
-# ou se existe um sinonimo com o mesmo nome.
-# Recebe o id do projeto e o nome do lexico (1.0)
-# Faz um SELECT na tabela lexico procurando por um nome semelhante
-# no projeto (1.1)
-# Faz um SELECT na tabela sinonimo procurando por um nome semelhante
-# no projeto (1.2)
-# retorna true caso nao exista ou false caso exista (1.3)
-###################################################################
+//Funcao faz um select na tabela lexico.
+//Para inserir um novo lexico, deve ser verificado se ele ja existe,
+//ou se existe um sinonimo com o mesmo nome.
+//Recebe o id do projeto e o nome do lexico (1.0)
+//Faz um SELECT na tabela lexico procurando por um nome semelhante
+//no projeto (1.1)
+//Faz um SELECT na tabela sinonimo procurando por um nome semelhante
+//no projeto (1.2)
+//retorna true caso nao exista ou false caso exista (1.3)
+
 
 function checarLexicoExistente($projeto, $nome) {
     $naoexiste = false;
@@ -1131,14 +938,12 @@ function checarLexicoExistente($projeto, $nome) {
     return $naoexiste;
 }
 
-###################################################################
-# Recebe o id do projeto e a lista de sinonimos (1.0)
-# Funcao faz um select na tabela sinonimo.
-# Para verificar se ja existe um sinonimo igual no BD.
-# Faz um SELECT na tabela lexico para verificar se ja existe
-# um lexico com o mesmo nome do sinonimo.(1.1)
-# retorna true caso nao exista ou false caso exista (1.2)
-###################################################################
+//Recebe o id do projeto e a lista de sinonimos (1.0)
+//Funcao faz um select na tabela sinonimo.
+//Para verificar se ja existe um sinonimo igual no BD.
+//Faz um SELECT na tabela lexico para verificar se ja existe
+//um lexico com o mesmo nome do sinonimo.(1.1)
+//retorna true caso nao exista ou false caso exista (1.2)
 
 function checarSinonimo($projeto, $listSinonimo) {
     $naoexiste = true;
@@ -1167,14 +972,13 @@ function checarSinonimo($projeto, $listSinonimo) {
     return $naoexiste;
 }
 
-###################################################################
-# Funcao faz um select na tabela cenario.
-# Para inserir um novo cenario, deve ser verificado se ele ja existe.
-# Recebe o id do projeto e o titulo do cenario (1.0)
-# Faz um SELECT na tabela cenario procurando por um nome semelhante
-# no projeto (1.2)
-# retorna true caso nao exista ou false caso exista (1.3)
-###################################################################
+//Funcao faz um select na tabela cenario.
+//Para inserir um novo cenario, deve ser verificado se ele ja existe.
+//Recebe o id do projeto e o titulo do cenario (1.0)
+//Faz um SELECT na tabela cenario procurando por um nome semelhante
+//no projeto (1.2)
+//retorna true caso nao exista ou false caso exista (1.3)
+
 
 function checarCenarioExistente($projeto, $titulo) {
     $naoexiste = false;
@@ -1190,15 +994,14 @@ function checarCenarioExistente($projeto, $titulo) {
     return $naoexiste;
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para inserir um novo cenario ela deve receber os campos do novo
-# cenario.
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este cenario caso o criador n�o seja o gerente.
-# Arquivos que utilizam essa funcao:
-# add_cenario.php
-###################################################################
+//Funcao faz um insert na tabela de pedido.
+//Para inserir um novo cenario ela deve receber os campos do novo
+//cenario.
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este cenario caso o criador n�o seja o gerente.
+//Arquivos que utilizam essa funcao:
+//add_cenario.php
+
 if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 
     function inserirPedidoAdicionarCenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios, $id_usuario) {
@@ -1235,15 +1038,15 @@ if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para alterar um cenario ela deve receber os campos do cenario
-# jah modificados.(1.1)
-# Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador n�o seja o gerente.(2.1)
-# Arquivos que utilizam essa funcao:
-# alt_cenario.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para alterar um cenario ela deve receber os campos do cenario
+//jah modificados.(1.1)
+//Ao final ela manda um e-mail para o gerentes do projeto
+//referente a este cenario caso o criador n�o seja o gerente.(2.1)
+//Arquivos que utilizam essa funcao:
+//alt_cenario.php
+
 if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
     function inserirPedidoAlterarCenario($id_projeto, $id_cenario, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios, $justificativa, $id_usuario) {
@@ -1281,15 +1084,15 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para remover um cenario ela deve receber
-# o id do cenario e id projeto.(1.1)
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico.(2.1)
-# Arquivos que utilizam essa funcao:
-# rmv_cenario.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para remover um cenario ela deve receber
+//o id do cenario e id projeto.(1.1)
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este lexico.(2.1)
+//Arquivos que utilizam essa funcao:
+//rmv_cenario.php
+
 if (!(function_exists("inserirPedidoRemoverCenario"))) {
 
     function inserirPedidoRemoverCenario($id_projeto, $id_cenario, $id_usuario) {
@@ -1319,15 +1122,15 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para inserir um novo lexico ela deve receber os campos do novo
-# lexicos.
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador n�o seja o gerente.
-# Arquivos que utilizam essa funcao:
-# add_lexico.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para inserir um novo lexico ela deve receber os campos do novo
+//lexicos.
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este lexico caso o criador n�o seja o gerente.
+//Arquivos que utilizam essa funcao:
+//add_lexico.php
+
 if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 
     function inserirPedidoAdicionarLexico($id_projeto, $nome, $nocao, $impacto, $id_usuario, $sinonimos, $classificacao) {
@@ -1384,15 +1187,15 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para alterar um lexico ela deve receber os campos do lexicos
-# jah modificados.(1.1)
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador n�o seja o gerente.(2.1)
-# Arquivos que utilizam essa funcao:
-# alt_lexico.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para alterar um lexico ela deve receber os campos do lexicos
+//jah modificados.(1.1)
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este lexico caso o criador n�o seja o gerente.(2.1)
+//Arquivos que utilizam essa funcao:
+//alt_lexico.php
+
 if (!(function_exists("inserirPedidoAlterarLexico"))) {
 
     function inserirPedidoAlterarLexico($id_projeto, $id_lexico, $nome, $nocao, $impacto, $justificativa, $id_usuario, $sinonimos, $classificacao) {
@@ -1408,7 +1211,6 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
 
 
         if ($resultArray == false) { //nao e gerente
-            //print("INSERT INTO pedidolex (id_projeto,id_lexico,nome,nocao,impacto,id_usuario,tipo_pedido,aprovado) VALUES ($id_projeto,$id_lexico,'$nome','$nocao','$impacto',$id_usuario,'alterar',0)");
             $insere->execute("INSERT INTO pedidolex (id_projeto,id_lexico,nome,nocao,impacto,id_usuario,tipo_pedido,aprovado,justificativa, tipo) VALUES ($id_projeto,$id_lexico,'$nome','$nocao','$impacto',$id_usuario,'alterar',0,'$justificativa', '$classificacao')");
 
             $newPedidoId = $insere->getLastId();
@@ -1446,15 +1248,15 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
     }
 
 }
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para remover um lexico ela deve receber
-# o id do lexico e id projeto.(1.1)
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico.(2.1)
-# Arquivos que utilizam essa funcao:
-# rmv_lexico.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para remover um lexico ela deve receber
+//o id do lexico e id projeto.(1.1)
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este lexico.(2.1)
+//Arquivos que utilizam essa funcao:
+//rmv_lexico.php
+
 if (!(function_exists("inserirPedidoRemoverLexico"))) {
 
     function inserirPedidoRemoverLexico($id_projeto, $id_lexico, $id_usuario) {
@@ -1466,7 +1268,6 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         $lexico = $select->gofirst();
         $nome = $lexico['nome'];
 
-        //print("INSERT INTO pedidolex (id_projeto,id_lexico,nome,id_usuario,tipo_pedido,aprovado) VALUES ($id_projeto,$id_lexico,'$nome',$id_usuario,'remover',0)");
         $insere->execute("INSERT INTO pedidolex (id_projeto,id_lexico,nome,id_usuario,tipo_pedido,aprovado) VALUES ($id_projeto,$id_lexico,'$nome',$id_usuario,'remover',0)");
         $select->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
         $select2->execute("SELECT * FROM participa WHERE gerente = 1 and id_projeto = $id_projeto");
@@ -1491,15 +1292,15 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para alterar um conceito ela deve receber os campos do conceito
-# jah modificados.(1.1)
-# Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador n�o seja o gerente.(2.1)
-# Arquivos que utilizam essa funcao:
-# alt_cenario.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para alterar um conceito ela deve receber os campos do conceito
+//jah modificados.(1.1)
+//Ao final ela manda um e-mail para o gerentes do projeto
+//referente a este cenario caso o criador n�o seja o gerente.(2.1)
+//Arquivos que utilizam essa funcao:
+//alt_cenario.php
+
 if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
     function inserirPedidoAlterarConceito($id_projeto, $id_conceito, $nome, $descricao, $namespace, $justificativa, $id_usuario) {
@@ -1537,15 +1338,15 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para remover um conceito ela deve receber
-# o id do conceito e id projeto.(1.1)
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este conceito.(2.1)
-# Arquivos que utilizam essa funcao:
-# rmv_conceito.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para remover um conceito ela deve receber
+//o id do conceito e id projeto.(1.1)
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este conceito.(2.1)
+//Arquivos que utilizam essa funcao:
+//rmv_conceito.php
+
 if (!(function_exists("inserirPedidoRemoverConceito"))) {
 
     function inserirPedidoRemoverConceito($id_projeto, $id_conceito, $id_usuario) {
@@ -1581,15 +1382,15 @@ if (!(function_exists("inserirPedidoRemoverConceito"))) {
 
 }
 
-###################################################################
-# Funcao faz um insert na tabela de pedido.
-# Para remover uma relacao ela deve receber
-# o id da relacao e id projeto.(1.1)
-# Ao final ela manda um e-mail para o gerente do projeto
-# referente a este relacao.(2.1)
-# Arquivos que utilizam essa funcao:
-# rmv_relacao.php
-###################################################################
+
+//Funcao faz um insert na tabela de pedido.
+//Para remover uma relacao ela deve receber
+//o id da relacao e id projeto.(1.1)
+//Ao final ela manda um e-mail para o gerente do projeto
+//referente a este relacao.(2.1)
+//Arquivos que utilizam essa funcao:
+//rmv_relacao.php
+
 if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 
     function inserirPedidoRemoverRelacao($id_projeto, $id_relacao, $id_usuario) {
@@ -1625,15 +1426,15 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 
 }
 
-###################################################################
-# Processa um pedido identificado pelo seu id.
-# Recebe o id do pedido.(1.1)
-# Faz um select para pegar o pedido usando o id recebido.(1.2)
-# Pega o campo tipo_pedido.(1.3)
-# Se for para remover: Chamamos a funcao remove();(1.4)
-# Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
-# Se for para inserir: chamamos a funcao insert();
-###################################################################
+
+//Processa um pedido identificado pelo seu id.
+//Recebe o id do pedido.(1.1)
+//Faz um select para pegar o pedido usando o id recebido.(1.2)
+//Pega o campo tipo_pedido.(1.3)
+//Se for para remover: Chamamos a funcao remove();(1.4)
+//Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
+//Se for para inserir: chamamos a funcao insert();
+
 if (!(function_exists("tratarPedidoCenario"))) {
 
     function tratarPedidoCenario($id_pedido) {
@@ -1665,24 +1466,22 @@ if (!(function_exists("tratarPedidoCenario"))) {
                 if (!strcasecmp($tipoPedido, 'alterar')) {
                     $id_cenario = $record['id_cenario'];
                     removeCenario($id_projeto, $id_cenario);
-                    //$delete->execute ("DELETE FROM pedidocen WHERE id_cenario = $id_cenario") ;
                 }
                 adicionar_cenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios);
             }
-            //$delete->execute ("DELETE FROM pedidocen WHERE id_pedido = $id_pedido") ;
         }
     }
 
 }
-###################################################################
-# Processa um pedido identificado pelo seu id.
-# Recebe o id do pedido.(1.1)
-# Faz um select para pegar o pedido usando o id recebido.(1.2)
-# Pega o campo tipo_pedido.(1.3)
-# Se for para remover: Chamamos a funcao remove();(1.4)
-# Se for para alterar: Devemos (re)mover o lexico e inserir o novo.
-# Se for para inserir: chamamos a funcao insert();
-###################################################################
+
+//Processa um pedido identificado pelo seu id.
+//Recebe o id do pedido.(1.1)
+//Faz um select para pegar o pedido usando o id recebido.(1.2)
+//Pega o campo tipo_pedido.(1.3)
+//Se for para remover: Chamamos a funcao remove();(1.4)
+//Se for para alterar: Devemos (re)mover o lexico e inserir o novo.
+//Se for para inserir: chamamos a funcao insert();
+
 if (!(function_exists("tratarPedidoLexico"))) {
 
     function tratarPedidoLexico($id_pedido) {
@@ -1728,9 +1527,7 @@ if (!(function_exists("tratarPedidoLexico"))) {
                 if (!strcasecmp($tipoPedido, 'alterar')) {
                     $id_lexico = $record['id_lexico'];
                     removeLexico($id_projeto, $id_lexico);
-                    //$delete->execute ("DELETE FROM pedidolex WHERE id_lexico = $id_lexico") ;
                 }
-                // adicionar_lexico($id_projeto, $nome, $nocao, $impacto) ;
 
 
                 if (($idLexicoConflitante = adicionar_lexico($id_projeto, $nome, $nocao, $impacto, $sinonimos, $classificacao)) <= 0) {
@@ -1744,20 +1541,19 @@ if (!(function_exists("tratarPedidoLexico"))) {
                 }
             }
             return null;
-            //$delete->execute ("DELETE FROM pedidolex WHERE id_pedido = $id_pedido") ;
         }
     }
 
 }
-###################################################################
-# Processa um pedido identificado pelo seu id.
-# Recebe o id do pedido.(1.1)
-# Faz um select para pegar o pedido usando o id recebido.(1.2)
-# Pega o campo tipo_pedido.(1.3)
-# Se for para remover: Chamamos a funcao remove();(1.4)
-# Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
-# Se for para inserir: chamamos a funcao insert();
-###################################################################
+
+//Processa um pedido identificado pelo seu id.
+//Recebe o id do pedido.(1.1)
+//Faz um select para pegar o pedido usando o id recebido.(1.2)
+//Pega o campo tipo_pedido.(1.3)
+//Se for para remover: Chamamos a funcao remove();(1.4)
+//Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
+//Se for para inserir: chamamos a funcao insert();
+
 if (!(function_exists("tratarPedidoConceito"))) {
 
     function tratarPedidoConceito($id_pedido) {
@@ -1792,15 +1588,15 @@ if (!(function_exists("tratarPedidoConceito"))) {
 
 }
 
-###################################################################
-# Processa um pedido identificado pelo seu id.
-# Recebe o id do pedido.(1.1)
-# Faz um select para pegar o pedido usando o id recebido.(1.2)
-# Pega o campo tipo_pedido.(1.3)
-# Se for para remover: Chamamos a funcao remove();(1.4)
-# Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
-# Se for para inserir: chamamos a funcao insert();
-###################################################################
+
+//Processa um pedido identificado pelo seu id.
+//Recebe o id do pedido.(1.1)
+//Faz um select para pegar o pedido usando o id recebido.(1.2)
+//Pega o campo tipo_pedido.(1.3)
+//Se for para remover: Chamamos a funcao remove();(1.4)
+//Se for para alterar: Devemos (re)mover o cenario e inserir o novo.
+//Se for para inserir: chamamos a funcao insert();
+
 if (!(function_exists("tratarPedidoRelacao"))) {
 
     function tratarPedidoRelacao($id_pedido) {
@@ -1832,13 +1628,13 @@ if (!(function_exists("tratarPedidoRelacao"))) {
     }
 
 }
-#############################################
-#Deprecated by the author:
-#Essa funcao deveria receber um id_projeto
-#de forma a verificar se o gerente pertence
-#a esse projeto.Ela so verifica atualmente
-#se a pessoa e um gerente.
-#############################################
+
+//eprecated by the author:
+//ssa funcao deveria receber um id_projeto
+//de forma a verificar se o gerente pertence
+//a esse projeto.Ela so verifica atualmente
+//se a pessoa e um gerente.
+
 if (!(function_exists("verificaGerente"))) {
 
     function verificaGerente($id_usuario) {
@@ -1854,11 +1650,11 @@ if (!(function_exists("verificaGerente"))) {
 
 }
 
-#############################################
-# Formata Data
-# Recebe YYY-DD-MM
-# Retorna DD-MM-YYYY
-#############################################
+
+// Formata Data
+// Recebe YYY-DD-MM
+// Retorna DD-MM-YYYY
+
 if (!(function_exists("formataData"))) {
 
     function formataData($data) {
@@ -1905,14 +1701,13 @@ if (!(function_exists("check_proj_perm"))) {
     }
 
 }
-###################################################################
-# Verifica se um determinado usuario e gerente de um determinado
-# projeto
-# Recebe o id do projeto. (1.1)
-# Faz um select para pegar o resultArray da tabela Participa.(1.2)
-# Se o resultArray for nao nulo: devolvemos TRUE(1);(1.3)
-# Se o resultArray for nulo: devolvemos False(0);(1.4)
-###################################################################
+
+//Verifica se um determinado usuario e gerente de um determinado projeto
+// Recebe o id do projeto. (1.1)
+//Faz um select para pegar o resultArray da tabela Participa.(1.2)
+//Se o resultArray for nao nulo: devolvemos TRUE(1);(1.3)
+//Se o resultArray for nulo: devolvemos False(0);(1.4)
+
 
 function verificaGerente($id_usuario, $id_projeto) {
     $ret = 0;
@@ -1927,25 +1722,23 @@ function verificaGerente($id_usuario, $id_projeto) {
     return $ret;
 }
 
-###################################################################
-# Remove um determinado projeto da base de dados
-# Recebe o id do projeto. (1.1)
-# Apaga os valores da tabela pedidocen que possuam o id do projeto enviado (1.2)
-# Apaga os valores da tabela pedidolex que possuam o id do projeto enviado (1.3)
-# Faz um SELECT para saber quais l�xico pertencem ao projeto de id_projeto (1.4)
-# Apaga os valores da tabela lextolex que possuam possuam lexico do projeto (1.5)
-# Apaga os valores da tabela centolex que possuam possuam lexico do projeto (1.6)
-# Apaga os valores da tabela sinonimo que possuam possuam o id do projeto (1.7)
-# Apaga os valores da tabela lexico que possuam o id do projeto enviado (1.8)
-# Faz um SELECT para saber quais cenario pertencem ao projeto de id_projeto (1.9)
-# Apaga os valores da tabela centocen que possuam possuam cenarios do projeto (2.0)
-# Apaga os valores da tabela centolex que possuam possuam cenarios do projeto (2.1)
-# Apaga os valores da tabela cenario que possuam o id do projeto enviado (2.2)
-# Apaga os valores da tabela participa que possuam o id do projeto enviado (2.3)
-# Apaga os valores da tabela publicacao que possuam o id do projeto enviado (2.4)
-# Apaga os valores da tabela projeto que possuam o id do projeto enviado (2.5)
-#
-###################################################################
+//Remove um determinado projeto da base de dados
+//Recebe o id do projeto. (1.1)
+//Apaga os valores da tabela pedidocen que possuam o id do projeto enviado (1.2)
+//Apaga os valores da tabela pedidolex que possuam o id do projeto enviado (1.3)
+//Faz um SELECT para saber quais l�xico pertencem ao projeto de id_projeto (1.4)
+//Apaga os valores da tabela lextolex que possuam possuam lexico do projeto (1.5)
+//Apaga os valores da tabela centolex que possuam possuam lexico do projeto (1.6)
+//Apaga os valores da tabela sinonimo que possuam possuam o id do projeto (1.7)
+//Apaga os valores da tabela lexico que possuam o id do projeto enviado (1.8)
+//Faz um SELECT para saber quais cenario pertencem ao projeto de id_projeto (1.9)
+//Apaga os valores da tabela centocen que possuam possuam cenarios do projeto (2.0)
+//Apaga os valores da tabela centolex que possuam possuam cenarios do projeto (2.1)
+//Apaga os valores da tabela cenario que possuam o id do projeto enviado (2.2)
+//Apaga os valores da tabela participa que possuam o id do projeto enviado (2.3)
+//Apaga os valores da tabela publicacao que possuam o id do projeto enviado (2.4)
+//Apaga os valores da tabela projeto que possuam o id do projeto enviado (2.5)
+
 
 function removeProjeto($id_projeto) {
     $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);

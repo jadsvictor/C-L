@@ -49,31 +49,34 @@ $senha = $row[4];
 
             if (login === "")
             {
-                alert("Por favor, digite o seu Login.")
-                form.login.focus()
+                alert("Por favor, digite o seu Login.");
+                form.login.focus();
                 return false;
             }
-            if (email == "")
+            if (email === "")
             {
-                alert("Por favor, digite o seu e-mail.")
+                alert("Por favor, digite o seu e-mail.");
                 form.email.focus();
                 return false;
             }
-            if (senha == "")
+            if (senha === "")
+                ;
             {
-                alert("Por favor, digite a sua senha.")
-                form.senha.focus()
+                alert("Por favor, digite a sua senha.");
+                form.senha.focus();
                 return false;
             }
-            if (nome == "")
+            if (nome === "")
+                ;
             {
-                alert("Por favor, digite o seu nome.")
-                form.nome.focus()
+                alert("Por favor, digite o seu nome.");
+                form.nome.focus();
                 return false;
             }
-            if (senha != senha_conf)
+            if (senha !== senha_conf)
+                ;
             {
-                alert("A senha e a confirmacao nao sao as mesmas!")
+                alert("A senha e a confirmacao nao sao as mesmas!");
                 form.senha.focus();
                 return false;
             }
@@ -86,12 +89,12 @@ $senha = $row[4];
             {
                 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email.value))
                 {
-                    return (true)
+                    return (true);
                 }
-                alert("Aten��o: o E-mail digitado n�o � v�lido.")
+                alert("Aten��o: o E-mail digitado n�o � v�lido.");
                 email.focus();
                 email.select();
-                return (false)
+                return (false);
             }
         }
 
@@ -106,7 +109,7 @@ $senha = $row[4];
                     <td>Nome:</td><td colspan="3"><input name="nome" maxlength="255" size="48" type="text" value="<?= $nome ?>"></td>
                 </tr>
                 <tr>
-                    <td>E-mail:</td><td colspan="3"><input name="email" maxlength="64" size="48" type="text" value="<?= $email ?>" OnBlur="checkEmail(this)"></td>
+                    <td>E-mail:</td><td colspan="3"><input name="email" maxlength="64" size="48" type="text" value="<?= $email ?>" OnBlur="checkEmail(this);"></td>
                 </tr>
                 <tr>
                     <td>Login:</td><td><input name="login" maxlength="32" size="24" type="text" value="<?= $login ?>"></td>
