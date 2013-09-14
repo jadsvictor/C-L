@@ -78,6 +78,7 @@ if (isset($submit)) {
     } else {
         $record = $select_request->gofirst();
         while ($record != 'LAST_RECORD_REACHED') {
+<<<<<<< HEAD
             $id_user = $record['id_usuario'];
             $id_request = $record['id_pedido'];
             $requested_type = $record['tipo_pedido'];
@@ -98,6 +99,20 @@ if (isset($submit)) {
                              
                 if (!strcasecmp($tipo_pedido, 'alterar')) {
                     echo"para cenario abaixo:</h3>";
+=======
+            $id_usuario = $record['id_usuario'];
+            $id_pedido = $record['id_pedido'];
+            $tipo_pedido = $record['tipo_pedido'];
+            $aprovado = $record['aprovado'];
+            $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
+            $user = $select2->gofirst();
+            if (strcasecmp($tipo_pedido, 'remover')) {
+                ?>
+
+                            <br>
+                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o cen�rio <font color="#ff0000"><?= $record['titulo'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
+                    echo"para cen�rio abaixo:</h3>";
+>>>>>>> 17b18ca0149fe14af652f269d22b70dfc68dcf0e
                 } else {
                     echo"</h3>";
                 } ?>
@@ -134,9 +149,13 @@ if (isset($submit)) {
                                     </tr>
                                 </table>
                             <?php } else { ?>
+<<<<<<< HEAD
                                 <h3>O usuario <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?>
                                     </a> pede para <?= $tipo_pedido ?> o cenario 
                                     <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
+=======
+                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o cen�rio <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
+>>>>>>> 17b18ca0149fe14af652f269d22b70dfc68dcf0e
                             <?php
                             }
                             if ($okay == 1) {
