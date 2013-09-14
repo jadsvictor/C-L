@@ -1,7 +1,6 @@
 <?php
 
 include 'daml.php';
-//include 'auxiliar_daml.php';
 include 'auxiliar_bd.php';
 include_once("bd.inc");
 include_once("CELConfig/CELConfig.inc");
@@ -12,18 +11,18 @@ $site = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL
 $dir = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
 $arquivo = nome_arquivo_daml();
 
-$i = array("title" => "Ontologia de teste",
+$description = array("title" => "Ontologia de teste",
     "creator" => "Pedro",
     "description" => "teste de tradução de léxico para ontologia",
     "subject" => "",
     "versionInfo" => "1.1");
 
-$lista_conceitos = get_lista_de_conceitos();
-$lista_relacoes = get_lista_de_relacoes();
-$lista_axiomas = get_lista_de_axiomas();
+$list_concept = get_lista_de_conceitos();
+$list_relations = get_lista_de_relacoes();
+$list_axioms = get_lista_de_axiomas();
 
 
-$daml = salva_daml($site, $dir, $arquivo, $i, $lista_conceitos, $lista_relacoes, $lista_axiomas);
+$daml = salva_daml($site, $dir, $arquivo, $description, $list_concept, $list_relations, $list_axioms);
 
 if (!$daml) {
     print 'Erro ao exportar ontologia para DAML!';
