@@ -12,18 +12,18 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php"); 
+chkUser("index.php"); // Checa se o usuario foi autenticado
 if (isset($submit)) {
-    $dataBase = new PGDB ();
-    $update_dataBase = new QUERY($dataBase);
-    $delete_dataBase = new QUERY($dataBase);
-   
+    $DB = new PGDB ();
+    $select = new QUERY($DB);
+    $update = new QUERY($DB);
+    $delete = new QUERY($DB);
     for ($count = 0; $count < sizeof($pedidos); $count++) {
-        $update_dataBase->execute("update pedidocen set aprovado= 1 where id_pedido = $pedidos[$count]");
+        $update->execute("update pedidocen set aprovado= 1 where id_pedido = $pedidos[$count]");
         tratarPedidoCenario($pedidos[$count]);
     }
     for ($count = 0; $count < sizeof($remover); $count++) {
-        $delete_dataBase->execute("delete from pedidocen where id_pedido = $remover[$count]");
+        $delete->execute("delete from pedidocen where id_pedido = $remover[$count]");
     }
     ?>
 
@@ -34,7 +34,7 @@ if (isset($submit)) {
 
     </script>
 
-    <h4>Operacao efetuada com sucesso!</h4>
+    <h4>Operação efetuada com sucesso!</h4>
     <script language="javascript1.3">
 
         self.close();
@@ -45,79 +45,56 @@ if (isset($submit)) {
     ?>
     <html>
         <head>
-            <title>Pedidos de alteracao dos Cenarios</title>
+            <title>Pedidos de alteração dos Cenários</title>
         </head>
         <body>
-            <h2>Pedidos de Alteracao no Conjunto de Cenarios</h2>
+            <h2>Pedidos de Alteração no Conjunto de Cenários</h2>
             <form action="?id_projeto=<?= $id_projeto ?>" method="post">
 
     <?php
-// Cen�rio - Verificar pedidos de altera��o de cen�rios
-//Objetivo:	Permitir ao administrador gerenciar os pedidos de altera��o de cen�rios.
-//Contexto:	Gerente deseja visualizar os pedidos de altera��o de cen�rios.
-//              Pr�-Condi��o: Login, projeto cadastrado.
+// Cenário - Verificar pedidos de alteração de cenários
+//Objetivo:	Permitir ao administrador gerenciar os pedidos de alteração de cenários.
+//Contexto:	Gerente deseja visualizar os pedidos de alteração de cenários.
+//              Pré-Condição: Login, projeto cadastrado.
 //Atores:	Administrador
 //Recursos:	Sistema, banco de dados.
-//Epis�dios: O administrador clica na op��o de Verificar pedidos de altera��o de cen�rios.
-//           Restri��o: Somente o Administrador do projeto pode ter essa fun��o vis�vel.
-//           O sistema fornece para o administrador uma tela onde poder� visualizar o hist�rico
-//           de todas as altera��es pendentes ou n�o para os cen�rios.
-//           Para novos pedidos de inclus�o ou altera��o de cen�rios,
+//Episódios: O administrador clica na opção de Verificar pedidos de alteração de cenários.
+//           Restrição: Somente o Administrador do projeto pode ter essa função visível.
+//           O sistema fornece para o administrador uma tela onde poderá visualizar o histórico
+//           de todas as alterações pendentes ou não para os cenários.
+//           Para novos pedidos de inclusão ou alteração de cenários,
 //           o sistema permite que o administrador opte por Aprovar ou Remover.
-//           Para os pedidos de inclus�o ou altera��o j� aprovados,
-//           o sistema somente habilita a op��o remover para o administrador.
-//           Para efetivar as sele��es de aprova��o e remo��o, basta clicar em Processar.
+//           Para os pedidos de inclusão ou alteração já aprovados,
+//           o sistema somente habilita a opção remover para o administrador.
+//           Para efetivar as seleções de aprovação e remoção, basta clicar em Processar.
 
-    $dataBase = new PGDB ();
-    $select_request = new QUERY($dataBase);
-    $select_user = new QUERY($dataBase);
-    $select_request->execute("SELECT * FROM pedidocen WHERE id_projeto = $id_projeto");
-
-    if ($select_request->getntuples() == 0) {
+    $DB = new PGDB ();
+    $select = new QUERY($DB);
+    $select2 = new QUERY($DB);
+    $select->execute("SELECT * FROM pedidocen WHERE id_projeto = $id_projeto");
+    if ($select->getntuples() == 0) {
         echo "<BR>Nenhum pedido.<BR>";
     } else {
-        $record = $select_request->gofirst();
+        $i = 0;
+        $record = $select->gofirst();
         while ($record != 'LAST_RECORD_REACHED') {
-<<<<<<< HEAD
-            $id_user = $record['id_usuario'];
-            $id_request = $record['id_pedido'];
-            $requested_type = $record['tipo_pedido'];
-            $okay = $record['aprovado'];
-            $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
-            $user = $select_user->gofirst();
-            if (strcasecmp($requested_type, 'remover')) {
-                ?>
-
-                            <br>
-                            <h3>O usuario 
-                                <a href="mailto:<?= $user['email'] ?>"> 
-                                    <?= $user['nome'] ?>
-                                </a> pede para <?= $tipo_pedido ?> o cenario 
-                                <font color="#ff0000">
-                                    <?= $record['titulo'] ?>
-                                </font> <?
-                             
-                if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para cenario abaixo:</h3>";
-=======
             $id_usuario = $record['id_usuario'];
             $id_pedido = $record['id_pedido'];
             $tipo_pedido = $record['tipo_pedido'];
             $aprovado = $record['aprovado'];
             $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $user = $select2->gofirst();
+            $usuario = $select2->gofirst();
             if (strcasecmp($tipo_pedido, 'remover')) {
                 ?>
 
                             <br>
-                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o cen�rio <font color="#ff0000"><?= $record['titulo'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para cen�rio abaixo:</h3>";
->>>>>>> 17b18ca0149fe14af652f269d22b70dfc68dcf0e
+                            <h3>O usuário <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> o cenário <font color="#ff0000"><?= $record['titulo'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
+                    echo"para cenário abaixo:</h3>";
                 } else {
                     echo"</h3>";
                 } ?>
                                 <table>
-                                    <td><b>Titulo:</b></td>
+                                    <td><b>Título:</b></td>
                                     <td><?= $record['titulo'] ?></td>
                                     <tr>
                                         <td><b>Objetivo:</b></td>
@@ -136,11 +113,11 @@ if (isset($submit)) {
                                         <td><?= $record['recursos'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td><b>Excecao:</b></td>
+                                        <td><b>Exceção:</b></td>
                                         <td><?= $record['excecao'] ?></td>
                                     </tr>
                                     <tr>
-                                        <td><b>Episodios:</b></td>
+                                        <td><b>Episódios:</b></td>
                                         <td><textarea cols="48" name="episodios" rows="5"><?= $record['episodios'] ?></textarea></td>
                                     </tr>
                                     <tr>
@@ -149,22 +126,16 @@ if (isset($submit)) {
                                     </tr>
                                 </table>
                             <?php } else { ?>
-<<<<<<< HEAD
-                                <h3>O usuario <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?>
-                                    </a> pede para <?= $tipo_pedido ?> o cenario 
-                                    <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
-=======
-                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o cen�rio <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
->>>>>>> 17b18ca0149fe14af652f269d22b70dfc68dcf0e
+                                <h3>O usuário <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> o cenário <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
                             <?php
                             }
-                            if ($okay == 1) {
+                            if ($aprovado == 1) {
                                 echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
                             } else {
-                                echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_request\"> <STRONG>Aprovar</STRONG>]<BR>  ";
+                                echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_pedido\"> <STRONG>Aprovar</STRONG>]<BR>  ";
 //                     echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\">" ;
                             }
-                            echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_request\"> <STRONG>Remover da lista</STRONG>]";
+                            echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\"> <STRONG>Remover da lista</STRONG>]";
                             print( "<br>\n<hr color=\"#000000\"><br>\n");
                             $record = $select->gonext();
                         }
@@ -172,10 +143,9 @@ if (isset($submit)) {
                     ?>
                     <input name="submit" type="submit" value="Processar">
                     </form>
-                    <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o codigo fonte!</a></i>
+                    <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o código fonte!</a></i>
                     </body>
                     </html>
                     <?php
                 }
                 ?>
-
