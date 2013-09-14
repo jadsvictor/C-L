@@ -84,12 +84,12 @@ if (isset($submit)) {
             $tipo_pedido = $record['tipo_pedido'];
             $aprovado = $record['aprovado'];
             $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $usuario = $select2->gofirst();
+            $user = $select2->gofirst();
             if (strcasecmp($tipo_pedido, 'remover')) {
                 ?>
 
                             <br>
-                            <h3>O usu�rio <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
+                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
                     echo"para conceito abaixo:</h3>";
                 } else {
                     echo"</h3>";
@@ -103,7 +103,7 @@ if (isset($submit)) {
                                     </tr>
                                 </table>
                             <?php } else { ?>
-                                <h3>O usu�rio <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font></h3>
+                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font></h3>
                             <?php
                             }
                             if ($aprovado == 1) {

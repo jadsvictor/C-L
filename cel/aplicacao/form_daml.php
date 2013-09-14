@@ -27,7 +27,7 @@ $link = bd_connect();
         $sql_user = "select nome from usuario where id_usuario='" . $_SESSION['id_usuario_corrente'] . "';";
         $query_user = mysql_query($sql_user) or die("Erro ao verificar usu�rio!" . mysql_error());
         $result = mysql_fetch_array($query_user);
-        $usuario = $result[0];
+        $user = $result[0];
 
         mysql_close($link);
         ?> 
@@ -42,7 +42,7 @@ $link = bd_connect();
             <tr><td>T�tulo:          </td><td><input type="text" name="title" size="15">              </td></tr>
             <tr><td>Assunto:      </td><td><input type="text" name="subject" size="50">       </td></tr>
             <tr><td>Descri��o:  </td><td><input type="text" name="description" size="50">  </td></tr>   
-            <tr><td>Usu�rio:      </td><td><input type="text" name="user" value= "<?= $usuario ?>" size="50">  </td></tr>   
+            <tr><td>Usu�rio:      </td><td><input type="text" name="user" value= "<?= $user ?>" size="50">  </td></tr>   
             <tr><td>Vers�o:       </td><td><input type="text" name="versionInfo" size="15">   </td></tr>
         </table>
         <p>

@@ -77,12 +77,12 @@
         print( "<CENTER><TABLE WIDTH=\"80%\">\n");
         print( "<TR>\n\t<Th><STRONG>Projeto</STRONG></Th>\n\t<Th><STRONG>Gerado em</STRONG></Th>\n</TR>\n");
         if ($dir_handle = @opendir($diretorio)) {
-            while (( $arquivo = readdir($dir_handle) ) !== false) {
-                if (is_file($diretorio . "/" . $arquivo) && $arquivo != "." && $arquivo != "..") {
+            while (( $archive = readdir($dir_handle) ) !== false) {
+                if (is_file($diretorio . "/" . $archive) && $archive != "." && $archive != "..") {
                     print( "<TR>\n");
-                    print( "\t<TD WIDTH=\"25%\" CLASS=\"Estilo\"><B>" . extrair_projeto($arquivo) . "</B></TD>\n");
-                    print( "\t<TD WIDTH=\"55%\" CLASS=\"Estilo\">" . extrair_data($arquivo) . "</TD>\n");
-                    print( "\t<TD WIDTH=\"10%\" >[<A HREF=\"" . $site . $arquivo . "\">Abrir</A>]</TD>\n");
+                    print( "\t<TD WIDTH=\"25%\" CLASS=\"Estilo\"><B>" . extrair_projeto($archive) . "</B></TD>\n");
+                    print( "\t<TD WIDTH=\"55%\" CLASS=\"Estilo\">" . extrair_data($archive) . "</TD>\n");
+                    print( "\t<TD WIDTH=\"10%\" >[<A HREF=\"" . $site . $archive . "\">Abrir</A>]</TD>\n");
                     print( "</TR>\n");
                 }
             }
