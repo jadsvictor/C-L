@@ -1211,8 +1211,9 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
 
-        $q = ("SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario AND id_projeto = $id_projeto");
-        $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $qr = mysql_query("SELECT * FROM participa WHERE gerente = 1 
+            AND id_usuario =" . _GET('$id_usuario') ." 
+            AND id_projeto =" . _GET('$id_projeto')) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         $resultArray = mysql_fetch_array($qr);
 
         if ($resultArray == false) { //Nao e gerente
