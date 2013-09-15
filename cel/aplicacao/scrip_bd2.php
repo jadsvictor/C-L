@@ -7,7 +7,6 @@
     <body> 
 
         <?php
-        include 'auxiliar_bd.php';
         include_once("bd.inc");
         include_once("CELConfig/CELConfig.inc");
 
