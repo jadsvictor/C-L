@@ -370,7 +370,8 @@ if (isset($project_id)) {
     ?>
                     var url = 'recuperarXML.php?id_projeto=' + '<?= $project_id ?>';
     <?php
-} else {
+} 
+else {
     ?>
                     var url = 'recuperarXML.php?'
     <?php
@@ -390,7 +391,8 @@ if (isset($project_id)) {
     ?>
                     var url = 'gerarGrafo.php?id_projeto=' + '<?= $project_id ?>';
     <?php
-} else {
+} 
+else {
     ?>
                     var url = 'gerarGrafo.php?'
     <?php
@@ -415,7 +417,8 @@ if (isset($project_id)) {
     ?>
                     var url = 'inicio.php?id_projeto=' + '<?= $project_id ?>';
     <?php
-} else {
+} 
+else {
     ?>
                     var url = 'inicio.php?'
     <?php
@@ -439,7 +442,8 @@ if (isset($project_id)) {
     ?>
                     var url = 'form_daml.php?id_projeto=' + '<?= $project_id ?>';
     <?php
-} else {
+} 
+else {
     ?>
                     var url = 'form_daml.php?'
     <?php
@@ -462,7 +466,8 @@ if (isset($project_id)) {
     ?>
                     var url = 'recuperaDAML.php?id_projeto=' + '<?= $project_id ?>';
     <?php
-} else {
+} 
+else {
     ?>
                     var url = 'recuperaDAML.php?'
     <?php
@@ -526,49 +531,49 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
         $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
         $result = mysql_fetch_array($qrr);
 
-        $c_id_projeto = $result['id_projeto'];
+        $c_project_id = $result['id_projeto'];
 
-        $vetorDeCenarios = carrega_vetor_cenario($c_id_projeto, $id, true); // carrega vetor de cenario
-        quicksort($vetorDeCenarios, 0, count($vetorDeCenarios) - 1, 'cenario');
+        $scenarios_vector = carrega_vetor_cenario($c_project_id, $id, true); // carrega vetor de cenario
+        quicksort($scenarios_vector, 0, count($scenarios_vector) - 1, 'cenario');
 
-        $vetorDeLexicos = carrega_vetor_lexicos($c_id_projeto, 0, false); // carrega vetor de l�xicos 
-        quicksort($vetorDeLexicos, 0, count($vetorDeLexicos) - 1, 'lexico');
+        $lexicons_vector = carrega_vetor_lexicos($c_project_id, 0, false); // carrega vetor de l�xicos 
+        quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
         ?>    
 
                     <tr> 
                         <th>Titulo:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['titulo'], $vetorDeLexicos, $vetorVazio)); ?>
+        <?php echo nl2br(monta_links($result['titulo'], $lexicons_vector, $vetorVazio)); ?>
                         </td> 
 
                     </tr> 
                     <tr> 
                         <th>Objetivo:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['objetivo'], $vetorDeLexicos, $vetorVazio)); ?>
+        <?php echo nl2br(monta_links($result['objetivo'], $lexicons_vector, $vetorVazio)); ?>
                         </td> 
                     </tr> 
                     <tr> 
                         <th>Contexto:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['contexto'], $vetorDeLexicos, $vetorDeCenarios)); ?>		 
+        <?php echo nl2br(monta_links($result['contexto'], $lexicons_vector, $scenarios_vector)); ?>		 
                         </td> 
                     </tr> 
                     <tr> 
                         <th>Atores:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['atores'], $vetorDeLexicos, $vetorVazio)); ?>
+        <?php echo nl2br(monta_links($result['atores'], $lexicons_vector, $vetorVazio)); ?>
                         </td>  
                     </tr> 
                     <tr> 
                         <th>Recursos:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['recursos'], $vetorDeLexicos, $vetorVazio)); ?>
+        <?php echo nl2br(monta_links($result['recursos'], $lexicons_vector, $vetorVazio)); ?>
                         </td> 
                     </tr> 
                     <tr> 
                         <th>Exce��o:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['excecao'], $vetorDeLexicos, $vetorVazio)); ?>
+        <?php echo nl2br(monta_links($result['excecao'], $lexicons_vector, $vetorVazio)); ?>
                         </td> 
                     </tr> 
                     <tr> 
                         <th>Epis�dios:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['episodios'], $vetorDeLexicos, $vetorDeCenarios)); ?>
+        <?php echo nl2br(monta_links($result['episodios'], $lexicons_vector, $scenarios_vector)); ?>
 
                         </td> 
                     </tr> 
@@ -597,18 +602,18 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                 $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
                 $result = mysql_fetch_array($qrr);
 
-                $l_id_projeto = $result['id_projeto'];
+                $l_project_id = $result['id_projeto'];
 
-                $vetorDeLexicos = carrega_vetor_lexicos($l_id_projeto, $id, true);
+                $lexicons_vector = carrega_vetor_lexicos($l_project_id, $id, true);
 
-                quicksort($vetorDeLexicos, 0, count($vetorDeLexicos) - 1, 'lexico');
+                quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
                 ?>    
                     <tr> 
                         <th>Nome:</th><td CLASS="Estilo"><?php echo $result['nome']; ?>
                         </td> 
                     </tr> 
                     <tr> 
-                        <th>No��o:</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['nocao'], $vetorDeLexicos, $vetorVazio)); ?>
+                        <th>No��o:</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['nocao'], $lexicons_vector, $vetorVazio)); ?>
                         </td> 
                     </tr> 
                     <tr> 
@@ -616,7 +621,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                         </td> 
                     </tr> 
                     <tr> 
-                        <th>Impacto(s):</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['impacto'], $vetorDeLexicos, $vetorVazio)); ?> 
+                        <th>Impacto(s):</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['impacto'], $lexicons_vector, $vetorVazio)); ?> 
                         </td>
                     </tr> 
                     <tr> 
@@ -625,13 +630,13 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                     <?php
                     //sinonimos 
                     $project_id = $_SESSION['id_projeto_corrente'];
-                    $qSinonimo = "SELECT * FROM sinonimo WHERE id_lexico = $id";
-                    $qrr = mysql_query($qSinonimo) or die("Erro ao enviar a query de Sinonimos" . mysql_error());
+                    $qSynonymous = "SELECT * FROM sinonimo WHERE id_lexico = $id";
+                    $qrr = mysql_query($qSynonymous) or die("Erro ao enviar a query de Sinonimos" . mysql_error());
 
                     $tempS = array();
 
-                    while ($resultSinonimo = mysql_fetch_array($qrr)) {
-                        $tempS[] = $resultSinonimo['nome'];
+                    while ($resultSynonymous = mysql_fetch_array($qrr)) {
+                        $tempS[] = $resultSynonymous['nome'];
                     }
                     ?>    
 

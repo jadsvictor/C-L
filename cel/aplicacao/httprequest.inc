@@ -1,14 +1,14 @@
 <?php
 
 reset($_GET);
-while (list ($chave, $valor) = each($_GET)) {
-    $a = $chave;
-    $$a = $valor;
+while (list ($key, $value) = each($_GET)) {
+    $a = $key;
+    $$a = $value;
 }
 
 reset($_POST);
-while (list ($chave, $valor) = each($_POST)) {
-    $a = $chave;
-    $$a = $valor;
+while (list ($key, $value) = each($_POST)) {
+    $a = $key;
+    $$a = $value;
 }
 ?>

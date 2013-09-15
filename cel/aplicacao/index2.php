@@ -1,6 +1,6 @@
 
 
-<title>C&L - Cen�rios e L�xico</title>
+<title>C&L - Scenarios an Lexicons</title>
 
 <!--
 <frameset rows="103,*" cols="*" frameborder="NO" border="0" framespacing="0">

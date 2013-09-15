@@ -31,7 +31,7 @@ $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 //Episodios: O usuario altera os dados desejados
 // 	     Usuario clica no botao de atualizar
 
-$password_cript = md5($senha);
+$password_cript = md5($password);
 
 mysql_query("UPDATE usuario SET  nome =" .  mysql_real_escape_string($_GET["nome"]) ."
         , login =" .  mysql_real_escape_string($_GET["login"]) ." 

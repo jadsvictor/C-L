@@ -42,7 +42,7 @@ if (isset($submit)) {
         <?php
         return;
     }
-    $ipValor = CELConfig_ReadVar("HTTPD_ip");
+    $ip_value = CELConfig_ReadVar("HTTPD_ip");
     ?>
 
     <script language="javascript1.2">

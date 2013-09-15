@@ -20,7 +20,7 @@ session_start();
 
 session_destroy();
 session_unset();
-$ipValor = CELConfig_ReadVar("HTTPD_ip");
+$ip_value = CELConfig_ReadVar("HTTPD_ip");
 ?>
 
 <html>

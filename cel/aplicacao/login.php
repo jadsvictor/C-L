@@ -18,7 +18,7 @@ include("bd.inc");
 $url = '';
 $submit = '';
 $login = '';
-$senha = '';
+$password = '';
 $wrong = "false";
 
 include("httprequest.inc");
@@ -30,8 +30,8 @@ $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 /** @Episodio 9: Se o formul�rio tiver sido submetido ent�o verificar se o login e senha est�o corretos. * */
 if ($submit == 'Entrar') {
-    $senha_cript = md5($senha);
-    $selection = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$senha_cript'";
+    $cript_password = md5($password);
+    $selection = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$cript_password'";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
 
     /** @Episodio 10: Se o login e/ou senha estiverem incorretos ent�o retornar a p�gina de login com wrong=true na URL. * */
@@ -67,7 +67,7 @@ if ($submit == 'Entrar') {
 
     <html>
         <head>
-            <title>Entre com seu Login e Senha</title>
+            <title>Entry with your Login and Password</title>
         </head>
         <body>
 
@@ -78,7 +78,7 @@ if ($submit == 'Entrar') {
 
                 <p style="color: red; font-weight: bold; text-align: center">
                     <img src="Images/Logo_CEL.jpg" width="180" height="180"><br/><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Login ou Senha Incorreto</p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Incorrect Login or Password</p>
 
                 <?php
             }
@@ -87,7 +87,7 @@ if ($submit == 'Entrar') {
 
                 <p style="color: green; font-weight: bold; text-align: center">
                     <img src="Images/Logo_CEL.jpg" width="100" height="100"><br/><br/>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Entre com seu Login e Senha:</p>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Entry with your Login and Password:</p>
 
                 <?php
             }
@@ -103,17 +103,17 @@ if ($submit == 'Entrar') {
                     </table>
 
     <?php /** @Episodio 6: [CADASTRAR NOVO USU�RIO] * */ ?>
-                    <p><a href="add_usuario.php?novo=true">Cadastrar-se</a>&nbsp;&nbsp;
+                    <p><a href="add_usuario.php?novo=true">Sign in</a>&nbsp;&nbsp;
 
     <?php /** @Episodio 7: [LEMBRAR SENHA] * */ ?>
-                        <a href="esqueciSenha.php">Esqueci senha</a></p>
+                        <a href="esqueciSenha.php">Forgot password</a></p>
                 </div>
             </form>
         </body>
 
                     <?php /** @Episodio 8: [MOSTRAR O C�DIGO FONTE] * */ ?>
 
-        <i><a href="showSource.php?file=login.php">Veja o c�digo fonte!</a></i>    
+        <i><a href="showSource.php?file=login.php">See the source!</a></i>    
     </html>
 
     <?php

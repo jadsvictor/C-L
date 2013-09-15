@@ -38,7 +38,7 @@ $qrr = mysql_query($BuscaLoginBanco) or die("Erro ao executar a query");
         $nome = $row[1];
         $mail = $row[2];
         $login = $row[3];
-        $senha = $row[4];
+        $password = $row[4];
 
         //Funcao que gera uma senha randomica de 6 caracteres
 
