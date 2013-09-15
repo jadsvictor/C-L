@@ -10,20 +10,9 @@ $dia = date("Y-m-d");
 $hora = date("H:i:s");
 $data = $dia . "T" . $hora . "Z";
 
-/*
-  Objetivo:       Salvar a ontologia em DAML
-  Par�metros: -
-  _ontologia - URL da Ontologia
-  - $dir - Diret�rio local onde ser� gravado o arquivo DAML
-  - $arquivo - Nome do arquivo DAML (COM extens�o .daml)
-  - $array_info - Array com as seguintes chaves ("title" , "creator" , "description" , "subject" , "versionInfo")
-  - $lista_de_conceitos - Lista de conceitos
-  - $lista_de_relacoes - Lista de rela��es
-  - $lista_de_axiomas - Lista de axiomas
-  Retornos:     - FALSE - caso ocorra erro ao criar o arquivo
-  - nome do arquivo - caso arquivo seja criado com sucesso
- */
 
+ // Objetivo:       Salvar a ontologia em DAML
+ 
 function salva_daml($url_ontologia, $diretorio, $arquivo, $array_info, $lista_de_conceitos, $lista_de_relacoes, $lista_de_axiomas) {
     // Registra a URL da Ontologia 
     $url = $url_ontologia . $arquivo;
@@ -91,13 +80,8 @@ function salva_daml($url_ontologia, $diretorio, $arquivo, $array_info, $lista_de
     return $arquivo;
 }
 
-/*
-  Objetivo:       Gravar os conceitos no arquivo DAML
-  Par�metros: - $fp - ponteiro para o arquivo DAML
-  - $url - URL da Ontologia
-  - $lista_de_conceitos - Lista de conceitos
-  - $criador - Criador do arquivo DAML
- */
+
+  //Objetivo:       Gravar os conceitos no arquivo DAML
 
 function grava_conceitos($fp, $url, $lista_de_conceitos, $criador) {
     /* VERIFICAR ESTRUTURA DA LISTA: DATA e CRIADOR */
@@ -156,15 +140,10 @@ function grava_conceitos($fp, $url, $lista_de_conceitos, $criador) {
     return TRUE;
 }
 
-/*
-  Objetivo:        Gravar as relacoes no arquivo DAML
-  Par�metros:  - $fp - ponteiro para o arquivo DAML
-  - $url - URL da Ontologia
-  - $lista_de_relacoes - Lista de rela��es
-  - $criador - Criador do arquivo DAML
- */
 
-function grava_relacoes($fp, $url, $lista_de_relacoes, $criador) {
+ // Objetivo:        Gravar as relacoes no arquivo DAML
+
+function grava_relacoes($PonteiroArquivoDAML, $lista_de_relacoes, $criador) {
     foreach ($lista_de_relacoes as $relacao) {
         $s_rel = '<daml:ObjectProperty rdf:about="' . "#" . strip_tags($relacao) . '">';
         $s_rel = $s_rel . '<rdfs:label>' . $relacao . '</rdfs:label>';
@@ -172,20 +151,16 @@ function grava_relacoes($fp, $url, $lista_de_relacoes, $criador) {
         $s_rel = $s_rel . '<creationDate><![CDATA[' . $GLOBALS["data"] . ']]> ' . '</creationDate>';
         $s_rel = $s_rel . '<creator><![CDATA[' . $criador . ']]> ' . '</creator>';
         $s_rel = $s_rel . '</daml:ObjectProperty>';
-        if (!fwrite($fp, $s_rel))
+        if (!fwrite($PonteiroArquivoDAML, $s_rel))
             return FALSE;
     }
     return TRUE;
 }
 
-/*
-  Objetivo:        Gravar os axiomas no arquivo DAML
-  Par�metros:  - $fp - ponteiro para o arquivo DAML
-  - $url - URL da Ontologia
-  - $lista_de_axiomas - Lista de axiomas
- */
 
-function grava_axiomas($fp, $url, $lista_de_axiomas) {
+ // Objetivo:        Gravar os axiomas no arquivo DAML
+
+function grava_axiomas($PonteiroArquivoDAML, $url, $lista_de_axiomas) {
     foreach ($lista_de_axiomas as $axioma) {
         // Cabe�alho do conceito 
         $axi = explode(" disjoint ", $axioma);
@@ -194,7 +169,7 @@ function grava_axiomas($fp, $url, $lista_de_axiomas) {
         $s_axi = $s_axi . '<daml:Class rdf:about="' . $url . '#' . strip_tags($axi[1]) . '" />';
         $s_axi = $s_axi . '</daml:disjointWith>';
         $s_axi = $s_axi . '</daml:Class>';
-        if (!fwrite($fp, $s_axi))
+        if (!fwrite($PonteiroArquivoDAML, $s_axi))
             return FALSE;
     }
 
