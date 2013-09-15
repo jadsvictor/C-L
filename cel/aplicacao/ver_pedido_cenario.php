@@ -1,29 +1,21 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// ver_pedido_cenario.php: Esse script exibe os varios pedidos referentes
-// ao cenario.O gerente tem a opcao de ver os pedidos
-// jah validados. O gerente tb podera validar e processar pedidos.
-// O gerente tera uma terceira opcao que eh a de remover o pedido
-// validado ou nao da lista de pedidos.O gerente podera responder
-// a um pedido via e-mail direto desta pagina.
-// Arquivo chamador: heading.php
+
 session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php"); // Checa se o usuario foi autenticado
+chkUser("index.php");
 if (isset($submit)) {
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $update = new QUERY($DB);
-    $delete = new QUERY($DB);
-    for ($count = 0; $count < sizeof($pedidos); $count++) {
-        $update->execute("update pedidocen set aprovado= 1 where id_pedido = $pedidos[$count]");
-        tratarPedidoCenario($pedidos[$count]);
+    $dataBase = new PGDB ();
+    $update_request_scene = new QUERY($dataBase);
+    $delete_request_scene = new QUERY($dataBase);
+    for ($count = 0; $count < sizeof($request); $count++) {
+        $update_request_scene->execute("update pedidocen set aprovado= 1 where id_pedido = $request[$count]");
+        tratarPedidoCenario($request[$count]);
     }
-    for ($count = 0; $count < sizeof($remover); $count++) {
-        $delete->execute("delete from pedidocen where id_pedido = $remover[$count]");
+    for ($count = 0; $count < sizeof($remove); $count++) {
+        $delete_request_scene->execute("delete from pedidocen where id_pedido = $remove[$count]");
     }
     ?>
 
@@ -41,7 +33,7 @@ if (isset($submit)) {
 
     </script>
 
-    <?php } else {
+<?php } else {
     ?>
     <html>
         <head>
@@ -49,9 +41,9 @@ if (isset($submit)) {
         </head>
         <body>
             <h2>Pedidos de Alteração no Conjunto de Cenários</h2>
-            <form action="?id_projeto=<?= $id_projeto ?>" method="post">
+            <form action="?id_projeto=<?= $id_project ?>" method="post">
 
-    <?php
+                <?php
 // Cenário - Verificar pedidos de alteração de cenários
 //Objetivo:	Permitir ao administrador gerenciar os pedidos de alteração de cenários.
 //Contexto:	Gerente deseja visualizar os pedidos de alteração de cenários.
@@ -68,84 +60,98 @@ if (isset($submit)) {
 //           o sistema somente habilita a opção remover para o administrador.
 //           Para efetivar as seleções de aprovação e remoção, basta clicar em Processar.
 
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $select2 = new QUERY($DB);
-    $select->execute("SELECT * FROM pedidocen WHERE id_projeto = $id_projeto");
-    if ($select->getntuples() == 0) {
-        echo "<BR>Nenhum pedido.<BR>";
-    } else {
-        $i = 0;
-        $record = $select->gofirst();
-        while ($record != 'LAST_RECORD_REACHED') {
-            $id_usuario = $record['id_usuario'];
-            $id_pedido = $record['id_pedido'];
-            $tipo_pedido = $record['tipo_pedido'];
-            $aprovado = $record['aprovado'];
-            $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $usuario = $select2->gofirst();
-            if (strcasecmp($tipo_pedido, 'remover')) {
-                ?>
+                $dataBase = new PGDB ();
+                $select_request_scene = new QUERY($dataBase);
+                $select_user = new QUERY($dataBase);
+                $select_request_scene->execute("SELECT * FROM pedidocen WHERE id_projeto = $id_project");
+
+                if ($select_request_scene->getntuples() == 0) {
+                    echo "<BR>Nenhum pedido.<BR>";
+                } else {
+                    $record = $select_request_scene->gofirst();
+                    while ($record != 'LAST_RECORD_REACHED') {
+                        $id_user = $record['id_usuario'];
+                        $id_request = $record['id_pedido'];
+                        $requested_type = $record['tipo_pedido'];
+                        $okay = $record['aprovado'];
+                        $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
+                        $user = $select_user->gofirst();
+                        if (strcasecmp($requested_type, 'remover')) {
+                            ?>
 
                             <br>
-                            <h3>O usuário <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> o cenário <font color="#ff0000"><?= $record['titulo'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para cenário abaixo:</h3>";
-                } else {
-                    echo"</h3>";
-                } ?>
-                                <table>
-                                    <td><b>Título:</b></td>
-                                    <td><?= $record['titulo'] ?></td>
-                                    <tr>
-                                        <td><b>Objetivo:</b></td>
-                                        <td><?= $record['objetivo'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Contexto:</b></td>
-                                        <td><?= $record['contexto'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Atores:</b></td>
-                                        <td><?= $record['atores'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Recursos:</b></td>
-                                        <td><?= $record['recursos'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Exceção:</b></td>
-                                        <td><?= $record['excecao'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Episódios:</b></td>
-                                        <td><textarea cols="48" name="episodios" rows="5"><?= $record['episodios'] ?></textarea></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Justificativa:</b></td>
-                                        <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
-                                    </tr>
-                                </table>
-                            <?php } else { ?>
-                                <h3>O usuário <a  href="mailto:<?= $usuario['email'] ?>" ><?= $usuario['nome'] ?></a> pede para <?= $tipo_pedido ?> o cenário <font color="#ff0000"><?= $record['titulo'] ?></font></h3>
-                            <?php
-                            }
-                            if ($aprovado == 1) {
-                                echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
+                            <h3>O usuário 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o cenário 
+                                <font color="#ff0000">
+                                <?= $record['titulo'] ?>
+                                </font>
+                            </h3> <?
+                            if (!strcasecmp($requested_type, 'alterar')) {
+                                echo"para cenário abaixo:</h3>";
                             } else {
-                                echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_pedido\"> <STRONG>Aprovar</STRONG>]<BR>  ";
-//                     echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\">" ;
+                                echo"</h3>";
                             }
-                            echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\"> <STRONG>Remover da lista</STRONG>]";
-                            print( "<br>\n<hr color=\"#000000\"><br>\n");
-                            $record = $select->gonext();
+                            ?>
+                            <table>
+                                <td><b>Título:</b></td>
+                                <td><?= $record['titulo'] ?></td>
+                                <tr>
+                                    <td><b>Objetivo:</b></td>
+                                    <td><?= $record['objetivo'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Contexto:</b></td>
+                                    <td><?= $record['contexto'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Atores:</b></td>
+                                    <td><?= $record['atores'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Recursos:</b></td>
+                                    <td><?= $record['recursos'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Exceção:</b></td>
+                                    <td><?= $record['excecao'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Episódios:</b></td>
+                                    <td><textarea cols="48" name="episodios" rows="5"><?= $record['episodios'] ?></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Justificativa:</b></td>
+                                    <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
+                                </tr>
+                            </table>
+                        <?php } else { ?>
+                            <h3>O usuário 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o cenário 
+                                <font color="#ff0000">
+                                <?= $record['titulo'] ?>
+                                </font></h3>
+                            <?php
                         }
+                        if ($okay == 1) {
+                            echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
+                        } else {
+                            echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_request\"> <STRONG>Aprovar</STRONG>]<BR>  ";
+                        }
+                        echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_request\"> <STRONG>Remover da lista</STRONG>]";
+                        print( "<br>\n<hr color=\"#000000\"><br>\n");
+                        $record = $select_request_scene->gonext();
                     }
-                    ?>
-                    <input name="submit" type="submit" value="Processar">
-                    </form>
-                    <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o código fonte!</a></i>
-                    </body>
-                    </html>
-                    <?php
                 }
                 ?>
+                <input name="submit" type="submit" value="Processar">
+            </form>
+            <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o código fonte!</a></i>
+        </body>
+    </html>
+    <?php
+}
+?>

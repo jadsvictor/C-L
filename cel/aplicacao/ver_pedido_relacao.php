@@ -1,29 +1,21 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// ver_pedido_relacao.php: Esse script exibe os varios pedidos referentes
-// a relacao.O gerente tem a opcao de ver os pedidos
-// jah validados. O gerente tb podera validar e processar pedidos.
-// O gerente tera uma terceira opcao que eh a de remover o pedido
-// validado ou nao da lista de pedidos.O gerente podera responder
-// a um pedido via e-mail direto desta pagina.
-// Arquivo chamador: heading.php
 session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php"); // Checa se o usuario foi autenticado
+chkUser("index.php");
 if (isset($submit)) {
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $update = new QUERY($DB);
-    $delete = new QUERY($DB);
-    for ($count = 0; $count < sizeof($pedidos); $count++) {
-        $update->execute("update pedidorel set aprovado= 1 where id_pedido = $pedidos[$count]");
-        tratarPedidoRelacao($pedidos[$count]);
+    $dataBase = new PGDB ();
+    $select_request_relation = new QUERY($dataBase);
+    $update_request_relation = new QUERY($dataBase);
+    $delete_request_relation = new QUERY($dataBase);
+    for ($count = 0; $count < sizeof($request); $count++) {
+        $update_request_relation->execute("update pedidorel set aprovado= 1 where id_pedido = $request[$count]");
+        tratarPedidoRelacao($request[$count]);
     }
-    for ($count = 0; $count < sizeof($remover); $count++) {
-        $delete->execute("delete from pedidorel where id_pedido = $remover[$count]");
+    for ($count = 0; $count < sizeof($remove); $count++) {
+        $delete_request_relation->execute("delete from pedidorel where id_pedido = $remove[$count]");
     }
     ?>
 
@@ -34,24 +26,24 @@ if (isset($submit)) {
 
     </script>
 
-    <h4>Opera��o efetuada com sucesso!</h4>
+    <h4>Operacao efetuada com sucesso!</h4>
     <script language="javascript1.3">
 
         self.close();
 
     </script>
 
-    <?php } else {
+<?php } else {
     ?>
     <html>
         <head>
-            <title>Pedidos de altera��o das Rela�oes</title>
+            <title>Pedidos de alteracao das Relacoes</title>
         </head>
         <body>
-            <h2>Pedidos de Altera��o no Conjunto de Rela��es</h2>
+            <h2>Pedidos de Alteracao no Conjunto de Relacoes</h2>
             <form action="?id_projeto=<?= $id_projeto ?>" method="post">
 
-    <?php
+                <?php
 // Cen�rio - Verificar pedidos de altera��o de conceitos
 //Objetivo:	Permitir ao administrador gerenciar os pedidos de altera��o de conceitos.
 //Contexto:	Gerente deseja visualizar os pedidos de altera��o de conceitos.
@@ -68,62 +60,76 @@ if (isset($submit)) {
 //           o sistema somente habilita a op��o remover para o administrador.
 //           Para efetivar as sele��es de aprova��o e remo��o, basta clicar em Processar.
 
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $select2 = new QUERY($DB);
-    $select->execute("SELECT * FROM pedidorel WHERE id_projeto = $id_projeto");
-    if ($select->getntuples() == 0) {
-        echo "<BR>Nenhum pedido.<BR>";
-    } else {
-        $i = 0;
-        $record = $select->gofirst();
+                $dataBase = new PGDB ();
+                $select_request_relation = new QUERY($dataBase);
+                $select_user = new QUERY($dataBase);
+                $select_request_relation->execute("SELECT * FROM pedidorel WHERE id_projeto = $id_projeto");
+                if ($select_request_relation->getntuples() == 0) {
+                    echo "<BR>Nenhum pedido.<BR>";
+                } else {
+                    $record = $select_request_relation->gofirst();
 
-        while ($record != 'LAST_RECORD_REACHED') {
-            $id_usuario = $record['id_usuario'];
-            $id_pedido = $record['id_pedido'];
-            $tipo_pedido = $record['tipo_pedido'];
-            $aprovado = $record['aprovado'];
-            $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $user = $select2->gofirst();
-            if (strcasecmp($tipo_pedido, 'remover')) {
-                ?>
+                    while ($record != 'LAST_RECORD_REACHED') {
+                        $id_user = $record['id_usuario'];
+                        $id_request = $record['id_pedido'];
+                        $requested_type = $record['tipo_pedido'];
+                        $okay = $record['aprovado'];
+                        $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
+                        $user = $select_user->gofirst();
+                        if (strcasecmp($requested_type, 'remover')) {
+                            ?>
 
                             <br>
-                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para conceito abaixo:</h3>";
-                } else {
-                    echo"</h3>";
-                } ?>
-                                <table>
-                                    <td><b>Nome:</b></td>
-                                    <td><?= $record['nome'] ?></td>
-                                    <tr>
-                                        <td><b>Justificativa:</b></td>
-                                        <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
-                                    </tr>
-                                </table>
-                            <?php } else { ?>
-                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> a rela��o <font color="#ff0000"><?= $record['nome'] ?></font></h3>
-                            <?php
-                            }
-                            if ($aprovado == 1) {
-                                echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
+                            <h3>O usuario 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> a relacao 
+                                <font color="#ff0000">
+                                <?= $record['nome'] ?>
+                                </font> 
+                            </h3> <?
+                            if (!strcasecmp($requested_type, 'alterar')) {
+                                echo"para conceito abaixo:</h3>";
                             } else {
-                                echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_pedido\"> <STRONG>Aprovar</STRONG>]<BR>  ";
-//                 echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\">" ;
+                                echo"</h3>";
                             }
-                            echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\"> <STRONG>Remover da lista</STRONG>]";
-                            print( "<br>\n<hr color=\"#000000\"><br>\n");
-                            $record = $select->gonext();
+                            ?>
+                            <table>
+                                <td><b>Nome:</b></td>
+                                <td><?= $record['nome'] ?></td>
+                                <tr>
+                                    <td><b>Justificativa:</b></td>
+                                    <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
+                                </tr>
+                            </table>
+                        <?php } else { ?>
+                            <h3>O usuario 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> a relacao 
+                                <font color="#ff0000">
+                                    <?= $record['nome'] ?>
+                                </font>
+                            </h3>
+                            <?php
                         }
+                        if ($okay == 1) {
+                            echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
+                        } else {
+                            echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_request\"> <STRONG>Aprovar</STRONG>]<BR>  ";
+                        }
+                        echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_request\"> <STRONG>Remover da lista</STRONG>]";
+                        print( "<br>\n<hr color=\"#000000\"><br>\n");
+                        $record = $select_request_relation->gonext();
                     }
-                    ?>
-                    <input name="submit" type="submit" value="Processar">
-                    </form>
-                    <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o c�digo fonte!</a></i>
-                    </body>
-                    </html>
-                    <?php
                 }
                 ?>
+                <input name="submit" type="submit" value="Processar">
+            </form>
+            <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o codigo fonte!</a></i>
+        </body>
+    </html>
+    <?php
+}
+?>
 

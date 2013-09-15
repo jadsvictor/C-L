@@ -1,32 +1,23 @@
 <?php
-// ver_pedido_lexico.php: Esse script exibe os varios pedidos referentes
-// ao lexico.O gerente tem a opcao de ver os pedidos
-//jah validados. O gerente tb podera validar e processar pedidos.
-//O gerente tera uma terceira opcao que eh a de remover o pedido
-//validado ou nao da lista de pedidos.O gerente podera responder
-//a um pedido via e-mail direto desta pagina.
-// Arquivo chamador: heading.php
-
 session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php"); // Checa se o usuario foi autenticado
+chkUser("index.php");
 
 if (isset($submit)) {
 
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $update = new QUERY($DB);
-    $delete = new QUERY($DB);
-    for ($count = 0; $count < sizeof($pedidos); $count++) {
-        $update->execute("update pedidolex set aprovado= 1 where id_pedido = $pedidos[$count]");
-        tratarPedidoLexico($pedidos[$count]);
+    $dataBase = new PGDB ();
+    $update_request_lexicon = new QUERY($dataBase);
+    $delete_request_lexicon = new QUERY($dataBase);
+    for ($count = 0; $count < sizeof($request); $count++) {
+        $update_request_lexicon->execute("update pedidolex set aprovado= 1 where id_pedido = $request[$count]");
+        tratarPedidoLexico($request[$count]);
     }
-    for ($count = 0; $count < sizeof($remover); $count++) {
-        $delete->execute("delete from pedidolex where id_pedido  = $remover[$count]");
-        $delete->execute("delete from sinonimo where id_pedidolex = $remover[$count]");
+    for ($count = 0; $count < sizeof($remove); $count++) {
+        $delete_request_lexicon->execute("delete from pedidolex where id_pedido  = $remove[$count]");
+        $delete_request_lexicon->execute("delete from sinonimo where id_pedidolex = $remove[$count]");
     }
     ?>
 
@@ -34,7 +25,7 @@ if (isset($submit)) {
         opener.parent.frames['code'].location.reload();
         opener.parent.frames['text'].location.replace("main.php");
     </script>
-    <h4>Opera��o efetuada com sucesso!</h4>
+    <h4>Operacao efetuada com sucesso!</h4>
     <script language="javascript1.2">
         self.close();
     </script>
@@ -43,13 +34,13 @@ if (isset($submit)) {
     ?>
     <html>
         <head>
-            <title>Pedido L�xico</title>
+            <title>Pedido Lexico</title>
         </head>
         <body>
-            <h2>Pedidos de Altera��o no L�xico</h2>
+            <h2>Pedidos de Alteracao no Lexico</h2>
             <form action="?id_projeto=<?= $id_projeto ?>" method="post">
 
-    <?php
+                <?php
 // Cen�rio - Verificar pedidos de altera��o de termos do l�xico
 //Objetivo:	Permitir ao administrador gerenciar os pedidos de altera��o de termos do l�xico.
 //Contexto:	Gerente deseja visualizar os pedidos de altera��o de termos do l�xico.
@@ -66,97 +57,109 @@ if (isset($submit)) {
 //              o sistema somente habilita a op��o remover para o administrador.
 //           5- Para efetivar as sele��es de aprova��o e remo��o, o administrador deve clicar em Processar.
 
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $select2 = new QUERY($DB);
-    $select3 = new QUERY($DB);
-    $select->execute("SELECT * FROM pedidolex where id_projeto = $id_projeto");
-    if ($select->getntuples() == 0) {
-        echo "<BR>Nenhum pedido.<BR>";
-    } else {
-        $i = 0;
-        $record = $select->gofirst();
-        while ($record != 'LAST_RECORD_REACHED') {
-            $id_usuario = $record['id_usuario'];
-            $id_pedido = $record['id_pedido'];
-            $tipo_pedido = $record['tipo_pedido'];
-            $aprovado = $record['aprovado'];
-
-            //pega sinonimos
-            $select3->execute("SELECT nome FROM sinonimo WHERE id_pedidolex = $id_pedido");
-
-            $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $user = $select2->gofirst();
-            if (strcasecmp($tipo_pedido, 'remover')) {
-                ?>
-                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o l�xico <font color="#ff0000"><?= $record['nome'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para l�xico abaixo:</h3>";
+                $dataBase = new PGDB ();
+                $select_request_lexicon = new QUERY($dataBase);
+                $select_user = new QUERY($dataBase);
+                $select_synonymous = new QUERY($dataBase);
+                $select_request_lexicon->execute("SELECT * FROM pedidolex where id_projeto = $id_projeto");
+                if ($select_request_lexicon->getntuples() == 0) {
+                    echo "<BR>Nenhum pedido.<BR>";
                 } else {
-                    echo"</h3>";
-                } ?>
-                                <table>
-                                    <td><b>Nome:</b></td>
-                                    <td><?= $record['nome'] ?></td>
+                    $record = $select_request_lexicon->gofirst();
+                    while ($record != 'LAST_RECORD_REACHED') {
+                        $id_user = $record['id_usuario'];
+                        $id_request = $record['id_pedido'];
+                        $requested_type = $record['tipo_pedido'];
+                        $okay = $record['aprovado'];
 
-                                    <tr>
+                        $select_synonymous->execute("SELECT nome FROM sinonimo WHERE id_pedidolex = $id_request");
 
-                                        <td><b>No��o:</b></td>
-                                        <td><?= $record['nocao'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Impacto:</b></td>
-                                        <td><?= $record['impacto'] ?></td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><b>Sin�nimos:</b></td>
-                                        <td>
-                                            <?php
-                                            $sinonimo = $select3->gofirst();
-                                            $strSinonimos = "";
-                                            while ($sinonimo != 'LAST_RECORD_REACHED') {
-                                                //echo($sinonimo["nome"] . ", ");
-                                                $strSinonimos = $strSinonimos . $sinonimo["nome"] . ", ";
-                                                $sinonimo = $select3->gonext();
-                                            }
-
-                                            echo(substr($strSinonimos, 0, strrpos($strSinonimos, ",")));
-                                            ?>
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td><b>Justificativa:</b></td>
-                                        <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
-                                    </tr>
-                                </table>
-                                <?php } else {
+                        $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
+                        $user = $select_user->gofirst();
+                        if (strcasecmp($requested_type, 'remover')) {
+                            ?>
+                            <h3>O usuario 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o lexico 
+                                <font color="#ff0000">
+                                <?= $record['nome'] ?>
+                                </font>
+                            </h3> <?
+                                if (!strcasecmp($requested_type, 'alterar')) {
+                                    echo"para lexico abaixo:</h3>";
+                                } else {
+                                    echo"</h3>";
+                                }
                                 ?>
-                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o l�xico <font color="#ff0000"><?= $record['nome'] ?></font></h3>
-                            <?php
-                            }
-                            if ($aprovado == 1) {
-                                echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
-                            } else {
-                                echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_pedido\"> <STRONG>Aprovar</STRONG>]<BR>  ";
-//                     echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\">" ;
-                            }
-                            echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\"> <STRONG>Remover da lista</STRONG>]";
-                            print( "<br>\n<hr color=\"#000000\"><br>\n");
-                            $record = $select->gonext();
-                        }
-                    }
-                    ?>
-                    <input name="submit" type="submit" value="Processar">
-                    </form>
-                    <br><i><a href="showSource.php?file=ver_pedido_lexico.php">Veja o c�digo fonte!</a></i>
-                    </body>
-                    </html>
+                            <table>
+                                <td><b>Nome:</b></td>
+                                <td><?= $record['nome'] ?></td>
 
-                    <?php
+                                <tr>
+
+                                    <td><b>Nocao:</b></td>
+                                    <td><?= $record['nocao'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Impacto:</b></td>
+                                    <td><?= $record['impacto'] ?></td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><b>Sinonimos:</b></td>
+                                    <td>
+                                        <?php
+                                        $synonymous = $select_synonymous->gofirst();
+                                        $synonymous_string = "";
+                                        while ($synonymous != 'LAST_RECORD_REACHED') {
+                                            $synonymous_string = $synonymous_string . $synonymous["nome"] . ", ";
+                                            $synonymous = $select_synonymous->gonext();
+                                        }
+
+                                        echo(substr($synonymous_string, 0, strrpos($synonymous_string, ",")));
+                                        ?>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <td><b>Justificativa:</b></td>
+                                    <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
+                                </tr>
+                            </table>
+                        <?php } else {
+                            ?>
+                            <h3>O usuario 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                       <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o lexico 
+                                <font color="#ff0000">
+                                    <?= $record['nome'] ?>
+                                </font>
+                            </h3>
+                            <?php
+                        }
+                        if ($okay == 1) {
+                            echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
+                        } else {
+                            echo "[<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_request\"> <STRONG>Aprovar</STRONG>]<BR>  ";
+                        }
+                        echo "[<input type=\"checkbox\" name=\"remover[]\" value=\"$id_request\"> <STRONG>Remover da lista</STRONG>]";
+                        print( "<br>\n<hr color=\"#000000\"><br>\n");
+                        $record = $select_request_lexicon->gonext();
+                    }
                 }
                 ?>
+                <input name="submit" type="submit" value="Processar">
+            </form>
+            <br><i><a href="showSource.php?file=ver_pedido_lexico.php">Veja o codigo fonte!</a></i>
+        </body>
+    </html>
+
+    <?php
+}
+?>
 
 

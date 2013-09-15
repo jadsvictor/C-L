@@ -1,29 +1,20 @@
 <?php
-/* vim: set expandtab tabstop=4 shiftwidth=4: */
-// ver_pedido_conceito.php: Esse script exibe os varios pedidos referentes
-// ao conceito.O gerente tem a opcao de ver os pedidos
-// jah validados. O gerente tb podera validar e processar pedidos.
-// O gerente tera uma terceira opcao que eh a de remover o pedido
-// validado ou nao da lista de pedidos.O gerente podera responder
-// a um pedido via e-mail direto desta pagina.
-// Arquivo chamador: heading.php
 session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php"); // Checa se o usuario foi autenticado
+chkUser("index.php");
 if (isset($submit)) {
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $update = new QUERY($DB);
-    $delete = new QUERY($DB);
-    for ($count = 0; $count < sizeof($pedidos); $count++) {
-        $update->execute("update pedidocon set aprovado= 1 where id_pedido = $pedidos[$count]");
-        tratarPedidoConceito($pedidos[$count]);
+    $dataBase = new PGDB ();
+    $update_request_concept = new QUERY($dataBase);
+    $delete_request_concept = new QUERY($dataBase);
+    for ($count = 0; $count < sizeof($request); $count++) {
+        $update_request_concept->execute("update pedidocon set aprovado= 1 where id_pedido = $request[$count]");
+        tratarPedidoConceito($request[$count]);
     }
-    for ($count = 0; $count < sizeof($remover); $count++) {
-        $delete->execute("delete from pedidocon where id_pedido = $remover[$count]");
+    for ($count = 0; $count < sizeof($remove); $count++) {
+        $delete_request_concept->execute("delete from pedidocon where id_pedido = $remove[$count]");
     }
     ?>
 
@@ -34,24 +25,24 @@ if (isset($submit)) {
 
     </script>
 
-    <h4>Opera��o efetuada com sucesso!</h4>
+    <h4>Operacao efetuada com sucesso!</h4>
     <script language="javascript1.3">
 
         self.close();
 
     </script>
 
-    <?php } else {
+<?php } else {
     ?>
     <html>
         <head>
-            <title>Pedidos de altera��o dos Conceitos</title>
+            <title>Pedidos de alteracao dos Conceitos</title>
         </head>
         <body>
-            <h2>Pedidos de Altera��o no Conjunto de Conceitos</h2>
-            <form action="?id_projeto=<?= $id_projeto ?>" method="post">
+            <h2>Pedidos de Alteracao no Conjunto de Conceitos</h2>
+            <form action="?id_projeto=<?= $id_project ?>" method="post">
 
-    <?php
+                <?php
 // Cen�rio - Verificar pedidos de altera��o de conceitos
 //Objetivo:	Permitir ao administrador gerenciar os pedidos de altera��o de conceitos.
 //Contexto:	Gerente deseja visualizar os pedidos de altera��o de conceitos.
@@ -68,68 +59,90 @@ if (isset($submit)) {
 //           o sistema somente habilita a op��o remover para o administrador.
 //           Para efetivar as sele��es de aprova��o e remo��o, basta clicar em Processar.
 
-    $DB = new PGDB ();
-    $select = new QUERY($DB);
-    $select2 = new QUERY($DB);
-    $select->execute("SELECT * FROM pedidocon WHERE id_projeto = $id_projeto");
-    if ($select->getntuples() == 0) {
-        echo "<BR>Nenhum pedido.<BR>";
-    } else {
-        $i = 0;
-        $record = $select->gofirst();
-        while ($record != 'LAST_RECORD_REACHED') {
-            $id_usuario = $record['id_usuario'];
-            $id_pedido = $record['id_pedido'];
-            $tipo_pedido = $record['tipo_pedido'];
-            $aprovado = $record['aprovado'];
-            $select2->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
-            $user = $select2->gofirst();
-            if (strcasecmp($tipo_pedido, 'remover')) {
-                ?>
+                $dataBase = new PGDB ();
+                $select_request_concept = new QUERY($dataBase);
+                $select_user = new QUERY($dataBase);
+                $select_request_concept->execute("SELECT * FROM pedidocon WHERE id_projeto = $id_project");
+                if ($select_request_concept->getntuples() == 0) {
+                    echo "<BR>Nenhum pedido.<BR>";
+                } else {
+                    $record = $select_request_concept->gofirst();
+                    while ($record != 'LAST_RECORD_REACHED') {
+                        $id_user = $record['id_usuario'];
+                        $id_request = $record['id_pedido'];
+                        $requested_type = $record['tipo_pedido'];
+                        $okay = $record['aprovado'];
+                        $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
+                        $user = $select_user->gofirst();
+                        if (strcasecmp($requested_type, 'remover')) {
+                            ?>
 
                             <br>
-                            <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o conceito <font color="#ff0000"><?= $record['nome'] ?></font> <? if (!strcasecmp($tipo_pedido, 'alterar')) {
-                    echo"para conceito abaixo:</h3>";
-                } else {
-                    echo"</h3>";
-                } ?>
-                                <table>
-                                    <td><b>Nome:</b></td>
-                                    <td><?= $record['nome'] ?></td>
-                                    <tr>
-                                        <td><b>Descri��o:</b></td>
-                                        <td><?= $record['descricao'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Namespace:</b></td>
-                                        <td><?= $record['namespaca'] ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td><b>Justificativa:</b></td>
-                                        <td><textarea name="justificativa" cols="48" rows="2"><?= $record['justificativa'] ?></textarea></td>
-                                    </tr>
-                                </table>
-                            <?php } else { ?>
-                                <h3>O usu�rio <a  href="mailto:<?= $user['email'] ?>" ><?= $user['nome'] ?></a> pede para <?= $tipo_pedido ?> o conceito <font color="#ff0000"><?= $record['nome'] ?></font></h3>
+                            <h3>O usuario 
+                                <a  href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o conceito 
+                                <font color="#ff0000">
+                                <?= $record['nome'] ?>
+                                </font>
+                            </h3> <?
+                                if (!strcasecmp($requested_type, 'alterar')) {
+                                    echo"para conceito abaixo:</h3>";
+                                } else {
+                                    echo"</h3>";
+                                }
+                                ?>
+                            <table>
+                                <td><b>Nome:</b></td>
+                                <td><?= $record['nome'] ?></td>
+                                <tr>
+                                    <td><b>Descricao:</b></td>
+                                    <td><?= $record['descricao'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Namespace:</b></td>
+                                    <td><?= $record['namespaca'] ?></td>
+                                </tr>
+                                <tr>
+                                    <td><b>Justificativa:</b></td>
+                                    <td>
+                                        <textarea name="justificativa" cols="48" rows="2">
+                                        <?= $record['justificativa'] ?>
+                                        </textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        <?php } else { ?>
+                            <h3>O usuario 
+                                <a href="mailto:<?= $user['email'] ?>" >
+                                    <?= $user['nome'] ?>
+                                </a> pede para <?= $requested_type ?> o conceito 
+                                <font color="#ff0000">
+                                    <?= $record['nome'] ?>
+                                </font>
+                            </h3>
                             <?php
-                            }
-                            if ($aprovado == 1) {
-                                echo "<font color=\"#ff0000\">Aprovado</font> ";
-                            } else {
-                                echo "Aprovar<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_pedido\">";
-                                echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_pedido\">";
-                            }
-                            echo "<br>\n<hr color=\"#000000\"><br>\n";
-                            $record = $select->gonext();
                         }
+                        if ($okay == 1) {
+                            echo "<font color=\"#ff0000\">Aprovado</font> ";
+                        } else {
+                            echo "Aprovar<input type=\"checkbox\" name=\"pedidos[]\" value=\"$id_request\">";
+                            echo "Rejeitar<input type=\"checkbox\" name=\"remover[]\" value=\"$id_request\">";
+                        }
+                        echo "<br>\n<hr color=\"#000000\"><br>\n";
+                        $record = $select_request_concept->gonext();
                     }
-                    ?>
-                    <input name="submit" type="submit" value="Processar">
-                    </form>
-                    <br><i><a href="showSource.php?file=ver_pedido_cenario.php">Veja o c�digo fonte!</a></i>
-                    </body>
-                    </html>
-                    <?php
                 }
                 ?>
+                <input name="submit" type="submit" value="Processar">
+            </form>
+            <br><i>
+                <a href="showSource.php?file=ver_pedido_cenario.php">
+                    Veja o codigo fonte!
+                </a></i>
+        </body>
+    </html>
+    <?php
+}
+?>
 
