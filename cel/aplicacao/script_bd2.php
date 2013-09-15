@@ -8,7 +8,6 @@
 
         <?php
         include_once("bd.inc");
-        include_once('auxiliar_bd.php');
         session_start();
 
         function converts_impacts() {
