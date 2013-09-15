@@ -218,7 +218,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
             $contador++;
         }
     }
-    //print_r( $vetorAuxLexicos );
+
     // Adiciona os links para lexicos no texto 
 
     $indice = 0;
@@ -245,7 +245,6 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
 
     // Adiciona os links para cen�rios no texto 
 
-    $indice = 0;
     $vetorAuxCen = array();
     while ($indice < count($vetorAuxCenarios)) {
         $tituloCenario = escapa_metacaracteres($vetorAuxCenarios[$indice]->titulo);
