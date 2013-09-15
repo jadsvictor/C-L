@@ -3,7 +3,6 @@
 include_once("bd.inc");
 
 $link = bd_connect();
-
 $query = "show tables";
 $result = mysql_query($query) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 
@@ -37,7 +36,9 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_projeto</font></td
            </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>" . $line[4] . "</td><td>" . $line[5] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>" .
+            $line[4] . "</td><td>" . $line[5] . "</td><td>";
 }
 print "</table>";
 
@@ -60,7 +61,11 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_pedido</font></td>
            </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>" . $line[4] . "</td><td>" . $line[5] . "</td><td>" . $line[6] . "</td><td>" . $line[7] . "</td><td>" . $line[8] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>" .
+            $line[4] . "</td><td>" . $line[5] . "</td><td>" .
+            $line[6] . "</td><td>" . $line[7] . "</td><td>" .
+            $line[8] . "</td><td>";
 }
 print "</table>";
 
@@ -81,7 +86,10 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_lexico</font></td>
            </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>" . $line[4] . "</td><td>" . $line[5] . "</td><td>" . $line[6] . "</td><td>" . $line[7] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>" .
+            $line[4] . "</td><td>" . $line[5] . "</td><td>" .
+            $line[6] . "</td><td>" . $line[7] . "</td><td>";
 }
 print "</table>";
 
@@ -99,7 +107,8 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_variavel</font></t
            </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>";
 }
 print "</table>";
 
@@ -117,7 +126,9 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_conceito</font></t
            </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>" . $line[4] . "</td><td>" . $line[5] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>" .
+            $line[4] . "</td><td>" . $line[5] . "</td><td>";
 }
 print "</table>";
 
@@ -127,7 +138,8 @@ print "</table>";
 /* RELA��ES */
 
 $relacoes = "select * from relacao order by id_relacao";
-$resultado = mysql_query($relacoes) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
+$resultado = mysql_query($relacoes) or
+        die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 print "<br><br><font color=#7c75b2 face=arial><h3>Rela��es<h3></font>";
 print "<table border=1>";
 print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_relacao</font></td> 
@@ -144,7 +156,8 @@ print "</table>";
 /* HIERARQUIA */
 
 $hierarquia = "select * from hierarquia";
-$resultado = mysql_query($hierarquia) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
+$resultado = mysql_query($hierarquia) or
+        die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 print "<br><br><font color=#7c75b2 face=arial><h3>Hierarquia<h3></font>";
 print "<table border=1>";
 print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_hierarquia</font></td> 
@@ -154,7 +167,8 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_hierarquia</font><
          </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>";
 }
 print "</table>";
 
@@ -173,7 +187,8 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>conceito</font></td>
          </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>";
 }
 print "</table>";
 
@@ -192,7 +207,8 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_axioma</font></td>
          </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>";
 }
 print "</table>";
 
@@ -211,7 +227,9 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_usuario</font></td
          </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>" . $line[3] . "</td><td>" . $line[4] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>" . $line[3] . "</td><td>" .
+            $line[4] . "</td><td>";
 }
 print "</table>";
 
@@ -228,11 +246,10 @@ print "<tr><td bgcolor=#7c75b2 width=120><font color=white>id_usuario</font></td
          </tr>";
 
 while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
-    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" . $line[2] . "</td><td>";
+    print "<tr><td>" . $line[0] . "</td><td>" . $line[1] . "</td><td>" .
+            $line[2] . "</td><td>";
 }
 print "</table>";
-
-
 
 mysql_close($link);
 ?>
