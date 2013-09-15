@@ -29,31 +29,31 @@ $XML = "";
 $bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
 if (isset($apaga)) {
     if ($apaga) {
-        $qApaga = "DELETE FROM publicacao WHERE id_projeto = '$id_projeto' AND versao = '$versao' ";
+        $qApaga = "DELETE FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
         $qrrApaga = mysql_query($qApaga);
     }
 }
-$q = "SELECT * FROM publicacao WHERE id_projeto = '$id_projeto'";
+$q = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
 $qrr = mysql_query($q) or die("Erro ao enviar a query");
 ?>
     <h2>Recupera XML/XSL</h2><br>
     <?php
     while ($result = mysql_fetch_row($qrr)) {
         $data = $result[1];
-        $versao = $result[2];
+        $version = $result[2];
         $XML = $result[3];
         ?>
         <table>
             <tr>
                 <th>Versao:</th>
-                <td><?= $versao ?></td>
+                <td><?= $version ?></td>
                 <th>Data:</th>
                 <td><?= $data ?></td>
                 <th>
-                    <a href="mostraXML.php?id_projeto=<?= $id_projeto ?>&versao=<?= $versao ?>">XML</a>
+                    <a href="mostraXML.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>">XML</a>
                 </th>
                 <th>
-                    <a href="recuperarXML.php?id_projeto=<?= $id_projeto ?>&versao=<?= $versao ?>&apaga=true">Apaga XML</a>
+                    <a href="recuperarXML.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>&apaga=true">Apaga XML</a>
                 </th>
 
             </tr>

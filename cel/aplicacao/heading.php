@@ -18,7 +18,7 @@ chkUser("index.php");        // Cenario: controle de acesso
 //              - Atualizar l�xico.
 
 if (isset($_GET['id_projeto'])) {
-    $id_projeto = $_GET['id_projeto'];
+    $project_id = $_GET['id_projeto'];
 }
 ?>
 
@@ -49,16 +49,16 @@ if (isset($_GET['id_projeto'])) {
     }
 
 <?php
-if (isset($id_projeto)) {   // $id_projeto soh nao estara setada caso seja a primeira
+if (isset($project_id)) {   // $id_projeto soh nao estara setada caso seja a primeira
     // vez que o usuario esteja acessando o sistema
     // Checagem de seguranca, pois $id_projeto eh passado atraves de JavaScript (cliente)
-    check_proj_perm($_SESSION['id_usuario_corrente'], $id_projeto) or die("Permissao negada");
+    check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
     ?>
 
         function setPrjSelected() {
             var select = document.forms[0].id_projeto;
             for (var i = 0; i < select.length; i++) {
-                if (select.options[i].value == <?= $id_projeto ?>) {
+                if (select.options[i].value == <?= $project_id ?>) {
                     select.options[i].selected = true;
                     i = select.length;
                 }
@@ -81,9 +81,9 @@ if (isset($id_projeto)) {   // $id_projeto soh nao estara setada caso seja a pri
 //Epis�dios:	O usu�rio clica no menu superior na op��o:
 //                Se usu�rio clica em Incluir ent�o INCLUIR CEN�RIO
 
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-            var url = 'add_cenario.php?id_projeto=' + '<?= $id_projeto ?>';
+            var url = 'add_cenario.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -110,9 +110,9 @@ if (isset($id_projeto)) {
 //Epis�dios:	O usu�rio clica no menu superior na op��o:
 //                Se usu�rio clica em Incluir ent�o INCLUIR L�XICO
 
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-            var url = 'add_lexico.php?id_projeto=' + '<?= $id_projeto ?>';
+            var url = 'add_lexico.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -149,7 +149,7 @@ if (isset($id_projeto)) {
             text-decoration: none
         }
     </style>
-    <body bgcolor="#ffffff" text="#000000" topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" <?= (isset($id_projeto)) ? "onLoad=\"setPrjSelected();\"" : "" ?>>
+    <body bgcolor="#ffffff" text="#000000" topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" <?= (isset($project_id)) ? "onLoad=\"setPrjSelected();\"" : "" ?>>
         <form onSubmit="return atualizaMenu();">
             <table width="100%" cellspacing="0" cellpadding="0">
                 <tr bgcolor="#E0FFFF">
@@ -159,11 +159,11 @@ if (isset($id_projeto)) {
                         <table>
                             <tr>
                                 <td align="right" valign="top"> <?php
-                                    if (isset($id_projeto)) {
+                                    if (isset($project_id)) {
 
                                         $id_usuario = $_SESSION['id_usuario_corrente'];
 
-                                        $ret = verificaGerente($id_usuario, $id_projeto);
+                                        $ret = verificaGerente($id_usuario, $project_id);
 
                                         if ($ret != 0) {
                                             ?>
@@ -223,7 +223,7 @@ if (isset($id_projeto)) {
                             <tr bgcolor="#E0FFFF" height="30">
 
                                 <td align="right" valign=MIDDLE> <?php
-                                    if (isset($id_projeto)) {    // Se o usuario ja tiver escolhido um projeto,
+                                    if (isset($project_id)) {    // Se o usuario ja tiver escolhido um projeto,
                                         // entao podemos mostrar os links de adicionar cen/lex
                                         // e de informacoes (pagina principal) do projeto
 // Cen�rio - Administrador escolhe Projeto
@@ -240,7 +240,7 @@ if (isset($id_projeto)) {
 //            -Alterar Cadastro.
                                         ?> <a href="#" onClick="novoCenario();">Adicionar Cen�rio</a>&nbsp;&nbsp;&nbsp; 
                                         <a href="#" onClick="novoLexico();">Adicionar S�mbolo</a>&nbsp;&nbsp;&nbsp; 
-                                        <a href="#" title="Informa��es sobre o Projeto" onClick="prjInfo(<?= $id_projeto ?>);">Info</a>&nbsp;&nbsp;&nbsp; 
+                                        <a href="#" title="Informa��es sobre o Projeto" onClick="prjInfo(<?= $project_id ?>);">Info</a>&nbsp;&nbsp;&nbsp; 
                                         <?php
                                     }
                                     ?> <?php
@@ -262,11 +262,11 @@ if (isset($id_projeto)) {
 //Epis�dios:   O Administrador clica na op��o �remover projeto� encontrada no menu superior.
 
 
-                                    if (isset($id_projeto)) {
+                                    if (isset($project_id)) {
 
                                         $id_usuario = $_SESSION['id_usuario_corrente'];
 
-                                        $ret = verificaGerente($id_usuario, $id_projeto);
+                                        $ret = verificaGerente($id_usuario, $project_id);
 
                                         if ($ret != 0) {
                                             ?> <a href="#" onClick="window.open('remove_projeto.php', '_blank', 'dependent,height=300,width=550,resizable,scrollbars,titlebar');">Remover 

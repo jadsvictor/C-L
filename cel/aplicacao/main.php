@@ -22,7 +22,7 @@ chkUser("index.php");
 
 //Recebe parametro da heading.php. Sem isso vai travar ja que a variavel nao foi inicializada 
 if (isset($_GET['id_projeto'])) {
-    $id_projeto = $_GET['id_projeto'];
+    $project_id = $_GET['id_projeto'];
 } else {
     // $id_projeto = ""; 
 }
@@ -187,9 +187,9 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
 
             function pedidoCenario() {
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'ver_pedido_cenario.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'ver_pedido_cenario.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -220,9 +220,9 @@ if (isset($id_projeto)) {
             function pedidoLexico() {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'ver_pedido_lexico.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'ver_pedido_lexico.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -253,9 +253,9 @@ if (isset($id_projeto)) {
             function pedidoConceito() {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'ver_pedido_conceito.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'ver_pedido_conceito.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -272,9 +272,9 @@ if (isset($id_projeto)) {
             function pedidoRelacao() {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'ver_pedido_relacao.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'ver_pedido_relacao.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -346,9 +346,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'form_xml.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'form_xml.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -366,9 +366,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'recuperarXML.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'recuperarXML.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -386,9 +386,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'gerarGrafo.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'gerarGrafo.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -411,9 +411,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'inicio.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'inicio.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -435,9 +435,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'form_daml.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'form_daml.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -458,9 +458,9 @@ if (isset($id_projeto)) {
             {
 
 <?php
-if (isset($id_projeto)) {
+if (isset($project_id)) {
     ?>
-                    var url = 'recuperaDAML.php?id_projeto=' + '<?= $id_projeto ?>';
+                    var url = 'recuperaDAML.php?id_projeto=' + '<?= $project_id ?>';
     <?php
 } else {
     ?>
@@ -624,7 +624,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
                     <?php
                     //sinonimos 
-                    $id_projeto = $_SESSION['id_projeto_corrente'];
+                    $project_id = $_SESSION['id_projeto_corrente'];
                     $qSinonimo = "SELECT * FROM sinonimo WHERE id_lexico = $id";
                     $qrr = mysql_query($qSinonimo) or die("Erro ao enviar a query de Sinonimos" . mysql_error());
 
@@ -760,26 +760,26 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
     <?php
     frame_inferior($c, $t, $id);
-} elseif (isset($id_projeto)) {         // SCRIPT CHAMADO PELO HEADING.PHP 
+} elseif (isset($project_id)) {         // SCRIPT CHAMADO PELO HEADING.PHP 
     // Foi passada uma variavel $id_projeto. Esta variavel deve conter o id de um 
     // projeto que o usuario esteja cadastrado. Entretanto, como a passagem eh 
     // feita usando JavaScript (no heading.php), devemos checar se este id realmente 
     // corresponde a um projeto que o usuario tenha acesso (seguranca). 
-    check_proj_perm($_SESSION['id_usuario_corrente'], $id_projeto) or die("Permissao negada");
+    check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
 
     // Seta uma variavel de sessao correspondente ao projeto atual 
-    $_SESSION['id_projeto_corrente'] = $id_projeto;
+    $_SESSION['id_projeto_corrente'] = $project_id;
     ?>    
 
             <table ALIGN=CENTER> 
                 <tr> 
                     <th>Projeto:</th> 
-                    <td CLASS="Estilo"><?= simple_query("nome", "projeto", "id_projeto = $id_projeto") ?></td> 
+                    <td CLASS="Estilo"><?= simple_query("nome", "projeto", "id_projeto = $project_id") ?></td> 
                 </tr> 
                 <tr> 
                     <th>Data de cria��o:</th> 
                 <?php
-                $data = simple_query("data_criacao", "projeto", "id_projeto = $id_projeto");
+                $data = simple_query("data_criacao", "projeto", "id_projeto = $project_id");
                 ?>    
 
                     <td CLASS="Estilo"><?= formataData($data) ?></td> 
@@ -787,7 +787,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                 </tr> 
                 <tr> 
                     <th>Descri��o:</th> 
-                    <td CLASS="Estilo"><?= nl2br(simple_query("descricao", "projeto", "id_projeto = $id_projeto")) ?></td> 
+                    <td CLASS="Estilo"><?= nl2br(simple_query("descricao", "projeto", "id_projeto = $project_id")) ?></td> 
                 </tr> 
             </table> 
 
@@ -802,7 +802,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 //            administrador, ver Administrador escolhe Projeto. 
 //            Caso contr�rio, ver Usu�rio escolhe Projeto. 
     // Verifica se o usuario eh administrador deste projeto 
-    if (is_admin($_SESSION['id_usuario_corrente'], $id_projeto)) {
+    if (is_admin($_SESSION['id_usuario_corrente'], $project_id)) {
         ?>    
 
                 <br> 

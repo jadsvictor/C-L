@@ -30,7 +30,7 @@ if (isset($submit)) {
 
     if (($ret == true) AND ($retSin == true )) {
         $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
-        inserirPedidoAdicionarLexico($id_projeto, $nome, $nocao, $impacto, $id_usuario_corrente, $listSinonimo, $classificacao);
+        inserirPedidoAdicionarLexico($project_id, $nome, $nocao, $impacto, $id_usuario_corrente, $listSinonimo, $classificacao);
     } else {
         ?>
         <html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
@@ -49,13 +49,13 @@ if (isset($submit)) {
 
         opener.parent.frames['code'].location.reload();
         opener.parent.frames['text'].location.replace('main.php?id_projeto=<?= $_SESSION['id_projeto_corrente'] ?>');
-        location.href = "add_lexico.php?id_projeto=<?= $id_projeto ?>&sucesso=s";
+        location.href = "add_lexico.php?id_projeto=<?= $project_id ?>&sucesso=s";
 
     </script>   
     <?php
 // Script chamado atrav�s do menu superior
 } else {
-    $q = "SELECT nome FROM projeto WHERE id_projeto = $id_projeto";
+    $q = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
     $qrr = mysql_query($q) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
     $nome_projeto = $result['nome'];
@@ -175,7 +175,7 @@ if (isset($submit)) {
         <?php
     }
     ?>       
-            <form action="?id_projeto=<?= $id_projeto ?>" method="post" onSubmit="return(doSubmit());">
+            <form action="?id_projeto=<?= $project_id ?>" method="post" onSubmit="return(doSubmit());">
                 <table>
                     <tr>
                         <td>Projeto:</td>

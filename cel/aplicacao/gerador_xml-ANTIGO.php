@@ -9,9 +9,9 @@ chkUser("index.php");        // Checa se o usuario foi autenticado
 // Testa se o usuario quer uma visualiza��o formatada ou n�o
 
 if (isset($_POST['flag'])) {
-    $flag_formatado = "ON";
+    $formated_flag = "ON";
 } else {
-    $flag_formatado = "OFF";
+    $formated_flag = "OFF";
 }
 ?>
 
@@ -168,30 +168,30 @@ function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
 ?>
 
 <?php
-$id_projeto = $_SESSION['id_projeto_corrente'];
-$data_pesquisa = $data_ano . "-" . $data_mes . "-" . $data_dia;
-$flag_formatado = $flag;
+$project_id = $_SESSION['id_projeto_corrente'];
+$search_date = $data_ano . "-" . $data_mes . "-" . $data_dia;
+$formated_flag = $flag;
 
 // Abre base de dados.
-$bd_trabalho = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_work = bd_connect() or die("Erro ao conectar ao SGBD");
 
-$qVerifica = "SELECT * FROM publicacao WHERE id_projeto = '$id_projeto' AND versao = '$versao' ";
-$qrrVerifica = mysql_query($qVerifica);
+$qVerify = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
+$qrrVerify = mysql_query($qVerify);
 
-if (!mysql_num_rows($qrrVerifica)) {
-    $str_xml = gerar_xml($bd_trabalho, $id_projeto, $data_pesquisa, $flag_formatado);
+if (!mysql_num_rows($qrrVerify)) {
+    $str_xml = gerar_xml($database_work, $project_id, $search_date, $formated_flag);
 
     $xml_resultante = "<?xml version=''1.0'' encoding=''ISO-8859-1'' ?>\n" . $str_xml;
     $str_xml = "<?xml version='1.0' encoding='ISO-8859-1' ?>\n" . $str_xml;
 
     $q = "INSERT INTO publicacao ( id_projeto, data_publicacao, versao, XML)
-                 VALUES ( '$id_projeto', '$data_pesquisa', '$versao', '$xml_resultante')";
+                 VALUES ( '$project_id', '$search_date', '$version', '$xml_resultante')";
 
     //echo $q;
 
     mysql_query($q) or die("Erro ao enviar a query INSERT!");
 
-    $qq = "select * from publicacao where id_projeto = $id_projeto ";
+    $qq = "select * from publicacao where id_projeto = $project_id ";
     $qrr = mysql_query($qq) or die("Erro ao enviar a query");
     $row = mysql_fetch_row($qrr);
     $xml_banco = $row[3];
@@ -199,11 +199,11 @@ if (!mysql_num_rows($qrrVerifica)) {
     // echo $xml_banco;
 
     $bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
-    $qRecupera = "SELECT * FROM publicacao WHERE id_projeto = '$id_projeto' AND versao = '$versao'";
+    $qRecupera = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version'";
     $qrrRecupera = mysql_query($qRecupera) or die("Erro ao enviar a query de busca!");
     $row = mysql_fetch_row($qrrRecupera);
 
-    if ($flag_formatado == "ON") {
+    if ($formated_flag == "ON") {
 
         $xh = xslt_create();
 

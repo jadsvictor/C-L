@@ -7,7 +7,9 @@ include("httprequest.inc");
 include_once("bd.inc");
 include_once("seguranca.php");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+// Checa se o usuario foi autenticado
+
+chkUser("index.php");        
 
 
 if (isset($_POST['flag'])) {
@@ -39,30 +41,30 @@ if (isset($_POST['flag'])) {
 
 if (!(function_exists("gerar_xml"))) {
 
-    function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
-        $xml_resultante = "";
-        $vetorVazio = array();
+    function gerar_xml($database, $project_id, $search_date, $formated_flag) {
+        $resultant_xml = "";
+        $emptyVector = array();
 
-        if ($flag_formatado == "ON") {
-            $xml_resultante = "";
-            $xml_resultante = $xml_resultante . "<?xml-stylesheet type='text/xsl' href='projeto.xsl'?>\n";
+        if ($formated_flag == "ON") {
+            $resultant_xml = "";
+            $resultant_xml = $resultant_xml . "<?xml-stylesheet type='text/xsl' href='projeto.xsl'?>\n";
         }
-        $xml_resultante = $xml_resultante . "<projeto>\n";
+        $resultant_xml = $resultant_xml . "<projeto>\n";
 
         // Seleciona o nome do projeto
 
-        $qry_nome = "SELECT nome
+        $qry_name = "SELECT nome
                      FROM projeto
-                     WHERE id_projeto = " . $id_projeto;
-        $tb_nome = mysql_query($qry_nome) or die("Erro ao enviar a query de selecao.");
+                     WHERE id_projeto = " . $project_id;
+        $tb_name = mysql_query($qry_name) or die("Erro ao enviar a query de selecao.");
 
         // Adiciona o nome do projeto no xml		
-        $xml_resultante = $xml_resultante . "<nome>" . mysql_result($tb_nome, 0) . "</nome>\n";
+        $resultant_xml = $resultant_xml . "<nome>" . mysql_result($tb_name, 0) . "</nome>\n";
 
         ## CEN�RIOS ##
         // Seleciona os cen�rios de um projeto.
 
-        $qry_cenario = "SELECT id_cenario ,
+        $qry_scenario = "SELECT id_cenario ,
                                titulo ,
                                objetivo ,
                                contexto ,
@@ -71,135 +73,135 @@ if (!(function_exists("gerar_xml"))) {
                                episodios ,
                                excecao
                         FROM   cenario
-                        WHERE  (id_projeto = " . $id_projeto
-                . ") AND (data <=" . " '" . $data_pesquisa . "'" . ")
+                        WHERE  (id_projeto = " . $project_id
+                . ") AND (data <=" . " '" . $search_date . "'" . ")
                         ORDER BY id_cenario,data DESC";
 
-        $tb_cenario = mysql_query($qry_cenario) or die("Erro ao enviar a query de selecao.");
+        $tb_scenario = mysql_query($qry_scenario) or die("Erro ao enviar a query de selecao.");
 
-        $primeiro = true;
+        $first = true;
 
         $id_temp = "";
 
-        $vetor_todos_lexicos = carrega_vetor_lexicos($id_projeto, 0, false);
+        $vetor_todos_lexicos = carrega_vetor_lexicos($project_id, 0, false);
 
         // Para cada cen�rio
 
-        while ($row = mysql_fetch_row($tb_cenario)) {
-            $id_cenario = "<ID>" . $row[0] . "</ID>";
-            $id_cenario_atual = $row[0];
-            $vetor_cenarios = carrega_vetor_cenario($id_projeto, $id_cenario_atual, true);
+        while ($row = mysql_fetch_row($tb_scenario)) {
+            $scenario_id = "<ID>" . $row[0] . "</ID>";
+            $current_scenario_id = $row[0];
+            $scenarios_vector = carrega_vetor_cenario($project_id, $current_scenario_id, true);
 
             // Porque usa $id_temp != $id_cenario ? e a variavel primeiro
 
-            if (($id_temp != $id_cenario) or (primeiro)) {
-                $titulo = '<titulo id="' . strtr(strip_tags($row[1]), "����������", "aaaaoooeec") . '">' . ucwords(strip_tags($row[1])) . '</titulo>';
+            if (($id_temp != $scenario_id) or (primeiro)) {
+                $title = '<titulo id="' . strtr(strip_tags($row[1]), "����������", "aaaaoooeec") . '">' . ucwords(strip_tags($row[1])) . '</titulo>';
 
-                $objetivo = "<objetivo>" . "<sentenca>" . gera_xml_links(monta_links($row[2], $vetor_todos_lexicos, $vetorVazio)) . "</sentenca>" . "<PT/>" . "</objetivo>";
+                $goal = "<objetivo>" . "<sentenca>" . generate_xml_links(monta_links($row[2], $vetor_todos_lexicos, $emptyVector)) . "</sentenca>" . "<PT/>" . "</objetivo>";
 
-                $contexto = "<contexto>" . "<sentenca>" . gera_xml_links(monta_links($row[3], $vetor_todos_lexicos, $vetor_cenarios)) . "</sentenca>" . "<PT/>" . "</contexto>";
+                $context = "<contexto>" . "<sentenca>" . generate_xml_links(monta_links($row[3], $vetor_todos_lexicos, $scenarios_vector)) . "</sentenca>" . "<PT/>" . "</contexto>";
 
-                $atores = "<atores>" . "<sentenca>" . gera_xml_links(monta_links($row[4], $vetor_todos_lexicos, $vetorVazio)) . "</sentenca>" . "<PT/>" . "</atores>";
+                $actors = "<atores>" . "<sentenca>" . generate_xml_links(monta_links($row[4], $vetor_todos_lexicos, $emptyVector)) . "</sentenca>" . "<PT/>" . "</atores>";
 
-                $recursos = "<recursos>" . "<sentenca>" . gera_xml_links(monta_links($row[5], $vetor_todos_lexicos, $vetorVazio)) . "</sentenca>" . "<PT/>" . "</recursos>";
+                $means = "<recursos>" . "<sentenca>" . generate_xml_links(monta_links($row[5], $vetor_todos_lexicos, $emptyVector)) . "</sentenca>" . "<PT/>" . "</recursos>";
 
-                $excecao = "<excecao>" . "<sentenca>" . gera_xml_links(monta_links($row[7], $vetor_todos_lexicos, $vetorVazio)) . "</sentenca>" . "<PT/>" . "</excecao>";
+                $exception = "<excecao>" . "<sentenca>" . generate_xml_links(monta_links($row[7], $vetor_todos_lexicos, $emptyVector)) . "</sentenca>" . "<PT/>" . "</excecao>";
 
-                $episodios = "<episodios>" . "<sentenca>" . gera_xml_links(monta_links($row[6], $vetor_todos_lexicos, $vetor_cenarios)) . "</sentenca>" . "<PT/>" . "</episodios>";
+                $episodes = "<episodios>" . "<sentenca>" . generate_xml_links(monta_links($row[6], $vetor_todos_lexicos, $scenarios_vector)) . "</sentenca>" . "<PT/>" . "</episodios>";
 
-                $xml_resultante = $xml_resultante . "<cenario>\n";
+                $resultant_xml = $resultant_xml . "<cenario>\n";
 
-                $xml_resultante = $xml_resultante . "$titulo\n";
+                $resultant_xml = $resultant_xml . "$title\n";
 
-                $xml_resultante = $xml_resultante . "$objetivo\n";
+                $resultant_xml = $resultant_xml . "$goal\n";
 
-                $xml_resultante = $xml_resultante . "$contexto\n";
+                $resultant_xml = $resultant_xml . "$context\n";
 
-                $xml_resultante = $xml_resultante . "$atores\n";
+                $resultant_xml = $resultant_xml . "$actors\n";
 
-                $xml_resultante = $xml_resultante . "$recursos\n";
+                $resultant_xml = $resultant_xml . "$means\n";
 
-                $xml_resultante = $xml_resultante . "$episodios\n";
+                $resultant_xml = $resultant_xml . "$episodes\n";
 
-                $xml_resultante = $xml_resultante . "$excecao\n";
+                $resultant_xml = $resultant_xml . "$exception\n";
 
-                $xml_resultante = $xml_resultante . "</cenario>\n";
+                $resultant_xml = $resultant_xml . "</cenario>\n";
 
-                $primeiro = false;
+                $first = false;
 
                 //??$id_temp = id_cenario;
             }
         } // while dos cen�rios
         // Seleciona os lexicos de um projeto.
 
-        $qry_lexico = "SELECT id_lexico ,
+        $qry_lexicon = "SELECT id_lexico ,
                                nome ,
                                nocao ,
                                impacto
                         FROM   lexico
-                        WHERE  (id_projeto = " . $id_projeto .
-                ") AND (data <=" . " '" . $data_pesquisa . "'" . ")
+                        WHERE  (id_projeto = " . $project_id .
+                ") AND (data <=" . " '" . $search_date . "'" . ")
 
                 ORDER BY id_lexico,data DESC";
 
-        $tb_lexico = mysql_query($qry_lexico) or die("Erro ao enviar a query de selecao.");
+        $tb_lexicon = mysql_query($qry_lexicon) or die("Erro ao enviar a query de selecao.");
 
-        $primeiro = true;
+        $first = true;
 
         $id_temp = "";
 
         // Para cada simbolo do lexico
 
-        while ($row = mysql_fetch_row($tb_lexico)) {
-            $vetor_lexicos = carrega_vetor_lexicos($id_projeto, $row[0], true);
-            quicksort($vetor_lexicos, 0, count($vetor_lexicos) - 1, 'lexico');
-            $id_lexico = "<ID>" . $row[0] . "</ID>";
-            if (($id_temp != $id_lexico) or (primeiro)) {
+        while ($row = mysql_fetch_row($tb_lexicon)) {
+            $lexicons_vector = carrega_vetor_lexicos($project_id, $row[0], true);
+            quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
+            $lexicon_id = "<ID>" . $row[0] . "</ID>";
+            if (($id_temp != $lexicon_id) or (primeiro)) {
 
-                $nome = '<nome_simbolo id="' . strtr(strip_tags($row[1]), "����������", "aaaaoooeec") . '">' . '<texto>' . ucwords(strip_tags($row[1])) . '</texto>' . '</nome_simbolo>';
+                $name = '<nome_simbolo id="' . strtr(strip_tags($row[1]), "����������", "aaaaoooeec") . '">' . '<texto>' . ucwords(strip_tags($row[1])) . '</texto>' . '</nome_simbolo>';
 
 
                 // Consulta os sinonimos do simbolo
-                $querySinonimo = "SELECT nome 
+                $querySynonymous = "SELECT nome 
 									FROM sinonimo
-									WHERE (id_projeto = " . $id_projeto . ") 
+									WHERE (id_projeto = " . $project_id . ") 
 									AND (id_lexico = " . $row[0] . " )";
 
-                $resultSinonimos = mysql_query($querySinonimo) or die("Erro ao enviar a query de selecao de sinonimos.");
+                $resultSynonymous = mysql_query($querySynonymous) or die("Erro ao enviar a query de selecao de sinonimos.");
 
                 //Para cada sinonimo do simbolo
-                $sinonimo = "<sinonimos>";
+                $synonymous = "<sinonimos>";
 
-                while ($rowSin = mysql_fetch_row($resultSinonimos)) {
-                    $sinonimo .= "<sinonimo>" . $rowSin[0] . "</sinonimo>";
+                while ($rowSin = mysql_fetch_row($resultSynonymous)) {
+                    $synonymous .= "<sinonimo>" . $rowSin[0] . "</sinonimo>";
                 }
-                $sinonimo .= "</sinonimos>";
+                $synonymous .= "</sinonimos>";
 
-                $nocao = "<nocao>" . "<sentenca>" . gera_xml_links(monta_links($row[2], $vetor_lexicos, $vetorVazio)) . "<PT/>" . "</sentenca>" . "</nocao>";
+                $notion = "<nocao>" . "<sentenca>" . generate_xml_links(monta_links($row[2], $lexicons_vector, $emptyVector)) . "<PT/>" . "</sentenca>" . "</nocao>";
 
-                $impacto = "<impacto>" . "<sentenca>" . gera_xml_links(monta_links($row[3], $vetor_lexicos, $vetorVazio)) . "<PT/>" . "</sentenca>" . "</impacto>";
+                $impact = "<impacto>" . "<sentenca>" . generate_xml_links(monta_links($row[3], $lexicons_vector, $emptyVector)) . "<PT/>" . "</sentenca>" . "</impacto>";
 
-                $xml_resultante = $xml_resultante . "<lexico>\n";
+                $resultant_xml = $resultant_xml . "<lexico>\n";
 
-                $xml_resultante = $xml_resultante . "$nome\n";
+                $resultant_xml = $resultant_xml . "$name\n";
 
-                $xml_resultante = $xml_resultante . "$sinonimo\n";
+                $resultant_xml = $resultant_xml . "$synonymous\n";
 
-                $xml_resultante = $xml_resultante . "$nocao\n";
+                $resultant_xml = $resultant_xml . "$notion\n";
 
-                $xml_resultante = $xml_resultante . "$impacto\n";
+                $resultant_xml = $resultant_xml . "$impact\n";
 
-                $xml_resultante = $xml_resultante . "</lexico>\n";
+                $resultant_xml = $resultant_xml . "</lexico>\n";
 
-                $primeiro = false;
+                $first = false;
 
                 //$id_temp = id_lexico;
             }
         } // while
 
-        $xml_resultante = $xml_resultante . "</projeto>\n";
+        $resultant_xml = $resultant_xml . "</projeto>\n";
 
-        return $xml_resultante;
+        return $resultant_xml;
     }
 
 // gerar_xml
@@ -310,97 +312,97 @@ if (!(function_exists("gerar_xml"))) {
 
 if (!(function_exists("gera_xml_links"))) {
 
-    function gera_xml_links($sentenca) {
+    function generate_xml_links($sentence) {
 
-        if (trim($sentenca) != "") {
+        if (trim($sentence) != "") {
 
             $regex = "/(<a[^>]*?>)(.*?)<\/a>/";
 
-            $vetor_texto = preg_split($regex, $sentenca, -1, PREG_SPLIT_DELIM_CAPTURE);
-            $tamanho_vetor_texto = count($vetor_texto);
-            $i = 0;
+            $text_vector = preg_split($regex, $sentence, -1, PREG_SPLIT_DELIM_CAPTURE);
+            $text_vector_size = count($text_vector);
+            $number = 0;
 
 
-            while ($i < $tamanho_vetor_texto) {
-                preg_match('/href="main.php\?t=(.)&id=(\d+?)"/mi', $vetor_texto[$i], $match);
+            while ($number < $text_vector_size) {
+                preg_match('/href="main.php\?t=(.)&id=(\d+?)"/mi', $text_vector[$number], $match);
                 if ($match) {
-                    $id_projeto = $_SESSION['id_projeto_corrente'];
+                    $project_id = $_SESSION['id_projeto_corrente'];
 
                     // Verifica se � l�xico 
                     if ($match[1] == 'l') {
                         // Retira o link do texto
-                        $vetor_texto[$i] = "";
+                        $text_vector[$number] = "";
 
                         //link para l�xico
-                        $atributo = "referencia_lexico";
+                        $attribute = "referencia_lexico";
 
-                        $query = "SELECT nome FROM lexico WHERE id_projeto = $id_projeto AND id_lexico = $match[2] ";
+                        $query = "SELECT nome FROM lexico WHERE id_projeto = $project_id AND id_lexico = $match[2] ";
                         $result = mysql_query($query) or die("Erro ao enviar a query lexico");
                         $row = mysql_fetch_row($result);
                         // Pega o nome do l�xico
-                        $valor = strtr($row[0], "����������", "aaaaoooeec");
+                        $value = strtr($row[0], "����������", "aaaaoooeec");
 
-                        $vetor_texto[$i + 1] = '<texto ' . $atributo . '="' . $valor . '">' . $vetor_texto[$i + 1] . '</texto>';
+                        $text_vector[$number + 1] = '<texto ' . $attribute . '="' . $value . '">' . $text_vector[$number + 1] . '</texto>';
                     } else if ($match[1] == 'c') {
                         // Retira o link do texto
-                        $vetor_texto[$i] = "";
+                        $text_vector[$number] = "";
 
                         //link para cen�rio
-                        $atributo = "referencia_cenario";
+                        $attribute = "referencia_cenario";
 
-                        $query = "SELECT titulo FROM cenario WHERE id_projeto = $id_projeto AND id_cenario = $match[2] ";
+                        $query = "SELECT titulo FROM cenario WHERE id_projeto = $project_id AND id_cenario = $match[2] ";
                         $result = mysql_query($query) or die("Erro ao enviar a query cenario");
                         $row = mysql_fetch_row($result);
                         // Pega o titulo do cenario
-                        $valor = strtr($row[0], "����������", "aaaaoooeec");
+                        $value = strtr($row[0], "����������", "aaaaoooeec");
 
-                        $vetor_texto[$i + 1] = '<texto ' . $atributo . '="' . $valor . '">' . strip_tags($vetor_texto[$i + 1]) . '</texto>';
+                        $text_vector[$number + 1] = '<texto ' . $attribute . '="' . $value . '">' . strip_tags($text_vector[$number + 1]) . '</texto>';
                     }
 
-                    $i = $i + 2;
+                    $number = $number + 2;
                 } else {
-                    if (trim($vetor_texto[$i]) != "") {
-                        $vetor_texto[$i] = "<texto>" . $vetor_texto[$i] . "</texto>";
+                    if (trim($text_vector[$number]) != "") {
+                        $text_vector[$number] = "<texto>" . $text_vector[$number] . "</texto>";
                     }
 
-                    $i = $i + 1;
+                    $number = $number + 1;
                 }
             }
             // Junta os elementos do array vetor_texto em uma string
-            return implode("", $vetor_texto);
+            return implode("", $text_vector);
         }
-        return $sentenca;
+        return $sentence;
     }
 
 }
 ?>
 
 <?php
-$id_projeto = $_SESSION['id_projeto_corrente'];
-$data_pesquisa = $data_ano . "-" . $data_mes . "-" . $data_dia;
-$flag_formatado = $flag;
+$project_id = $_SESSION['id_projeto_corrente'];
+$search_date = $data_ano . "-" . $data_mes . "-" . $data_dia;
+$formated_flag = $flag;
 
 // Abre base de dados.
-$bd_trabalho = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_work = bd_connect() or die("Erro ao conectar ao SGBD");
 
-$qVerifica = "SELECT * FROM publicacao WHERE id_projeto = '$id_projeto' AND versao = '$versao' ";
-$qrrVerifica = mysql_query($qVerifica);
+$qVerify = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
+$qrrVerify = mysql_query($qVerify);
 
 // Se n�o existir nenhum XML com o id passado ele cria
-if (!mysql_num_rows($qrrVerifica)) {
+if (!mysql_num_rows($qrrVerify)) {
 
-    $str_xml = gerar_xml($bd_trabalho, $id_projeto, $data_pesquisa, $flag_formatado);
+    $str_xml = gerar_xml($database_work, $project_id, $search_date, $formated_flag);
 
     $xml_resultante = "<?xml version='1.0' encoding='ISO-8859-1' ?>\n" . $str_xml;
 
     $q = "INSERT INTO publicacao ( id_projeto, data_publicacao, versao, XML)
-                 VALUES ( '$id_projeto', '$data_pesquisa', '$versao', '" . mysql_real_escape_string($xml_resultante) . "')";
+                 VALUES ( '$project_id', '$search_date', '$version', '" . mysql_real_escape_string($xml_resultante) . "')";
 
     mysql_query($q) or die("Erro ao enviar a query INSERT do XML no banco de dados! ");
-    recarrega("http://pes.inf.puc-rio.br/cel/aplicacao/mostraXML.php?id_projeto=" . $id_projeto . "&versao=" . $versao);
+    recarrega("http://pes.inf.puc-rio.br/cel/aplicacao/mostraXML.php?id_projeto=" . $project_id . "&versao=" . $version);
 } else {
     ?>
-    <html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
+    <html><head><title>Projct</teitle></head><body bgcolor="#FFFFFF">
             <p style="color: red; font-weight: bold; text-align: center">Essa vers�o j� existe!</p>
             <br>
             <br>

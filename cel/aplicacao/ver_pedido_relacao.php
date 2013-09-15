@@ -41,7 +41,7 @@ if (isset($submit)) {
         </head>
         <body>
             <h2>Pedidos de Alteracao no Conjunto de Relacoes</h2>
-            <form action="?id_projeto=<?= $id_projeto ?>" method="post">
+            <form action="?id_projeto=<?= $project_id ?>" method="post">
 
                 <?php
 // Cen�rio - Verificar pedidos de altera��o de conceitos
@@ -63,7 +63,7 @@ if (isset($submit)) {
                 $dataBase = new PGDB ();
                 $select_request_relation = new QUERY($dataBase);
                 $select_user = new QUERY($dataBase);
-                $select_request_relation->execute("SELECT * FROM pedidorel WHERE id_projeto = $id_projeto");
+                $select_request_relation->execute("SELECT * FROM pedidorel WHERE id_projeto = $project_id");
                 if ($select_request_relation->getntuples() == 0) {
                     echo "<BR>Nenhum pedido.<BR>";
                 } else {

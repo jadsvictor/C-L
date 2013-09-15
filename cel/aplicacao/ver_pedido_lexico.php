@@ -38,7 +38,7 @@ if (isset($submit)) {
         </head>
         <body>
             <h2>Pedidos de Alteracao no Lexico</h2>
-            <form action="?id_projeto=<?= $id_projeto ?>" method="post">
+            <form action="?id_projeto=<?= $project_id ?>" method="post">
 
                 <?php
 // Cen�rio - Verificar pedidos de altera��o de termos do l�xico
@@ -61,7 +61,7 @@ if (isset($submit)) {
                 $select_request_lexicon = new QUERY($dataBase);
                 $select_user = new QUERY($dataBase);
                 $select_synonymous = new QUERY($dataBase);
-                $select_request_lexicon->execute("SELECT * FROM pedidolex where id_projeto = $id_projeto");
+                $select_request_lexicon->execute("SELECT * FROM pedidolex where id_projeto = $project_id");
                 if ($select_request_lexicon->getntuples() == 0) {
                     echo "<BR>Nenhum pedido.<BR>";
                 } else {

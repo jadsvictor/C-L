@@ -36,7 +36,7 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
     }
 
 
-    inserirPedidoAlterarLexico($id_projeto, $id_lexico, $nome, $nocao, $impacto, $justificativa, $_SESSION['id_usuario_corrente'], $listSinonimo, $classificacao);
+    inserirPedidoAlterarLexico($project_id, $id_lexico, $nome, $nocao, $impacto, $justificativa, $_SESSION['id_usuario_corrente'], $listSinonimo, $classificacao);
     ?>
     <html>
         <head>
@@ -153,7 +153,7 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
 
                 <h4>Alterar S�mbolo</h4>
                 <br>
-                <form action="?id_projeto=<?= $id_projeto ?>" method="post" onSubmit="return(doSubmit());">
+                <form action="?id_projeto=<?= $project_id ?>" method="post" onSubmit="return(doSubmit());">
                     <table>
                         <input type="hidden" name="id_lexico" value="<?= $result['id_lexico'] ?>">
 

@@ -105,7 +105,7 @@ exit();
 <?php
 $q = "SELECT id_cenario, titulo  
 FROM cenario  
-WHERE id_projeto = $id_projeto  
+WHERE id_projeto = $project_id  
 ORDER BY titulo";
 
 $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
@@ -164,7 +164,7 @@ while ($row = mysql_fetch_row($qrr)) {    // para cada cenario do projeto
 <?php
 $q = "SELECT id_lexico, nome  
 FROM lexico  
-WHERE id_projeto = $id_projeto  
+WHERE id_projeto = $project_id  
 ORDER BY nome";
 
 $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
@@ -228,7 +228,7 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto
 <?php
 $q = "SELECT id_conceito, nome  
  FROM conceito 
- WHERE id_projeto = $id_projeto  
+ WHERE id_projeto = $project_id  
  ORDER BY nome";
 
 $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
@@ -253,7 +253,7 @@ while ($row = mysql_fetch_row($qrr)) {  // para cada conceito do projeto
 <?php
 $q = "SELECT   id_relacao, nome 
 FROM     relacao r 
-WHERE    id_projeto = $id_projeto  
+WHERE    id_projeto = $project_id  
 ORDER BY nome";
 
 $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
@@ -277,7 +277,7 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada rela��o do projeto
 <?php
 $q = "SELECT   id_axioma, axioma 
 FROM     axioma 
-WHERE    id_projeto = $id_projeto  
+WHERE    id_projeto = $project_id  
 ORDER BY axioma";
 
 $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");

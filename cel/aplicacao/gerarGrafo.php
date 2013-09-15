@@ -24,22 +24,22 @@ $XML = "";
 //Epis�dios:  Restri��o: Possuir um XML gerado do projeto
 
 $bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
-$q = "SELECT * FROM publicacao WHERE id_projeto = '$id_projeto'";
+$q = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
 $qrr = mysql_query($q) or die("Erro ao enviar a query");
 ?>
     <h2>Gerar Grafo</h2><br>
     <?php
     while ($result = mysql_fetch_row($qrr)) {
         $data = $result[1];
-        $versao = $result[2];
+        $version = $result[2];
         $XML = $result[3];
         ?>
         <table>
             <tr>
-                <th>Vers�o:</th><td><?= $versao ?></td>
+                <th>Vers�o:</th><td><?= $version ?></td>
                 <th>Data:</th><td><?= $data ?></td>
-                <th><a href="mostraXML.php?id_projeto=<?= $id_projeto ?>&versao=<?= $versao ?>">XML</a></th>
-                <th><a href="grafo\mostraGrafo.php?versao=<?= $versao ?>&id_projeto=<?= $id_projeto ?>">Gerar Grafo</a></th>
+                <th><a href="mostraXML.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>">XML</a></th>
+                <th><a href="grafo\mostraGrafo.php?versao=<?= $version ?>&id_projeto=<?= $project_id ?>">Gerar Grafo</a></th>
 
             </tr>
         </table>
