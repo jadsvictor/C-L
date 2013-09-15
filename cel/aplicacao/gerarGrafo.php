@@ -4,7 +4,8 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+// Check if the user was authenticated
+chkUser("index.php");        
 
 $XML = "";
 ?>
@@ -16,12 +17,12 @@ $XML = "";
     </head>
 
 <?php
-//Cen�rio -  Gerar Grafo 
-//Objetivo:   Permitir ao administrador gerar o grafo de um projeto
-//Contexto:   Gerente deseja gerar um grafo para uma das vers�es de XML
-//Atores:     Administrador
-//Recursos:   Sistema, XML, dados cadastrados do projeto, banco de dados.
-//Epis�dios:  Restri��o: Possuir um XML gerado do projeto
+//Scenario -  Generate Graph
+//Goal:   Allow the administrator to generate the graph of a project
+//Context:   Manager to generate a graph for one of the versions of XML
+//Actors:     Administrator
+//Means:   System, XML, registered data project, database.
+//Episodes:  Restriction: Possuir um XML gerado do projeto
 
 $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 $selection = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
@@ -48,7 +49,7 @@ $qrr = mysql_query($selection) or die("Erro ao enviar a query");
 }
 ?>
 
-    <br><i><a href="showSource.php?file=recuperarXML.php">Veja o c�digo fonte!</a></i>
+    <br><i><a href="showSource.php?file=recuperarXML.php">See the source!</a></i>
 
 </body>
 

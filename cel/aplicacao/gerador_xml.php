@@ -21,23 +21,23 @@ if (isset($_POST['flag'])) {
 
 <?php
 // gerador_xml.php
-// Dada a base e o id do projeto, gera-se o xml
-// dos cen�rios e l�xicos.
-//Cen�rio - Gerar Relat�rios XML 
-//Objetivo:    Permitir ao administrador gerar relat�rios em formato XML de um projeto, identificados por data.     
-//Contexto:    Gerente deseja gerar um relat�rio para um dos projetos da qual � administrador.
-//          Pr�-Condi��o: Login, projeto cadastrado.
-//Atores:    Administrador     
-//Recursos:    Sistema, dados do relat�rio, dados cadastrados do projeto, banco de dados.     
-//Epis�dios:O sistema fornece para o administrador uma tela onde dever� fornecer os dados
-//          do relat�rio para sua posterior identifica��o, como data e vers�o. 
-//          Para efetivar a gera��o do relat�rio, basta clicar em Gerar. 
-//          Restri��o: O sistema executar� duas valida��es: 
-//                      - Se a data � v�lida.
-//                      - Se existem cen�rios e l�xicos em datas iguais ou anteriores.
-//          Gerando com sucesso o relat�rio a partir dos dados cadastrados do projeto,
-//          o sistema fornece ao administrador a tela de visualiza��o do relat�rio XML criado. 
-//          Restri��o: Recuperar os dados em XML do Banco de dados e os transformar por uma XSL para a exibi��o.      
+// Given the base and the id of the project, it generates the xml scenarios and lexicons
+// Scenario - Generate XML reports
+// Goal: Allow the administrator to generate reports in XML format to a project, identified by date.     
+// Context: Menager wishes generate a report for one of the projects
+//          Pre-condition: Login, registered project.
+// Actors:    Administrator   
+// Means:    System, data report, data registered of project, database.    
+// Episode: The system provides to a screen where the administrator must provide the data
+//         Report for subsequent identification, such as date and version.
+//         To execute the report generation, simply click Generate.
+// Restriction: The system performs two validations:
+//         - If the date is valid.
+//         - If there are scenarios and lexicons on dates equal to or earlier.
+//         Generating the report successfully from the data registered design,
+//         Provides the system administrator screen display XML report created,
+//         Tags including internal links between lexicons and scenarios.
+//         Constraint: Recovering data in the XML database and a XSL transform to display.      
 
 if (!(function_exists("gerar_xml"))) {
 
@@ -51,18 +51,18 @@ if (!(function_exists("gerar_xml"))) {
         }
         $resultant_xml = $resultant_xml . "<projeto>\n";
 
-        // Seleciona o nome do projeto
+        // Select the project name
 
         $qry_name = "SELECT nome
                      FROM projeto
                      WHERE id_projeto = " . $project_id;
         $tb_name = mysql_query($qry_name) or die("Erro ao enviar a query de selecao.");
 
-        // Adiciona o nome do projeto no xml		
+        // Add the project name into xml		
         $resultant_xml = $resultant_xml . "<nome>" . mysql_result($tb_name, 0) . "</nome>\n";
 
         ## CEN�RIOS ##
-        // Seleciona os cen�rios de um projeto.
+        // Select the scenarios of a project
 
         $qry_scenario = "SELECT id_cenario ,
                                titulo ,
@@ -85,7 +85,7 @@ if (!(function_exists("gerar_xml"))) {
 
         $vetor_todos_lexicos = carrega_vetor_lexicos($project_id, 0, false);
 
-        // Para cada cen�rio
+        // For it scenario
 
         while ($row = mysql_fetch_row($tb_scenario)) {
             $scenario_id = "<ID>" . $row[0] . "</ID>";
@@ -131,8 +131,8 @@ if (!(function_exists("gerar_xml"))) {
 
                 //??$id_temp = id_cenario;
             }
-        } // while dos cen�rios
-        // Seleciona os lexicos de um projeto.
+        } // while of scenarios
+        // Select the project lexicons
 
         $qry_lexicon = "SELECT id_lexico ,
                                nome ,
@@ -150,7 +150,7 @@ if (!(function_exists("gerar_xml"))) {
 
         $id_temp = "";
 
-        // Para cada simbolo do lexico
+        // For it lexicon symbols
 
         while ($row = mysql_fetch_row($tb_lexicon)) {
             $lexicons_vector = carrega_vetor_lexicos($project_id, $row[0], true);
@@ -161,7 +161,7 @@ if (!(function_exists("gerar_xml"))) {
                 $name = '<nome_simbolo id="' . strtr(strip_tags($row[1]), "����������", "aaaaoooeec") . '">' . '<texto>' . ucwords(strip_tags($row[1])) . '</texto>' . '</nome_simbolo>';
 
 
-                // Consulta os sinonimos do simbolo
+                // Consult the symbols synonymous
                 $querySynonymous = "SELECT nome 
 									FROM sinonimo
 									WHERE (id_projeto = " . $project_id . ") 
@@ -169,7 +169,7 @@ if (!(function_exists("gerar_xml"))) {
 
                 $resultSynonymous = mysql_query($querySynonymous) or die("Erro ao enviar a query de selecao de sinonimos.");
 
-                //Para cada sinonimo do simbolo
+                //For it symbol synonymous
                 $synonymous = "<sinonimos>";
 
                 while ($rowSin = mysql_fetch_row($resultSynonymous)) {
@@ -328,32 +328,32 @@ if (!(function_exists("gera_xml_links"))) {
                 if ($match) {
                     $project_id = $_SESSION['id_projeto_corrente'];
 
-                    // Verifica se � l�xico 
+                    // Verify if is a lexicon
                     if ($match[1] == 'l') {
-                        // Retira o link do texto
+                        // Remove the link of the text
                         $text_vector[$number] = "";
 
-                        //link para l�xico
+                        //Link for a lexicon
                         $attribute = "referencia_lexico";
 
                         $query = "SELECT nome FROM lexico WHERE id_projeto = $project_id AND id_lexico = $match[2] ";
                         $result = mysql_query($query) or die("Erro ao enviar a query lexico");
                         $row = mysql_fetch_row($result);
-                        // Pega o nome do l�xico
+                        // Get the lexicon name
                         $value = strtr($row[0], "����������", "aaaaoooeec");
 
                         $text_vector[$number + 1] = '<texto ' . $attribute . '="' . $value . '">' . $text_vector[$number + 1] . '</texto>';
                     } else if ($match[1] == 'c') {
-                        // Retira o link do texto
+                        // Remove the link of the text
                         $text_vector[$number] = "";
 
-                        //link para cen�rio
+                        //Link for scenario
                         $attribute = "referencia_cenario";
 
                         $query = "SELECT titulo FROM cenario WHERE id_projeto = $project_id AND id_cenario = $match[2] ";
                         $result = mysql_query($query) or die("Erro ao enviar a query cenario");
                         $row = mysql_fetch_row($result);
-                        // Pega o titulo do cenario
+                        // Get the scenario title
                         $value = strtr($row[0], "����������", "aaaaoooeec");
 
                         $text_vector[$number + 1] = '<texto ' . $attribute . '="' . $value . '">' . strip_tags($text_vector[$number + 1]) . '</texto>';
@@ -368,7 +368,7 @@ if (!(function_exists("gera_xml_links"))) {
                     $number = $number + 1;
                 }
             }
-            // Junta os elementos do array vetor_texto em uma string
+            // Board vetor_texto array elements into a string
             return implode("", $text_vector);
         }
         return $sentence;
@@ -382,13 +382,13 @@ $project_id = $_SESSION['id_projeto_corrente'];
 $search_date = $data_ano . "-" . $data_mes . "-" . $data_dia;
 $formated_flag = $flag;
 
-// Abre base de dados.
+// Open database
 $database_work = bd_connect() or die("Erro ao conectar ao SGBD");
 
 $qVerify = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
 $qrrVerify = mysql_query($qVerify);
 
-// Se n�o existir nenhum XML com o id passado ele cria
+// If no XML with the past id, it creates
 if (!mysql_num_rows($qrrVerify)) {
 
     $str_xml = gerar_xml($database_work, $project_id, $search_date, $formated_flag);
@@ -403,10 +403,10 @@ if (!mysql_num_rows($qrrVerify)) {
 } else {
     ?>
     <html><head><title>Projct</teitle></head><body bgcolor="#FFFFFF">
-            <p style="color: red; font-weight: bold; text-align: center">Essa vers�o j� existe!</p>
+            <p style="color: red; font-weight: bold; text-align: center">This version already exists!</p>
             <br>
             <br>
-        <center><a href="JavaScript:window.history.go(-1)">Voltar</a></center>
+        <center><a href="JavaScript:window.history.go(-1)">Back</a></center>
     </body></html>
 
     <?php
