@@ -8,12 +8,12 @@
     <!--
         function TestarBranco(form)
         {
-            login = form.login.value
+            login = form.login.value;
 
-            if ((login == ""))
+            if ((login === ""))
             {
-                alert("Por favor, digite o seu Login.")
-                form.login.focus()
+                alert("Por favor, digite o seu Login.");
+                form.login.focus();
                 return false;
             }
 
@@ -30,18 +30,7 @@
             <div align="center">
 
                 <?php
-// Cen�rio - Lembrar senha 
-//Objetivo:   Permitir o usu�rio cadastrado, que esqueceu sua senha,  receber  a mesma por email	
-//Contexto:   Sistema est� aberto, Usu�rio esqueceu sua senha Usu�rio na tela de lembran�a de 
-//             senha. 
-//            Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-//Atores:     Usu�rio, Sistema	
-//Recursos:   Banco de Dados	
-//Epis�dios:  O usu�rio acessa a tela de login do sistema. 
-//            O usu�rio clica no link �Esqueci senha� 
-//            O sistema apresenta uma mensagem na tela, pedindo ao usu�rio que digite o seu 
-//            login na caixa de texto. 
-//            O usu�rio digita o seu login e clica no bot�o Enviar. 
+
                 ?>
 
                 <p style="color: green; font-weight: bold; text-align: center">Entre com seu Login:</p>
