@@ -161,9 +161,9 @@ if (isset($project_id)) {
                                 <td align="right" valign="top"> <?php
                                     if (isset($project_id)) {
 
-                                        $id_usuario = $_SESSION['id_usuario_corrente'];
+                                        $user_id = $_SESSION['id_usuario_corrente'];
 
-                                        $ret = verificaGerente($id_usuario, $project_id);
+                                        $ret = verificaGerente($user_id, $project_id);
 
                                         if ($ret != 0) {
                                             ?>
@@ -185,7 +185,7 @@ if (isset($project_id)) {
                                     ?>      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Projeto:&nbsp;&nbsp;
 
                                     <select name="id_projeto" size="1" onChange="atualizaMenu();">
-                                        <option>-- Selecione um Projeto --</option>
+                                        <option>-- Select a Project --</option>
 
 
                                         <?php
@@ -193,10 +193,10 @@ if (isset($project_id)) {
 // O sistema d� ao usu�rio a op��o de cadastrar um novo projeto
 // ou utilizar um projeto em que ele fa�a parte.
 // conecta ao SGBD
-                                        $r = bd_connect() or die("Erro ao conectar ao SGBD");
+                                        $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 // define a consulta
-                                        $q = "SELECT p.id_projeto, p.nome, pa.gerente
+                                        $selection = "SELECT p.id_projeto, p.nome, pa.gerente
       FROM usuario u, participa pa, projeto p
       WHERE u.id_usuario = pa.id_usuario
       AND pa.id_projeto = p.id_projeto
@@ -204,7 +204,7 @@ if (isset($project_id)) {
       ORDER BY p.nome";
 
 // executa a consulta
-                                        $qrr = mysql_query($q) or die("Erro ao executar query");
+                                        $qrr = mysql_query($selection) or die("Erro ao executar query");
 
                                         while ($result = mysql_fetch_array($qrr)) {    // enquanto houver projetos
                                             ?>
@@ -238,7 +238,7 @@ if (isset($project_id)) {
 //            -Info; 
 //            -Adicionar Projeto; 
 //            -Alterar Cadastro.
-                                        ?> <a href="#" onClick="novoCenario();">Adicionar Cen�rio</a>&nbsp;&nbsp;&nbsp; 
+                                        ?> <a href="#" onClick="novoCenario();">Add Scenario</a>&nbsp;&nbsp;&nbsp; 
                                         <a href="#" onClick="novoLexico();">Adicionar S�mbolo</a>&nbsp;&nbsp;&nbsp; 
                                         <a href="#" title="Informa��es sobre o Projeto" onClick="prjInfo(<?= $project_id ?>);">Info</a>&nbsp;&nbsp;&nbsp; 
                                         <?php
@@ -255,7 +255,7 @@ if (isset($project_id)) {
                                         Projeto</a>&nbsp;&nbsp;&nbsp; <?php
 //Cen�rio  -   Remover Novo Projeto 
 //Objetivo:    Permitir ao Administrador do projeto remover um projeto
-//Contexto:    Um Administrador de projeto deseja remover um determinado projeto da base de dados
+//Contexto:    Um Administrador de projeto deseja remover um determinado projeto da base de dadosF
 //             Pr�-Condi��o: Login, Ser administrador do projeto selecionado.
 //Atores:      Administrador
 //Recursos:    Sistema, dados do projeto, base de dados
@@ -264,9 +264,9 @@ if (isset($project_id)) {
 
                                     if (isset($project_id)) {
 
-                                        $id_usuario = $_SESSION['id_usuario_corrente'];
+                                        $user_id = $_SESSION['id_usuario_corrente'];
 
-                                        $ret = verificaGerente($id_usuario, $project_id);
+                                        $ret = verificaGerente($user_id, $project_id);
 
                                         if ($ret != 0) {
                                             ?> <a href="#" onClick="window.open('remove_projeto.php', '_blank', 'dependent,height=300,width=550,resizable,scrollbars,titlebar');">Remover 

@@ -17,7 +17,7 @@ if (!isset($sucesso)) {
 chkUser("index.php");
 
 // Conecta ao SGBD
-$r = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 //Script chamado atrav�s do submit do formul�rio
 if (isset($submit)) {
@@ -55,8 +55,8 @@ if (isset($submit)) {
     <?php
 // Script chamado atrav�s do menu superior
 } else {
-    $q = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
-    $qrr = mysql_query($q) or die("Erro ao executar a query");
+    $selection = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
+    $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
     $nome_projeto = $result['nome'];
     ?>

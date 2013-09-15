@@ -24,8 +24,8 @@ $XML = "";
 //Epis�dios:  Restri��o: Possuir um XML gerado do projeto
 
 $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
-$q = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
-$qrr = mysql_query($q) or die("Erro ao enviar a query");
+$selection = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
+$qrr = mysql_query($selection) or die("Erro ao enviar a query");
 ?>
     <h2>Generate Graph</h2><br>
     <?php

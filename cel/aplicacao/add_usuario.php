@@ -52,9 +52,9 @@ if (isset($submit)) {   // Se chamado pelo botao de submit
 //              Caso aquele login digitado j� exista, o sistema retorna a mesma p�gina
 //               para o usu�rio avisando que o usu�rio deve escolher outro login,.
 
-            $r = bd_connect() or die("Erro ao conectar ao SGBD");
-            $q = "SELECT id_usuario FROM usuario WHERE login = '$login'";
-            $qrr = mysql_query($q) or die("Erro ao enviar a query");
+            $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+            $selection = "SELECT id_usuario FROM usuario WHERE login = '$login'";
+            $qrr = mysql_query($selection) or die("Erro ao enviar a query");
             if (mysql_num_rows($qrr)) {        // Se ja existe algum usuario com este login
 //               
 // Cen�rio - Adicionar Usu�rio
@@ -84,8 +84,8 @@ if (isset($submit)) {   // Se chamado pelo botao de submit
 
                 // Criptografando a senha
                 $senha = md5($senha);
-                $q = "INSERT INTO usuario (nome, login, email, senha) VALUES ('$nome', '$login', '$email', '$senha')";
-                mysql_query($q) or die("Erro ao cadastrar o usuario");
+                $selection = "INSERT INTO usuario (nome, login, email, senha) VALUES ('$nome', '$login', '$email', '$senha')";
+                mysql_query($selection) or die("Erro ao cadastrar o usuario");
                 recarrega("?cadastrado=&novo=$novo&login=$login");
             }
         }
@@ -134,12 +134,12 @@ if (isset($submit)) {   // Se chamado pelo botao de submit
         // Devemos agora adicionar o usuario incluido no projeto
         // do administrador.
         // Conexao com a base de dados
-        $r = bd_connect() or die("Erro ao conectar ao SGBD");
+        $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
         // $login eh o login do usuario incluido, passado na URL
         $id_usuario_incluido = simple_query("id_usuario", "usuario", "login = '$login'");
-        $q = "INSERT INTO participa (id_usuario, id_projeto)
+        $selection = "INSERT INTO participa (id_usuario, id_projeto)
           VALUES ($id_usuario_incluido, " . $_SESSION['id_projeto_corrente'] . ")";
-        mysql_query($q) or die("Erro ao inserir na tabela participa");
+        mysql_query($selection) or die("Erro ao inserir na tabela participa");
 
         $nome_usuario = simple_query("nome", "usuario", "id_usuario = $id_usuario_incluido");
         $nome_projeto = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);

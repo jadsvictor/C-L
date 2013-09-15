@@ -519,11 +519,11 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
     <?php
     if ($t == "c") {        // se for cenario 
-        $q = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios, id_projeto    
+        $selection = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios, id_projeto    
               FROM cenario    
               WHERE id_cenario = $id";
 
-        $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+        $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
         $result = mysql_fetch_array($qrr);
 
         $c_id_projeto = $result['id_projeto'];
@@ -590,11 +590,11 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                 <?php
             } elseif ($t == "l") {
 
-                $q = "SELECT id_lexico, nome, nocao, impacto, tipo, id_projeto    
+                $selection = "SELECT id_lexico, nome, nocao, impacto, tipo, id_projeto    
               FROM lexico    
               WHERE id_lexico = $id";
 
-                $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+                $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
                 $result = mysql_fetch_array($qrr);
 
                 $l_id_projeto = $result['id_projeto'];
@@ -669,11 +669,11 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
         <?php
     } elseif ($t == "oc") {        // se for cenario 
-        $q = "SELECT id_conceito, nome, descricao   
+        $selection = "SELECT id_conceito, nome, descricao   
               FROM   conceito   
               WHERE  id_conceito = $id";
 
-        $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+        $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
         $result = mysql_fetch_array($qrr);
         ?>    
 
@@ -701,10 +701,10 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
                     <?php
                 } elseif ($t == "or") {        // se for cenario 
-                    $q = "SELECT id_relacao, nome   
+                    $selection = "SELECT id_relacao, nome   
               FROM relacao   
               WHERE id_relacao = $id";
-                    $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+                    $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
                     $result = mysql_fetch_array($qrr);
                     ?>    
 

@@ -16,7 +16,7 @@ include_once("bd.inc");
 chkUser("index.php");
 
 // Conecta ao SGBD
-$r = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 if (isset($submit)) {       // Script chamado atraves do submit do formulario
     if (!isset($listSinonimo))
@@ -61,8 +61,8 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
     <?php
 } else {        // Script chamado atraves do link do lexico corrente
     $nome_projeto = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
-    $q = "SELECT * FROM lexico WHERE id_lexico = $id_lexico";
-    $qrr = mysql_query($q) or die("Erro ao executar a query");
+    $selection = "SELECT * FROM lexico WHERE id_lexico = $id_lexico";
+    $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
 
     //sinonimos

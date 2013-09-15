@@ -184,12 +184,12 @@ if (!mysql_num_rows($qrrVerify)) {
     $xml_resultante = "<?xml version=''1.0'' encoding=''ISO-8859-1'' ?>\n" . $str_xml;
     $str_xml = "<?xml version='1.0' encoding='ISO-8859-1' ?>\n" . $str_xml;
 
-    $q = "INSERT INTO publicacao ( id_projeto, data_publicacao, versao, XML)
+    $selection = "INSERT INTO publicacao ( id_projeto, data_publicacao, versao, XML)
                  VALUES ( '$project_id', '$search_date', '$version', '$xml_resultante')";
 
     //echo $q;
 
-    mysql_query($q) or die("Erro ao enviar a query INSERT!");
+    mysql_query($selection) or die("Erro ao enviar a query INSERT!");
 
     $qq = "select * from publicacao where id_projeto = $project_id ";
     $qrr = mysql_query($qq) or die("Erro ao enviar a query");

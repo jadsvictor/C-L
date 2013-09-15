@@ -103,12 +103,12 @@ exit();
        mc = new MTMenu();
 
 <?php
-$q = "SELECT id_cenario, titulo  
+$selection = "SELECT id_cenario, titulo  
 FROM cenario  
 WHERE id_projeto = $project_id  
 ORDER BY titulo";
 
-$qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+$qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 // Devemos retirar todas as tags HTML do titulo do cenario. Possivelmente 
 // havera tags de links (<a> </a>). Caso nao tiremos, havera erro ao 
 // mostra-lo no menu. Este search & replace retira qualquer coisa que 
@@ -131,9 +131,9 @@ while ($row = mysql_fetch_row($qrr)) {    // para cada cenario do projeto
            mcsrc_<?= $row[0] ?> = new MTMenu();
 
     <?php
-    $q = "SELECT c.id_cenario_to, cen.titulo FROM centocen c, cenario cen WHERE c.id_cenario_from = " . $row[0];
-    $q = $q . " AND c.id_cenario_to = cen.id_cenario";
-    $qrr_2 = mysql_query($q) or die("Erro ao enviar a query de selecao");
+    $selection = "SELECT c.id_cenario_to, cen.titulo FROM centocen c, cenario cen WHERE c.id_cenario_from = " . $row[0];
+    $selection = $selection . " AND c.id_cenario_to = cen.id_cenario";
+    $qrr_2 = mysql_query($selection) or die("Erro ao enviar a query de selecao");
     while ($row_2 = mysql_fetch_row($qrr_2)) {
         $row_2[1] = preg_replace($search, $replace, $row_2[1]);
         ?>
@@ -162,12 +162,12 @@ while ($row = mysql_fetch_row($qrr)) {    // para cada cenario do projeto
        ml = new MTMenu();
 
 <?php
-$q = "SELECT id_lexico, nome  
+$selection = "SELECT id_lexico, nome  
 FROM lexico  
 WHERE id_projeto = $project_id  
 ORDER BY nome";
 
-$qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+$qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto 
     ?>
 
@@ -181,9 +181,9 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto
            // mlsrl_<?= $row[0] ?> = new MTMenu(); 
 
     <?php
-    $q = "SELECT l.id_lexico_to, lex.nome FROM lextolex l, lexico lex WHERE l.id_lexico_from = " . $row[0];
-    $q = $q . " AND l.id_lexico_to = lex.id_lexico";
-    $qrr_2 = mysql_query($q) or die("Erro ao enviar a query de selecao");
+    $selection = "SELECT l.id_lexico_to, lex.nome FROM lextolex l, lexico lex WHERE l.id_lexico_from = " . $row[0];
+    $selection = $selection . " AND l.id_lexico_to = lex.id_lexico";
+    $qrr_2 = mysql_query($selection) or die("Erro ao enviar a query de selecao");
     while ($row_2 = mysql_fetch_row($qrr_2)) {
         ?>
 
@@ -226,12 +226,12 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto
        moc = new MTMenu();
 
 <?php
-$q = "SELECT id_conceito, nome  
+$selection = "SELECT id_conceito, nome  
  FROM conceito 
  WHERE id_projeto = $project_id  
  ORDER BY nome";
 
-$qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+$qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 while ($row = mysql_fetch_row($qrr)) {  // para cada conceito do projeto 
     print "moc.addItem(\"$row[1]\", \"main.php?id=$row[0]&t=oc\");";
 }
@@ -251,12 +251,12 @@ while ($row = mysql_fetch_row($qrr)) {  // para cada conceito do projeto
        mor = new MTMenu();
 
 <?php
-$q = "SELECT   id_relacao, nome 
+$selection = "SELECT   id_relacao, nome 
 FROM     relacao r 
 WHERE    id_projeto = $project_id  
 ORDER BY nome";
 
-$qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+$qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 while ($row = mysql_fetch_row($qrr)) {   // para cada rela��o do projeto 
     print "mor.addItem(\"$row[1]\", \"main.php?id=$row[0]&t=or\");";
 }
@@ -275,12 +275,12 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada rela��o do projeto
        moa = new MTMenu();
 
 <?php
-$q = "SELECT   id_axioma, axioma 
+$selection = "SELECT   id_axioma, axioma 
 FROM     axioma 
 WHERE    id_projeto = $project_id  
 ORDER BY axioma";
 
-$qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+$qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 
 while ($row = mysql_fetch_row($qrr)) {  // para cada axioma do projeto 
     $axi = explode(" disjoint ", $row[1]);

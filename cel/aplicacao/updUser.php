@@ -5,9 +5,9 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 
-$id_usuario = $_SESSION['id_usuario_corrente'];
+$user_id = $_SESSION['id_usuario_corrente'];
 
-$r = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 ?>
 
 <html>

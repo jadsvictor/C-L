@@ -33,8 +33,8 @@ if (isset($apaga)) {
         $qrrApaga = mysql_query($qApaga);
     }
 }
-$q = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
-$qrr = mysql_query($q) or die("Erro ao enviar a query");
+$selection = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
+$qrr = mysql_query($selection) or die("Erro ao enviar a query");
 ?>
     <h2>Recupera XML/XSL</h2><br>
     <?php

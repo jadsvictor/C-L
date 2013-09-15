@@ -145,10 +145,10 @@ if (isset($submit)) {
                                         $result_user_nonparticipating = "$result_user_nonparticipating , $row[0]";
                                     $result_user_nonparticipating = "$result_user_nonparticipating )";
                                 }
-                                $q = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " .  mysql_real_escape_string($result_user_nonparticipating);
+                                $selection = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " .  mysql_real_escape_string($result_user_nonparticipating);
                               
-                                echo($q);
-                                $query_user_nonparticipating = mysql_query($q) or die("Erro ao enviar a query");
+                                echo($selection);
+                                $query_user_nonparticipating = mysql_query($selection) or die("Erro ao enviar a query");
                                 while ($result = mysql_fetch_array($query_user_nonparticipating)) {
                                     ?>
                                     <option value="<?= $result['id_usuario'] ?>">

@@ -111,10 +111,10 @@ chkUser("index.php");
                 $c = bd_connect() or die("Erro ao conectar ao SGBD");
 
                 if ($t == "c") {        // se for cenario
-                    $q = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, episodios
+                    $selection = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, episodios
               FROM cenario
               WHERE id_cenario = $id";
-                    $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+                    $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
                     $result = mysql_fetch_array($qrr);
                     ?>
 
@@ -147,10 +147,10 @@ chkUser("index.php");
 
                     <?php
                 } else {
-                    $q = "SELECT id_lexico, nome, nocao, impacto
+                    $selection = "SELECT id_lexico, nome, nocao, impacto
               FROM lexico
               WHERE id_lexico = $id";
-                    $qrr = mysql_query($q) or die("Erro ao enviar a query de selecao");
+                    $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
                     $result = mysql_fetch_array($qrr);
                     ?>
 

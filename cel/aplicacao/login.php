@@ -26,13 +26,13 @@ include("httprequest.inc");
 /** @Episodio 2: Conectar o SGBD * */
 /** @Restri��o: a fun��o bd_connect definida em bd.inc � utilizada * */
 /** @Exce��o: Erro ao conectar banco de dados * */
-$r = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 /** @Episodio 9: Se o formul�rio tiver sido submetido ent�o verificar se o login e senha est�o corretos. * */
 if ($submit == 'Entrar') {
     $senha_cript = md5($senha);
-    $q = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$senha_cript'";
-    $qrr = mysql_query($q) or die("Erro ao executar a query");
+    $selection = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$senha_cript'";
+    $qrr = mysql_query($selection) or die("Erro ao executar a query");
 
     /** @Episodio 10: Se o login e/ou senha estiverem incorretos ent�o retornar a p�gina de login com wrong=true na URL. * */
     if (!mysql_num_rows($qrr)) {
