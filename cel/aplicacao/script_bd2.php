@@ -11,29 +11,29 @@
         include_once('auxiliar_bd.php');
         session_start();
 
-        function converte_impactos() {
-            $conecta_banco = bd_connect() or die("Erro na conexao ao BD : " . mysql_error() . __LINE__);
+        function converts_impacts() {
+            $connect_database = bd_connect() or die("Erro na conexao ao BD : " . mysql_error() . __LINE__);
 
             $filename = "teste.txt";
 
-            $query_seleciona_lexico = "select * from lexico;";
-            $result_seleciona_lexico = mysql_query($query_seleciona_lexico) or die("A consulta ao BD falhou : " . mysql_error() . __LINE__);
+            $query_selects_lexicon = "select * from lexico;";
+            $result_selects_lexicon = mysql_query($query_selects_lexicon) or die("A consulta ao BD falhou : " . mysql_error() . __LINE__);
 
             if (!$handle = fopen($filename, 'w')) {
                 print "Nao foi possivel abrir o arquivo !!!($filename)";
                 exit;
             }
 
-            while ($line = mysql_fetch_array($result_seleciona_lexico, MYSQL_ASSOC)) {
-                $id_lexico = $line['id_lexico'];
-                $impacto = $line['impacto'];
+            while ($line = mysql_fetch_array($result_selects_lexicon, MYSQL_ASSOC)) {
+                $id_lexicon = $line['id_lexico'];
+                $impact = $line['impacto'];
 
-                if (!fwrite($handle, "@\r\n$id_lexico\r\n")) {
+                if (!fwrite($handle, "@\r\n$id_lexicon\r\n")) {
                     print "Cannot write to file ($filename)";
                     exit;
                 }
 
-                if (!fwrite($handle, "$impacto\r\n")) {
+                if (!fwrite($handle, "$impact\r\n")) {
                     print "Cannot write to file ($filename)";
                     exit;
                 }
@@ -45,33 +45,33 @@
 
             $lines = file($filename);
 
-            $pegar_id = "FALSE";
-            $id_lexico = 0;
+            $id_pick = "FALSE";
+            $id_lexicon = 0;
 
-            foreach ($lines as $line_num => $line) {
+            foreach ($lines as $line) {
                 if ($line[0] == '@') {
-                    $pegar_id = 1;
+                    $id_pick = 1;
                     continue;
                 }
-                if ($pegar_id) {
+                if ($id_pick) {
                     $id = sscanf($line, "%d");
-                    $id_lexico = $id[0];
-                    $pegar_id = 0;
+                    $id_lexicon = $id[0];
+                    $id_pick = 0;
                     continue;
                 }
 
                 print ($line . "<br>\n");
                 if (strcmp(trim($line), "") != 0) {
-                    $query_inserir_impacto = "insert into impacto (id_lexico, impacto) values ('$id_lexico', '$line');";
-                    mysql_query($query_inserir_impacto) or die("A consulta ao BD falhou : " . mysql_error() . " " . $line . " " . $id_lexico . " " . __LINE__);
+                    $query_insert_impact = "insert into impacto (id_lexico, impacto) values ('$id_lexicon', '$line');";
+                    mysql_query($query_insert_impact) or die("A consulta ao BD falhou : " . mysql_error() . " " . $line . " " . $id_lexicon . " " . __LINE__);
                 }
             }
 
-            $query_seleciona_impacto = "select * from impacto order by id_lexico;";
-            $result_seleciona_impacto = mysql_query($query_seleciona_impacto) or die("A consulta ao BD falhou : " . mysql_error() . __LINE__);
-            mysql_num_rows($result_seleciona_impacto);
+            $query_selects_impact = "select * from impacto order by id_lexico;";
+            $result_selects_impact = mysql_query($query_selects_impact) or die("A consulta ao BD falhou : " . mysql_error() . __LINE__);
+            mysql_num_rows($result_selects_impact);
 
-            mysql_close($conecta_banco);
+            mysql_close($connect_database);
         }
         ?>
 

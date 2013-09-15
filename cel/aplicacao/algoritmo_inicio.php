@@ -38,7 +38,7 @@ $_SESSION["salvar"] = "FALSE";
 
 
 if ($_POST["load"] == "FALSE") {
-    converte_impactos();
+    converts_impacts();
     $_SESSION["lista_de_conceitos"] = array();
     $_SESSION["lista_de_relacoes"] = array();
     $_SESSION["lista_de_axiomas"] = array();

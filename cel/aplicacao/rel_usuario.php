@@ -1,3 +1,9 @@
+ <html>
+        <head>
+            <title>
+                Selecione os usuarios
+            </title>
+
 <?php
 // Cenario - Relacionar usuarios ao projeto
 // Objetivo:  Permitir ao Administrador relacionar novos usuarios cadastrados ao projeto selecionado.
@@ -13,7 +19,7 @@ include("httprequest.inc");
 
 chkUser("index.php");
 
-$r = bd_connect() or die("Erro ao conectar ao SGBD");
+bd_connect() or die("Erro ao conectar ao SGBD");
 
 $submit = 0;
 if (isset($submit)) {
@@ -40,11 +46,7 @@ if (isset($submit)) {
 } else {
     ?>
 
-    <html>
-        <head>
-            <title>
-                Selecione os usuarios
-            </title>
+   
             <script type ="text/javascript1.3" src="MSelect.js">
             </script>
             <script type ="text/javascript1.3">
