@@ -12,7 +12,7 @@ include("funcoes_genericas.php");
 <body>
 
 <?php
-$bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 
 //Cen�rio - Escolher Projeto
 //Objetivo:   Permitir ao Administrador/Usu�rio escolher um projeto.
@@ -31,7 +31,7 @@ $qrr = mysql_query($q) or die("Erro ao enviar a query de busca");
     <?php
     while ($result = mysql_fetch_row($qrr)) {
         $project_id = $result[0];
-        $data = $result[1];
+        $date = $result[1];
         $version = $result[2];
         $XML = $result[3];
 
@@ -45,7 +45,7 @@ $qrr = mysql_query($q) or die("Erro ao enviar a query de busca");
             <tr>
 
                 <th height="29" width="140"><a href="mostrarProjeto.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>"><?= $nome_projeto ?></a></th>
-                <th height="29" width="140">Data: <?= $data ?></th>
+                <th height="29" width="140">Data: <?= $date ?></th>
                 <th height="29" width="100">Vers�o: <?= $version ?></th>
 
             </tr>

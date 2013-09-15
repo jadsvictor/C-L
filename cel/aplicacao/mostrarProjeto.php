@@ -13,7 +13,7 @@ include("httprequest.inc");
 //              ver ADMINISTRADOR ESCOLHE PROJETO.
 //              Caso contr�rio, ver USU�RIO ESCOLHE PROJETO.
 
-$bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 
 $qq = "select * from publicacao where id_projeto = $project_id AND versao = $version";
 $qrr = mysql_query($qq) or die("Erro ao enviar a query");

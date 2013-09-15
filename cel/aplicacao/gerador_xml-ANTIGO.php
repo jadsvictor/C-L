@@ -198,7 +198,7 @@ if (!mysql_num_rows($qrrVerify)) {
 
     // echo $xml_banco;
 
-    $bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+    $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
     $qRecupera = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version'";
     $qrrRecupera = mysql_query($qRecupera) or die("Erro ao enviar a query de busca!");
     $row = mysql_fetch_row($qrrRecupera);

@@ -11,7 +11,7 @@ $XML = "";
 <html>
     <body>
     <head>
-        <title>Gerar Grafo</title>
+        <title>Generate Graph</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">        
     </head>
 
@@ -23,21 +23,21 @@ $XML = "";
 //Recursos:   Sistema, XML, dados cadastrados do projeto, banco de dados.
 //Epis�dios:  Restri��o: Possuir um XML gerado do projeto
 
-$bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 $q = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
 $qrr = mysql_query($q) or die("Erro ao enviar a query");
 ?>
-    <h2>Gerar Grafo</h2><br>
+    <h2>Generate Graph</h2><br>
     <?php
     while ($result = mysql_fetch_row($qrr)) {
-        $data = $result[1];
+        $date = $result[1];
         $version = $result[2];
         $XML = $result[3];
         ?>
         <table>
             <tr>
-                <th>Vers�o:</th><td><?= $version ?></td>
-                <th>Data:</th><td><?= $data ?></td>
+                <th>Version:</th><td><?= $version ?></td>
+                <th>Date:</th><td><?= $date ?></td>
                 <th><a href="mostraXML.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>">XML</a></th>
                 <th><a href="grafo\mostraGrafo.php?versao=<?= $version ?>&id_projeto=<?= $project_id ?>">Gerar Grafo</a></th>
 

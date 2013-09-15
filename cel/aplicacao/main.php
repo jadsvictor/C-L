@@ -779,10 +779,10 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                 <tr> 
                     <th>Data de cria��o:</th> 
                 <?php
-                $data = simple_query("data_criacao", "projeto", "id_projeto = $project_id");
+                $date = simple_query("data_criacao", "projeto", "id_projeto = $project_id");
                 ?>    
 
-                    <td CLASS="Estilo"><?= formataData($data) ?></td> 
+                    <td CLASS="Estilo"><?= formataData($date) ?></td> 
 
                 </tr> 
                 <tr> 

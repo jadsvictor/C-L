@@ -8,7 +8,7 @@ session_start();
 // Padr�o para data 
 $dia = date("Y-m-d");
 $hora = date("H:i:s");
-$data = $dia . "T" . $hora . "Z";
+$date = $dia . "T" . $hora . "Z";
 
 
  // Objetivo:       Salvar a ontologia em DAML

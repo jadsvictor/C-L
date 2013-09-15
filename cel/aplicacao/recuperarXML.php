@@ -26,7 +26,7 @@ $XML = "";
 //Epis�dios:  Restri��o: Recuperar os dados em XML do Banco de dados e os transformar
 //                       por uma XSL para a exibi��o.
 
-$bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 if (isset($apaga)) {
     if ($apaga) {
         $qApaga = "DELETE FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
@@ -39,7 +39,7 @@ $qrr = mysql_query($q) or die("Erro ao enviar a query");
     <h2>Recupera XML/XSL</h2><br>
     <?php
     while ($result = mysql_fetch_row($qrr)) {
-        $data = $result[1];
+        $date = $result[1];
         $version = $result[2];
         $XML = $result[3];
         ?>
@@ -48,7 +48,7 @@ $qrr = mysql_query($q) or die("Erro ao enviar a query");
                 <th>Versao:</th>
                 <td><?= $version ?></td>
                 <th>Data:</th>
-                <td><?= $data ?></td>
+                <td><?= $date ?></td>
                 <th>
                     <a href="mostraXML.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>">XML</a>
                 </th>

@@ -6,7 +6,7 @@ include("httprequest.inc");
 
 chkUser("index.php");        // Checa se o usuario foi autenticado
 
-$bd_recupera = bd_connect() or die("Erro ao conectar ao SGBD");
+$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 
 //Cen�rio -  Gerar Relat�rios XML 
 //Objetivo:	Permitir ao administrador gerar relat�rios em formato XML de um projeto,
