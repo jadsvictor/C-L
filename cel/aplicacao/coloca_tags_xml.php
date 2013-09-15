@@ -1,19 +1,6 @@
 <?php
 
-/* * ******************************************************
- * Modulo criado em 05/07/07
- * Grupo PES_07_1_1
- * Autores:
- *   BVF
- *   DFS
- *   TVD
- *   EMC
- * ****************************************************** */
-
-/* * ******************************************************* 
-  /* Modulo que poe as tags dos links no arquivo XML
-  /******************************************************** */
-
+  // Modulo que poe as tags dos links no arquivo XML
 
 include ("coloca_links.php");
 
@@ -39,13 +26,13 @@ function pega_id_xml($str) {
 function troca_chaves_xml($str) {
     $conta_abertos = 0;
     $conta_fehados = 0;
-    $comeco;
-    $fim;
+    $comeco = 0;
+    $fim = 0;
     $x = 0;
     $y = 0;
-    $vet_id;
-    $link_original;
-    $link_novo;
+    $vet_id = 0;
+    $link_original = 0;
+    $link_novo = 0;
     $buffer3 = '';
     $buffer = 0;
     $i = 0;
@@ -56,19 +43,18 @@ function troca_chaves_xml($str) {
             $conta_abertos = $conta_abertos + 1;
         }
         $i++;
-    } // FIM WHILE 1
-    $i = 0;
+    }
     while ($i <= $tam_str) {
         if ($str[$i] == '}') {
             $conta_fechados = $conta_fechados + 1;
         }
         $i++;
-    } // FIM WHILE 2
-    $i = 0;
+    } 
+    
     if ($conta_abertos == 0) {
         return $str;
     }
-    $i = 0;
+    
     while ($i <= $tam_str) {
         if ($str[$i] == '{') {
             $buffer = $buffer + 1;
@@ -86,8 +72,7 @@ function troca_chaves_xml($str) {
         }
         $i++;
     };
-    $i = 0;
-
+    
     while ($i < $x) { //x = numero de links reais - 1    
         $link = substr($str, $comeco[$i], $fim[$i] - $comeco[$i]);
         $link_original[$i] = $link;
@@ -96,7 +81,6 @@ function troca_chaves_xml($str) {
         $buffer2 = 0;
         $conta = 0;
         $n = 0;
-        //echo('aki - >'."$link".'<br>');
         $vet_id[$i] = pega_id_xml($link);
         $link = '**' . $link;
         $marcador = 0;
@@ -128,13 +112,12 @@ function troca_chaves_xml($str) {
         $link_novo[$i] = $link;
         $i++;
     }
-    $i = 0;
-    //echo("STRING INICAL -> $str<br/>");
+    
     while ($i < $x) {
         $str = str_replace($link_original[$i], $link_novo[$i], $str);
         $i++;
     }
-    //echo("STRING FINAL -> $str<br/>");
+    
     return $str;
 }
 
