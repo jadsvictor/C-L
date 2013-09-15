@@ -18,16 +18,13 @@ include("httprequest.inc");
         <title>Remover Projeto</title>
     </head>
 <?php
-$id_project = $_SESSION['id_projeto_corrente'];
 
 bd_connect() or die("Erro ao conectar ao SGBD");
-$select_project = "SELECT * FROM projeto WHERE id_projeto = '$id_project' ";
-$query_select_project = mysql_query($select_project) or die("Erro ao enviar a query de select no projeto");
+$query_select_project = mysql_query("SELECT * FROM projeto WHERE id_projeto =" . (int)$_GET['id_projeto_corrente']) or die("Erro ao enviar a query de select no projeto");
 $resultArrayProject = mysql_fetch_array($query_select_project);
 $name_Project = $resultArrayProject[1];
 $date_Project = $resultArrayProject[2];
 $project_description = $resultArrayProject[3];
-
 
 //Episodio 1:   O Administrador clica na opcao remover projeto encontrada no menu superior.
 ?>    
