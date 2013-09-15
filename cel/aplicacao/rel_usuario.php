@@ -24,15 +24,15 @@ bd_connect() or die("Erro ao conectar ao SGBD");
 $submit = 0;
 if (isset($submit)) {
     $delete_user = "DELETE FROM participa
-          WHERE id_usuario != " . $_SESSION['id_usuario_corrente'] . "
-          AND id_projeto = " . $_SESSION['id_projeto_corrente'];
+          WHERE id_usuario != " . (int)$_GET['id_usuario_corrente'] . "
+          AND id_projeto = " . (int)$_GET['id_projeto_corrente'];
     mysql_query($delete_user) or die("Erro ao executar a query de DELETE");
-
+    
     $user = 0;
     $number_selected_users = count($user);
     for ($i = 0; $i < $number_selected_users; $i++) {
         $user_registers = "INSERT INTO participa (id_usuario, id_projeto)
-              VALUES (" . $user[$i] . ", " . $_SESSION['id_projeto_corrente'] . ")";
+              VALUES (" . (int)$user[$i] . ", " . (int)$_GET['id_projeto_corrente'] . ")";
         mysql_query($user_registers) or die("Erro ao cadastrar usuario");
     }
     ?>
@@ -109,8 +109,8 @@ if (isset($submit)) {
                                 $user_selects = "SELECT u.id_usuario, login
                                               FROM usuario u, participa p
                                               WHERE u.id_usuario = p.id_usuario
-                                              AND p.id_projeto = " . $_SESSION['id_projeto_corrente'] . "
-                                              AND u.id_usuario != " . $_SESSION['id_usuario_corrente'];
+                                              AND p.id_projeto = " . (int)$_GET['id_projeto_corrente'] . "
+                                              AND u.id_usuario != " . (int)$_GET['id_usuario_corrente'];
 
                                 $query_user_selects = mysql_query($user_selects) or die("Erro ao enviar a query");
                                 while ($result_user_selects = mysql_fetch_array($query_user_selects)) {
@@ -135,7 +135,7 @@ if (isset($submit)) {
                         <td rowspan="2">
                             <select  multiple name="usuarios_r" size="6">
                                 <?php
-                                $user_selects_nonparticipating = "SELECT id_usuario FROM participa where participa.id_projeto =" . $_SESSION['id_projeto_corrente'];
+                                $user_selects_nonparticipating = "SELECT id_usuario FROM participa where participa.id_projeto =" . (int)$_SESSION['id_projeto_corrente'];
                                 $subqrr = mysql_query($user_selects_nonparticipating) or die("Erro ao enviar a subquery");
                                 $result_user_nonparticipating = "(0)";
                                 if ($subqrr != 0) {
@@ -145,8 +145,8 @@ if (isset($submit)) {
                                         $result_user_nonparticipating = "$result_user_nonparticipating , $row[0]";
                                     $result_user_nonparticipating = "$result_user_nonparticipating )";
                                 }
-                                $q = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " . $result_user_nonparticipating;
-
+                                $q = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " .  mysql_real_escape_string($result_user_nonparticipating);
+                              
                                 echo($q);
                                 $query_user_nonparticipating = mysql_query($q) or die("Erro ao enviar a query");
                                 while ($result = mysql_fetch_array($query_user_nonparticipating)) {
