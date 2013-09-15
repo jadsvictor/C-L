@@ -5,9 +5,10 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
-// Testa se o usuario quer uma visualiza��o formatada ou n�o
+// Check if the user was autenticated
+chkUser("index.php");    
 
+// Test if user wnats a formated visualization or not
 if (isset($_POST['flag'])) {
     $formated_flag = "ON";
 } else {
@@ -18,23 +19,23 @@ if (isset($_POST['flag'])) {
 <?php
 
 // gerador_xml.php
-// Dada a base e o id do projeto, gera-se o xml dos cen�rios e l�xicos.
-// Cen�rio - Gerar Relat�rios XML 
-// Objetivo:    Permitir ao administrador gerar relat�rios em formato XML de um projeto, identificados por data.     
-// Contexto:    Gerente deseja gerar um relat�rio para um dos projetos da qual � administrador.
-//          Pr�-Condi��o: Login, projeto cadastrado.
-// Atores:    Administrador     
-// Recursos:    Sistema, dados do relat�rio, dados cadastrados do projeto, banco de dados.     
-// Epis�dios:O sistema fornece para o administrador uma tela onde dever� fornecer os dados
-//          do relat�rio para sua posterior identifica��o, como data e vers�o. 
-//          Para efetivar a gera��o do relat�rio, basta clicar em Gerar. 
-//          Restri��o: O sistema executar� duas valida��es: 
-//                      - Se a data � v�lida.
-//                      - Se existem cen�rios e l�xicos em datas iguais ou anteriores.
-//          Gerando com sucesso o relat�rio a partir dos dados cadastrados do projeto,
-//          o sistema fornece ao administrador a tela de visualiza��o do relat�rio XML criado, 
-//          incluindo os tags de links internos entre lexicos e cenarios.
-//          Restri��o: Recuperar os dados em XML do Banco de dados e os transformar por uma XSL para a exibi��o.      
+// Given the base and the id of the project, it generates the xml scenarios and lexicons
+// Scenario - Generate XML reports
+// Goal: Allow the administrator to generate reports in XML format to a project, identified by date.     
+// Context: Menager wishes generate a report for one of the projects
+//          Pre-condition: Login, registered project.
+// Actors:    Administrator   
+// Means:    System, data report, data registered of project, database.    
+// Episode: The system provides to a screen where the administrator must provide the data
+//         Report for subsequent identification, such as date and version.
+//         To execute the report generation, simply click Generate.
+// Restriction: The system performs two validations:
+//         - If the date is valid.
+//         - If there are scenarios and lexicons on dates equal to or earlier.
+//         Generating the report successfully from the data registered design,
+//         Provides the system administrator screen display XML report created,
+//         Tags including internal links between lexicons and scenarios.
+//         Constraint: Recovering data in the XML database and a XSL transform to display.      
 
 function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
     if ($flag_formatado == "ON") {
@@ -43,7 +44,7 @@ function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
 
     $xml_resultante = $xml_resultante . "<projeto>\n";
 
-    // Seleciona o nome do projeto
+    // Select the project name
 
     $qry_nome = "SELECT nome
 	                 FROM projeto
@@ -52,7 +53,7 @@ function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
 
     $xml_resultante = $xml_resultante . "<nome>" . mysql_result($tb_nome, 0) . "</nome>\n";
 
-    // Seleciona os cen�rios de um projeto.
+    // Seleciona the scenarios of a project
 
     $qry_cenario = "SELECT id_cenario ,
                                titulo ,
@@ -116,7 +117,7 @@ function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
             //??$id_temp = id_cenario;
         }
     } // while
-    // Seleciona os lexicos de um projeto.
+    // Select the lexicons of a project
 
     $qry_lexico = "SELECT id_lexico ,
 		                        nome ,
@@ -172,7 +173,7 @@ $project_id = $_SESSION['id_projeto_corrente'];
 $search_date = $data_ano . "-" . $data_mes . "-" . $data_dia;
 $formated_flag = $flag;
 
-// Abre base de dados.
+// Open the data base
 $database_work = bd_connect() or die("Erro ao conectar ao SGBD");
 
 $qVerify = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
