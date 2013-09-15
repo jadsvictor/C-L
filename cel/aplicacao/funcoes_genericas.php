@@ -114,9 +114,8 @@ if (!(function_exists("inclui_projeto"))) {
     function inclui_projeto($nome, $descricao) {
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //verifica se usuario ja existe
-        $qv = "SELECT * FROM projeto WHERE nome = '$nome'";
-        $qvr = mysql_query($qv) or die("Erro ao enviar a query de select<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
+        $qrv = mysql_query("SELECT * FROM users WHERE name = '"  .  mysql_real_escape_string($_GET["name"])  .  "'");
+        
         //$result = mysql_fetch_row($qvr);
         $resultArray = mysql_fetch_array($qvr);
 
