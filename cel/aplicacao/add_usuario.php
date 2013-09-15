@@ -111,8 +111,9 @@ if (isset($submit)) {   // Se chamado pelo botao de submit
 // Epis�dios:  Caso aquele login digitado n�o exista, o sistema cadastra esse usu�rio 
 //               como administrador no banco de dados,  possibilitando:
 //              - Redirecion�-lo  para a interface de CADASTRAR NOVO PROJETO; 
-        $id_usuario_corrente = simple_query("id_usuario", "usuario", "login = '$login'");
-        session_register("id_usuario_corrente");
+        //$id_usuario_corrente = simple_query("id_usuario", "usuario", "login = '$login'");
+        //session_register("id_usuario_corrente");
+         $_SESSION['id_usuario_corrente'] = simple_query("id_usuario", "usuario", "login = '$login'");
         ?>
 
         <script language="javascript1.3">
@@ -159,7 +160,7 @@ if (isset($submit)) {   // Se chamado pelo botao de submit
         $p_text = "Favor preencher os dados abaixo:";
     }
 
-    if ($primeira_vez) {
+    if (true) {
         $email = "";
         $login = "";
         $nome = "";

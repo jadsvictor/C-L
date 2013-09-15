@@ -8,13 +8,13 @@ if (!(class_exists("PGDB"))) {
 }
 */
 
-/* chkUser(): checa se o usuário acessando foi autenticado (presença da variável de sessão
-$id_usuario_corrente). Caso ele já tenha sido autenticado, continua-se com a execução do
-script. Caso contrário, abre-se uma janela de logon. */
+/* chkUser(): checa se o usuï¿½rio acessando foi autenticado (presenï¿½a da variï¿½vel de sessï¿½o
+$id_usuario_corrente). Caso ele jï¿½ tenha sido autenticado, continua-se com a execuï¿½ï¿½o do
+script. Caso contrï¿½rio, abre-se uma janela de logon. */
 if (!(function_exists("chkUser"))) {
 	function chkUser($url)
 	{
-		if (!(session_is_registered("id_usuario_corrente"))) {
+		if (!(isset($_SESSION['id_usuario_corrente'])))  {
 ?>
 
 <script language="javascript1.3">
@@ -52,7 +52,7 @@ if (!(function_exists("inclui_cenario"))) {
 }
 ###################################################################
 # Insere um lexico no banco de dados.
-# Recebe o id_projeto, nome, noção, impacto e os sinonimos. (1.1)
+# Recebe o id_projeto, nome, noï¿½ï¿½o, impacto e os sinonimos. (1.1)
 # Insere os valores do lexico na tabela LEXICO. (1.2)
 # Insere todos os sinonimos na tabela SINONIMO. (1.3)
 # Devolve o id_lexico. (1.4)
@@ -769,7 +769,7 @@ if (!(function_exists("removeCenario"))) {
 		//print("<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
 		/*  $sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $tituloCenario");
 		if ($sql->getntuples() == 0){
-		echo "<BR> Projeto não possui cenarios." ;
+		echo "<BR> Projeto nï¿½o possui cenarios." ;
 		}else{*/
 		$qr = "SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $id_cenario";
 		//echo($qr)."          ";
@@ -788,9 +788,9 @@ if (!(function_exists("removeCenario"))) {
 			$recursosAnterior = $result['recursos'] ;
 			$episodiosAnterior = $result['episodios'] ;
 			$excecaoAnterior = $result['excecao'] ;
-			#echo        "/<a title=\"Cenário\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
-			#$episodiosAnterior = "<a title=\"Cenário\" href=\"main.php?t=c&id=38\">robin</a>" ;
-			/*"'<a title=\"Cenário\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
+			#echo        "/<a title=\"Cenï¿½rio\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
+			#$episodiosAnterior = "<a title=\"Cenï¿½rio\" href=\"main.php?t=c&id=38\">robin</a>" ;
+			/*"'<a title=\"Cenï¿½rio\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
 			$tiratag = "'<[\/\!]*?[^<>]*?>'si" ;
 			//$tiratagreplace = "";
 			//$tituloCenario = preg_replace($tiratag,$tiratagreplace,$tituloCenario);
@@ -854,7 +854,7 @@ if (!(function_exists("removeLexico"))) {
 		# [ATENCAO] Essa query pode ser melhorada com um join
 		$sql->execute ("SELECT * FROM lexico WHERE id_projeto = $id_projeto ");
 		if ($sql->getntuples() == 0){
-			//echo "<BR> Projeto não possui lexicos ainda." ;
+			//echo "<BR> Projeto nï¿½o possui lexicos ainda." ;
 		}else{
 			# Percorre todos os lexicos tirando as tag do lexico
 			# a ser removido
@@ -877,7 +877,7 @@ if (!(function_exists("removeLexico"))) {
 		# [ATENCAO] Essa query pode ser melhorada com um join
 		$sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto ");
 		if ($sql->getntuples() == 0){
-			//echo "<BR> Projeto não possui cenarios." ;
+			//echo "<BR> Projeto nï¿½o possui cenarios." ;
 		}else{
 			# Percorre todos os cenarios tirando as tag do lexico
 			# a ser removido
@@ -928,7 +928,7 @@ if (!(function_exists("removeLexico"))) {
 		{
 			$sql->execute ("SELECT * FROM lexico WHERE id_projeto = $id_projeto ");
 			if ($sql->getntuples() == 0){
-				//echo "<BR> Projeto não possui lexicos -ainda." ;
+				//echo "<BR> Projeto nï¿½o possui lexicos -ainda." ;
 			}else{
 				# Percorre todos os lexicos tirando as tag do sinonimo
 				# a ser removido
@@ -959,7 +959,7 @@ if (!(function_exists("removeLexico"))) {
 			# [ATENCAO] Essa query pode ser melhorada com um join
 			$sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto ");
 			if ($sql->getntuples() == 0){
-				//echo "<BR> Projeto não possui lexicos -- ainda." ;
+				//echo "<BR> Projeto nï¿½o possui lexicos -- ainda." ;
 			}else{
 				# Percorre todos os cenarios tirando as tag do lexico
 				# a ser removido
@@ -993,7 +993,7 @@ if (!(function_exists("removeLexico"))) {
 		/*   # Procura pelo possivel cenario que ele define
 		# remove sua tag e relacionamento
 		//print ("<br>cenario<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
-		//$sql->execute ("SELECT * FROM cenario WHERE titulo like '%<a title=\"Léxico\" href=\"main.php?t=l&id=$id_lexico\">$nomeLexico</a>%'");
+		//$sql->execute ("SELECT * FROM cenario WHERE titulo like '%<a title=\"Lï¿½xico\" href=\"main.php?t=l&id=$id_lexico\">$nomeLexico</a>%'");
 		$sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto");
 		
 		if($sql->getntuples() != 0){
@@ -1065,7 +1065,7 @@ if (!(function_exists("removeConceito"))) {
 		//print("<br>SELECT * FROM cenario WHERE id_projeto = $id_projeto");
 		/*  $sql->execute ("SELECT * FROM cenario WHERE id_projeto = $id_projeto AND id_cenario != $tituloCenario");
 		if ($sql->getntuples() == 0){
-		echo "<BR> Projeto não possui cenarios." ;
+		echo "<BR> Projeto nï¿½o possui cenarios." ;
 		}else{*/
 		$qr = "SELECT * FROM conceito WHERE id_projeto = $id_projeto AND id_conceito != $id_conceito";
 		//echo($qr)."          ";
@@ -1080,9 +1080,9 @@ if (!(function_exists("removeConceito"))) {
 			$nomeAnterior = $result['nome'] ;
 			$descricaoAnterior = $result['descricao'] ;
 			$namespaceAnterior = $result['namespace'] ;
-			#echo        "/<a title=\"Cenário\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
-			#$episodiosAnterior = "<a title=\"Cenário\" href=\"main.php?t=c&id=38\">robin</a>" ;
-			/*"'<a title=\"Cenário\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
+			#echo        "/<a title=\"Cenï¿½rio\" href=\"main.php?t='c'&id=$id_cenario>($tituloCenario)<\/a>/mi"  ;
+			#$episodiosAnterior = "<a title=\"Cenï¿½rio\" href=\"main.php?t=c&id=38\">robin</a>" ;
+			/*"'<a title=\"Cenï¿½rio\" href=\"main.php?t=c&id=38\">robin<\/a>'si" ; */
 			$tiratag = "'<[\/\!]*?[^<>]*?>'si" ;
 			//$tiratagreplace = "";
 			//$tituloCenario = preg_replace($tiratag,$tiratagreplace,$tituloCenario);
@@ -1242,7 +1242,7 @@ function checarCenarioExistente($projeto, $titulo)
 # Para inserir um novo cenario ela deve receber os campos do novo
 # cenario.
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este cenario caso o criador não seja o gerente.
+# referente a este cenario caso o criador nï¿½o seja o gerente.
 # Arquivos que utilizam essa funcao:
 # add_cenario.php
 ###################################################################
@@ -1273,7 +1273,7 @@ if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 				$select->execute("SELECT * FROM usuario WHERE id_usuario = $id");
 				$record = $select->gofirst();
 				$mailGerente = $record['email'];
-				mail("$mailGerente", "Pedido de Inclusão Cenário", "O usuario do sistema $nome\nPede para inserir o cenario $titulo \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
+				mail("$mailGerente", "Pedido de Inclusï¿½o Cenï¿½rio", "O usuario do sistema $nome\nPede para inserir o cenario $titulo \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
 				$record2 = $select2->gonext();
 			}
 		}
@@ -1288,7 +1288,7 @@ if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 # Para alterar um cenario ela deve receber os campos do cenario
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador não seja o gerente.(2.1)
+# referente a este cenario caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_cenario.php
 ###################################################################
@@ -1319,7 +1319,7 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 				$select->execute("SELECT * FROM usuario WHERE id_usuario = $id");
 				$record = $select->gofirst();
 				$mailGerente = $record['email'];
-				mail("$mailGerente", "Pedido de Alteração Cenário", "O usuario do sistema $nome\nPede para alterar o cenario $titulo \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
+				mail("$mailGerente", "Pedido de Alteraï¿½ï¿½o Cenï¿½rio", "O usuario do sistema $nome\nPede para alterar o cenario $titulo \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
 				$record2 = $select2->gonext();
 			}
 		}
@@ -1362,7 +1362,7 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
 			$select->execute("SELECT * FROM usuario WHERE id_usuario = $id");
 			$record = $select->gofirst();
 			$mailGerente = $record['email'];
-			mail("$mailGerente", "Pedido de Remover Cenário", "O usuario do sistema $nome\nPede para remover o cenario $id_cenario \nObrigado!", "From: $nome\r\n" . "Reply-To: $email\r\n");
+			mail("$mailGerente", "Pedido de Remover Cenï¿½rio", "O usuario do sistema $nome\nPede para remover o cenario $id_cenario \nObrigado!", "From: $nome\r\n" . "Reply-To: $email\r\n");
 			$record2 = $select2->gonext();
 		}
 	}
@@ -1373,7 +1373,7 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
 # Para inserir um novo lexico ela deve receber os campos do novo
 # lexicos.
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador não seja o gerente.
+# referente a este lexico caso o criador nï¿½o seja o gerente.
 # Arquivos que utilizam essa funcao:
 # add_lexico.php
 ###################################################################
@@ -1423,7 +1423,7 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 					$select->execute("SELECT * FROM usuario WHERE id_usuario = $id") ;
 					$record = $select->gofirst ();
 					$mailGerente = $record['email'] ;
-					mail("$mailGerente", "Pedido de Inclusão de Léxico", "O usuario do sistema $nome2\nPede para inserir o lexico $nome \nObrigado!","From: $nome2\r\n"."Reply-To: $email\r\n");
+					mail("$mailGerente", "Pedido de Inclusï¿½o de Lï¿½xico", "O usuario do sistema $nome2\nPede para inserir o lexico $nome \nObrigado!","From: $nome2\r\n"."Reply-To: $email\r\n");
 					$record2 = $select2->gonext();
 					
 					
@@ -1442,7 +1442,7 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 # Para alterar um lexico ela deve receber os campos do lexicos
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador não seja o gerente.(2.1)
+# referente a este lexico caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_lexico.php
 ###################################################################
@@ -1491,7 +1491,7 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
 					$select->execute("SELECT * FROM usuario WHERE id_usuario = $id") ;
 					$record = $select->gofirst ();
 					$mailGerente = $record['email'] ;
-					mail("$mailGerente", "Pedido de Alterar Léxico", "O usuario do sistema $nome2\nPede para alterar o lexico $nome \nObrigado!","From: $nome2\r\n"."Reply-To: $email\r\n");
+					mail("$mailGerente", "Pedido de Alterar Lï¿½xico", "O usuario do sistema $nome2\nPede para alterar o lexico $nome \nObrigado!","From: $nome2\r\n"."Reply-To: $email\r\n");
 					$record2 = $select2->gonext();
 				}
 			}
@@ -1540,7 +1540,7 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
 				$select->execute("SELECT * FROM usuario WHERE id_usuario = $id") ;
 				$record = $select->gofirst ();
 				$mailGerente = $record['email'] ;
-				mail("$mailGerente", "Pedido de Remover Léxico", "O usuario do sistema $nome2\nPede para remover o lexico $id_lexico \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
+				mail("$mailGerente", "Pedido de Remover Lï¿½xico", "O usuario do sistema $nome2\nPede para remover o lexico $id_lexico \nObrigado!","From: $nome\r\n"."Reply-To: $email\r\n");
 				$record2 = $select2->gonext();
 			}
 		}
@@ -1552,7 +1552,7 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
 # Para alterar um conceito ela deve receber os campos do conceito
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador não seja o gerente.(2.1)
+# referente a este cenario caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_cenario.php
 ###################################################################
@@ -1583,7 +1583,7 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 				$select->execute("SELECT * FROM usuario WHERE id_usuario = $id");
 				$record = $select->gofirst();
 				$mailGerente = $record['email'];
-				mail("$mailGerente", "Pedido de Alteração Conceito", "O usuario do sistema $nomeUsuario\nPede para alterar o conceito $nome \nObrigado!","From: $nomeUsuario\r\n"."Reply-To: $email\r\n");
+				mail("$mailGerente", "Pedido de Alteraï¿½ï¿½o Conceito", "O usuario do sistema $nomeUsuario\nPede para alterar o conceito $nome \nObrigado!","From: $nomeUsuario\r\n"."Reply-To: $email\r\n");
 				$record2 = $select2->gonext();
 			}
 		}
@@ -1978,7 +1978,7 @@ function verificaGerente($id_usuario, $id_projeto)
 # Recebe o id do projeto. (1.1)
 # Apaga os valores da tabela pedidocen que possuam o id do projeto enviado (1.2)
 # Apaga os valores da tabela pedidolex que possuam o id do projeto enviado (1.3)
-# Faz um SELECT para saber quais léxico pertencem ao projeto de id_projeto (1.4)
+# Faz um SELECT para saber quais lï¿½xico pertencem ao projeto de id_projeto (1.4)
 # Apaga os valores da tabela lextolex que possuam possuam lexico do projeto (1.5)
 # Apaga os valores da tabela centolex que possuam possuam lexico do projeto (1.6)
 # Apaga os valores da tabela sinonimo que possuam possuam o id do projeto (1.7)
