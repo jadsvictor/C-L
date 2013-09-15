@@ -1,4 +1,13 @@
 <?php
+// Cenario - Relacionar usuarios ao projeto
+
+// Objetivo:  Permitir ao Administrador relacionar novos usuarios cadastrados ao projeto selecionado.
+// Contexto:  O Administrador deseja relacionar novos usuarios cadastrados ao projeto selecionado.
+//            Pre-Condicoes: Ser administrador do projeto que deseja relacionar os usuarios
+// Atores:    Administrador
+// Recursos:  Usuarios cadastrados
+
+
 session_start();
 
 include("funcoes_genericas.php");
@@ -10,17 +19,17 @@ $r = bd_connect() or die("Erro ao conectar ao SGBD");
 
 $submit = 0;
 if (isset($submit)) { 
-    $deleta_usuario = "DELETE FROM participa
+    $delete_user = "DELETE FROM participa
           WHERE id_usuario != " . $_SESSION['id_usuario_corrente'] . "
           AND id_projeto = " . $_SESSION['id_projeto_corrente'];
-    mysql_query($deleta_usuario) or die("Erro ao executar a query de DELETE");
+    mysql_query($delete_user) or die("Erro ao executar a query de DELETE");
 
-    $usuarios = 0;
-    $numero_usuarios_selecionados = count($usuarios); 
-    for ($i = 0; $i < $numero_usuarios_selecionados; $i++) {
-        $cadastra_usuario = "INSERT INTO participa (id_usuario, id_projeto)
-              VALUES (" . $usuarios[$i] . ", " . $_SESSION['id_projeto_corrente'] . ")";
-        mysql_query($cadastra_usuario) or die("Erro ao cadastrar usuario");
+    $user = 0;
+    $number_selected_users = count($user); 
+    for ($i = 0; $i < $number_selected_users; $i++) {
+        $user_registers = "INSERT INTO participa (id_usuario, id_projeto)
+              VALUES (" . $user[$i] . ", " . $_SESSION['id_projeto_corrente'] . ")";
+        mysql_query($user_registers) or die("Erro ao cadastrar usuario");
     }
     ?>
      <script language="javascript1.3">
@@ -98,22 +107,26 @@ if (isset($submit)) {
                         <td rowspan="2">
                             <select name="usuarios[]" multiple size="6">
     <?php
-    $seleciona_usuario = "SELECT u.id_usuario, login
+    // Episodio 1: O Administrador clica no link Relacionar usuario ja existentes com este projeto.
+    $user_selects = "SELECT u.id_usuario, login
                                               FROM usuario u, participa p
                                               WHERE u.id_usuario = p.id_usuario
                                               AND p.id_projeto = " . $_SESSION['id_projeto_corrente'] . "
                                               AND u.id_usuario != " . $_SESSION['id_usuario_corrente'];
 
-    $qrr = mysql_query($seleciona_usuario) or die("Erro ao enviar a query");
-    while ($result_usuario_selecionado = mysql_fetch_array($qrr)) {
+    $query_user_selects = mysql_query($user_selects) or die("Erro ao enviar a query");
+    while ($result_user_selects = mysql_fetch_array($query_user_selects)) {
         ?>
-                                    <option value="<?= $result_usuario_selecionado['id_usuario'] ?>">
-                                    <?= $result_usuario_selecionado['login'] ?>
+                                    <option value="<?= $result_user_selects['id_usuario'] ?>">
+                                    <?= $result_user_selects['login'] ?>
                                     </option>
 
                                       
                                <?php
                                 }
+// Episodio 2: Excluindo usuario(s) do projeto: o administrador seleciona os usuarios cadastrados 
+//            (ja existentes) da lista Participantes (usuarios que pertencem a este projeto) 
+//            e clica no botao -> . 
                                 ?>
 
                             </select>
@@ -124,21 +137,21 @@ if (isset($submit)) {
                         <td rowspan="2">
                             <select  multiple name="usuarios_r" size="6">
     <?php
-    $seleciona_usuario_nao_participante = "SELECT id_usuario FROM participa where participa.id_projeto =" . $_SESSION['id_projeto_corrente'];
-    $subqrr = mysql_query($seleciona_usuario_nao_participante) or die("Erro ao enviar a subquery");
-    $resultado_usuario_nao_participante = "(0)";
+    $user_selects_nonparticipating = "SELECT id_usuario FROM participa where participa.id_projeto =" . $_SESSION['id_projeto_corrente'];
+    $subqrr = mysql_query($user_selects_nonparticipating) or die("Erro ao enviar a subquery");
+    $result_user_nonparticipating = "(0)";
     if ($subqrr != 0) {
         $row = mysql_fetch_row($subqrr);
-        $resultado_usuario_nao_participante = "( $row[0]";
+        $result_user_nonparticipating = "( $row[0]";
         while ($row = mysql_fetch_row($subqrr))
-            $resultado_usuario_nao_participante = "$resultado_usuario_nao_participante , $row[0]";
-        $resultado_usuario_nao_participante = "$resultado_usuario_nao_participante )";
+            $result_user_nonparticipating = "$result_user_nonparticipating , $row[0]";
+        $result_user_nonparticipating = "$result_user_nonparticipating )";
     }
-    $q = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " . $resultado_usuario_nao_participante;
+    $q = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " . $result_user_nonparticipating;
    
     echo($q);
-    $query_usuario_nao_participante = mysql_query($q) or die("Erro ao enviar a query");
-    while ($result = mysql_fetch_array($query_usuario_nao_participante)) {
+    $query_user_nonparticipating = mysql_query($q) or die("Erro ao enviar a query");
+    while ($result = mysql_fetch_array($query_user_nonparticipating)) {
         ?>
                                     <option value="<?= $result['id_usuario'] ?>">
                                     <?= $result['login'] ?>
@@ -146,6 +159,10 @@ if (isset($submit)) {
 
                                <?php
                                 }
+// Episodio 3: Incluindo usuario(s) ao projeto: o administrador seleciona os usuarios cadastrados 
+//           (ja existentes) da lista de usuarios que nao pertencem a este projeto e 
+//           clica no botao <- . 
+
                                 ?>
                             </select>
                         </td>
@@ -155,6 +172,10 @@ if (isset($submit)) {
                             <input name="usr_r2l" type="button" value="<-">
                         </td>
                     </tr>
+<?php
+// Episodio 4: Para atualizar os relacionamentos realizados, o administrador clica no botao Atualizar.
+?>
+                        _egg_logo_guid()
                     <tr>
                         <td align="center" colspan="3" height="50" valign="bottom">
                             <input name="submit" type="submit" value="Atualizar">
