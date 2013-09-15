@@ -129,10 +129,6 @@ function gerar_xml($bd, $id_projeto, $data_pesquisa, $flag_formatado) {
                         ORDER BY id_lexico,data DESC";
     $tb_lexico = mysql_query($qry_lexico) or die("Erro ao enviar a query de selecao.");
 
-    $primeiro = true;
-
-    $id_temp = "";
-
     while ($row = mysql_fetch_row($tb_lexico)) {
         $id_lexico = "<ID>" . $row[0] . "</ID>";
         if (($id_temp != $id_lexico) or (primeiro)) {
@@ -202,7 +198,7 @@ if (!mysql_num_rows($qrrVerify)) {
     $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
     $qRecupera = "SELECT * FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version'";
     $qrrRecupera = mysql_query($qRecupera) or die("Erro ao enviar a query de busca!");
-    $row = mysql_fetch_row($qrrRecupera);
+    $row_recover = mysql_fetch_row($qrrRecupera);
 
     if ($formated_flag == "ON") {
 
@@ -217,7 +213,7 @@ if (!mysql_num_rows($qrrVerify)) {
 
         xslt_free($xh);
 
-        $xml_bank = $row[3];
+        $xml_bank = $row_recover[3];
 
         echo $xml_bank;
 
@@ -238,11 +234,11 @@ if (!mysql_num_rows($qrrVerify)) {
     }
 } else {
     ?>
-    <html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
-            <p style="color: red; font-weight: bold; text-align: center">Essa vers�o j� existe!</p>
+    <html><head><title>Projeto</title></head><body style="background-color: #FFFFFF">
+            <p style="color: red; font-weight: bold; text-align: center">Essa versao ja existe!</p>
             <br>
             <br>
-        <center><a href="JavaScript:window.history.go(-1)">Voltar</a></center>
+        <h1 style="text-align:center;"><a href="JavaScript:window.history.go(-1)">Voltar</a></h1>
     </body></html>
 
     <?php
