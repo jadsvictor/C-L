@@ -58,7 +58,7 @@ if (isset($submit)) {
     $selection = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
-    $nome_projeto = $result['nome'];
+    $project_name = $result['nome'];
     ?>
 
     <html>
@@ -179,7 +179,7 @@ if (isset($submit)) {
                 <table>
                     <tr>
                         <td>Projeto:</td>
-                        <td><input disabled size="48" type="text" value="<?= $nome_projeto ?>"></td>
+                        <td><input disabled size="48" type="text" value="<?= $project_name ?>"></td>
                     </tr>
                     <tr>
                         <td>Nome:</td>

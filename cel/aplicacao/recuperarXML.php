@@ -11,7 +11,7 @@ $XML = "";
 <html>
     <body>
     <head>
-        <title>Recuperar XML</title>
+        <title>XML Recover</title>
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">        
     </head>
 
@@ -27,16 +27,16 @@ $XML = "";
 //                       por uma XSL para a exibi��o.
 
 $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
-if (isset($apaga)) {
-    if ($apaga) {
-        $qApaga = "DELETE FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
-        $qrrApaga = mysql_query($qApaga);
+if (isset($delete)) {
+    if ($delete) {
+        $qDelete = "DELETE FROM publicacao WHERE id_projeto = '$project_id' AND versao = '$version' ";
+        $qrrDelete = mysql_query($qDelete);
     }
 }
 $selection = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
 $qrr = mysql_query($selection) or die("Erro ao enviar a query");
 ?>
-    <h2>Recupera XML/XSL</h2><br>
+    <h2>XML/XSL Recover</h2><br>
     <?php
     while ($result = mysql_fetch_row($qrr)) {
         $date = $result[1];
@@ -65,7 +65,7 @@ $qrr = mysql_query($selection) or die("Erro ao enviar a query");
 }
 ?>
 
-    <br><i><a href="showSource.php?file=recuperarXML.php">Veja o c�digo fonte!</a></i>
+    <br><i><a href="showSource.php?file=recuperarXML.php">See the source!</a></i>
 
 </body>
 

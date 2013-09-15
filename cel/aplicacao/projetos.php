@@ -35,16 +35,16 @@ $qrr = mysql_query($selection) or die("Erro ao enviar a query de busca");
         $version = $result[2];
         $XML = $result[3];
 
-        $qProcuraNomeProjeto = "SELECT * FROM projeto WHERE id_projeto = '$project_id'";
-        $qrrProcura = mysql_query($qProcuraNomeProjeto) or die("Erro ao enviar a query de busca de projeto");
-        $resultNome = mysql_fetch_row($qrrProcura);
-        $nome_projeto = $resultNome[1];
+        $qSearchProjectName = "SELECT * FROM projeto WHERE id_projeto = '$project_id'";
+        $qrrSearch = mysql_query($qSearchProjectName) or die("Erro ao enviar a query de busca de projeto");
+        $resultName = mysql_fetch_row($qrrSearch);
+        $project_name = $resultName[1];
         ?>
         <table border='0'>
 
             <tr>
 
-                <th height="29" width="140"><a href="mostrarProjeto.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>"><?= $nome_projeto ?></a></th>
+                <th height="29" width="140"><a href="mostrarProjeto.php?id_projeto=<?= $project_id ?>&versao=<?= $version ?>"><?= $project_name ?></a></th>
                 <th height="29" width="140">Data: <?= $date ?></th>
                 <th height="29" width="100">Vers�o: <?= $version ?></th>
 

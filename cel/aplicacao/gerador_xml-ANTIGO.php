@@ -194,7 +194,7 @@ if (!mysql_num_rows($qrrVerify)) {
     $qq = "select * from publicacao where id_projeto = $project_id ";
     $qrr = mysql_query($qq) or die("Erro ao enviar a query");
     $row = mysql_fetch_row($qrr);
-    $xml_banco = $row[3];
+    $xml_bank = $row[3];
 
     // echo $xml_banco;
 
@@ -216,9 +216,9 @@ if (!mysql_num_rows($qrrVerify)) {
 
         xslt_free($xh);
 
-        $xml_banco = $row[3];
+        $xml_bank = $row[3];
 
-        echo $xml_banco;
+        echo $xml_bank;
 
         //echo $html ;
     }
@@ -230,7 +230,7 @@ if (!mysql_num_rows($qrrVerify)) {
         //<html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
         ?>
         <?
-        echo $xml_banco;
+        echo $xml_bank;
         //</body></html>
         ?>
         <?php

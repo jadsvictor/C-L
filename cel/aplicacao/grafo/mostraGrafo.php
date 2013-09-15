@@ -15,7 +15,7 @@ $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 $qq = "select * from publicacao where id_projeto = $project_id AND versao = $version";
 $qrr = mysql_query($qq) or die("Erro ao enviar a query ao BD");
 $row = mysql_fetch_row($qrr);
-$xml_banco = $row[3];
+$xml_bank = $row[3];
 
 $i = 1;
 // If the file exists and isn't older than 5 minutes, then create another one
@@ -35,7 +35,7 @@ if (!($out = fopen($xml_banco_file , "w"))) {
 }
 
 // Salva o XML gerado pelo CEL em um arquivo
-fwrite( $out , $xml_banco );
+fwrite( $out , $xml_bank );
 
 // Move to the PHP converter
 header('Location: convertXML.php?file='.$xml_banco_file);

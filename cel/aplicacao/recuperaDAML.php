@@ -14,55 +14,55 @@
           Coment�rio: Este programa lista todos os arquivos DAML    gerados    em $_SESSION['diretorio']
          */
 
-        function extrair_data($nome_arquivo) {
-            list($projeto, $resto) = split("__", $nome_arquivo);
-            list($dia, $mes, $ano, $hora, $minuto, $segundo, $extensao) = split('[_-.]', $resto);
+        function extrair_data($archive_name) {
+            list($project, $rest) = split("__", $archive_name);
+            list($day, $month, $year, $hour, $minuto, $second, $extension) = split('[_-.]', $rest);
 
-            if (!is_numeric($dia) || !is_numeric($mes) || !is_numeric($ano) || !is_numeric($hora) || !is_numeric($minuto) || !is_numeric($segundo))
+            if (!is_numeric($day) || !is_numeric($month) || !is_numeric($year) || !is_numeric($hour) || !is_numeric($minuto) || !is_numeric($second))
                 return "-";
 
-            $mes_por_extenso = "-";
-            switch ($mes) {
-                case 1: $mes_por_extenso = "janeiro";
+            $month_unabbreviated = "-";
+            switch ($month) {
+                case 1: $month_unabbreviated = "janeiro";
                     break;
-                case 2: $mes_por_extenso = "fevereiro";
+                case 2: $month_unabbreviated = "fevereiro";
                     break;
-                case 3: $mes_por_extenso = "mar�o";
+                case 3: $month_unabbreviated = "mar�o";
                     break;
-                case 4: $mes_por_extenso = "abril";
+                case 4: $month_unabbreviated = "abril";
                     break;
-                case 5: $mes_por_extenso = "maio";
+                case 5: $month_unabbreviated = "maio";
                     break;
-                case 6: $mes_por_extenso = "junho";
+                case 6: $month_unabbreviated = "junho";
                     break;
-                case 7: $mes_por_extenso = "julho";
+                case 7: $month_unabbreviated = "julho";
                     break;
-                case 8: $mes_por_extenso = "agosto";
+                case 8: $month_unabbreviated = "agosto";
                     break;
-                case 9: $mes_por_extenso = "setembro";
+                case 9: $month_unabbreviated = "setembro";
                     break;
-                case 10: $mes_por_extenso = "outubro";
+                case 10: $month_unabbreviated = "outubro";
                     break;
-                case 11: $mes_por_extenso = "novembro";
+                case 11: $month_unabbreviated = "novembro";
                     break;
-                case 12: $mes_por_extenso = "dezembro";
+                case 12: $month_unabbreviated = "dezembro";
                     break;
             }
 
-            return $dia . " de " . $mes_por_extenso . " de " . $ano . " �s " . $hora . ":" . $minuto . "." . $segundo . "\n";
+            return $day . " de " . $month_unabbreviated . " de " . $year . " �s " . $hour . ":" . $minuto . "." . $second . "\n";
         }
 
-        function extrair_projeto($nome_arquivo) {
-            list($projeto) = split("__", $nome_arquivo);
-            return $projeto;
+        function extrair_projeto($archive_name) {
+            list($project) = split("__", $archive_name);
+            return $project;
         }
 
-        $diretorio = $_SESSION['diretorio'];
+        $directory = $_SESSION['diretorio'];
         $site = $_SESSION['site'];
 
-        if ($diretorio == "") {
+        if ($directory == "") {
             //    $diretorio = "teste"; 
-            $diretorio = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
+            $directory = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
         }
 
         if ($site == "") {
@@ -76,9 +76,9 @@
         /* Monta a tabela    de arquivos    DAML */
         print( "<CENTER><TABLE WIDTH=\"80%\">\n");
         print( "<TR>\n\t<Th><STRONG>Projeto</STRONG></Th>\n\t<Th><STRONG>Gerado em</STRONG></Th>\n</TR>\n");
-        if ($dir_handle = @opendir($diretorio)) {
+        if ($dir_handle = @opendir($directory)) {
             while (( $archive = readdir($dir_handle) ) !== false) {
-                if (is_file($diretorio . "/" . $archive) && $archive != "." && $archive != "..") {
+                if (is_file($directory . "/" . $archive) && $archive != "." && $archive != "..") {
                     print( "<TR>\n");
                     print( "\t<TD WIDTH=\"25%\" CLASS=\"Estilo\"><B>" . extrair_projeto($archive) . "</B></TD>\n");
                     print( "\t<TD WIDTH=\"55%\" CLASS=\"Estilo\">" . extrair_data($archive) . "</TD>\n");

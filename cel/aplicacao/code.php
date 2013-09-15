@@ -80,7 +80,7 @@ exit();
         // for description of each option and their possible values. 
              
         MTMDefaultTarget = "text";
-        MTMenuText = "<?= $nome_projeto ?>";
+        MTMenuText = "<?= $project_name ?>";
              
         /****************************************************************************** 
         * User-configurable list of icons.                                            * 
