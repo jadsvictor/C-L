@@ -11,7 +11,7 @@ $link = bd_connect();
 if ($_POST['user'] == "") {
 // Recover user name
     $sql_user = "select nome from usuario where id_usuario='" . $_SESSION['id_usuario_corrente'] . "';";
-    $query_user = mysql_query($sql_user) or die("Erro ao verificar usu�rio!" . mysql_error());
+    $query_user = mysql_query($sql_user) or die("Erro ao verificar usuario!" . mysql_error());
     $result = mysql_fetch_array($query_user);
     $user = $result[0];
 } else {
@@ -46,7 +46,7 @@ mysql_close($link);
 
 <html> 
     <head><title>Generate DAML</title></head> 
-    <body bgcolor="#FFFFFF"> 
+    <body style="background-color: #FFFFFF"> 
 
 <?php
 if (!$daml) {
