@@ -4,12 +4,12 @@ include_once("CELConfig/CELConfig.inc");
 
 //$_SESSION['site'] = 'http://pes.inf.puc-rio.br/pes03_1_1/Site/desenvolvimento/teste/';       
 //$_SESSION['site'] = 'http://139.82.24.189/cel_vf/aplicacao/teste/';
-/* URL do diretorio contendo os arquivos de DAML */
+/* URL of the directory containing the files DAML */
 $_SESSION['site'] = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo") . CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
 
 //$_SESSION['diretorio'] = "/home/local/pes/pes03_1_1/Site/desenvolvimento/teste/";        
 //$_SESSION['diretorio'] = "teste/";        
-/* Caminho relativo ao CEL do diretorio contendo os arquivos de DAML */
+/* Relative path to the directory containing the CEL files DAML */
 $_SESSION['diretorio'] = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
 
 include("funcoes_genericas.php");
@@ -17,10 +17,11 @@ include("httprequest.inc");
 include_once("coloca_links.php");
 
 
-// Checa se o usu�rio foi autenticado
+// Checks if the user has been authenticated
 chkUser("index.php");
 
-//Recebe parametro da heading.php. Sem isso vai travar ja que a variavel nao foi inicializada 
+//Parameter receives the heading.php. No it will lock that variable not already 
+//been initialized
 if (isset($_GET['id_projeto'])) {
     $project_id = $_GET['id_projeto'];
 } else {
@@ -41,21 +42,21 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
         <LINK rel="stylesheet" type="text/css" href="style.css"> 
         <script language="javascript1.3">
 
-            // Funcoes que serao usadas quando o script for chamado atraves dele proprio ou da arvore 
+            // Functions that will be used when the script is called through his own or tree 
             function reCarrega(URL) {
                 document.location.replace(URL);
             }
 
 <?php
-// Cen�rio - Atualizar Cen�rio 
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um Cen�rio por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um cen�rio ainda n�o cadastrado, alterar e/ou excluir 
-//              um cen�rio previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Alterar ent�o ALTERAR CEN�RIO 
+// Scenario - Refresh Scenario
+// Purpose: Allow Inclusion, Change and Delete a scenario by a user
+// Context: User want to include a scenario not registered, change and / or delete
+// A scenario previously registered.
+// Precondition: Login
+// Actors: User, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: The user clicks on the top menu option:
+// If the user, clicks Change then CHANGE SCENARIO
 ?>
 
             function altCenario(cenario) {
@@ -66,15 +67,15 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
             }
 
 <?php
-// Cen�rio - Atualizar Cen�rio 
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um Cen�rio por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um cen�rio ainda n�o cadastrado, alterar e/ou excluir 
-//              um cen�rio previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Excluir ent�o EXCLUIR CEN�RIO 
+// Scenario - Refresh Scenario
+// Purpose: Allow Inclusion, Change and Delete a scenario by a user
+// Context: User want to include a scenario not registered, change and / or delete
+// A scenario previously registered.
+// Precondition: Login
+// Actors: User, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: The user clicks on the top menu option:
+// If user clicks Delete then DELETE SCENE
 ?>
 
             function rmvCenario(cenario) {
@@ -85,15 +86,15 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
             }
 
 <?php
-//Cen�rios -  Atualizar L�xico 
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um L�xico por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um lexico ainda n�o cadastrado, alterar e/ou 
-//              excluir um cen�rio/l�xico previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Alterar ent�o ALTERAR L�XICO 
+// Scenarios - Upgrade Lexicon
+// Purpose: Allow Included, Excluded Alteraoe a Lexicon for a user
+// Context: Usurio want to include a lexicon still in the register, amend and / or
+// Delete a scenario / lexicon previously registered.
+// Pre-condition: Login
+// Actors: Usurio, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: the user clicks on the top menu option:
+// If user, click Change then CHANGE lexicon
 ?>
 
             function altLexico(lexico) {
@@ -104,15 +105,15 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
             }
 
 <?php
-//Cen�rios -  Atualizar L�xico 
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um L�xico por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um lexico ainda n�o cadastrado, alterar e/ou 
-//              excluir um cen�rio/l�xico previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Excluir ent�o EXCLUIR L�XICO 
+// Scenarios - Upgrade Lexicon
+// Purpose: Allow Inclusion, Change and Delete a Lexicon by user
+// Context: User want to include a lexicon not registered, amend and / or
+// Delete a scenario / lexicon previously registered.
+// Precondition: Login
+// Actors: User, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: The user clicks on the top menu option:
+// If user clicks Delete then DELETE LEXICON
 ?>
 
             function rmvLexico(lexico) {
@@ -122,19 +123,18 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
                 open(url, where, window_spec);
             }
 
-            // Funcoes que serao usadas quando o script 
-            // for chamado atraves da heading.php 
+            //Functions that will be used when the script is invoked through the heading.php 
 
 <?php
-// Cen�rio - Atualizar Cen�rio 
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um Cen�rio por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um cen�rio ainda n�o cadastrado, alterar e/ou excluir 
-//              um cen�rio previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Alterar ent�o ALTERAR CEN�RIO 
+// Scenario - Upgrade Scenario
+// Purpose: Allow Included, Excluded Alteraoe a Scenario for a user
+// Context: Usurio want to include a scenario in yet registered, change and / or delete
+// One scenario previously registered.
+// Pre-condition: Login
+// Actors: Usurio, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episdios: the user clicks on the top menu option:
+// If user click Change then CHANGE scenario
 ?>
 
             function altConceito(conceito) {
@@ -145,15 +145,15 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
             }
 
 <?php
-// Cen�rio - Atualizar Conceito
-//Objetivo:    Permitir Inclus�o, Altera��o e Exclus�o de um Cen�rio por um usu�rio 
-//Contexto:    Usu�rio deseja incluir um cen�rio ainda n�o cadastrado, alterar e/ou excluir 
-//              um cen�rio previamente cadastrados. 
-//              Pr�-Condi��o: Login 
-//Atores:    Usu�rio, Gerente do projeto 
-//Recursos:    Sistema, menu superior, objeto a ser modificado 
-//Epis�dios:    O usu�rio clica no menu superior na op��o: 
-//                Se usu�rio clica em Excluir ent�o EXCLUIR CEN�RIO 
+// Scenario - Upgrade Concept
+// Purpose: Allow Included, Excluded Alteraoe a Scenario for a user
+// Context: Usurio want to include a scenario in yet registered, change and / or delete
+// One scenario previously registered.
+// Pre-condition: Login
+// Actors: Usurio, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episdios: the user clicks on the top menu option:
+// If user click Delete then DELETE scenario
 ?>
 
             function rmvConceito(conceito) {
@@ -172,17 +172,16 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            -Verificar pedidos de altera��o de cen�rio (ver Verificar pedidos de altera��o 
-//            de cen�rio); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Preconditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project Admnistrator
+// Episodes: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing onscreen options:
+// Check-ordered change of scenerio (see Check applications change scenario);
 ?>
 
             function pedidoCenario() {
@@ -204,17 +203,17 @@ if (isset($project_id)) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            - Verificar pedidos de altera��o de termos do l�xico 
-//            ( ver Verificar pedidos de altera��o de termos do l�xico); 
+//  Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project Administrator
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// - Check requests for alteration of terms of the lexicon
+// (Check to see requests for alteration of terms of the lexicon);
 ?>
 
             function pedidoLexico() {
@@ -237,17 +236,17 @@ if (isset($project_id)) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            - Verificar pedidos de altera��o de termos do l�xico 
-//            ( ver Verificar pedidos de altera��o de termos do l�xico); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project Administrator
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// - Check requests for alteration of terms of the lexicon
+// (Check to see requests for alteration of terms of the lexicon);
 ?>
 
             function pedidoConceito() {
@@ -289,16 +288,16 @@ if (isset($project_id)) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            -Adicionar usu�rio (n�o existente) neste projeto (ver Adicionar Usu�rio); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project doAdministrador
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// Add-usurio (at present) in this project (see Add Usurio);
 ?>
 
             function addUsuario() {
@@ -309,17 +308,17 @@ if (isset($project_id)) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            -Relacionar usu�rios j� existentes com este projeto 
-//            (ver Relacionar usu�rios com projetos); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project doAdministrador
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// J-Relate existing users with this design
+// (See Relate users with projects);
 ?>
 
             function relUsuario() {
@@ -330,16 +329,16 @@ if (isset($project_id)) {
             }
 
 <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            -Gerar xml deste projeto (ver Gerar relat�rios XML); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project doAdministrador
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// Generate-xml this project (see Generate XML reports); 
 ?>
 
             function geraXML()
@@ -406,8 +405,8 @@ else {
 
 
 <?php
-// Ontologia 
-// Objetivo:  Gerar ontologia do projeto 
+// Ontology
+// Goal: Generate project ontology
 ?>
             function geraOntologia()
             {
@@ -431,8 +430,8 @@ else {
             }
 
 <?php
-// Ontologia - DAML 
-// Objetivo:  Gerar daml deste da ontologia do projeto 
+// Ontology - DAML
+// Purpose: Generate daml ontology project
 ?>
             function geraDAML()
             {
@@ -456,7 +455,7 @@ else {
             }
 
 <?php
-// Objetivo: Recuperar hist�rico da ontologia em DAML 
+// Purpose: Retrieve historical ontology in DAML
 ?>
             function recuperaDAML()
             {
@@ -486,13 +485,13 @@ else {
     </head> 
     <body> 
 
-        <!--                     PRIMEIRA PARTE                                     --> 
+        <!--                     First Part                                     --> 
 
 <?php
 include("frame_inferior.php");
 
-
-if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU PELA ARVORE) 
+// SCRIPT CALLED BY OWN main.php (OR THE TREE)
+if (isset($id) && isset($t)) {      
     $vetorVazio = array();
     if ($t == "c") {
         print "<h3>Informa��es sobre o cen�rio</h3>";
@@ -511,7 +510,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
 
 
-                <!--                     SEGUNDA PARTE                                     --> 
+                <!--                     SECOND PART                         --> 
 
 
     <?php
@@ -520,10 +519,11 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
 
 
-                <!-- CEN�RIO --> 
+                <!-- SCENARIO --> 
 
     <?php
-    if ($t == "c") {        // se for cenario 
+    // if scenario 
+    if ($t == "c") {        
         $selection = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios, id_projeto    
               FROM cenario    
               WHERE id_cenario = $id";
@@ -532,11 +532,13 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
         $result = mysql_fetch_array($qrr);
 
         $c_project_id = $result['id_projeto'];
-
-        $scenarios_vector = carrega_vetor_cenario($c_project_id, $id, true); // carrega vetor de cenario
+        
+        // load vector scenery
+        $scenarios_vector = carrega_vetor_cenario($c_project_id, $id, true); 
         quicksort($scenarios_vector, 0, count($scenarios_vector) - 1, 'cenario');
-
-        $lexicons_vector = carrega_vetor_lexicos($c_project_id, 0, false); // carrega vetor de l�xicos 
+        
+        // load vector lexicons
+        $lexicons_vector = carrega_vetor_lexicos($c_project_id, 0, false); 
         quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
         ?>    
 
@@ -590,7 +592,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                     </tr> 
 
 
-                    <!-- L�XICO --> 
+                    <!-- LEXICON --> 
 
                 <?php
             } elseif ($t == "l") {
@@ -702,10 +704,12 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
 
 
-                    <!-- ONTOLOGIA - RELA��ES --> 
+                    <!-- ONTOLOGY - RELATIONS --> 
 
                     <?php
-                } elseif ($t == "or") {        // se for cenario 
+                    
+                  // se for cenario 
+                } elseif ($t == "or") {        
                     $selection = "SELECT id_relacao, nome   
               FROM relacao   
               WHERE id_relacao = $id";
@@ -739,7 +743,7 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
             <br> 
 
 
-            <!--                     TERCEIRA PARTE                                     --> 
+            <!--                     THIRD PART                             --> 
 
 
                         <?php
@@ -760,19 +764,20 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
 
 
 
-            <!--                     QUARTA PARTE                                     --> 
+            <!--                     PART FOUR                            --> 
 
 
     <?php
     frame_inferior($c, $t, $id);
-} elseif (isset($project_id)) {         // SCRIPT CHAMADO PELO HEADING.PHP 
-    // Foi passada uma variavel $id_projeto. Esta variavel deve conter o id de um 
-    // projeto que o usuario esteja cadastrado. Entretanto, como a passagem eh 
-    // feita usando JavaScript (no heading.php), devemos checar se este id realmente 
-    // corresponde a um projeto que o usuario tenha acesso (seguranca). 
+  // SCRIPT CHAMADO PELO HEADING.PHP 
+} elseif (isset($project_id)) {         
+    //Was passed a variable $ id_projeto. This variable should contain the id of a
+    // Project that the User is registered. However, as the passage eh
+    // Done using JavaScript (in heading.php), we check if this id really
+    // Corresponds to a project that the User has access (security). 
     check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
 
-    // Seta uma variavel de sessao correspondente ao projeto atual 
+    // Set a session variable corresponding to the current project 
     $_SESSION['id_projeto_corrente'] = $project_id;
     ?>    
 
@@ -797,16 +802,16 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
             </table> 
 
     <?php
-// Cen�rio - Escolher Projeto 
-// Objetivo:  Permitir ao Administrador/Usu�rio escolher um projeto. 
-// Contexto:  O Administrador/Usu�rio deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser Administrador 
-// Atores:    Administrador, Usu�rio 
-// Recursos:  Usu�rios cadastrados 
-// Epis�dios: Caso o Usuario selecione da lista de projetos um projeto da qual ele seja 
-//            administrador, ver Administrador escolhe Projeto. 
-//            Caso contr�rio, ver Usu�rio escolhe Projeto. 
-    // Verifica se o usuario eh administrador deste projeto 
+// Scenario - Choosing Project
+// Purpose: Allow Administrator / Usurio choose a design.
+// Context: The Administrator / Usurio want to choose a design.
+// Pre-conditions: Login Become Administrator
+// Actors: Administrator Usurio
+// Resources: registered users
+// Episdios: If the User select from the list of projects a project of which he is
+// Administrator, see Administrator chooses Project.
+// Otherwise, see Usurio choose Project.
+// Check if the User Administrator eh this project
     if (is_admin($_SESSION['id_usuario_corrente'], $project_id)) {
         ?>    
 
@@ -816,23 +821,23 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                         <th>Voc� � um administrador deste projeto:</th> 
 
                     <?php
-// Cen�rio - Administrador escolhe Projeto 
-// Objetivo:  Permitir ao Administrador escolher um projeto. 
-// Contexto:  O Administrador deseja escolher um projeto. 
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado. 
-// Atores:    Administrador 
-// Recursos:  Projetos doAdministrador 
-// Epis�dios: O Administrador seleciona da lista de projetos um projeto da qual ele seja 
-//            administrador. 
-//            Aparecendo na tela as op��es de: 
-//            -Verificar pedidos de altera��o de cen�rio (ver Verificar pedidos de altera��o 
-//            de cen�rio); 
-//            - Verificar pedidos de altera��o de termos do l�xico 
-//            ( ver Verificar pedidos de altera��o de termos do l�xico); 
-//            -Adicionar usu�rio (n�o existente) neste projeto (ver Adicionar Usu�rio); 
-//            -Relacionar usu�rios j� existentes com este projeto 
-//            (ver Relacionar usu�rios com projetos); 
-//            -Gerar xml deste projeto (ver Gerar relat�rios XML); 
+// Scenario - Project Administrator chooses
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Pre-conditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project doAdministrador
+// Episdios: The administrator selects the list of projects a project of which he is
+// Administrator.
+// Appearing on the screen of the options:
+// Check-applications for alteration of scenario (see Check requests for alteration
+// The scenario);
+// - Check requests for alteration of terms of the lexicon
+// - (Check to see requests for alteration of terms of the lexicon);
+// - Add-usurio (at present) in this project (see Add Usurio);
+// - J-Relate existing users with this design
+// - (See Relate users with projects);
+// - Generate-xml this project (see Generate XML reports); 
                     ?>    
                     </TR>
 
@@ -920,15 +925,15 @@ if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU 
                 </table>			
                 <?php
             }
-        } else {        // SCRIPT CHAMADO PELO INDEX.PHP 
+        } else {        // SCRIPT CALLED BY index.php 
             ?>    
 
-            <p>Selecione um projeto acima, ou crie um novo projeto.</p> 
+            <p>Select a project above, or create a new project.</p> 
 
                     <?php
                 }
                 ?>    
-        <i><a href="showSource.php?file=main.php">Veja o c�digo fonte!</a></i> 
+        <i><a href="showSource.php?file=main.php">See the source!</a></i> 
     </body> 
 
 </html> 
