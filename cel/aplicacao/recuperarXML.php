@@ -4,7 +4,8 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+// Check if the User is authenticated
+chkUser("index.php");        
 
 $XML = "";
 ?>
@@ -16,15 +17,15 @@ $XML = "";
     </head>
 
 <?php
-//Cen�rio -  Gerar Relat�rios XML 
-//Objetivo:   Permitir ao administrador gerar relat�rios em formato XML de um projeto,
-//             identificados por data.
-//Contexto:   Gerente deseja gerar um relat�rio para um dos projetos da qual � administrador.
-//              Pr�-Condi��o: Login, projeto cadastrado.
-//Atores:     Administrador
-//Recursos:   Sistema, dados do relat�rio, dados cadastrados do projeto, banco de dados.
-//Epis�dios:  Restri��o: Recuperar os dados em XML do Banco de dados e os transformar
-//                       por uma XSL para a exibi��o.
+// Scenario - Generate XML Reports
+// Purpose: Allow the administrator to generate reports in XML format to a project,
+// Identified by date.
+// Context: Manager to generate a report for a project which is administrator.
+// Precondition: Login, registered design.
+// Actors: Administrator
+// Resources: System, report data, data registered design, database.
+// Episodes: Restriction: Retrieve XML data from the database and transform
+// By an XSL for display.
 
 $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 if (isset($delete)) {

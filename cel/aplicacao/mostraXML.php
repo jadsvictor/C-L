@@ -4,20 +4,21 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+// Check if the User is authenticated
+chkUser("index.php");        
 
 $database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
 
-//Cen�rio -  Gerar Relat�rios XML 
-//Objetivo:	Permitir ao administrador gerar relat�rios em formato XML de um projeto,
-//              identificados por data.
-//Contexto:   Gerente deseja gerar um relat�rio para um dos projetos da qual � administrador.
-//              Pr�-Condi��o: Login, projeto cadastrado.
-//Atores:	  Administrador
-//Recursos:	  Sistema, dados do relat�rio, dados cadastrados do projeto, banco de dados.
-//Epis�dios:  Gerando com sucesso o relat�rio a partir dos dados cadastrados do projeto,
-//             o sistema fornece ao administrador a tela de visualiza��o do relat�rio
-//             XML criado.
+// Scenario - Generate XML Reports
+// Purpose: Allow the administrator to generate reports in XML format to a project,
+// Identified by date.
+// Context: Manager to generate a report for a project which is administrator.
+// Precondition: Login, registered design.
+// Actors: Administrator
+// Resources: System, report data, data registered design, database.
+// Episodes: Generating Success with the report from the data registered design,
+// The system gives the administrator the viewing screen of the report
+// XML created.
 
 $qq = "select * from publicacao where id_projeto = $project_id AND versao = $version";
 $qrr = mysql_query($qq) or die("Erro ao enviar a query");

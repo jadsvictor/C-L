@@ -9,9 +9,9 @@
         <?PHP
         include_once( "CELConfig/CELConfig.inc" );
         /*
-          Arquivo   : recuperaDAML.php
-          Vers�o       : 1.0
-          Coment�rio: Este programa lista todos os arquivos DAML    gerados    em $_SESSION['diretorio']
+          Archive   : recuperaDAML.php
+          Version      : 1.0
+          Comentary: This program lists all the files generated DAML $ _SESSION ['directory']
          */
 
         function extrair_data($archive_name) {
@@ -73,7 +73,7 @@
             }
         }
 
-        /* Monta a tabela    de arquivos    DAML */
+        //Mounts the file table DAML
         print( "<CENTER><TABLE WIDTH=\"80%\">\n");
         print( "<TR>\n\t<Th><STRONG>Projeto</STRONG></Th>\n\t<Th><STRONG>Gerado em</STRONG></Th>\n</TR>\n");
         if ($dir_handle = @opendir($directory)) {
