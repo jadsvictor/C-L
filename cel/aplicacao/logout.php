@@ -5,18 +5,18 @@ include_once("CELConfig/CELConfig.inc");
 session_start();
 
 
-// Cen�rio - Realizar logout
-// Objetivo:  Permitir ao usu�rio realizar o logout, mantendo a integridade do que foi 
-//            realizado,  e retorna a tela de login	
-// Contexto:  Sistema aberto. Usu�rio ter acessado ao sistema. 
-//            Usu�rio deseja sair da aplica��o e manter a integridade do que foi 
-//            realizado 
-//            Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-// Atores:	  Usu�rio, Sistema.	
-// Recursos:  Interface	
-// Epis�dios: O sistema fecha a sess�o do usu�rio, mantendo a integridade do que foi realizado 
-//            O sistema retorna a interface de login, possibilitando o usu�rio se logar 
-//            novamente 	
+// Scenario - Perform logout
+// Purpose: Allow the user to perform the logout, maintaining the integrity of what was
+// Done, and returns to the login screen
+// Context: Open System. User has accessed the system.
+// User wishes to exit the application and maintain the integrity of which was
+// Done
+// Precondition: User has accessed the system
+// Actors: User, System.
+// Features: Interface
+// Episodes: The system closes the user session, maintaining the integrity of what was done
+// The system returns the login interface, allowing the user to login
+// Again	
 
 session_destroy();
 session_unset();
