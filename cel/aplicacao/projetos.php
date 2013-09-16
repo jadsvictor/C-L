@@ -12,7 +12,7 @@ include("funcoes_genericas.php");
 <body>
 
 <?php
-$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
+bd_connect() or die("Erro ao conectar ao SGBD");
 
 // Scenario - Choosing Project
 // Purpose: Allows the Administrator / User choose a design.
@@ -33,8 +33,7 @@ $qrr = mysql_query($selection) or die("Erro ao enviar a query de busca");
         $project_id = $result[0];
         $date = $result[1];
         $version = $result[2];
-        $XML = $result[3];
-
+       
         $qSearchProjectName = "SELECT * FROM projeto WHERE id_projeto = '$project_id'";
         $qrrSearch = mysql_query($qSearchProjectName) or die("Erro ao enviar a query de busca de projeto");
         $resultName = mysql_fetch_row($qrrSearch);

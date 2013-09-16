@@ -13,7 +13,7 @@ include("httprequest.inc");
 // SINGLE PROJECT ADMINISTRATOR see.
 // Otherwise, see USER CHOOSES DESIGN.
 
-$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
+bd_connect() or die("Erro ao conectar ao SGBD");
 
 $qq = "select * from publicacao where id_projeto = $project_id AND versao = $version";
 $qrr = mysql_query($qq) or die("Erro ao enviar a query");

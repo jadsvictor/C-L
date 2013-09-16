@@ -18,7 +18,7 @@
             list($project, $rest) = split("__", $archive_name);
             list($day, $month, $year, $hour, $minuto, $second, $extension) = split('[_-.]', $rest);
 
-            if (!is_numeric($day) || !is_numeric($month) || !is_numeric($year) || !is_numeric($hour) || !is_numeric($minuto) || !is_numeric($second))
+            if (!is_numeric($day) || !is_numeric($month) || !is_numeric($year) || !is_numeric($hour) || !is_numeric($minuto) || !is_numeric($second)  || !is_numeric($extension))
                 return "-";
 
             $month_unabbreviated = "-";

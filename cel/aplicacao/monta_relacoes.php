@@ -7,25 +7,18 @@ include_once("coloca_links.php");
 function monta_relacoes($project_id) {
     // Deletes all relations existing tables centocen, centolex and lextolex
 
-    $DATABASE = new PGDB ();
-    $sql1 = new QUERY($DATABASE);
-    $sql2 = new QUERY($DATABASE);
-    $sql3 = new QUERY($DATABASE);
-
-    //$sql1->execute ("DELETE FROM centocen");
-    //$sql2->execute ("DELETE FROM centolex") ;
-    //$sql3->execute ("DELETE FROM lextolex") ;
+   
     // Redo the relationships of the tables centocen, centolex and lextolex
     // selects all scenarios
 
-    $q = "SELECT *
+    $select_scene = "SELECT *
 	          FROM cenario
 	          WHERE id_projeto = $project_id
 	          ORDER BY CHAR_LENGTH(titulo) DESC";
-    $qrr = mysql_query($q) or die("Erro ao enviar a query");
+    $qrr_select_scene = mysql_query($select_scene) or die("Erro ao enviar a query");
     
     // For all scenarios
-    while ($result = mysql_fetch_array($qrr)) {  
+    while ($result = mysql_fetch_array($qrr_select_scene)) {  
         $current_scenario_id = $result['id_cenario'];
 
         // Ride vector title of scenarios
@@ -89,13 +82,13 @@ function monta_relacoes($project_id) {
 
     // Select all the lexicons
 
-    $q = "SELECT *
+    $select_lexicon = "SELECT *
 	          FROM lexico
 	          WHERE id_projeto = $project_id
 	          ORDER BY CHAR_LENGTH(nome) DESC";
-    $qrr = mysql_query($q) or die("Erro ao enviar a query");
+    $qrr_select_lexicon = mysql_query($select_lexicon) or die("Erro ao enviar a query");
 
-    while ($result = mysql_fetch_array($qrr)) { 
+    while ($result = mysql_fetch_array($qrr_select_lexicon)) { 
         $current_lexicon_id = $result['id_lexico'];
 
         $lexicons_vector = carrega_vetor($project_id, $current_lexicon_id);
@@ -137,6 +130,7 @@ function lexico_para_lexico($id_lexico, $text, $vetor_lexicos) {
 
 function cenario_para_lexico($id_cenario, $text, $vetor_lexicos) {
     $number = 0;
+    $j = 0;
     while ($number < count($vetor_lexicos)) {
         $regex = "/(\s|\b)(" . $vetor_lexicos[$number]->nome . ")(\s|\b)/i";
         $text = preg_replace($regex, "$1{l" . $vetor_lexicos[$j]->id_lexico . "**$2" . "}$3", $text);
@@ -150,10 +144,11 @@ function cenario_para_lexico($id_cenario, $text, $vetor_lexicos) {
 
 function cenario_para_cenario($id_cenario, $text, $vetor_cenarios) {
     $number = 0;
+    $j= 0;
     while ($number < count($vetor_cenarios)) {
         $regex = "/(\s|\b)(" . $vetor_cenarios[$number]->titulo . ")(\s|\b)/i";
         $text = preg_replace($regex, "$1{c" . $vetor_cenarios[$j]->id_cenario . "**$2" . "}$3", $text);
-        $number++;
+        $number++; 
         
         }
     return $text;
@@ -198,7 +193,6 @@ function adiciona_relacionamento($id_from, $type_from, $text) {
     // Check if the tags should be added
     $parser = 0; 
 
-    $new_text = "";
     while ($index < strlen(&$text)) {
         if ($text[$index] == "{") {
             $parser++;

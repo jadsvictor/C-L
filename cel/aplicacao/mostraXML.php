@@ -7,7 +7,7 @@ include("httprequest.inc");
 // Check if the User is authenticated
 chkUser("index.php");        
 
-$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
+bd_connect() or die("Erro ao conectar ao SGBD");
 
 // Scenario - Generate XML Reports
 // Purpose: Allow the administrator to generate reports in XML format to a project,
