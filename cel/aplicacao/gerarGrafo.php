@@ -1,3 +1,6 @@
+<html>
+    <head>
+        <title>Generate Graph</title>
 <?php
 session_start();
 
@@ -9,13 +12,11 @@ chkUser("index.php");
 
 $XML = "";
 ?>
-<html>
-    <body>
-    <head>
-        <title>Generate Graph</title>
+
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">        
     </head>
 
+    <body>
 <?php
 //Scenario -  Generate Graph
 //Goal:   Allow the administrator to generate the graph of a project
@@ -24,7 +25,7 @@ $XML = "";
 //Means:   System, XML, registered data project, database.
 //Episodes:  Restriction: Possuir um XML gerado do projeto
 
-$database_recover = bd_connect() or die("Erro ao conectar ao SGBD");
+bd_connect() or die("Erro ao conectar ao SGBD");
 $selection = "SELECT * FROM publicacao WHERE id_projeto = '$project_id'";
 $qrr = mysql_query($selection) or die("Erro ao enviar a query");
 ?>

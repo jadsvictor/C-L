@@ -87,7 +87,7 @@ session_unregister("verbos_selecionados");
 session_unregister("predicados_selecionados");
 session_unregister("lista_de_sujeito_e_objeto");
 ?> 
-<SCRIPT language='javascript'>
+<SCRIPT type='text/javascript'>
     document.location = "auxiliar_interface.php";
 </SCRIPT>
 <?php ?>

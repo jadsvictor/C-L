@@ -146,9 +146,6 @@ if (!(function_exists("gerar_xml"))) {
 
         $tb_lexicon = mysql_query($qry_lexicon) or die("Erro ao enviar a query de selecao.");
 
-        $first = true;
-
-        $id_temp = "";
 
         // For it lexicon symbols
 

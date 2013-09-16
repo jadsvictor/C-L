@@ -40,7 +40,7 @@ if (!isset($_SESSION['id_projeto_corrente'])) {
 
     <head> 
         <LINK rel="stylesheet" type="text/css" href="style.css"> 
-        <script language="javascript1.3">
+        <script type="text/javascript1.3">
 
             // Functions that will be used when the script is called through his own or tree 
             function reCarrega(URL) {
@@ -585,10 +585,10 @@ if (isset($id) && isset($t)) {
                     <tr> 
                         <td CLASS="Estilo" height="40" valign=MIDDLE> 
                             <a href="#" onClick="altCenario(<?= $result['id_cenario'] ?>);">Alterar Cen�rio</a> 
-                            </th> 
+                            </td> 
                         <td CLASS="Estilo"  valign=MIDDLE> 
                             <a href="#" onClick="rmvCenario(<?= $result['id_cenario'] ?>);">Remover Cen�rio</a> 
-                            </th> 
+                            </td> 
                     </tr> 
 
 
@@ -665,10 +665,10 @@ if (isset($id) && isset($t)) {
                     <tr> 
                         <td CLASS="Estilo" height="40" valign="middle"> 
                             <a href="#" onClick="altLexico(<?= $result['id_lexico'] ?>);">Alterar S�mbolo</a> 
-                            </th> 
+                            </td> 
                         <td CLASS="Estilo" valign="middle"> 
                             <a href="#" onClick="rmvLexico(<?= $result['id_lexico'] ?>);">Remover S�mbolo</a> 
-                            </th> 
+                            </td> 
                     </tr> 
 
 
@@ -680,8 +680,8 @@ if (isset($id) && isset($t)) {
               FROM   conceito   
               WHERE  id_conceito = $id";
 
-        $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
-        $result = mysql_fetch_array($qrr);
+        $qrr_selection = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+        $result = mysql_fetch_array($qrr_selection);
         ?>    
 
                     <tr> 
@@ -695,10 +695,10 @@ if (isset($id) && isset($t)) {
                 <TABLE> 
                     <tr> 
                         <td CLASS="Estilo" height="40" valign=MIDDLE>                     
-                            </th> 
+                            </td> 
                         <td CLASS="Estilo"  valign=MIDDLE> 
                             <a href="#" onClick="rmvConceito(<?= $result['id_conceito'] ?>);">Remover Conceito</a> 
-                            </th> 
+                            </td> 
                     </tr> 
 
 
@@ -726,10 +726,10 @@ if (isset($id) && isset($t)) {
                 <TABLE> 
                     <tr> 
                         <td CLASS="Estilo" height="40" valign=MIDDLE>                   
-                            </th>
+                            </td>
                         <td CLASS="Estilo"  valign=MIDDLE> 
                             <a href="#" onClick="rmvRelacao(<?= $result['id_relacao'] ?>);">Remover Rela��o</a> 
-                            </th> 
+                            </td> 
                     </tr> 
 
 
@@ -781,7 +781,7 @@ if (isset($id) && isset($t)) {
     $_SESSION['id_projeto_corrente'] = $project_id;
     ?>    
 
-            <table ALIGN=CENTER> 
+            <table style="text-align:center"> 
                 <tr> 
                     <th>Projeto:</th> 
                     <td CLASS="Estilo"><?= simple_query("nome", "projeto", "id_projeto = $project_id") ?></td> 
@@ -816,7 +816,7 @@ if (isset($id) && isset($t)) {
         ?>    
 
                 <br> 
-                <table ALIGN=CENTER> 
+                <table style="text-align:center"> 
                     <tr> 
                         <th>Voc� � um administrador deste projeto:</th> 
 
@@ -915,7 +915,7 @@ if (isset($id) && isset($t)) {
             } else {
                 ?>	
                 <br>
-                <table ALIGN=CENTER> 
+                <table style="text-align:center"> 
                     <tr> 
                         <th>Voc� n�o � um administrador deste projeto:</th> 	
                     </tr>	

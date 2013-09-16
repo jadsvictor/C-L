@@ -1,3 +1,4 @@
+<html>
 <?php
 session_start();
 
@@ -24,7 +25,7 @@ if (isset($_GET['id_projeto'])) {
 }
 ?>
 
-<script language="javascript1.3">
+<script type="text/javascript1.3">
 
     function getIDPrj() {
         // combo-box de projeto
@@ -141,7 +142,6 @@ if (isset($project_id)) {
 
 </script>
 
-<html>
     <style>
         a
         {
@@ -158,10 +158,11 @@ if (isset($project_id)) {
             text-decoration: none
         }
     </style>
-    <body bgcolor="#ffffff" text="#000000" topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" <?= (isset($project_id)) ? "onLoad=\"setPrjSelected();\"" : "" ?>>
+    <body style="background-color: #ffffff" 
+           <?= (isset($project_id)) ? "onLoad=\"setPrjSelected();\"" : "" ?>>
         <form onSubmit="return atualizaMenu();">
             <table width="100%" cellspacing="0" cellpadding="0">
-                <tr bgcolor="#E0FFFF">
+                <tr  style="background-color: #E0FFFF">
                    <td width="294" height="79" > <!--<img src="Images/Logo.jpg"></td>-->
                         <img src="Images/Logo_C.jpg" width="190" height="100"></td>
                     <td align="right" valign="top">
@@ -176,12 +177,12 @@ if (isset($project_id)) {
 
                                         if ($ret != 0) {
                                             ?>
-                                            <font color="#FF0033">Administrador</font>
+                                            <p style=" color: #FF0033">Administrador</p>
 
 
                                             <?php
                                         } else {
-                                            ?>                               <font color="#FF0033">Usu�rio normal</font>
+                                            ?>                               <p style=" color: #FF0033">Usuario normal</p>
 
 
                                             <?php
@@ -204,7 +205,7 @@ if (isset($project_id)) {
 // Or use a project he is a part.
 // Connect to the DBMS
                                         
-                                        $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+                                       bd_connect() or die("Erro ao conectar ao SGBD");
 
 // define the consult
                                         $selection = "SELECT p.id_projeto, p.nome, pa.gerente

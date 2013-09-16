@@ -20,11 +20,11 @@ session_start();
 
 session_destroy();
 session_unset();
-$ip_value = CELConfig_ReadVar("HTTPD_ip");
+
 ?>
 
 <html>
-    <script language="javascript1.3">
+    <script type="text/javascript1.3">
 
 
         document.writeln('<p style="color: blue; font-weight: bold; text-align: center">A aplica��o teminou escolha uma das op��es abaixo:</p>');
