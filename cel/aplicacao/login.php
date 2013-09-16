@@ -1,16 +1,16 @@
 <?php
-/**
-  @Titulo: Acessar o sistema
+//Title: Acess the system
+//Goal: Allow the user to access the Application of Lexical Editing and Editing
+//Scenarios, register or order in the system password in the case of having 
+//forgotten it.
+//Context: A página da aplicação é acessada. Na página de abertura ../cel/aplicacao/login.php 
+//o usuário insere login ou senha incorretos - $wrong=true.
+//Actors: user, application
+//Means: UURL to access the system, login, password, bd.inc, httprequest.inc, 
+//$ wrong, $ url, showSource.php? File = login.php, esqueciSenha.php, add_usuario.php? 
+//Again = true
+//Episode 1: login
 
-  @Objetivo: Permitir que o usu�rio acesse a Aplica��o de Edi��o de L�xicos e de Edi��o de Cen�rios, cadastre-se no sistema ou requisite sua senha no caso de t�-la esquecido.
-
-  @Contexto: A p�gina da aplica��o � acessada. Na p�gina de abertura ../cel/aplicacao/login.php o usu�rio insere login ou senha incorretos - $wrong=true.
-
-  @Atores: usu�rio, aplica��o
-
-  @Recursos: URL de acesso ao sistema,  login, senha, bd.inc, httprequest.inc, $wrong, $url, showSource.php?file=login.php, esqueciSenha.php, add_usuario.php?novo=true
- * */
-/** @Episodio 1: Iniciar sess�o * */
 session_start();
 
 include("bd.inc");
@@ -23,18 +23,23 @@ $wrong = "false";
 
 include("httprequest.inc");
 
-/** @Episodio 2: Conectar o SGBD * */
-/** @Restri��o: a fun��o bd_connect definida em bd.inc � utilizada * */
-/** @Exce��o: Erro ao conectar banco de dados * */
+// Episode 2: Connect the DBMS
+// Constraint: a function defined in bd_connect bd.inc used
+// Exception: Failed to connect database
+
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
-/** @Episodio 9: Se o formul�rio tiver sido submetido ent�o verificar se o login e senha est�o corretos. * */
+// Episode 9: If the form has been submitted then check if the login and
+// password are correct.
+
 if ($submit == 'Entrar') {
     $cript_password = md5($password);
     $selection = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$cript_password'";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
 
-    /** @Episodio 10: Se o login e/ou senha estiverem incorretos ent�o retornar a p�gina de login com wrong=true na URL. * */
+// Episode 10: If the login and / or password is incorrect then return the page
+// login with wrong = true in the URL.
+        
     if (!mysql_num_rows($qrr)) {
         ?>
         <script language="javascript1.3">
@@ -45,7 +50,10 @@ if ($submit == 'Entrar') {
         $wrong = $_get["wrong"];
     }
 
-    /** @Episodio 11: Se o login e senha estiverem corretos ent�o registrar sess�o para o usu�rio, fechar login.php e abrir aplica��o . * */ else {
+// Episode 11: If the login and password are correct then register session for
+// the user to close the application and open login.php
+    
+    else {
 
         $row = mysql_fetch_row($qrr);
         //$id_usuario_corrente = $row[0];
@@ -62,7 +70,9 @@ if ($submit == 'Entrar') {
     }
 }
 
-/** @Episodio 3: Mostrar o formul�rio de login para usu�rio. * */ else {
+//Episode 3: Show the login form to user.
+
+else {
     ?>
 
     <html>
@@ -72,7 +82,8 @@ if ($submit == 'Entrar') {
         <body>
 
     <?php
-    /** @Episodio 4: Se wrong = true ent�o mostrar a mensagem Login ou Senha incorreto . * */
+    
+    //Episode 4: If wrong = true then display the message "Incorrect Login or Password"
     if ($wrong == "true") {
         ?>
 
@@ -82,7 +93,9 @@ if ($submit == 'Entrar') {
 
                 <?php
             }
-            /** @Episodio 5: Se wrong != true ent�o mostrar a mensagem Entre com seu login e senha. * */ else {
+            //Episodio 5: If wrong! = True then display the message "Enter your login and password"
+            
+            else {
                 ?>
 
                 <p style="color: green; font-weight: bold; text-align: center">
@@ -102,16 +115,22 @@ if ($submit == 'Entrar') {
                         <tr><td align="center" colspan="2"><input name="submit" type="submit" value="Entrar"></td></tr>
                     </table>
 
-    <?php /** @Episodio 6: [CADASTRAR NOVO USU�RIO] * */ ?>
+    <?php 
+                    //Episode 6: [REGISTER NEW USER]
+    ?>
                     <p><a href="add_usuario.php?novo=true">Sign in</a>&nbsp;&nbsp;
 
-    <?php /** @Episodio 7: [LEMBRAR SENHA] * */ ?>
+    <?php 
+                        //Episode 7: [REMEMBER PASSWORD]
+    ?>
                         <a href="esqueciSenha.php">Forgot password</a></p>
                 </div>
             </form>
         </body>
 
-                    <?php /** @Episodio 8: [MOSTRAR O C�DIGO FONTE] * */ ?>
+                    <?php 
+         //Episode 8: [SHOW THE SOURCE]
+                    ?>
 
         <i><a href="showSource.php?file=login.php">See the source!</a></i>    
     </html>

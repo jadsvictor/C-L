@@ -1,7 +1,10 @@
 <?php
 session_start();
 include("funcoes_genericas.php");
-chkUser("index.php");        // Cenario: controle de acesso 
+chkUser("index.php");        
+
+// Scenario: Acess control
+
 ?> 
 
 <title>C&L - Scenarios and Lexicons</title> 
