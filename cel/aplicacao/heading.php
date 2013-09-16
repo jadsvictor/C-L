@@ -4,18 +4,20 @@ session_start();
 include("funcoes_genericas.php");
 
 
-chkUser("index.php");        // Cenario: controle de acesso
-// Cen�rio - Usu�rio escolhe Projeto
-// Objetivo:  Permitir ao Usu�rio escolher um projeto.
-// Contexto:  O usu�rio deseja escoher um projeto.
-//            Pr�-Condi��es: Login
-// Atores:    Usu�rio
-// Recursos:  Projetos
-// Epis�dios: O Usu�rio seleciona da lista de projetos um projeto da qual ele n�o seja 
-//            administrador. 
-//            O usu�rio poder�:
-//              - Atualizar cen�rio:
-//              - Atualizar l�xico.
+chkUser("index.php");        
+
+// Scenario: acess control
+// Scenario - User chooses project
+// Goal:  Allow User to choose a design.
+// Context:  The user wants to choose a project
+//            Pre-conditions: Login
+// Actors:    User
+// Means:  Projects
+// Episodes: The user selects from the list of projects a project of which he is not
+// Administrator.
+// The user can:
+// - Refresh scenario:
+// - Update lexicon.
 
 if (isset($_GET['id_projeto'])) {
     $project_id = $_GET['id_projeto'];
@@ -25,15 +27,19 @@ if (isset($_GET['id_projeto'])) {
 <script language="javascript1.3">
 
     function getIDPrj() {
-        var select = document.forms[0].id_projeto; // combo-box de projeto
-        var indice = select.selectedIndex; // indice selecionado
-        var id_projeto = select.options[indice].value; // id_projeto correspondente ao indice
+        // combo-box de projeto
+        var select = document.forms[0].id_projeto;
+        // indice selecionado
+        var indice = select.selectedIndex;
+        // id_projeto correspondente ao indice
+        var id_projeto = select.options[indice].value; 
         return id_projeto;
 
     }
 
-    function atualizaMenu() {   // carrega o menu correspondente ao projeto
-        // Para nao fazer nada se selecionarem o "-- Selecione um Projeto --"
+    // loads the menu corresponding to the project
+    function atualizaMenu() {   
+        // To not do anything if they select the "- Select a Project -"
         if (!(document.forms[0].id_projeto.options[0].selected))
         {
             top.frames['code'].location.replace('code.php?id_projeto=' + getIDPrj());
@@ -49,9 +55,10 @@ if (isset($_GET['id_projeto'])) {
     }
 
 <?php
-if (isset($project_id)) {   // $id_projeto soh nao estara setada caso seja a primeira
-    // vez que o usuario esteja acessando o sistema
-    // Checagem de seguranca, pois $id_projeto eh passado atraves de JavaScript (cliente)
+// $id_projeto not only will joined if the first
+// time the User is accessing the system
+if (isset($project_id)) {   
+    // Checking safety as $ id_projeto is passed through JavaScript (client)
     check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
     ?>
 
@@ -71,15 +78,16 @@ if (isset($project_id)) {   // $id_projeto soh nao estara setada caso seja a pri
 
     function novoCenario() {
 <?php
-// Cen�rio - Atualizar Cen�rio 
-//Objetivo:	Permitir Inclus�o, Altera��o e Exclus�o de um Cen�rio por um usu�rio
-//Contexto:	Usu�rio deseja incluir um cen�rio ainda n�o cadastrado, alterar e/ou excluir
-//              um cen�rio previamente cadastrados.
-//              Pr�-Condi��o: Login
-//Atores:	Usu�rio, Gerente do projeto
-//Recursos:	Sistema, menu superior, objeto a ser modificado
-//Epis�dios:	O usu�rio clica no menu superior na op��o:
-//                Se usu�rio clica em Incluir ent�o INCLUIR CEN�RIO
+
+// Setting - Refresh Scenario
+// Purpose: Allow Inclusion, Change and Delete a scenario by a user
+// Context: User want to include a scenario not registered, change and / or delete
+// A scenario previously registered.
+// Precondition: Login
+// Actors: User, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: The user clicks on the top menu option:
+// If the user clicks in Include, then INCLUDE SCENARIO
 
 if (isset($project_id)) {
     ?>
@@ -100,15 +108,16 @@ if (isset($project_id)) {
 
     function novoLexico() {
 <?php
-//Cen�rios -  Atualizar L�xico
-//Objetivo:	Permitir Inclus�o, Altera��o e Exclus�o de um L�xico por um usu�rio
-//Contexto:	Usu�rio deseja incluir um l�xico ainda n�o cadastrado, alterar e/ou 
-//              excluir um cen�rio/l�xico previamente cadastrados.
-//              Pr�-Condi��o: Login
-//Atores:	Usu�rio, Gerente do projeto
-//Recursos:	Sistema, menu superior, objeto a ser modificado
-//Epis�dios:	O usu�rio clica no menu superior na op��o:
-//                Se usu�rio clica em Incluir ent�o INCLUIR L�XICO
+
+// Scenarios - Upgrade Lexicon
+// Purpose: Allow Inclusion, Change and Delete a Lexicon by user
+// Context: User want to include a lexicon not registered, amend and / or
+// Delete a scenario / lexicon previously registered.
+// Precondition: Login
+// Actors: User, Project Manager
+// Resources: System, top menu, the object to be modified
+// Episodes: The user clicks on the top menu option:
+// If the user then clicks Add INCLUDE LEXICON
 
 if (isset($project_id)) {
     ?>
@@ -189,13 +198,15 @@ if (isset($project_id)) {
 
 
                                         <?php
-// ** Cenario "Login" **
-// O sistema d� ao usu�rio a op��o de cadastrar um novo projeto
-// ou utilizar um projeto em que ele fa�a parte.
-// conecta ao SGBD
+                                        
+// ** Scenario "Login" **
+// The system gives the user the option to register a new project
+// Or use a project he is a part.
+// Connect to the DBMS
+                                        
                                         $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
-// define a consulta
+// define the consult
                                         $selection = "SELECT p.id_projeto, p.nome, pa.gerente
       FROM usuario u, participa pa, projeto p
       WHERE u.id_usuario = pa.id_usuario
@@ -203,7 +214,7 @@ if (isset($project_id)) {
       AND pa.id_usuario = " . $_SESSION["id_usuario_corrente"] . "
       ORDER BY p.nome";
 
-// executa a consulta
+// execute the consult
                                         $qrr = mysql_query($selection) or die("Erro ao executar query");
 
                                         while ($result = mysql_fetch_array($qrr)) {    // enquanto houver projetos
@@ -223,43 +234,51 @@ if (isset($project_id)) {
                             <tr bgcolor="#E0FFFF" height="30">
 
                                 <td align="right" valign=MIDDLE> <?php
-                                    if (isset($project_id)) {    // Se o usuario ja tiver escolhido um projeto,
-                                        // entao podemos mostrar os links de adicionar cen/lex
-                                        // e de informacoes (pagina principal) do projeto
-// Cen�rio - Administrador escolhe Projeto
-// Objetivo:  Permitir ao Administrador escolher um projeto.
-// Contexto:  O Administrador deseja escolher um projeto.
-//            Pr�-Condi��es: Login, Ser administrador do projeto selecionado.
-// Atores:    Administrador
-// Recursos:  Projetos doAdministrador
-// Epis�dios: Aparecendo no menu as op��es de: 
-//            -Adicionar Cen�rio (ver Adicionar Cen�rio); 
-//            -Adicionar L�xico (ver Adicionar L�xico); 
-//            -Info; 
-//            -Adicionar Projeto; 
-//            -Alterar Cadastro.
+                                
+// Scenario - choose Project Administrator
+// Purpose: Allow the administrator to choose a project.
+// Context: The administrator wants to choose a design.
+// Preconditions: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: Project doAdministrador
+// Episodes: Appearing in the menu options:
+//           -Add-Scenario (see Add Scenario);
+//           -Add-Lexicon (see Add Lexicon);
+//           -Info;
+//           -Add-Project;
+//           -Change Register.
+                                
+                                    
+                                    // If the User has already chosen a project,
+                                    //Then we can show links to add cen / lex
+                                    // And informations (main page) of project
+                                    if (isset($project_id)) { 
+                                       
                                         ?> <a href="#" onClick="novoCenario();">Add Scenario</a>&nbsp;&nbsp;&nbsp; 
                                         <a href="#" onClick="novoLexico();">Adicionar S�mbolo</a>&nbsp;&nbsp;&nbsp; 
                                         <a href="#" title="Informa��es sobre o Projeto" onClick="prjInfo(<?= $project_id ?>);">Info</a>&nbsp;&nbsp;&nbsp; 
                                         <?php
                                     }
                                     ?> <?php
-//Cen�rio  -  Cadastrar Novo Projeto 
-//Objetivo:    Permitir ao usu�rio cadastrar um novo projeto
-//Contexto:    Usu�rio deseja incluir um novo projeto na base de dados
-//             Pr�-Condi��o: Login
-//Atores:      Usu�rio
-//Recursos:    Sistema, dados do projeto, base de dados
-//Epis�dios:   O Usu�rio clica na op��o �adicionar projeto� encontrada no menu superior.
+                                    
+//Setting - Register New Project
+// Purpose: Allow user to register a new project
+// Context: User want to include a new project in the database
+// Precondition: Login
+// Actors: User
+// Resources: System, design data, database
+// Episodes: The User clicks on the "add project" found in the top menu.
+                                    
                                     ?> <a href="#" onClick="window.open('add_projeto.php', '_blank', 'dependent,height=313,width=550,resizable,scrollbars,titlebar');">Adicionar 
                                         Projeto</a>&nbsp;&nbsp;&nbsp; <?php
-//Cen�rio  -   Remover Novo Projeto 
-//Objetivo:    Permitir ao Administrador do projeto remover um projeto
-//Contexto:    Um Administrador de projeto deseja remover um determinado projeto da base de dadosF
-//             Pr�-Condi��o: Login, Ser administrador do projeto selecionado.
-//Atores:      Administrador
-//Recursos:    Sistema, dados do projeto, base de dados
-//Epis�dios:   O Administrador clica na op��o �remover projeto� encontrada no menu superior.
+                                        
+// Scenario - Remove New Project
+// Purpose: Allow Project Manager to remove a project
+// Context: A Project Manager you want to remove a specific design based dadosF
+// Precondition: Login Become administrator selected project.
+// Actors: Administrator
+// Resources: System, design data, database
+// Episodes: The Administrator clicks on the "remove project" found in the top menu.
 
 
                                     if (isset($project_id)) {
@@ -274,26 +293,26 @@ if (isset($project_id)) {
                                         }
                                     }
 
-// Cen�rio - Logar no sistema
-// Objetivo:  Permitir ao usu�rio entrar no sistema e escolher um projeto que ele esteja 
-//              cadastrado, ou cadastrar novo projeto	
-// Contexto:  Sistema est� aberto Usu�rio na tela de login do sistema. 
-//            Usu�rio sabe a sua senha Usu�rio deseja entrar no sistema com seu perfil 
-//            Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-// Atores:	  Usu�rio, Sistema	
-// Recursos:  Banco de Dados	
-// Epis�dios: O sistema d� ao usu�rio as op��es:
-//             - ALTERAR CADASTRO, no qual o usu�rio ter� a possibilidade de realizar 
-//               altera��es nos seus dados cadastrais
-// Cen�rio - Alterar cadastro
-//
-//Objetivo:  Permitir ao usu�rio realizar altera��o nos seus dados cadastrais	
-//Contexto:  Sistema aberto, Usu�rio ter acessado ao sistema e logado 
-//           Usu�rio deseja alterar seus dados cadastrais 
-//           Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-//Atores:    Usu�rio, Sistema.	
-//Recursos:  Interface	
-//Epis�dios: O usu�rio clica na op��o de alterar cadastro da interface
+// Scenario - Log into the system
+// Purpose: Allow user to enter the system and choose a project he is
+// Registered or registering new project
+// Context: User System is open on the login screen of the system.
+// User know your password User wishes to enter the system with your profile
+// Precondition: User has accessed the system
+// Actors: User, System
+// Resource: Database
+// Episodes: The system gives the user the options:
+//          - CHANGE REGISTER, in which the user will be able to make changes to your registration
+
+// Scneario - Change register
+// Purpose: Allow user to make changes in your registration data
+// Context: Open System, User have accessed the system and logged
+// User want to change your registration
+// Precondition: User has accessed the system
+// Actors: User, System.
+// Features: Interface
+// Episodes: The user clicks the option to change the registration interface
+                                    
                                     ?> <a href="#" onClick="window.open('Call_UpdUser.php', '_blank', 'dependent,height=300,width=550,resizable,scrollbars,titlebar');">Alterar 
                                         Cadastro</a>&nbsp;&nbsp;&nbsp; 
 
@@ -301,29 +320,31 @@ if (isset($project_id)) {
 
                                     <a href="mailto:per@les.inf.puc-rio.br">Fale Conosco&nbsp;&nbsp;&nbsp;</a>
 
-
                                     <?php
-// Cen�rio - Logar no sistema
-// Objetivo:  Permitir ao usu�rio entrar no sistema e escolher um projeto que ele esteja 
-//              cadastrado, ou cadastrar novo projeto	
-// Contexto:  Sistema est� aberto Usu�rio na tela de login do sistema. 
-//            Usu�rio sabe a sua senha Usu�rio deseja entrar no sistema com seu perfil 
-//            Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-// Atores:    Usu�rio, Sistema	
-// Recursos:  Banco de Dados	
-// Epis�dios: O sistema d� ao usu�rio as op��es:
-//             - REALIZAR LOGOUT, no qual o usu�rio ter� a possibilidade de sair da 
-//               sess�o e se logar novamente
-// Cen�rio - Realizar logout
-// Objetivo:  Permitir ao usu�rio realizar o logout, mantendo a integridade do que foi 
-//            realizado,  e retorna a tela de login	
-// Contexto:  Sistema aberto. Usu�rio ter acessado ao sistema. 
-//            Usu�rio deseja sair da aplica��o e manter a integridade do que foi 
-//            realizado 
-//            Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-// Atores:	  Usu�rio, Sistema.	
-// Recursos:  Interface	
-// Epis�dios: O usu�rio clica na op��o de logout
+                                    
+// Scenario - Log into the system
+// Purpose: Allow user to enter the system and choose a project he is
+// Registered or registering new project
+// Context: User System is open on the login screen of the system.
+// User know your password User wishes to enter the system with your profile
+// Precondition: User has accessed the system
+// Actors: User, System
+// Resource: Database
+// Episodes: The system gives the user the options:
+// - PERFORMING LOGOUT, ​​in which the user will be able to leave the
+// Session and login again
+
+// Scenario - Perform logout
+// Purpose: Allow the user to perform the logout, maintaining the integrity of what was
+// Done, and returns to the login screen
+// Context: Open System. User has accessed the system.
+// User wishes to exit the application and maintain the integrity of which was
+// Done
+// Precondition: User has accessed the system
+// Actors: User, System.
+// Features: Interface
+// Episodes: The user clicks the logout option
+                                    
                                     ?> <a href="logout.php" target="_parent");">Sair</a>&nbsp;&nbsp;&nbsp; <a href="ajuda.htm" target="_blank"> 
                                         Ajuda</a></td>
                             </tr>
