@@ -1,9 +1,4 @@
 <?php
-// alt_cenario.php: Este script faz um pedido de alteracao de um cenario do projeto.
-// O usuario recebe um form com o cenario corrente (ou seja com seus campos preenchidos)
-// e podera fazer	alteracoes em todos os campos menos no titulo.Ao final a tela principal
-// retorna para a tela de inicio e a arvore e fechada.O form de alteracao tb e fechado.
-// Arquivo chamador: main.php
 session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
@@ -11,10 +6,8 @@ include_once("bd.inc");
 
 chkUser("index.php");
 
-// Conecta ao SGBD
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
-
-if (isset($submit)) {       // Script chamado atraves do submit do formulario
+if (isset($submit)) {
     inserirPedidoAlterarCenario($_SESSION['id_projeto_corrente'], $id_cenario, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios, $justificativa, $_SESSION['id_usuario_corrente']);
     ?>
 
@@ -34,20 +27,13 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
     </script>
 
     <?php
-} else { // Script chamado atraves do link no cenario corrente
+} else {
     $project_name = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
-
     $selection = "SELECT * FROM cenario WHERE id_cenario = $id_cenario";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
 
 // Cen�rio -    Alterar Cen�rio 
-//Objetivo:	    Permitir a altera��o de um cen�rio por um usu�rio
-//Contexto:	    Usu�rio deseja alterar cen�rio previamente cadastrado
-//              Pr�-Condi��o: Login, Cen�rio cadastrado no sistema
-//Atores:	    Usu�rio
-//Recursos:	    Sistema, dados cadastrados
-//Excess�es:    O nome do cen�rio sendo alterado � modificado para o nome de um cen�rio j� existente.
 //Epis�dios:	O sistema fornecer� para o usu�rio a mesma tela de INCLUIR CEN�RIO,
 //              por�m com os seguintes dados do cen�rio a ser alterado preenchidos
 //              e edit�veis nos seus respectivos campos: Objetivo, Contexto, Atores, Recursos e Epis�dios.
@@ -73,7 +59,8 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
                     <td>T�tulo:</td>
     <? $result['titulo'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['titulo']); ?>
                     <input type="hidden" name="titulo" value="<?= $result['titulo'] ?>">
-                    <td><input disabled maxlength="128" name="titulo2" size="48" type="text" value="<?= $result['titulo'] ?>"></td>
+                    <td><input disabled maxlength="128" name="titulo2" size="48" 
+                               type="text" value="<?= $result['titulo'] ?>"></td>
                     <tr>
                         <td>Objetivo:</td>
     <? $result['objetivo'] = preg_replace("'<[\/\!]*?[^<>]*?>'si", "", $result['objetivo']); ?>
@@ -114,11 +101,15 @@ if (isset($submit)) {       // Script chamado atraves do submit do formulario
                     </tr>
 
                     <tr>
-                        <td colspan="2"><b><small>Essa justificativa � necess�ria apenas para aqueles usu�rios que n�o s�o administradores.</small></b></td>
+                        <td colspan="2"><b><small>Essa justificativa � necess�ria 
+                                    apenas para aqueles usu�rios que 
+                                    n�o s�o administradores.</small></b></td>
                     </tr>
 
                     <tr>
-                        <td align="center" colspan="2" height="60"><input name="submit" type="submit" value="Alterar Cen�rio" onClick="updateOpener()"></td>
+                        <td align="center" colspan="2" height="60"><input 
+                                name="submit" type="submit" value="Alterar Cen�rio" 
+                                onClick="updateOpener()"></td>
                     </tr>
                 </table>
             </form>
