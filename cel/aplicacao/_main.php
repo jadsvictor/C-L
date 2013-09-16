@@ -89,7 +89,7 @@ chkUser("index.php");
         <?php
         include("frame_inferior.php");
 
-        if (isset($id) && isset($t)) {      // SCRIPT CHAMADO PELO PROPRIO MAIN.PHP (OU PELA ARVORE)
+        if (isset($id) && isset($t)) {
             if ($t == "c") {
                 ?>
 
@@ -110,8 +110,9 @@ chkUser("index.php");
                 <?php
                 $c = bd_connect() or die("Erro ao conectar ao SGBD");
 
-                if ($t == "c") {        // se for cenario
-                    $selection = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, episodios
+                if ($t == "c") {
+                    $selection = "SELECT id_cenario, titulo, objetivo, contexto, 
+                                  atores, recursos, episodios
               FROM cenario
               WHERE id_cenario = $id";
                     $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
@@ -197,14 +198,13 @@ chkUser("index.php");
             }
 
             frame_inferior($c, $t, $id);
-        } elseif (isset($project_id)) {         // SCRIPT CHAMADO PELO HEADING.PHP
+        } elseif (isset($project_id)) {
             // Foi passada uma variavel $id_projeto. Esta variavel deve conter o id de um
             // projeto que o usuario esteja cadastrado. Entretanto, como a passagem eh
             // feita usando JavaScript (no heading.php), devemos checar se este id realmente
             // corresponde a um projeto que o usuario tenha acesso (seguranca).
             check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
 
-            // Seta uma variavel de sessao correspondente ao projeto atual
             $_SESSION['id_projeto_corrente'] = $project_id;
             ?>
 

@@ -13,13 +13,10 @@ if (!isset($sucesso)) {
     $sucesso = 'n';
 }
 
-// Checa se o usu�rio foi autenticado
 chkUser("index.php");
 
-// Conecta ao SGBD
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
-//Script chamado atrav�s do submit do formul�rio
 if (isset($submit)) {
 
     $ret = checarLexicoExistente($_SESSION['id_projeto_corrente'], $nome);
@@ -30,7 +27,8 @@ if (isset($submit)) {
 
     if (($ret == true) AND ($retSin == true )) {
         $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
-        inserirPedidoAdicionarLexico($project_id, $nome, $nocao, $impacto, $id_usuario_corrente, $listSinonimo, $classificacao);
+        inserirPedidoAdicionarLexico($project_id, $nome, $nocao, $impacto, 
+                                     $id_usuario_corrente, $listSinonimo, $classificacao);
     } else {
         ?>
         <html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
@@ -48,12 +46,12 @@ if (isset($submit)) {
     <script language="javascript1.2">
 
         opener.parent.frames['code'].location.reload();
-        opener.parent.frames['text'].location.replace('main.php?id_projeto=<?= $_SESSION['id_projeto_corrente'] ?>');
+        opener.parent.frames['text'].location.replace('main.php?id_projeto=<?= 
+                                                      $_SESSION['id_projeto_corrente'] ?>');
         location.href = "add_lexico.php?id_projeto=<?= $project_id ?>&sucesso=s";
 
     </script>   
     <?php
-// Script chamado atrav�s do menu superior
 } else {
     $selection = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
@@ -67,7 +65,7 @@ if (isset($submit)) {
         </head>
         <body>
             <script language="JavaScript">
-            <!--
+            
                 function TestarBranco(form)
                 {
                     nome = form.nome.value;
@@ -75,7 +73,8 @@ if (isset($submit)) {
 
                     if (nome === "")
                     {
-                        alert(" Por favor, forne�a o NOME do l�xico.\n O campo NOME � de preenchimento obrigat�rio.");
+                        alert(" Por favor, forne�a o NOME do l�xico.\n \n\
+                                O campo NOME � de preenchimento obrigat�rio.");
                         form.nome.focus();
                         return false;
                     } else {
@@ -83,54 +82,50 @@ if (isset($submit)) {
                         nOK = padrao.exec(nome);
                         if (nOK)
                         {
-                            window.alert("O nome do l�xico n�o pode conter nenhum dos seguintes caracteres:   / \\ : ? \" < > |");
+                            window.alert("O nome do l�xico n�o pode conter nenhum \n\
+                                          dos seguintes caracteres:   / \\ : ? \" < > |");
                             form.nome.focus();
                             return false;
                         }
                     }
-
                     if (nocao == "")
                     {
-                        alert(" Por favor, forne�a a NO��O do l�xico.\n O campo NO��O � de preenchimento obrigat�rio.");
+                        alert(" Por favor, forne�a a NO��O do l�xico.\n \n\
+                                O campo NO��O � de preenchimento obrigat�rio.");
                         form.nocao.focus();
                         return false;
                     }
-
                 }
+                
                 function addSinonimo()
                 {
                     listSinonimo = document.forms[0].elements['listSinonimo[]'];
-
                     if (document.forms[0].sinonimo.value == "")
                         return;
-
                     sinonimo = document.forms[0].sinonimo.value;
                     padrao = /[\\\/\?"<>:|]/;
                     nOK = padrao.exec(sinonimo);
                     if (nOK)
                     {
-                        window.alert("O sin�nimo do l�xico n�o pode conter nenhum dos seguintes caracteres:   / \\ : ? \" < > |");
+                        window.alert("O sin�nimo do l�xico n�o pode conter nenhum \n\
+                                      dos seguintes caracteres:   / \\ : ? \" < > |");
                         document.forms[0].sinonimo.focus();
                         return;
                     }
-
-                    listSinonimo.options[listSinonimo.length] = new Option(document.forms[0].sinonimo.value, document.forms[0].sinonimo.value);
-
+                    listSinonimo.options[listSinonimo.length] = 
+                                 new Option(document.forms[0].sinonimo.value, 
+                                 document.forms[0].sinonimo.value);
                     document.forms[0].sinonimo.value = "";
-
                     document.forms[0].sinonimo.focus();
-
                 }
-
+                
                 function delSinonimo()
                 {
                     listSinonimo = document.forms[0].elements['listSinonimo[]'];
-
                     if (listSinonimo.selectedIndex == -1)
                         return;
                     else
                         listSinonimo.options[listSinonimo.selectedIndex] = null;
-
                     delSinonimo();
                 }
 
@@ -144,24 +139,13 @@ if (isset($submit)) {
                     return true;
                 }
 
-            //-->
+            
 
     <?php
     //Cen�rios -  Incluir L�xico 
     //Objetivo:    Permitir ao usu�rio a inclus�o de uma nova palavra do l�xico
     //Contexto:    Usu�rio deseja incluir uma nova palavra no l�xico.
     //                     Pr�-Condi��o: Login, palavra do l�xico ainda n�o cadastrada
-    //Atores:         Usu�rio, Sistema
-    //Recursos:    Dados a serem cadastrados
-    //Epis�dios:    O sistema fornecer� para o usu�rio uma tela com os seguintes campos de texto:
-    //               - Entrada L�xico.
-    //               - No��o.   Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //               - Impacto. Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //              Bot�o para confirmar a inclus�o da nova entrada do l�xico
-    //              Restri��es: Depois de clicar no bot�o de confirma��o, o sistema verifica se todos
-    //              os campos foram preenchidos. 
-    //Exce��o:    Se todos os campos n�o foram preenchidos, retorna para o usu�rio uma mensagem
-    //              avisando que todos os campos devem ser preenchidos e um bot�o de voltar para a pagina anterior.
     ?>
 
             </SCRIPT>
@@ -189,8 +173,10 @@ if (isset($submit)) {
                         <td>Sin�nimos:</td>
                         <td width="0%">
                             <input name="sinonimo" size="15" type="text" maxlength="50">             
-                            &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Adicionar" onclick="addSinonimo()">
-                            &nbsp;&nbsp;<input type="button" value="Remover" onclick="delSinonimo()">&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;<input type="button" value="Adicionar" 
+                                                           onclick="addSinonimo()">
+                            &nbsp;&nbsp;<input type="button" value="Remover"
+                                               onclick="delSinonimo()">&nbsp;
                         </td>
                     </tr>
                     <tr> 
@@ -223,10 +209,13 @@ if (isset($submit)) {
                     </tr>
                     <tr>
                         <td align="center" colspan="2" height="60">
-                            <input name="submit" type="submit" onClick="return TestarBranco(this.form);" value="Adicionar S�mbolo"><BR><BR>
+                            <input name="submit" type="submit" onClick="return TestarBranco(this.form);
+                                 " value="Adicionar S�mbolo"><BR><BR>
                             </script>
-                            <!--            <A HREF="RegrasLAL.html" TARGET="new">Ver Regras do LAL</A><BR>   -->
-                            <A HREF="#" OnClick="javascript:open('RegrasLAL.html', '_blank', 'dependent,height=380,width=520,titlebar');"> Veja as regras do <i>LAL</i></A>
+                            <A HREF="#" OnClick="javascript:open('RegrasLAL.html', 
+                                                                 '_blank', 'dependent,\n\
+                                                                 height=380,width=520,titlebar');"
+                                                                 > Veja as regras do <i>LAL</i></A>
                         </td>
                     </tr>
                 </table>

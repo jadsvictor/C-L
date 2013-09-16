@@ -57,9 +57,8 @@ if (isset($submit)) {
 
         opener.parent.frames['code'].location.reload();
         opener.parent.frames['text'].location.replace('main.php?id_projeto=<?= $_SESSION['id_projeto_corrente'] ?>');
-    <?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>add_cenario.php?id_projeto =<?= $project_id ?> & sucesso = s" ;
-
-
+    <?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>
+        add_cenario.php?id_projeto =<?= $project_id ?> & sucesso = s" ;
                 location.href = "add_cenario.php?id_projeto=<?= $project_id ?>&sucesso=s";
 
     </script>
@@ -75,7 +74,7 @@ if (isset($submit)) {
         </head>
         <body>
             <script language="JavaScript">
-            <!--
+                <!--
                 function TestarBranco(form)
                 {
                     titulo = form.titulo.value;
@@ -92,7 +91,8 @@ if (isset($submit)) {
                         OK = padrao.exec(titulo);
                         if (OK)
                         {
-                            window.alert("O t�tulo do cen�rio n�o pode conter nenhum dos seguintes caracteres:   / \\ : ? \" < > |");
+                            window.alert("O t�tulo do cen�rio n�o pode conter nenhum \n\
+                                          dos seguintes caracteres:   / \\ : ? \" < > |");
                             form.titulo.focus();
                             return false;
                         }
@@ -112,28 +112,14 @@ if (isset($submit)) {
                         return false;
                     }
                 }
-            //-->
+                //-->
 
     <?php
-    // Cen�rio -  Incluir Cen�rio 
-    //Objetivo:        Permitir ao usu�rio a inclus�o de um novo cen�rio
-    //Contexto:        Usu�rio deseja incluir um novo cen�rio.
-    //              Pr�-Condi��o: Login, cen�rio ainda n�o cadastrado
-    //Atores:        Usu�rio, Sistema
-    //Recursos:        Dados a serem cadastrados
-    //Epis�dios:    O sistema fornecer� para o usu�rio uma tela com os seguintes campos de texto:
-    //                - Nome Cen�rio
-    //                - Objetivo.  Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //                - Contexto.  Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //                - Atores.    Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //                - Recursos.  Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //                - Exce��o.   Restri��o: Caixa de texto com pelo menos 5 linhas de escrita vis�veis
-    //                - Epis�dios. Restri��o: Caixa de texto com pelo menos 16 linhas de escrita vis�veis
-    //                - Bot�o para confirmar a inclus�o do novo cen�rio
-    //              Restri��es: Depois de clicar no bot�o de confirma��o,
-    //                          o sistema verifica se todos os campos foram preenchidos. 
-    // Exce��o:        Se todos os campos n�o foram preenchidos, retorna para o usu�rio uma mensagem avisando
-    //              que todos os campos devem ser preenchidos e um bot�o de voltar para a pagina anterior.
+// Cen�rio -  Incluir Cen�rio 
+//Objetivo:        Permitir ao usu�rio a inclus�o de um novo cen�rio
+//Contexto:        Usu�rio deseja incluir um novo cen�rio.
+//              Pr�-Condi��o: Login, cen�rio ainda n�o cadastrado
+//Atores:        Usu�rio, Sistema
     ?>
 
             </SCRIPT>
@@ -144,9 +130,9 @@ if (isset($submit)) {
     if ($sucesso == "s") {
         ?>
                 <p style="color: blue; font-weight: bold; text-align: center">Cen�rio inserido com sucesso!</p>
-        <?php
-    }
-    ?>    
+                <?php
+            }
+            ?>    
             <form action="" method="post">
                 <table>
                     <tr>
@@ -180,7 +166,9 @@ if (isset($submit)) {
                         <td><textarea cols="51" name="episodios" rows="5" WRAP="SOFT"></textarea></td>
                     </tr>
                     <tr>
-                        <td align="center" colspan="2" height="60"><input name="submit" type="submit" onClick="return TestarBranco(this.form);" value="Adicionar Cen�rio"></td>
+                        <td align="center" colspan="2" height="60"><input name="submit" 
+                                                                          type="submit" onClick="return TestarBranco(this.form);" 
+                                                                          value="Adicionar Cen�rio"></td>
                     </tr>
                 </table>
             </form>
