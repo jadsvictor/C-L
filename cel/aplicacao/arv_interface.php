@@ -34,21 +34,26 @@ $link = bd_connect();
             menu = new MTMenu();
 
 <?php
+
+
 if (isset($_SESSION['lista_de_conceitos']))
     $arv = $_SESSION['lista_de_conceitos'];
 else
     $arv = array();
 
+//conceitos
 foreach ($arv as $conc) {
     echo "\nmenu.addItem(\"$conc->nome\");\n";
     echo " var mC = null;\n";
     echo " mC = new MTMenu();\n";
     echo "menu.makeLastSubmenu(mC);\n";
-
+    
+    //Verbos 
     foreach ($conc->relacoes as $relacao) {
         echo " mC.addItem(\"$relacao->verbo\",\"\");\n";
         echo " var mV = new MTMenu();\n";
 
+        //Predicados 
         foreach ($relacao->predicados as $predicado) {
             echo " mV.addItem(\"$predicado\",\"blank.html\",\"enganaarvore\");\n";
         }

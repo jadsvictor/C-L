@@ -24,7 +24,15 @@ session_start();
                 <td align='left' valign='top'>
                     <?php
 
-//Cenario:     Verificar com o usuario a existencia de um nome numa lista.
+/*
+Cenario:     Verificar com o usuario a existencia de um nome numa lista.
+Objetivo:    Verificar com o usuario a existencia de um nome numa lista.
+Contexto:    Algoritmo de traducão iniciado.
+Atores:      Usuario.
+Recursos:    Sistema, nome, lista.
+Episodios:
+- Posta true ou false, caso true posta o indice junto, caso false o indice e ignorado.
+*/ 
                     function exist($name, $list) {
                         $indice = -1;
                         foreach ($list as $key => $palavra) {
@@ -125,7 +133,15 @@ session_start();
                         $_SESSION["exist"] = 1;
                     }
 
-//  Cenario:    Verificar a importancia de um termo com ajuda do usuario.
+/*
+Cenario:    Verificar a importancia de um termo com ajuda do usuario.
+Objetivo:    Verificar a importancia de um termo com ajuda do usuario.
+Contexto:    Algoritmo de traducão iniciado.
+Atores:        Usuario.
+Recursos:    Sistema, termo.
+Episodios:
+- Retorna TRUE se a importancia e central.
+*/
                     function importancia_central($termo, $impactos) {
                         ?>
                         <h3>Termo: <?= $termo ?></h3><br>
@@ -150,7 +166,15 @@ session_start();
                         $_SESSION["main_subject"] = 1;
                     }
 
-//Cenario:    Verificar se um conceito referencia outro.
+/* -------- INCERTO --------
+Cenario:    Verificar se um conceito referencia outro.
+Objetivo:   Verificar se um conceito referencia outro.
+Contexto:   Algoritmo de traducão iniciado.
+Atores:     Usuario.
+Recursos:   Conceito1, conceito2.
+Episodios:
+            - Retorna TRUE se referencia.
+*/
                     function faz_referencia($conceitos, $subconceitos) {
                         ?>
 
@@ -230,6 +254,15 @@ session_start();
                         $_SESSION["reference"] = 1;
                     }
 
+					/* -------- INCERTO --------
+					Cenario:    Insere tipo.
+					Objetivo:    Deixar o bd consistente.
+					Contexto:    .
+					Atores:        Usuario.
+					Recursos:    lista de termos sem tipo.
+					Episodios:
+					- .
+					*/
                     function insere_tipo($list) {
                         $_SESSION["tipos"] = 2;
                         ?>

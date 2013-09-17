@@ -23,13 +23,42 @@ if (isset($submit)) {
             recarrega("?p_style=$p_style&p_text=$p_text&nome=$nome&email=$email&login=$login&novo=$novo");
         } else {
 
-// Cenï¿½rio - Incluir usuï¿½rio independente 
+// Cenário - Incluir usuário independente 
+
+// Objetivo:  Permitir um usuário, que não esteja cadastrado como administrador, se cadastrar 
+//            com o perfil de administrador	
+// Contexto:  Sistema aberto Usuário deseja cadastrar-se ao sistema como administrador. 
+//            Usuário na tela de cadastro de usuário 
+//            Pré-Condição: Usuário ter acessado ao sistema	
+// Atores:    Usuário, Sistema	
+// Recursos:  Interface, Banco de Dados	
+// Episódios: O sistema retorna para o usuário uma interface com campos para entrada de
+//            um Nome, email, login, uma senha e a confirmação da senha.
+//            O usuário preenche os campos e clica em cadastrar 
+//            O sistema então checa para ver se todos os campos estão preenchidos.
+//              Caso algum campo deixar de ser preenchido, o sistema avisa que todos
+//               os campos devem ser preenchidos.
+//              Caso todos os campos estiverem preenchidos, o sistema checa no banco
+//               de dados para ver se esse login já existe..
+//              Caso aquele login digitado já exista, o sistema retorna a mesma página
+//               para o usuário avisando que o usuário deve escolher outro login,.
             $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
             $selection = "SELECT id_usuario FROM usuario WHERE login = '$login'";
             $qrr = mysql_query($selection) or die("Erro ao enviar a query");
             if (mysql_num_rows($qrr)) {
-//               
-// Cenï¿½rio - Adicionar Usuï¿½rio
+            	
+// Cenário - Adicionar Usuário
+
+// Objetivo:  Permitir ao Administrador criar novos usuários.
+// Contexto:  O Administrador deseja adicionar novos usuários (não cadastrados)
+//            criando novos  usuários ao projeto selecionado.
+//            Pré-Condições: Login
+// Atores:    Administrador
+// Recursos:  Dados do usuário
+// Episódios: O Administrador clica no link “Adicionar usuário (não existente) neste projeto”,
+//            entrando com as informações do novo usuário: nome, email, login e senha.
+//            Caso o login já exista, aparecerá uma mensagem de erro na tela informando que
+//            este login já existe.
                 ?>
                 <script language="JavaScript">
                     alert("Login jï¿½ existente no sistema. Favor escolher outro login.")
@@ -49,8 +78,20 @@ if (isset($submit)) {
         }
     }
 } elseif (isset($cadastrado)) {
-    if ($novo == "true") {      // Veio da tela inicial de login
-// Cenï¿½rio - Incluir usuï¿½rio independente 
+    if ($novo == "true") {    
+    	
+// Cenário - Incluir usuário independente 
+
+// Objetivo:  Permitir um usuário, que não esteja cadastrado como administrador, se cadastrar 
+//            com o perfil de administrador	
+// Contexto:  Sistema aberto Usuário deseja cadastrar-se ao sistema como administrador. 
+//            Usuário na tela de cadastro de usuário 
+//            Pré-Condição: Usuário ter acessado ao sistema	
+// Atores:    Usuário, Sistema	
+// Recursos:  Interface, Banco de Dados	
+// Episódios:  Caso aquele login digitado não exista, o sistema cadastra esse usuário 
+//               como administrador no banco de dados,  possibilitando:
+//              - Redirecioná-lo  para a interface de CADASTRAR NOVO PROJETO; 
         $_SESSION['id_usuario_corrente'] = simple_query("id_usuario", "usuario", "login = '$login'");
         ?>
 
@@ -159,7 +200,18 @@ if (isset($submit)) {
                     <tr>
 
                         <?php
-// Cenï¿½rio - Adicionar Usuï¿½rio
+                        
+// Cenário - Adicionar Usuário
+
+// Objetivo:  Permitir ao Administrador criar novos usuários.
+// Contexto:  O Administrador deseja adicionar novos usuários (não cadastrados) criando novos
+//              usuários ao projeto selecionado.
+//            Pré-Condições: Login
+// Atores:    Administrador
+// Recursos:  Dados do usuário
+// Episódios: Clicando no botão Cadastrar para confirmar a adição do novo
+//             usuário ao projeto selecionado.
+//            O novo usuário criado receberá uma mensagem via email com seu login e senha.
                         ?>
 
                         <td align="center" colspan="4" height="40" valign="bottom"><input name="submit" onClick="return verifyEmail(this.form);" type="submit" value="Cadastrar"></td>

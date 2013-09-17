@@ -6,13 +6,26 @@ include("httprequest.inc");
 
 chkUser("index.php");
 
-// Cenï¿½rio controle de acesso
 // Este script eh chamado quando ocorre uma solicitacao de inclusao
 // de novo projeto, ou quando um novo usuario se cadastra no sistema
-//Cenï¿½rio  -  Cadastrar Novo Projeto 
-//Objetivo:	   Permitir ao usuï¿½rio cadastrar um novo projeto
-//Contexto:	   Usuï¿½rio deseja incluir um novo projeto na base de dados
-//              Prï¿½-Condiï¿½ï¿½o: Login  
+
+
+//Cenário  -  Cadastrar Novo Projeto 
+//Objetivo:	   Permitir ao usuário cadastrar um novo projeto
+//Contexto:	   Usuário deseja incluir um novo projeto na base de dados
+//              Pré-Condição: Login  
+//Atores:	   Usuário
+//Recursos:	   Sistema, dados do projeto, base de dados
+//Episódios:   O Usuário clica na opção “adicionar projeto” encontrada no menu superior.
+//             O sistema disponibiliza uma tela para o usuário especificar os dados do novo projeto,
+//              como o nome do projeto e sua descrição.
+//             O usuário clica no botão inserir.
+//             O sistema grava o novo projeto na base de dados e automaticamente constrói a Navegação
+//              para este novo projeto.
+//Exceção:	   Se for especificado um nome de projeto já existente e que pertença ou tenha a participação
+//                 deste usuário, o sistema exibe uma mensagem de erro.
+
+// Chamado atraves do botao de submit  
 if (isset($submit)) {
 
     $id_projeto_incluido = inclui_projeto($nome, $descricao);

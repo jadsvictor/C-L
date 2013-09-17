@@ -17,6 +17,7 @@ chkUser("index.php");
 
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
+//Script chamado através do submit do formulário
 if (isset($submit)) {
 
     $ret = checarLexicoExistente($_SESSION['id_projeto_corrente'], $nome);
@@ -142,10 +143,24 @@ if (isset($submit)) {
             
 
     <?php
-    //Cenï¿½rios -  Incluir Lï¿½xico 
-    //Objetivo:    Permitir ao usuï¿½rio a inclusï¿½o de uma nova palavra do lï¿½xico
-    //Contexto:    Usuï¿½rio deseja incluir uma nova palavra no lï¿½xico.
-    //                     Prï¿½-Condiï¿½ï¿½o: Login, palavra do lï¿½xico ainda nï¿½o cadastrada
+    
+  //Cenários -  Incluir Léxico 
+
+//Objetivo:    Permitir ao usuário a inclusão de uma nova palavra do léxico
+//Contexto:    Usuário deseja incluir uma nova palavra no léxico.
+//                     Pré-Condição: Login, palavra do léxico ainda não cadastrada
+//Atores:         Usuário, Sistema
+//Recursos:    Dados a serem cadastrados
+//Episódios:    O sistema fornecerá para o usuário uma tela com os seguintes campos de texto:
+//               - Entrada Léxico.
+//               - Noção.   Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//               - Impacto. Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//              Botão para confirmar a inclusão da nova entrada do léxico
+//              Restrições: Depois de clicar no botão de confirmação, o sistema verifica se todos
+//              os campos foram preenchidos. 
+//Exceção:    Se todos os campos não foram preenchidos, retorna para o usuário uma mensagem
+//              avisando que todos os campos devem ser preenchidos e um botão de voltar para a pagina anterior.
+
     ?>
 
             </SCRIPT>

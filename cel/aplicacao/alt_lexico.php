@@ -1,5 +1,11 @@
 <?php
 
+// alt_lexico.php: Este script faz um pedido de alteracao de um lexico do projeto.
+//                 O usuario recebe um form com o lexico corrente (ou seja, com seus campos preenchidos)
+//                 e podera fazer alteracoes em todos os campos menos no nome. Ao final a tela principal
+//                 retorna para a tela de inicio e a arvore e fechada. O form de alteracao tb e fechado.
+// Arquivo chamador: main.php
+
 session_start();
 
 include("funcoes_genericas.php");
@@ -10,12 +16,17 @@ chkUser("index.php");
 
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
-if (isset($submit)) {      
+if (isset($submit)) {     
+	 
     if (!isset($listSinonimo))
         $listSinonimo = array();
+        
+    //tira os sinonimos caso aja um nulo.
     $count = count($listSinonimo);
     for ($i = 0; $i < $count; $i++) {
+    	
         if ($listSinonimo[$i] == "") {
+        	
             $listSinonimo = null;
         }
     }
@@ -110,13 +121,19 @@ if (isset($submit)) {
 
     <?php
     
-    //Cenï¿½rios -  Alterar Lï¿½xico 
-    //Episï¿½dios:	O sistema fornecerï¿½ para o usuï¿½rio a mesma tela de INCLUIR Lï¿½XICO,
-    //              porï¿½m com os seguintes dados do lï¿½xico a ser alterado preenchidos
-    //              e editï¿½veis nos seus respectivos campos: Noï¿½ï¿½o e Impacto.
-    //              Os campos Projeto e Nome estarï¿½o preenchidos, mas nï¿½o editï¿½veis.
-    //              Serï¿½ exibido um campo Justificativa para o usuï¿½rio colocar uma
-    //              justificativa para a alteraï¿½ï¿½o feita.	
+    //Cenários -  Alterar Léxico 
+
+	//Objetivo:	Permitir a alteração de uma entrada do dicionário léxico por um usuário	
+	//Contexto:	Usuário deseja alterar um léxico previamente cadastrado
+	//              Pré-Condição: Login, léxico cadastrado no sistema
+	//Atores:	Usuário
+	//Recursos:	Sistema, dados cadastrados
+	//Episódios:	O sistema fornecerá para o usuário a mesma tela de INCLUIR LÉXICO,
+	//              porém com os seguintes dados do léxico a ser alterado preenchidos
+	//              e editáveis nos seus respectivos campos: Noção e Impacto.
+	//              Os campos Projeto e Nome estarão preenchidos, mas não editáveis.
+	//              Será exibido um campo Justificativa para o usuário colocar uma
+	// 
     ?>
 
                 </SCRIPT>

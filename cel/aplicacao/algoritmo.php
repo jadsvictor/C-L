@@ -32,25 +32,42 @@ session_start();
             return TRUE;
         }
 
-//Cenario:	Montar hierarquia.
+/*
+Cenario:	Montar hierarquia.
+Objetivo:	Montar hierarquia de conceitos.
+Contexto:	Organizacao da ontologia em andamento.
+Atores:
+Recursos:	Sistema, conceito, lista de subconceitos, lista de conceitos.
+Episodios:
+- Para cada subconceito
+* Procurar sua chave na lista de conceitos.
+* Adicionar a chave como um subconceito do conceito.
+*/
         function montar_hierarquia($conc, $nova_lista, $list) {
             foreach ($nova_lista as $subcon) {
                 $key = existe_conceito($subcon, $list);
                 $conc->subconceitos[] = $subcon;
             }
         }
+        
 
-//Cenario:	Traduzir os termos do lexico classificados como sujeito e objeto.
-//Episodios:
-//- Para cada elemento da lista de sujeito e objetos
-//* Criar novo conceito com o mesmo nome e a descricao igual a nocao do elemento.
-//* Para cada impacto do elemento
-//. Verificar com o usuario a existencia do impacto na lista de relacoes.
-//. Caso nï¿½o exista, incluir este impacto na lista de relacoes.
-//. Incluir esta relacao na lista de relacoes do conceito.
-//. Descobrir
-//* Incluir o conceito na lista de conceitos.
-//* Verificar consistencia.
+/*
+Cenario:	Traduzir os termos do lexico classificados como sujeito e objeto.
+Objetivo:	Traduzir os termos do lexico classificados como sujeito e objeto.
+Contexto:	Algoritmo de tradução iniciado.
+Atores:		Usuario.
+Recursos:	Sistema, lista de sujeito e objetos, lista de conceitos, lista de relacoes.
+Episodios:
+- Para cada elemento da lista de sujeito e objetos
+* Criar novo conceito com o mesmo nome e a descricao igual a nocao do elemento.
+* Para cada impacto do elemento
+. Verificar com o usuario a existencia do impacto na lista de relacoes.
+. Caso não exista, incluir este impacto na lista de relacoes.
+. Incluir esta relacao na lista de relacoes do conceito.
+. Descobrir
+* Incluir o conceito na lista de conceitos.
+* Verificar consistencia.
+*/
         function traduz_sujeito_objeto($lista_de_sujeito_e_objeto, $conceitos, $relacoes, $axiomas) {
             for (; $_SESSION["index1"] < count($lista_de_sujeito_e_objeto); ++$_SESSION["index1"]) {
                 $suj = $lista_de_sujeito_e_objeto[$_SESSION["index1"]];
@@ -240,12 +257,18 @@ session_start();
             session_unregister("finish_relation");
         }
 
-//Cenario:	Traduzir os termos do lexico classificados como verbo.
-//Episodios:
-//- Para cada elemento da lista de verbo
-//* Verificar com o usuario a existencia do verbo na lista de relacoes.
-//* Caso nï¿½o exista, incluir este verbo na lista de relacoes.
-//* Verificar consistencia.
+/*
+Cenario:	Traduzir os termos do lexico classificados como verbo.
+Objetivo:	Traduzir os termos do lexico classificados como verbo.
+Contexto:	Algoritmo de tradução iniciado.
+Atores:		Usuario.
+Recursos:	Sistema, lista de verbo, lista de relacoes.
+Episodios:
+- Para cada elemento da lista de verbo
+* Verificar com o usuario a existencia do verbo na lista de relacoes.
+* Caso não exista, incluir este verbo na lista de relacoes.
+* Verificar consistencia.
+*/
         function traduz_verbos($verbos, $relacoes) {
             for (; $_SESSION["index3"] < count($verbos); ++$_SESSION["index3"]) {
                 $verbo = $verbos[$_SESSION["index3"]];
@@ -277,16 +300,21 @@ session_start();
             $_SESSION["index3"] = 0;
         }
 
-//Cenario:	Traduzir os termos do lexico classificados como estado.
-//Episodios:
-//- Para cada elemento da lista de estado
-//* Para cada impacto do elemento
-//. Descobrir
-//* Verificar se o elemento possui importancia central na ontologia.
-//* Caso tenha, traduza como se fosse um sujeito/objeto.
-//* Caso contrario, traduza como se fosse um verbo.
-//* Verificar consistencia.
-
+/*
+Cenario:	Traduzir os termos do lexico classificados como estado.
+Objetivo:	Traduzir os termos do lexico classificados como estado.
+Contexto:	Algoritmo de traducao iniciado.
+Atores:		Usuario.
+Recursos:	Sistema, lista de estado, lista de conceitos, lista de relacoes, lista de axiomas.
+Episodios:
+- Para cada elemento da lista de estado
+* Para cada impacto do elemento
+. Descobrir
+* Verificar se o elemento possui importancia central na ontologia.
+* Caso tenha, traduza como se fosse um sujeito/objeto.
+* Caso contrario, traduza como se fosse um verbo.
+* Verificar consistencia.
+*/
         function traduz_estados($estados, $conceitos, $relacoes, $axiomas) {
             for (; $_SESSION["index4"] < count($estados); ++$_SESSION["index4"]) {
                 $estado = $estados[$_SESSION["index4"]];
@@ -325,24 +353,30 @@ session_start();
                 $_SESSION["index4"] = 0;
             }
 
-//Cenario:	Organizar ontologia.
-//Episodios:
-//- Faz-se uma copia da lista de conceitos.
-//- Para cada elemento x da lista de conceitos
-//* Cria-se uma nova lista contendo o elemento x.
-//* Para cada elemento subsequente y
-//. Compara as relacoes dos elementos x e y.
-//. Caso possuam as mesmas relacoes, adiciona-se o elemento y a nova lista que ja contem x.
-//. Retira-se y da lista de conceitos.
-//* Retira-se x da lista de conceitos.
-//* Caso a nova lista tenha mais de dois elementos, ou seja, caso x compartilhe as mesmas
-//relacoes com outro termo
-//. Procura por um elemento na lista de conceitos que faca referencia a todos os elementos
-//da nova lista.
-//. Caso exista tal elemento, montar hierarquia.
-//. Caso nao exista, descobrir.
-//* Verificar consistencia.
-//- Restaurar lista de conceitos.
+/*
+Cenario:	Organizar ontologia.
+Objetivo:	Organizar ontologia.
+Contexto:	Listas de conceitos, relacoes e axiomas prontas.
+Atores:		Usuario.
+Recursos:	Sistema, lista de conceitos, lista de relacoes, lista de axiomas.
+Episodios:
+- Faz-se uma copia da lista de conceitos.
+- Para cada elemento x da lista de conceitos
+* Cria-se uma nova lista contendo o elemento x.
+* Para cada elemento subsequente y
+. Compara as relacoes dos elementos x e y.
+. Caso possuam as mesmas relacoes, adiciona-se o elemento y a nova lista que ja contem x.
+. Retira-se y da lista de conceitos.
+* Retira-se x da lista de conceitos.
+* Caso a nova lista tenha mais de dois elementos, ou seja, caso x compartilhe as mesmas
+relacoes com outro termo
+. Procura por um elemento na lista de conceitos que faca referencia a todos os elementos
+da nova lista.
+. Caso exista tal elemento, montar hierarquia.
+. Caso nao exista, descobrir.
+* Verificar consistencia.
+- Restaurar lista de conceitos.
+*/
 
             function organizar_ontologia($conceitos, $relacoes, $axiomas) {
                 $_SESSION["salvar"] = "TRUE";
@@ -388,15 +422,24 @@ session_start();
                 }
             }
 
-//Cenario:  	Traduzir Lï¿½xico para Ontologia.
-//Episï¿½dios:
-//- Criar lista de conceitos vazia.
-//- Criar lista de relacoes vazia.
-//- Criar lista de axiomas vazia.
-//- Traduzir os termos do lexico classificados como sujeito e objeto.
-//- Traduzir os termos do lexico classificados como verbo.
-//- Traduzir os termos do lexico classificados como estado.
-//- Organizar a ontologia.
+/*
+Cenario:  	Traduzir Léxico para Ontologia.
+Objetivo: 	Traduzir Léxico para Ontologia.
+Contexto: 	Existem listas de elementos do léxico organizadas por tipo, e estes elementos
+são consistentes.
+Atores:   	Usuário.
+Recursos: 	Sistema, listas de elementos do léxico organizadas por tipo, listas de elementos
+da ontologia.
+Episódios:
+- Criar lista de conceitos vazia.
+- Criar lista de relacoes vazia.
+- Criar lista de axiomas vazia.
+- Traduzir os termos do lexico classificados como sujeito e objeto.
+- Traduzir os termos do lexico classificados como verbo.
+- Traduzir os termos do lexico classificados como estado.
+- Organizar a ontologia.
+
+*/
             function traduz() {
                 if (isset($_SESSION["lista_de_sujeito"]) && isset($_SESSION["lista_de_objeto"]) &&
                         isset($_SESSION["lista_de_verbo"]) && isset($_SESSION["lista_de_estado"]) &&

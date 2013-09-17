@@ -1,5 +1,13 @@
 <?php
+
+// alt_cenario.php: Este script faz um pedido de alteracao de um cenario do projeto.
+// O usuario recebe um form com o cenario corrente (ou seja com seus campos preenchidos)
+// e podera fazer	alteracoes em todos os campos menos no titulo.Ao final a tela principal
+// retorna para a tela de inicio e a arvore e fechada.O form de alteracao tb e fechado.
+// Arquivo chamador: main.php
+
 session_start();
+
 include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
@@ -33,13 +41,20 @@ if (isset($submit)) {
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
 
-// Cenï¿½rio -    Alterar Cenï¿½rio 
-//Episï¿½dios:	O sistema fornecerï¿½ para o usuï¿½rio a mesma tela de INCLUIR CENï¿½RIO,
-//              porï¿½m com os seguintes dados do cenï¿½rio a ser alterado preenchidos
-//              e editï¿½veis nos seus respectivos campos: Objetivo, Contexto, Atores, Recursos e Episï¿½dios.
-//              Os campos Projeto e Tï¿½tulo estarï¿½o preenchidos, mas nï¿½o editï¿½veis.
-//              Serï¿½ exibido um campo Justificativa para o usuï¿½rio colocar uma
-//              justificativa para a alteraï¿½ï¿½o feita.
+// Cenário -    Alterar Cenário 
+
+//Objetivo:	    Permitir a alteração de um cenário por um usuário
+//Contexto:	    Usuário deseja alterar cenário previamente cadastrado
+//              Pré-Condição: Login, Cenário cadastrado no sistema
+//Atores:	    Usuário
+//Recursos:	    Sistema, dados cadastrados
+//Excessões:    O nome do cenário sendo alterado é modificado para o nome de um cenário já existente.
+//Episódios:	O sistema fornecerá para o usuário a mesma tela de INCLUIR CENÁRIO,
+//              porém com os seguintes dados do cenário a ser alterado preenchidos
+//              e editáveis nos seus respectivos campos: Objetivo, Contexto, Atores, Recursos e Episódios.
+//              Os campos Projeto e Título estarão preenchidos, mas não editáveis.
+//              Será exibido um campo Justificativa para o usuário colocar uma
+//              justificativa para a alteração feita.
     ?>
 
     <html>

@@ -54,6 +54,9 @@ function get_lista_de_estado() {
     return $aux;
 }
 
+//Esta função verifica se todos os membros da tabela de léxicos tem um tipo definido
+//Caso haja registros na tabela sem tipo defino, a função retorna estes registros
+//Caso contrário retorna true
 function verifica_tipo() {
     $id_projeto = $_SESSION['id_projeto'];
     $query = "select * from lexico where tipo is null AND id_projeto='$id_projeto' order by id_lexico;";
@@ -73,6 +76,8 @@ function verifica_tipo() {
     }
 }
 
+// esta função atualiza o tipo do lexico $id_lexico (inteiro) para $tipo (string)
+// esta função só aceita os tipos: sujeito, objeto, verbo, estado e NULL
 function atualiza_tipo($id_lexico, $tipo) {
     $id_projeto = $_SESSION['id_projeto'];
     if (!(($tipo != "sujeito") || ($tipo != "objeto") || ($tipo != "verbo") || ($tipo != "estado") || ($tipo != "null"))) {
@@ -89,6 +94,8 @@ function atualiza_tipo($id_lexico, $tipo) {
 
 function obter_lexico($id_lexico) {
     $id_projeto = $_SESSION['id_projeto'];
+    //retorna todos os campos do lexico; cada campo é uma posição do array que 
+    //pode ser indexada pelo nome do campo ou por um indice inteiro.
     $query = "select * from lexico where id_lexico = '$id_lexico' AND id_projeto='$id_projeto';";
     $result = mysql_query($query) or die("A consulta ï¿½ BD falhou : " . mysql_error() . __LINE__);
     $line = mysql_fetch_array($result, MYSQL_BOTH);
@@ -119,6 +126,7 @@ function cadastra_impacto($id_lexico, $impacto) {
     return $id_impacto;
 }
 
+//criar tabela para conceitos (class conceito)
 function get_lista_de_conceitos() {
     $id_projeto = $_SESSION['id_projeto'];
     $aux = array();
@@ -170,6 +178,7 @@ function get_lista_de_conceitos() {
     return $aux;
 }
 
+//criar tabela para conceitos (class relacao_entre_conceitos)
 function get_lista_de_relacoes() {
     $id_projeto = $_SESSION['id_projeto'];
     $aux = array();
@@ -182,6 +191,7 @@ function get_lista_de_relacoes() {
     return $aux;
 }
 
+//criar tabela para axiomas (string)
 function get_lista_de_axiomas() {
     $id_projeto = $_SESSION['id_projeto'];
     $aux = array();

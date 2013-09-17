@@ -47,10 +47,10 @@ if ($_POST["load"] == "FALSE") {
     $_SESSION["funcao"] = get_funcao();
     $indices = get_indices();
     if (count($indices) == 5) {
-        $_SESSION["index1"] = $indices['index1'];
-        $_SESSION["index3"] = $indices['index3'];
-        $_SESSION["index4"] = $indices['index4'];
-        $_SESSION["index5"] = $indices['index5'];
+        $_SESSION["index1"] = $indices['index1']; //sujeito
+        $_SESSION["index3"] = $indices['index3']; //verbo
+        $_SESSION["index4"] = $indices['index4']; //estado
+        $_SESSION["index5"] = $indices['index5'];//organizacao
     } else {
         $_SESSION["index1"] = 0;
         $_SESSION["index3"] = 0;

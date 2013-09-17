@@ -15,7 +15,7 @@ if (!isset($sucesso)) {
     $sucesso = "n";
 }
 
-// Conecta ao SGBD
+
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 if (isset($submit)) {
@@ -115,11 +115,27 @@ if (isset($submit)) {
                 //-->
 
     <?php
-// Cenï¿½rio -  Incluir Cenï¿½rio 
-//Objetivo:        Permitir ao usuï¿½rio a inclusï¿½o de um novo cenï¿½rio
-//Contexto:        Usuï¿½rio deseja incluir um novo cenï¿½rio.
-//              Prï¿½-Condiï¿½ï¿½o: Login, cenï¿½rio ainda nï¿½o cadastrado
-//Atores:        Usuï¿½rio, Sistema
+// Cenário -  Incluir Cenário 
+
+//Objetivo:        Permitir ao usuário a inclusão de um novo cenário
+//Contexto:        Usuário deseja incluir um novo cenário.
+//              Pré-Condição: Login, cenário ainda não cadastrado
+//Atores:        Usuário, Sistema
+//Recursos:        Dados a serem cadastrados
+//Episódios:    O sistema fornecerá para o usuário uma tela com os seguintes campos de texto:
+//                - Nome Cenário
+//                - Objetivo.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//                - Contexto.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//                - Atores.    Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//                - Recursos.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//                - Exceção.   Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
+//                - Episódios. Restrição: Caixa de texto com pelo menos 16 linhas de escrita visíveis
+//                - Botão para confirmar a inclusão do novo cenário
+//              Restrições: Depois de clicar no botão de confirmação,
+//                          o sistema verifica se todos os campos foram preenchidos. 
+// Exceção:        Se todos os campos não foram preenchidos, retorna para o usuário uma mensagem avisando
+//              que todos os campos devem ser preenchidos e um botão de voltar para a pagina anterior.
+
     ?>
 
             </SCRIPT>
