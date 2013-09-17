@@ -199,10 +199,10 @@ chkUser("index.php");
 
             frame_inferior($c, $t, $id);
         } elseif (isset($project_id)) {
-            // Foi passada uma variavel $id_projeto. Esta variavel deve conter o id de um
-            // projeto que o usuario esteja cadastrado. Entretanto, como a passagem eh
-            // feita usando JavaScript (no heading.php), devemos checar se este id realmente
-            // corresponde a um projeto que o usuario tenha acesso (seguranca).
+             // Was passed a variable $ id_projeto. This variable should contain the id of a
+             // Project that the User is registered. However, as the passage eh
+             // Done using JavaScript (in heading.php), we check if this id really
+             // Corresponds to a project that the User has access (security).
             check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
 
             $_SESSION['id_projeto_corrente'] = $project_id;

@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-// add_cenario.php: Este script cadastra um novo cenario do projeto. Eh
-//                  passada, atraves da URL, uma variavel $id_projeto, que
-//                  indica em que projeto deve ser inserido o novo cenario.
+// Add_cenario.php: This script registers a new scenary design.
+// Is passed, through the URL, a variable $ id_projeto that
+// Indicates that the project should be inserted the new scenary.
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
@@ -30,7 +30,7 @@ if (isset($submit)) {
     if ($ret == true) {
         print("<!-- Tentando Inserir Cenario --><BR>");
 
-        /* Substitui todas as ocorrencias de ">" e "<" por " " */
+        // Replaces all occurrences of ">" and "<" with "" 
         $titulo = str_replace(">", " ", str_replace("<", " ", $titulo));
         $objetivo = str_replace(">", " ", str_replace("<", " ", $objetivo));
         $contexto = str_replace(">", " ", str_replace("<", " ", $contexto));
@@ -64,7 +64,8 @@ if (isset($submit)) {
     </script>
 
     <?php
-} else {    // Script chamado atraves do menu superior
+} else {   
+	 // Script called trough the top menu
     $project_name = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
     ?>
 
@@ -115,26 +116,25 @@ if (isset($submit)) {
                 //-->
 
     <?php
-// Cenário -  Incluir Cenário 
-
-//Objetivo:        Permitir ao usuário a inclusão de um novo cenário
-//Contexto:        Usuário deseja incluir um novo cenário.
-//              Pré-Condição: Login, cenário ainda não cadastrado
-//Atores:        Usuário, Sistema
-//Recursos:        Dados a serem cadastrados
-//Episódios:    O sistema fornecerá para o usuário uma tela com os seguintes campos de texto:
-//                - Nome Cenário
-//                - Objetivo.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
-//                - Contexto.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
-//                - Atores.    Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
-//                - Recursos.  Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
-//                - Exceção.   Restrição: Caixa de texto com pelo menos 5 linhas de escrita visíveis
-//                - Episódios. Restrição: Caixa de texto com pelo menos 16 linhas de escrita visíveis
-//                - Botão para confirmar a inclusão do novo cenário
-//              Restrições: Depois de clicar no botão de confirmação,
-//                          o sistema verifica se todos os campos foram preenchidos. 
-// Exceção:        Se todos os campos não foram preenchidos, retorna para o usuário uma mensagem avisando
-//              que todos os campos devem ser preenchidos e um botão de voltar para a pagina anterior.
+// Scenary - Include Scenary
+// Purpose: Allow user to include a new scenario
+// Context: User to include a new scenario.
+// Precondition: Login, backdrop not registered
+// Actors: User, System
+// Resources: Data to be registered
+// Episodes: The system provides the user a screen with the following text fields:
+// - Name Scenary
+// - Purpose. Restriction: Text box with at least 5 lines of writing visible
+// - Context. Restriction: Text box with at least 5 lines of writing visible
+// - Actors. Restriction: Text box with at least 5 lines of writing visible
+// - Resources. Restriction: Text box with at least 5 lines of writing visible
+// - Exception. Restriction: Text box with at least 5 lines of writing visible
+// - Episodes. Restriction: Text box with at least 16 lines of writing visible
+// - Button to confirm the inclusion of the new scenario
+// Restrictions: After clicking the confirmation button,
+// The system checks whether all fields have been filled.
+// Exception: If all fields are empty, returns to the user a warning message
+// All fields must be completed and a button to return to the previous page.
 
     ?>
 

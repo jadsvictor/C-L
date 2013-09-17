@@ -6,32 +6,30 @@ include("httprequest.inc");
 
 chkUser("index.php");
 
-// Este script eh chamado quando ocorre uma solicitacao de inclusao
-// de novo projeto, ou quando um novo usuario se cadastra no sistema
+// This script is only called when a solicitation of inclusion
+// New project, or when a New User register on the system
 
+// SCENARY - Register New Project
+// Purpose: Allow user to register a new project
+// Context: User want to include a new project in the database
+// Precondition: Login
+// Actors: User
+// Resources: System, design data, database
+// Episodes: The User clicks on the "add project" found in the top menu.
+// The system provides a screen for the user to specify the details of the new project,
+// As the project name and description.
+// The user clicks the insert button.
+// The system saves the new project in the database and automatically builds the navigation
+// For this new project.
+// Exception: If you specify a project name already exists and belongs or has participation
+// This user, the system displays an error message.
 
-//Cenário  -  Cadastrar Novo Projeto 
-//Objetivo:	   Permitir ao usuário cadastrar um novo projeto
-//Contexto:	   Usuário deseja incluir um novo projeto na base de dados
-//              Pré-Condição: Login  
-//Atores:	   Usuário
-//Recursos:	   Sistema, dados do projeto, base de dados
-//Episódios:   O Usuário clica na opção “adicionar projeto” encontrada no menu superior.
-//             O sistema disponibiliza uma tela para o usuário especificar os dados do novo projeto,
-//              como o nome do projeto e sua descrição.
-//             O usuário clica no botão inserir.
-//             O sistema grava o novo projeto na base de dados e automaticamente constrói a Navegação
-//              para este novo projeto.
-//Exceção:	   Se for especificado um nome de projeto já existente e que pertença ou tenha a participação
-//                 deste usuário, o sistema exibe uma mensagem de erro.
-
-// Chamado atraves do botao de submit  
+// Called through the button to submit
 if (isset($submit)) {
 
     $id_projeto_incluido = inclui_projeto($nome, $descricao);
 
-    // Inserir na tabela participa
-
+    // Insert on index
     if ($id_projeto_incluido != -1) {
         $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
         $gerente = 1;

@@ -23,42 +23,40 @@ if (isset($submit)) {
             recarrega("?p_style=$p_style&p_text=$p_text&nome=$nome&email=$email&login=$login&novo=$novo");
         } else {
 
-// Cenário - Incluir usuário independente 
-
-// Objetivo:  Permitir um usuário, que não esteja cadastrado como administrador, se cadastrar 
-//            com o perfil de administrador	
-// Contexto:  Sistema aberto Usuário deseja cadastrar-se ao sistema como administrador. 
-//            Usuário na tela de cadastro de usuário 
-//            Pré-Condição: Usuário ter acessado ao sistema	
-// Atores:    Usuário, Sistema	
-// Recursos:  Interface, Banco de Dados	
-// Episódios: O sistema retorna para o usuário uma interface com campos para entrada de
-//            um Nome, email, login, uma senha e a confirmação da senha.
-//            O usuário preenche os campos e clica em cadastrar 
-//            O sistema então checa para ver se todos os campos estão preenchidos.
-//              Caso algum campo deixar de ser preenchido, o sistema avisa que todos
-//               os campos devem ser preenchidos.
-//              Caso todos os campos estiverem preenchidos, o sistema checa no banco
-//               de dados para ver se esse login já existe..
-//              Caso aquele login digitado já exista, o sistema retorna a mesma página
-//               para o usuário avisando que o usuário deve escolher outro login,.
+// Scenary - Include independent user
+// Purpose: Allow a user who is not registered as an administrator, register
+// With the administrator profile
+// Context: Open System User wishes to subscribe to the system as administrator.
+// User in the registration screen user
+// Precondition: User has accessed the system
+// Actors: User, System
+// Features: Interface, Database
+// Episodes: The system returns to the user interface with fields for entering
+// A Name, email, login, password, and password confirmation.
+// The user fills in the fields and click on submit
+// The system then checks to see if all fields are filled.
+// If a field fails to be completed, the system warns you that all
+// Fields must be filled.
+// If all fields are completed, the system checks in the bank
+// Data to see if this login exists ..
+// If you enter that login already exists, the system returns the same page
+// To the user warning that the user must choose another login.
             $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
             $selection = "SELECT id_usuario FROM usuario WHERE login = '$login'";
             $qrr = mysql_query($selection) or die("Erro ao enviar a query");
             if (mysql_num_rows($qrr)) {
             	
-// Cenário - Adicionar Usuário
-
-// Objetivo:  Permitir ao Administrador criar novos usuários.
-// Contexto:  O Administrador deseja adicionar novos usuários (não cadastrados)
-//            criando novos  usuários ao projeto selecionado.
-//            Pré-Condições: Login
-// Atores:    Administrador
-// Recursos:  Dados do usuário
-// Episódios: O Administrador clica no link “Adicionar usuário (não existente) neste projeto”,
-//            entrando com as informações do novo usuário: nome, email, login e senha.
-//            Caso o login já exista, aparecerá uma mensagem de erro na tela informando que
-//            este login já existe.
+// scenary - Add User
+// Purpose: Allow the administrator to create new users.
+// Context: The administrator wants to add new users (not registered)
+// Create new users to the selected project.
+// Preconditions: Login
+// Actors: Administrator
+// Resources: User Data
+// Episodes: The Administrator clicks on the link "Add User (nonexistent) this project,"
+// Entering the new user information: name, email, login and password.
+// If the login already exists, an error message appears on the screen stating that
+// This login already exists.
                 ?>
                 <script language="JavaScript">
                     alert("Login jï¿½ existente no sistema. Favor escolher outro login.")
@@ -80,18 +78,17 @@ if (isset($submit)) {
 } elseif (isset($cadastrado)) {
     if ($novo == "true") {    
     	
-// Cenário - Incluir usuário independente 
-
-// Objetivo:  Permitir um usuário, que não esteja cadastrado como administrador, se cadastrar 
-//            com o perfil de administrador	
-// Contexto:  Sistema aberto Usuário deseja cadastrar-se ao sistema como administrador. 
-//            Usuário na tela de cadastro de usuário 
-//            Pré-Condição: Usuário ter acessado ao sistema	
-// Atores:    Usuário, Sistema	
-// Recursos:  Interface, Banco de Dados	
-// Episódios:  Caso aquele login digitado não exista, o sistema cadastra esse usuário 
-//               como administrador no banco de dados,  possibilitando:
-//              - Redirecioná-lo  para a interface de CADASTRAR NOVO PROJETO; 
+// scenary - Include independent user
+// Purpose: Allow a user who is not registered as an administrator, register
+// With the administrator profile
+// Context: Open System User wishes to subscribe to the system as administrator.
+// User in the registration screen user
+// Precondition: User has accessed the system
+// Actors: User, System
+// Features: Interface, Database
+// Episodes: If you enter that login does not exist, the system registers this user
+// As an administrator in the database, enabling:
+// - Redirect it to interface REGISTER NEW PROJECT;
         $_SESSION['id_usuario_corrente'] = simple_query("id_usuario", "usuario", "login = '$login'");
         ?>
 
@@ -107,7 +104,7 @@ if (isset($submit)) {
         <?php
     } else {
 
-        // Cenario "Edicao de Usuario" 
+        
         $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
         $id_usuario_incluido = simple_query("id_usuario", "usuario", "login = '$login'");
         $selection = "INSERT INTO participa (id_usuario, id_projeto)
@@ -127,7 +124,7 @@ if (isset($submit)) {
 
         <?php
     }
-} else {    // Script chamado normalmente
+} else {  
     if (empty($p_style)) {
         $p_style = "color: green; font-weight: bold";
         $p_text = "Favor preencher os dados abaixo:";
@@ -201,17 +198,16 @@ if (isset($submit)) {
 
                         <?php
                         
-// Cenário - Adicionar Usuário
-
-// Objetivo:  Permitir ao Administrador criar novos usuários.
-// Contexto:  O Administrador deseja adicionar novos usuários (não cadastrados) criando novos
-//              usuários ao projeto selecionado.
-//            Pré-Condições: Login
-// Atores:    Administrador
-// Recursos:  Dados do usuário
-// Episódios: Clicando no botão Cadastrar para confirmar a adição do novo
-//             usuário ao projeto selecionado.
-//            O novo usuário criado receberá uma mensagem via email com seu login e senha.
+// Scenary - Add User
+// Purpose: Allow the administrator to create new users.
+// Context: The administrator wants to add new users (not registered) creating new
+// Users to the selected project.
+// Preconditions: Login
+// Actors: Administrator
+// Resources: User Data
+// Episodes: By clicking the Register button to confirm the addition of the new
+// User to the selected project.
+// The newly created user will receive a message via email with your login and password.
                         ?>
 
                         <td align="center" colspan="4" height="40" valign="bottom"><input name="submit" onClick="return verifyEmail(this.form);" type="submit" value="Cadastrar"></td>
