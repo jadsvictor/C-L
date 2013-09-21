@@ -20,7 +20,12 @@ include("bd.inc");
     </head>
 <?php
 
-bd_connect() or die("Erro ao conectar ao SGBD");
+$connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
+if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))
+            echo "SUCESSO NA CONEXAO AO BD <br>";
+        else
+            echo "ERRO NA CONEXAO AO BD <br>";
+        
 $query_select_project = mysql_query("SELECT * FROM projeto WHERE id_projeto =" . (int)$_GET['id_projeto_corrente']) or die("Erro ao enviar a query de select no projeto");
 $resultArrayProject = mysql_fetch_array($query_select_project);
 $name_Project = $resultArrayProject[1];
@@ -71,6 +76,7 @@ $project_description = $resultArrayProject[3];
     <p>
     <i><a href="showSource.php?file=remove_projeto.php">Veja o codigo fonte!</a></i> 
     </p>
+    mysql_close($connect_database);
 </body>
 </html>
 

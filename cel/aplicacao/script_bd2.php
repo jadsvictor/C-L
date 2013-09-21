@@ -12,9 +12,13 @@
 
         function converts_impacts() {
             $connect_database = bd_connect() or die("Erro na conexao ao BD : " . mysql_error() . __LINE__);
-
+            if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))
+                echo "SUCESSO NA CONEXAO AO BD <br>";
+            else
+                echo "ERRO NA CONEXAO AO BD <br>";
+            
             $filename = "teste.txt";
-          
+
             if (!$handle = fopen($filename, 'w')) {
                 print "Nao foi possivel abrir o arquivo !!!($filename)";
                 exit;
@@ -25,7 +29,7 @@
 
             while ($line = mysql_fetch_array($result_selects_lexicon, MYSQL_ASSOC)) {
                 $id_lexicon = $line['id_lexico'];
-               
+
                 if (!fwrite($handle, "@\r\n$id_lexicon\r\n")) {
                     print "Cannot write to file ($filename)";
                     exit;
@@ -59,14 +63,14 @@
                 print ($line . "<br>\n");
                 if (strcmp(trim($line), "") != 0) {
                     $query_insert_impact = "insert into impacto (id_lexico, impacto) values ('$id_lexicon', '$line');";
-                    mysql_query($query_insert_impact) or die("A consulta ao BD falhou : " . 
-                            mysql_error() . " " . $line . " " . $id_lexicon . " " . __LINE__);
+                    mysql_query($query_insert_impact) or die("A consulta ao BD falhou : " .
+                                    mysql_error() . " " . $line . " " . $id_lexicon . " " . __LINE__);
                 }
             }
 
             $query_selects_impact = "select * from impacto order by id_lexico;";
-            $result_selects_impact = mysql_query($query_selects_impact) or die("A consulta ao BD falhou : " . 
-                    mysql_error() . __LINE__);
+            $result_selects_impact = mysql_query($query_selects_impact) or die("A consulta ao BD falhou : " .
+                            mysql_error() . __LINE__);
             mysql_num_rows($result_selects_impact);
 
             mysql_close($connect_database);

@@ -31,7 +31,7 @@ if (isset($submit)) {
 
     // Insert on index
     if ($id_projeto_incluido != -1) {
-        $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+        $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
         $gerente = 1;
         $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
         $selection = "INSERT INTO participa (id_usuario, id_projeto, gerente)

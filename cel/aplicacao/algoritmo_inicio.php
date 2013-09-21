@@ -5,7 +5,7 @@ include 'auxiliar_bd.php';
 include_once 'bd.inc';
 include_once "script_bd2.php";
 
-$link = bd_connect();
+$connect_database = bd_connect();
 $list = verifica_tipo();
 if (is_array($list)) {
     foreach ($list as $id) {
@@ -62,7 +62,7 @@ if ($_POST["load"] == "FALSE") {
     $_SESSION["index7"] = 0;
 }
 
-mysql_close($link);
+mysql_close($connect_database);
 ?>
 
 <html>

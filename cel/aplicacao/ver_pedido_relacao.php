@@ -27,13 +27,13 @@
         chkUser("index.php");
         if (isset($submit)) {
             $dataBase = new PGDB ();
-            $select_request_relation = new QUERY($dataBase);
-            $update_request_relation = new QUERY($dataBase);
-            $delete_request_relation = new QUERY($dataBase);
+            $update_request_relation = new QUERY($dataBase);           
             for ($count = 0; $count < sizeof($request); $count++) {
                 $update_request_relation->execute("update pedidorel set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoRelacao($request[$count]);
             }
+            
+            $delete_request_relation = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_relation->execute("delete from pedidorel where id_pedido = $remove[$count]");
             }
@@ -62,7 +62,6 @@
             <?php
             $dataBase = new PGDB ();
             $select_request_relation = new QUERY($dataBase);
-            $select_user = new QUERY($dataBase);
             $select_request_relation->execute("SELECT * FROM pedidorel WHERE id_projeto = $project_id");
             if ($select_request_relation->getntuples() == 0) {
                 echo "<BR>Nenhum pedido.<BR>";
@@ -70,12 +69,11 @@
                 $record = $select_request_relation->gofirst();
 
                 while ($record != 'LAST_RECORD_REACHED') {
-                    $id_user = $record['id_usuario'];
-                    $id_request = $record['id_pedido'];
-                    $requested_type = $record['tipo_pedido'];
-                    $okay = $record['aprovado'];
+                    $id_user = $record['id_usuario'];                    
+                    $select_user = new QUERY($dataBase);
                     $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
                     $user = $select_user->gofirst();
+                    $requested_type = $record['tipo_pedido'];
                     if (strcasecmp($requested_type, 'remover')) {
                         ?>
 
@@ -113,6 +111,8 @@
                         </h3>
                         <?php
                     }
+                    $id_request = $record['id_pedido'];                    
+                    $okay = $record['aprovado'];
                     if ($okay == 1) {
                         echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
                     } else {

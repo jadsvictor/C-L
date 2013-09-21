@@ -374,7 +374,7 @@ if (isset($_SESSION["tipos"])) {
 
     include_once 'bd.inc';
 
-    $link = bd_connect();
+    $connect_database = bd_connect();
 
     $list = verifica_tipo();
 
@@ -385,7 +385,7 @@ if (isset($_SESSION["tipos"])) {
             echo "ERRO <br>";
         }
     }
-    mysql_close($link);
+    mysql_close($connect_database);
     ?>
     <script>
         document.location = "algoritmo_inicio.php";

@@ -15,7 +15,7 @@ if (!isset($sucesso)) {
 
 chkUser("index.php");
 
-$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+$connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 
 // Script called via the submit form
 if (isset($submit)) {

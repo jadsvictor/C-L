@@ -6,7 +6,7 @@ include_once("bd.inc");
 session_start();
 
 
-$link = bd_connect();
+$connect_database = bd_connect();
 
 if ($_POST['user'] == "") {
 // Recover user name
@@ -41,7 +41,7 @@ $list_axiom = get_lista_de_axiomas();
 
 $daml = salva_daml($site, $dir, $archive, $i, $list_concepts, $list_relations, $list_axiom);
 
-mysql_close($link);
+mysql_close($connect_database);
 ?>   
 
 <html> 

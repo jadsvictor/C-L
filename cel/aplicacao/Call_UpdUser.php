@@ -3,7 +3,7 @@ session_start();
 
 include_once("bd.inc");
 
-$database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+$connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 
 // Cen�rio - Alterar cadastro
 //

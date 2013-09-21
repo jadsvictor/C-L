@@ -31,11 +31,12 @@
 
             $dataBase = new PGDB ();
             $update_request_lexicon = new QUERY($dataBase);
-            $delete_request_lexicon = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($request); $count++) {
                 $update_request_lexicon->execute("update pedidolex set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoLexico($request[$count]);
             }
+            
+            $delete_request_lexicon = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_lexicon->execute("delete from pedidolex where id_pedido  = $remove[$count]");
                 $delete_request_lexicon->execute("delete from sinonimo where id_pedidolex = $remove[$count]");
@@ -61,23 +62,21 @@
             <?php
             $dataBase = new PGDB ();
             $select_request_lexicon = new QUERY($dataBase);
-            $select_user = new QUERY($dataBase);
+            
             $select_synonymous = new QUERY($dataBase);
             $select_request_lexicon->execute("SELECT * FROM pedidolex where id_projeto = $project_id");
             if ($select_request_lexicon->getntuples() == 0) {
                 echo "<BR>Nenhum pedido.<BR>";
             } else {
                 $record = $select_request_lexicon->gofirst();
-                while ($record != 'LAST_RECORD_REACHED') {
-                    $id_user = $record['id_usuario'];
+                while ($record != 'LAST_RECORD_REACHED') {                    
                     $id_request = $record['id_pedido'];
-                    $requested_type = $record['tipo_pedido'];
-                    $okay = $record['aprovado'];
-
                     $select_synonymous->execute("SELECT nome FROM sinonimo WHERE id_pedidolex = $id_request");
-
+                    $select_user = new QUERY($dataBase);
+                    $id_user = $record['id_usuario'];
                     $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
                     $user = $select_user->gofirst();
+                    $requested_type = $record['tipo_pedido'];
                     if (strcasecmp($requested_type, 'remover')) {
                         ?>
                         <h3>O usuario 
@@ -143,6 +142,7 @@
                         </h3>
                         <?php
                     }
+                    $okay = $record['aprovado'];
                     if ($okay == 1) {
                         echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
                     } else {

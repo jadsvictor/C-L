@@ -41,7 +41,7 @@ if (isset($submit)) {
 // Data to see if this login exists ..
 // If you enter that login already exists, the system returns the same page
 // To the user warning that the user must choose another login.
-            $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+            $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
             $selection = "SELECT id_usuario FROM usuario WHERE login = '$login'";
             $qrr = mysql_query($selection) or die("Erro ao enviar a query");
             if (mysql_num_rows($qrr)) {
@@ -105,7 +105,7 @@ if (isset($submit)) {
     } else {
 
         
-        $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
+        $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
         $id_usuario_incluido = simple_query("id_usuario", "usuario", "login = '$login'");
         $selection = "INSERT INTO participa (id_usuario, id_projeto)
           VALUES ($id_usuario_incluido, " . $_SESSION['id_projeto_corrente'] . ")";

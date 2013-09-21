@@ -5,7 +5,11 @@ include 'auxiliar_bd.php';
 include_once("bd.inc");
 include_once("CELConfig/CELConfig.inc");
 
-$link = bd_connect();
+$connect_database = bd_connect();
+if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))
+            echo "SUCESSO NA CONEXAO AO BD <br>";
+        else
+            echo "ERRO NA CONEXAO AO BD <br>";
 
 $site = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo") . CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
 $dir = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
@@ -33,5 +37,5 @@ if (!$daml) {
 }
 
 
-mysql_close($link);
+mysql_close($connect_database);
 ?>

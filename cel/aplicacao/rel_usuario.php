@@ -20,7 +20,11 @@ include("bd.inc");
 
 chkUser("index.php");
 
-bd_connect() or die("Erro ao conectar ao SGBD");
+$connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
+if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))
+            echo "SUCESSO NA CONEXAO AO BD <br>";
+        else
+            echo "ERRO NA CONEXAO AO BD <br>";
 
 $submit = 0;
 if (isset($submit)) {
@@ -33,7 +37,7 @@ if (isset($submit)) {
     $number_selected_users = count($user);
     for ($i = 0; $i < $number_selected_users; $i++) {
         $user_registers = "INSERT INTO participa (id_usuario, id_projeto)
-              VALUES (" . (int)$user[$i] . ", " . (int)$_GET['id_projeto_corrente'] . ")";
+              VALUES (" . $user[$i] . ", " . (int)$_GET['id_projeto_corrente'] . ")";
         mysql_query($user_registers) or die("Erro ao cadastrar usuario");
     }
     ?>
@@ -138,15 +142,15 @@ if (isset($submit)) {
                                 <?php
                                 $user_selects_nonparticipating = "SELECT id_usuario FROM participa where participa.id_projeto =" . (int)$_SESSION['id_projeto_corrente'];
                                 $subqrr = mysql_query($user_selects_nonparticipating) or die("Erro ao enviar a subquery");
-                                $result_user_nonparticipating = "(0)";
-                                if ($subqrr != 0) {
+                                 if ($subqrr != 0) {
                                     $row = mysql_fetch_row($subqrr);
                                     $result_user_nonparticipating = "( $row[0]";
                                     while ($row = mysql_fetch_row($subqrr))
                                         $result_user_nonparticipating = "$result_user_nonparticipating , $row[0]";
                                     $result_user_nonparticipating = "$result_user_nonparticipating )";
                                 }
-                                $selection = "SELECT usuario.id_usuario, usuario.login FROM usuario where usuario.id_usuario not in " .  mysql_real_escape_string($result_user_nonparticipating);
+                                $selection = "SELECT usuario.id_usuario, usuario.login FROM usuario 
+                                    where usuario.id_usuario not in " .  mysql_real_escape_string($result_user_nonparticipating);
                               
                                 echo($selection);
                                 $query_user_nonparticipating = mysql_query($selection) or die("Erro ao enviar a query");
@@ -182,6 +186,7 @@ if (isset($submit)) {
                 </table>
             </form>
             <br><i><a href="showSource.php?file=rel_usuario.php">Veja o codigo fonte!</a></i>
+          mysql_close($connect_database);
         </body>
     </html>
 

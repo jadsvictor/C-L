@@ -4,7 +4,7 @@
             Pedidos de alteração dos Cenários
         </title>
 
- <?php
+        <?php
 // Cenário - Verificar pedidos de alteração de cenários
 //Objetivo:	Permitir ao administrador gerenciar os pedidos de alteração de cenários.
 //Contexto:	Gerente deseja visualizar os pedidos de alteração de cenários.
@@ -29,11 +29,12 @@
         if (isset($submit)) {
             $dataBase = new PGDB ();
             $update_request_scene = new QUERY($dataBase);
-            $delete_request_scene = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($request); $count++) {
                 $update_request_scene->execute("update pedidocen set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoCenario($request[$count]);
             }
+
+            $delete_request_scene = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_scene->execute("delete from pedidocen where id_pedido = $remove[$count]");
             }
@@ -56,7 +57,7 @@
         ?>
 
     </head>
-    
+
     <body>
         <h2>Pedidos de Alteração no Conjunto de Cenários</h2>
         <form action="?id_projeto=<?= $id_project ?>" method="post">
@@ -64,7 +65,6 @@
             <?php
             $dataBase = new PGDB ();
             $select_request_scene = new QUERY($dataBase);
-            $select_user = new QUERY($dataBase);
             $select_request_scene->execute("SELECT * FROM pedidocen WHERE id_projeto = $id_project");
 
             if ($select_request_scene->getntuples() == 0) {
@@ -72,17 +72,16 @@
             } else {
                 $record = $select_request_scene->gofirst();
                 while ($record != 'LAST_RECORD_REACHED') {
+                    $select_user = new QUERY($dataBase);
                     $id_user = $record['id_usuario'];
-                    $id_request = $record['id_pedido'];
-                    $requested_type = $record['tipo_pedido'];
-                    $okay = $record['aprovado'];
                     $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
                     $user = $select_user->gofirst();
+                    $requested_type = $record['tipo_pedido'];
                     if (strcasecmp($requested_type, 'remover')) {
                         ?>
 
                         <br>
-                        <h3>O usuário 
+                        <h3>O usuario 
                             <a  href="mailto:<?= $user['email'] ?>" >
                                 <?= $user['nome'] ?>
                             </a> pede para <?= $requested_type ?> o cenário 
@@ -90,12 +89,12 @@
                             <?= $record['titulo'] ?>
                             </font>
                         </h3> <?
-                            if (!strcasecmp($requested_type, 'alterar')) {
-                                echo"para cenário abaixo:</h3>";
-                            } else {
-                                echo"</h3>";
-                            }
-                            ?>
+                        if (!strcasecmp($requested_type, 'alterar')) {
+                            echo"para cenário abaixo:</h3>";
+                        } else {
+                            echo"</h3>";
+                        }
+                        ?>
                         <table>
                             <td><b>Título:</b></td>
                             <td><?= $record['titulo'] ?></td>
@@ -138,6 +137,8 @@
                             </font></h3>
                         <?php
                     }
+                    $okay = $record['aprovado'];
+                    $id_request = $record['id_pedido'];
                     if ($okay == 1) {
                         echo "[<font color=\"#ff0000\"><STRONG>Aprovado</STRONG></font>]<BR>";
                     } else {

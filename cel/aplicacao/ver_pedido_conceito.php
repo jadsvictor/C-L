@@ -27,11 +27,12 @@
         if (isset($submit)) {
             $dataBase = new PGDB ();
             $update_request_concept = new QUERY($dataBase);
-            $delete_request_concept = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($request); $count++) {
                 $update_request_concept->execute("update pedidocon set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoConceito($request[$count]);
             }
+            
+            $delete_request_concept = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_concept->execute("delete from pedidocon where id_pedido = $remove[$count]");
             }
@@ -61,20 +62,18 @@
 
             <?php
             $dataBase = new PGDB ();
-            $select_request_concept = new QUERY($dataBase);
-            $select_user = new QUERY($dataBase);
+            $select_request_concept = new QUERY($dataBase);           
             $select_request_concept->execute("SELECT * FROM pedidocon WHERE id_projeto = $id_project");
             if ($select_request_concept->getntuples() == 0) {
                 echo "<BR>Nenhum pedido.<BR>";
             } else {
                 $record = $select_request_concept->gofirst();
                 while ($record != 'LAST_RECORD_REACHED') {
-                    $id_user = $record['id_usuario'];
-                    $id_request = $record['id_pedido'];
-                    $requested_type = $record['tipo_pedido'];
-                    $okay = $record['aprovado'];
+                    $id_user = $record['id_usuario'];                                       
+                    $select_user = new QUERY($dataBase);
                     $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
                     $user = $select_user->gofirst();
+                    $requested_type = $record['tipo_pedido'];
                     if (strcasecmp($requested_type, 'remover')) {
                         ?>
 
@@ -124,6 +123,8 @@
                         </h3>
                         <?php
                     }
+                    $id_request = $record['id_pedido'];
+                    $okay = $record['aprovado'];
                     if ($okay == 1) {
                         echo "<font color=\"#ff0000\">Aprovado</font> ";
                     } else {

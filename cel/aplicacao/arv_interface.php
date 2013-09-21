@@ -4,7 +4,7 @@ include_once("bd.inc");
 
 session_start();
 
-$link = bd_connect();
+$connect_database = bd_connect();
 ?>    
 
 <html> 
@@ -62,7 +62,7 @@ foreach ($arv as $conc) {
     }
 }
 
-mysql_close($link);
+mysql_close($connect_database);
 ?>
 
         </script>

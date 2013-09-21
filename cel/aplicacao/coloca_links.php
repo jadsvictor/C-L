@@ -151,7 +151,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
         $i = 0;
         $a = 0;
         while ($i < count($vetorDeLexicos)) {
-            $nomeLexico = escapa_metacaracteres($vetorDeLexicos[$i]->nome);
+            $nomeLexico = escapes_metacharacters($vetorDeLexicos[$i]->nome);
             $regex = "/(\s|\b)(" . $nomeLexico . ")(\s|\b)/i";
             if (preg_match($regex, $copiaTexto) != 0) {
                 $copiaTexto = preg_replace($regex, " ", $copiaTexto);
@@ -175,7 +175,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
         while ($contador < $tamanhoTotal) {
             if (($i < $tamLexicos ) && ($j < $tamCenarios)) {
                 if (strlen($vetorDeCenarios[$j]->titulo) < strlen($vetorDeLexicos[$i]->nome)) {
-                    $nomeLexico = escapa_metacaracteres($vetorDeLexicos[$i]->nome);
+                    $nomeLexico = escapes_metacharacters($vetorDeLexicos[$i]->nome);
                     $regex = "/(\s|\b)(" . $nomeLexico . ")(\s|\b)/i";
                     if (preg_match($regex, $copiaTexto) != 0) {
                         $copiaTexto = preg_replace($regex, " ", $copiaTexto);
@@ -185,7 +185,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
                     $i++;
                 } else {
 
-                    $tituloCenario = escapa_metacaracteres($vetorDeCenarios[$j]->titulo);
+                    $tituloCenario = escapes_metacharacters($vetorDeCenarios[$j]->titulo);
                     $regex = "/(\s|\b)(" . $tituloCenario . ")(\s|\b)/i";
                     if (preg_match($regex, $copiaTexto) != 0) {
                         $copiaTexto = preg_replace($regex, " ", $copiaTexto);
@@ -196,7 +196,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
                 }
             } else if ($tamLexicos == $i) {
 
-                $tituloCenario = escapa_metacaracteres($vetorDeCenarios[$j]->titulo);
+                $tituloCenario = escapes_metacharacters($vetorDeCenarios[$j]->titulo);
                 $regex = "/(\s|\b)(" . $tituloCenario . ")(\s|\b)/i";
                 if (preg_match($regex, $copiaTexto) != 0) {
                     $copiaTexto = preg_replace($regex, " ", $copiaTexto);
@@ -206,7 +206,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
                 $j++;
             } else if ($tamCenarios == $j) {
 
-                $nomeLexico = escapa_metacaracteres($vetorDeLexicos[$i]->nome);
+                $nomeLexico = escapes_metacharacters($vetorDeLexicos[$i]->nome);
                 $regex = "/(\s|\b)(" . $nomeLexico . ")(\s|\b)/i";
                 if (preg_match($regex, $copiaTexto) != 0) {
                     $copiaTexto = preg_replace($regex, " ", $copiaTexto);
@@ -224,7 +224,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
     $indice = 0;
     $vetorAux = array();
     while ($indice < count($vetorAuxLexicos)) {
-        $nomeLexico = escapa_metacaracteres($vetorAuxLexicos[$indice]->nome);
+        $nomeLexico = escapes_metacharacters($vetorAuxLexicos[$indice]->nome);
         $regex = "/(\s|\b)(" . $nomeLexico . ")(\s|\b)/i";
         $link = "<a title=\"L�xico\" href=\"main.php?t=l&id=" .
                 $vetorAuxLexicos[$indice]->id_lexico . "\">" .
@@ -247,7 +247,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
 
     $vetorAuxCen = array();
     while ($indice < count($vetorAuxCenarios)) {
-        $tituloCenario = escapa_metacaracteres($vetorAuxCenarios[$indice]->titulo);
+        $tituloCenario = escapes_metacharacters($vetorAuxCenarios[$indice]->titulo);
         $regex = "/(\s|\b)(" . $tituloCenario . ")(\s|\b)/i";
         $link = "$1<a title=\"Cen�rio\" href=\"main.php?t=c&id=" .
                 $vetorAuxCenarios[$indice]->id_cenario . "\"><span style=\"font-variant: small-caps\">" .

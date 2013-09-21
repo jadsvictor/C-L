@@ -2,7 +2,7 @@
 
 include_once("bd.inc");
 
-$link = bd_connect();
+$connect_database = bd_connect();
 $query = "show tables";
 $result = mysql_query($query) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 
@@ -251,5 +251,5 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 }
 print "</table>";
 
-mysql_close($link);
+mysql_close($connect_database);
 ?>

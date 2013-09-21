@@ -10,7 +10,7 @@
         include_once( "bd.inc" );
         include 'auxiliar_bd.php';
 
-        $link = bd_connect() or die("Erro na conex�o � BD : " . mysql_error());
+        $connect_database = bd_connect() or die("Erro na conex�o � BD : " . mysql_error());
 
         $query = "show tables";
         $result = mysql_query($query) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
@@ -29,7 +29,7 @@
         echo "<br>FIM !!!";
 
 
-        mysql_close($link);
+        mysql_close($connect_database);
         ?>
 
     </body>
