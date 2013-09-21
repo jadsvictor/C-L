@@ -54,9 +54,9 @@ function get_lista_de_estado() {
     return $aux;
 }
 
-//Esta função verifica se todos os membros da tabela de léxicos tem um tipo definido
-//Caso haja registros na tabela sem tipo defino, a função retorna estes registros
-//Caso contrário retorna true
+//Esta funï¿½ï¿½o verifica se todos os membros da tabela de lï¿½xicos tem um tipo definido
+//Caso haja registros na tabela sem tipo defino, a funï¿½ï¿½o retorna estes registros
+//Caso contrï¿½rio retorna true
 function verifica_tipo() {
     $id_projeto = $_SESSION['id_projeto'];
     $query = "select * from lexico where tipo is null AND id_projeto='$id_projeto' order by id_lexico;";
@@ -76,25 +76,28 @@ function verifica_tipo() {
     }
 }
 
-// esta função atualiza o tipo do lexico $id_lexico (inteiro) para $tipo (string)
-// esta função só aceita os tipos: sujeito, objeto, verbo, estado e NULL
+// esta funï¿½ï¿½o atualiza o tipo do lexico $id_lexico (inteiro) para $tipo (string)
+// esta funï¿½ï¿½o sï¿½ aceita os tipos: sujeito, objeto, verbo, estado e NULL
 function atualiza_tipo($id_lexico, $tipo) {
     $id_projeto = $_SESSION['id_projeto'];
     if (!(($tipo != "sujeito") || ($tipo != "objeto") || ($tipo != "verbo") || ($tipo != "estado") || ($tipo != "null"))) {
         return (FALSE);
     }
-    if ($tipo == "null") {
-        $query = "update lexico set tipo = $tipo where id_lexico = '$id_lexico';";
+    /*if ($tipo == "null") {
+        $query = "update lexico set tipo =" .  mysql_real_escape_string($_GET["tipo"]) . " where id_lexico =" .  (int)$_GET["id_lexico"];
     } else {
-        $query = "update lexico set tipo = '$tipo' where id_lexico = '$id_lexico';";
-    }
-    $result = mysql_query($query) or die("A consulta ï¿½ BD falhou : " . mysql_error() . __LINE__);
+        $query = "update lexico set tipo =" .  mysql_real_escape_string($_GET["tipo"]) . " where id_lexico =" .  (int)$_GET["id_lexico"];
+    }*/
+    
+    mysql_query("update lexico set tipo = '" .  mysql_real_escape_string($_GET["tipo"]) . "'" . 
+            " where id_lexico =" .  (int)$_GET["id_lexico"]) or die("A consulta ï¿½ BD falhou : " 
+            . mysql_error() . __LINE__);
     return(TRUE);
 }
 
 function obter_lexico($id_lexico) {
     $id_projeto = $_SESSION['id_projeto'];
-    //retorna todos os campos do lexico; cada campo é uma posição do array que 
+    //retorna todos os campos do lexico; cada campo ï¿½ uma posiï¿½ï¿½o do array que 
     //pode ser indexada pelo nome do campo ou por um indice inteiro.
     $query = "select * from lexico where id_lexico = '$id_lexico' AND id_projeto='$id_projeto';";
     $result = mysql_query($query) or die("A consulta ï¿½ BD falhou : " . mysql_error() . __LINE__);
