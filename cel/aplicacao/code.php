@@ -29,7 +29,7 @@ $r = bd_connect() or die("Erro ao conectar ao SGBD");
 if (isset($id_projeto)) {
 check_proj_perm($_SESSION['id_usuario_corrente'], $id_projeto) or
 die("Permissao negada");
-$q = "SELECT nome FROM projeto WHERE id_projeto = $id_projeto";
+$q = "SELECT nome FROM projeto WHERE id_projeto =" . (int)$_GET[$id_projeto];
 $qrr = mysql_query($q) or die("Erro ao enviar a query");
 $result = mysql_fetch_array($qrr);
 $nome_projeto = $result['nome'];
