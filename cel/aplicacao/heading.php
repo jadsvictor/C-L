@@ -21,7 +21,7 @@ chkUser("index.php");
 // - Update lexicon.
 
 if (isset($_GET['id_projeto'])) {
-    $project_id = $_GET['id_projeto'];
+    $project_id = (int)$_GET['id_projeto'];
 }
 ?>
 
@@ -212,7 +212,7 @@ if (isset($project_id)) {
       FROM usuario u, participa pa, projeto p
       WHERE u.id_usuario = pa.id_usuario
       AND pa.id_projeto = p.id_projeto
-      AND pa.id_usuario = " . $_SESSION["id_usuario_corrente"] . "
+      AND pa.id_usuario = " . (int)$_SESSION["id_usuario_corrente"] . "
       ORDER BY p.nome";
 
 // execute the consult
@@ -284,7 +284,7 @@ if (isset($project_id)) {
 
                                     if (isset($project_id)) {
 
-                                        $user_id = $_SESSION['id_usuario_corrente'];
+                                        $user_id = (int)$_SESSION['id_usuario_corrente'];
 
                                         $ret = verificaGerente($user_id, $project_id);
 
