@@ -11,6 +11,7 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
+include("bd.inc");
 
 ?>
 <html>

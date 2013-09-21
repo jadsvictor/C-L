@@ -16,6 +16,7 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
+include("bd.inc");
 
 chkUser("index.php");
 
@@ -49,7 +50,7 @@ if (isset($submit)) {
    
             <script type ="text/javascript1.3" src="MSelect.js">
             </script>
-            <script type ="text/javascript1.3">
+            <script>
                     
                 function createMSelect() {
                     var usr_lselect = document.forms[0].elements['usuarios[]'];
