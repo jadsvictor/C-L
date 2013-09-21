@@ -5,7 +5,7 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 
-$user_id = $_SESSION['id_usuario_corrente'];
+$user_id = (int)$_SESSION['id_usuario_corrente'];
 
 $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 ?>
@@ -33,9 +33,9 @@ $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 $password_cript = md5($password);
 
-mysql_query("UPDATE usuario SET  nome =" .  mysql_real_escape_string($_GET["nome"]) ."
-        , login =" .  mysql_real_escape_string($_GET["login"]) ." 
-        , email =" .  mysql_real_escape_string($_GET["email"]) ." 
+mysql_query("UPDATE usuario SET  nome = ' " .  mysql_real_escape_string($_GET["nome"]) . "'" ."
+        , login = ' " .  mysql_real_escape_string($_GET["login"]) . "'"  ." 
+        , email = ' " .  mysql_real_escape_string($_GET["email"]) . "'"  ." 
         , senha = '$password_cript' 
          WHERE  id_usuario=" . (int)$_GET["id_usuario"]) 
          or die("<p style='color: red; font-weight: bold; text-align: 
@@ -43,9 +43,6 @@ mysql_query("UPDATE usuario SET  nome =" .  mysql_real_escape_string($_GET["nome
          href='JavaScript:window.history.go(-1)'>Voltar</a></center>");
 ?>
         
-        1: mysql_query("SELECT * FROM users WHERE id = "  .  (int)$_GET["id"]);    mysql_query("SELECT * FROM users WHERE name = '"  .  mysql_real_escape_string($_GET["name"])  .  "'");  
-
-
     <center><b>Cadastro atualizado com sucesso!</b></center>
     <center><button onClick="javascript:window.close();">Fechar</button></center>
 
