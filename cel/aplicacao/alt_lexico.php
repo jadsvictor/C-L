@@ -1,10 +1,10 @@
 <?php
 
-// alt_lexico.php: Este script faz um pedido de alteracao de um lexico do projeto.
-//                 O usuario recebe um form com o lexico corrente (ou seja, com seus campos preenchidos)
-//                 e podera fazer alteracoes em todos os campos menos no nome. Ao final a tela principal
-//                 retorna para a tela de inicio e a arvore e fechada. O form de alteracao tb e fechado.
-// Arquivo chamador: main.php
+// Alt_lexico.php: This script makes a request for alteration of a project lexicon.
+// The User receives a form with the current lexicon (ie with completed fields)
+// And may make changes in all fields but name. At the end of the main screen
+// Returns to the start screen and the tree and closed. The form of alteration and tb closed.
+// File Caller: main.php
 
 session_start();
 
@@ -21,7 +21,7 @@ if (isset($submit)) {
     if (!isset($listSinonimo))
         $listSinonimo = array();
         
-    //tira os sinonimos caso aja um nulo.
+// strip the sinonimos case has a null.
     $count = count($listSinonimo);
     for ($i = 0; $i < $count; $i++) {
     	
@@ -121,19 +121,19 @@ if (isset($submit)) {
 
     <?php
     
-    //Cenários -  Alterar Léxico 
+// Scenarios - Change Lexicon
 
-	//Objetivo:	Permitir a alteração de uma entrada do dicionário léxico por um usuário	
-	//Contexto:	Usuário deseja alterar um léxico previamente cadastrado
-	//              Pré-Condição: Login, léxico cadastrado no sistema
-	//Atores:	Usuário
-	//Recursos:	Sistema, dados cadastrados
-	//Episódios:	O sistema fornecerá para o usuário a mesma tela de INCLUIR LÉXICO,
-	//              porém com os seguintes dados do léxico a ser alterado preenchidos
-	//              e editáveis nos seus respectivos campos: Noção e Impacto.
-	//              Os campos Projeto e Nome estarão preenchidos, mas não editáveis.
-	//              Será exibido um campo Justificativa para o usuário colocar uma
-	// 
+// Purpose: Allow changing an input by a user lexicon
+// Context: User want to change a lexicon previously registered
+// Precondition: Login lexicon, registered in the system
+// Actors: User
+// Resources: System, data registered
+// Episodes: The system will provide to the user the same screen INCLUDE LEXICON,
+// But with the following data from the lexical to be changed filled
+// And editable in their respective fields: Concept and Impact.
+// Design and Name fields will be filled, but not editable.
+// Will display a field Rationale for the user to place one
+
     ?>
 
                 </SCRIPT>

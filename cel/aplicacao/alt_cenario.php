@@ -1,10 +1,10 @@
 <?php
 
-// alt_cenario.php: Este script faz um pedido de alteracao de um cenario do projeto.
-// O usuario recebe um form com o cenario corrente (ou seja com seus campos preenchidos)
-// e podera fazer	alteracoes em todos os campos menos no titulo.Ao final a tela principal
-// retorna para a tela de inicio e a arvore e fechada.O form de alteracao tb e fechado.
-// Arquivo chamador: main.php
+// Alt_cenario.php: This script makes a request for alteration of a scenario project.
+// The User receives a form with the current scenario (ie with completed fields)
+// And may make changes in all fields titulo.Ao least in the end the main screen
+// Returns to the start screen and the tree and fechada.O form of alteration and tb closed.
+// File Caller: main.php
 
 session_start();
 
@@ -41,20 +41,19 @@ if (isset($submit)) {
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);
 
-// Cenário -    Alterar Cenário 
-
-//Objetivo:	    Permitir a alteração de um cenário por um usuário
-//Contexto:	    Usuário deseja alterar cenário previamente cadastrado
-//              Pré-Condição: Login, Cenário cadastrado no sistema
-//Atores:	    Usuário
-//Recursos:	    Sistema, dados cadastrados
-//Excessões:    O nome do cenário sendo alterado é modificado para o nome de um cenário já existente.
-//Episódios:	O sistema fornecerá para o usuário a mesma tela de INCLUIR CENÁRIO,
-//              porém com os seguintes dados do cenário a ser alterado preenchidos
-//              e editáveis nos seus respectivos campos: Objetivo, Contexto, Atores, Recursos e Episódios.
-//              Os campos Projeto e Título estarão preenchidos, mas não editáveis.
-//              Será exibido um campo Justificativa para o usuário colocar uma
-//              justificativa para a alteração feita.
+// Scenario - Changing Scenario
+// Purpose: Allow changing a setting by a user
+// Context: User want to change scenario previously registered
+// Precondition: Login, Scenario registered in the system
+// Actors: User
+// Resources: System, data registered
+// Exceptions: The scenario name being changed is changed to the name of an existing scenario.
+// Episodes: The system will provide to the user the same screen INCLUDE SCENARIO,
+// But with the following scenario data to be changed filled
+// And editable in their respective fields: Purpose, Context, Actors, Resources and Episodes.
+// Fields Project Title and will be filled, but not editable.
+// Will display a field Rationale for the user to place a
+// Justification for the change made.
     ?>
 
     <html>

@@ -25,14 +25,14 @@ session_start();
                     <?php
 
 /*
-Cenario:     Verificar com o usuario a existencia de um nome numa lista.
-Objetivo:    Verificar com o usuario a existencia de um nome numa lista.
-Contexto:    Algoritmo de traducão iniciado.
-Atores:      Usuario.
-Recursos:    Sistema, nome, lista.
-Episodios:
-- Posta true ou false, caso true posta o indice junto, caso false o indice e ignorado.
-*/ 
+Scenario: Check with the User the existence of a name on a list.
+Purpose: Check with the User the existence of a name on a list.
+Context: translation algorithm started.
+Actors: User.
+Features: System name list.
+episodes:
+- Update true or false, if true put the index together, false if the index and ignored.
+*/
                     function exist($name, $list) {
                         $indice = -1;
                         foreach ($list as $key => $palavra) {
@@ -134,13 +134,13 @@ Episodios:
                     }
 
 /*
-Cenario:    Verificar a importancia de um termo com ajuda do usuario.
-Objetivo:    Verificar a importancia de um termo com ajuda do usuario.
-Contexto:    Algoritmo de traducão iniciado.
-Atores:        Usuario.
-Recursos:    Sistema, termo.
-Episodios:
-- Retorna TRUE se a importancia e central.
+Scenario: Checking the importance of a term with the help of the User.
+Objective: To evaluate the importance of a term with the help of the User.
+Context: translation algorithm started.
+Actors: User.
+Features: System term.
+episodes:
+- Returns TRUE if the importance and central.
 */
                     function importancia_central($termo, $impactos) {
                         ?>
@@ -166,14 +166,14 @@ Episodios:
                         $_SESSION["main_subject"] = 1;
                     }
 
-/* -------- INCERTO --------
-Cenario:    Verificar se um conceito referencia outro.
-Objetivo:   Verificar se um conceito referencia outro.
-Contexto:   Algoritmo de traducão iniciado.
-Atores:     Usuario.
-Recursos:   Conceito1, conceito2.
-Episodios:
-            - Retorna TRUE se referencia.
+/* --------  UNCERTAIN --------
+Scenario: Check if a concept references another.
+Objective: To determine if a concept references another.
+Context: translation algorithm started.
+Actors: User.
+Resources: Conceito1, conceito2.
+episodes:
+Returns TRUE if references.
 */
                     function faz_referencia($conceitos, $subconceitos) {
                         ?>
@@ -254,15 +254,15 @@ Episodios:
                         $_SESSION["reference"] = 1;
                     }
 
-					/* -------- INCERTO --------
-					Cenario:    Insere tipo.
-					Objetivo:    Deixar o bd consistente.
-					Contexto:    .
-					Atores:        Usuario.
-					Recursos:    lista de termos sem tipo.
-					Episodios:
-					- .
+					/* -------- -------- UNCERTAIN
+					Scenario: Inserts type.
+					Objective: Let bd consistent.
+					Context:.
+					Actors: User.
+					Resources: list of untyped terms.
+					episodes:
 					*/
+					
                     function insere_tipo($list) {
                         $_SESSION["tipos"] = 2;
                         ?>

@@ -33,15 +33,15 @@ session_start();
         }
 
 /*
-Cenario:	Montar hierarquia.
-Objetivo:	Montar hierarquia de conceitos.
-Contexto:	Organizacao da ontologia em andamento.
-Atores:
-Recursos:	Sistema, conceito, lista de subconceitos, lista de conceitos.
-Episodios:
-- Para cada subconceito
-* Procurar sua chave na lista de conceitos.
-* Adicionar a chave como um subconceito do conceito.
+Scenary: assemble hierarchy.
+Objective: Assemble concept hierarchy.
+Context: Organization ontology in progress.
+actors:
+Features: System concept subconcepts list, list of concepts.
+episodes:
+- For each subconceito
+* Browse the list of your key concepts.
+* Add the key as a subconceito concept.
 */
         function montar_hierarquia($conc, $nova_lista, $list) {
             foreach ($nova_lista as $subcon) {
@@ -52,21 +52,21 @@ Episodios:
         
 
 /*
-Cenario:	Traduzir os termos do lexico classificados como sujeito e objeto.
-Objetivo:	Traduzir os termos do lexico classificados como sujeito e objeto.
-Contexto:	Algoritmo de tradução iniciado.
-Atores:		Usuario.
-Recursos:	Sistema, lista de sujeito e objetos, lista de conceitos, lista de relacoes.
-Episodios:
-- Para cada elemento da lista de sujeito e objetos
-* Criar novo conceito com o mesmo nome e a descricao igual a nocao do elemento.
-* Para cada impacto do elemento
-. Verificar com o usuario a existencia do impacto na lista de relacoes.
-. Caso não exista, incluir este impacto na lista de relacoes.
-. Incluir esta relacao na lista de relacoes do conceito.
-. Descobrir
-* Incluir o conceito na lista de conceitos.
-* Verificar consistencia.
+Scenario: Translate the terms of lexical classified as subject and object.
+Objective: To translate the terms of lexical classified as subject and object.
+Context: Algorithm translation started.
+Actors: User.
+Features: System, list of subjects and objects, concepts list, list of relations.
+episodes:
+- For each element of the list of subjects and objects
+* Create new concept with the same name and description like the notion of the element.
+* For each element of the impact
+. Check with the User the existence of the impact on the list of relations.
+. If not, this impact include the list of relations.
+. Include this list in relation to the concept relations.
+. discover
+* Include the concept in the list of concepts.
+* Check consistency.
 */
         function traduz_sujeito_objeto($lista_de_sujeito_e_objeto, $conceitos, $relacoes, $axiomas) {
             for (; $_SESSION["index1"] < count($lista_de_sujeito_e_objeto); ++$_SESSION["index1"]) {
@@ -258,16 +258,16 @@ Episodios:
         }
 
 /*
-Cenario:	Traduzir os termos do lexico classificados como verbo.
-Objetivo:	Traduzir os termos do lexico classificados como verbo.
-Contexto:	Algoritmo de tradução iniciado.
-Atores:		Usuario.
-Recursos:	Sistema, lista de verbo, lista de relacoes.
-Episodios:
-- Para cada elemento da lista de verbo
-* Verificar com o usuario a existencia do verbo na lista de relacoes.
-* Caso não exista, incluir este verbo na lista de relacoes.
-* Verificar consistencia.
+Scenario: Translate the terms of lexical classified as a verb.
+Objective: To translate the terms of lexical classified as verb.
+Context: Algorithm translation started.
+Actors: User.
+Features: System, verb list, list of relations.
+episodes:
+- For each element of the list of verb
+* Check with the User the existence of the verb in the list of relations.
+* If not, include this in the list of verb relations.
+* Check consistency.
 */
         function traduz_verbos($verbos, $relacoes) {
             for (; $_SESSION["index3"] < count($verbos); ++$_SESSION["index3"]) {
@@ -301,19 +301,19 @@ Episodios:
         }
 
 /*
-Cenario:	Traduzir os termos do lexico classificados como estado.
-Objetivo:	Traduzir os termos do lexico classificados como estado.
-Contexto:	Algoritmo de traducao iniciado.
-Atores:		Usuario.
-Recursos:	Sistema, lista de estado, lista de conceitos, lista de relacoes, lista de axiomas.
-Episodios:
-- Para cada elemento da lista de estado
-* Para cada impacto do elemento
-. Descobrir
-* Verificar se o elemento possui importancia central na ontologia.
-* Caso tenha, traduza como se fosse um sujeito/objeto.
-* Caso contrario, traduza como se fosse um verbo.
-* Verificar consistencia.
+Scenario: Translate the terms of lexical classified as a state.
+Objective: To translate the terms of lexical classified as a state.
+Context: Algorithm traducao started.
+Actors: User.
+Features: System status list, list of concepts, list of relations, list of axioms.
+episodes:
+- For each element of the list of state
+* For each element of the impact
+. discover
+* Check if the element has central importance in the ontology.
+* If you have, translate as if it were a subject / object.
+* Otherwise, translate as if it were a verb.
+* Check consistency.
 */
         function traduz_estados($estados, $conceitos, $relacoes, $axiomas) {
             for (; $_SESSION["index4"] < count($estados); ++$_SESSION["index4"]) {
@@ -354,28 +354,28 @@ Episodios:
             }
 
 /*
-Cenario:	Organizar ontologia.
-Objetivo:	Organizar ontologia.
-Contexto:	Listas de conceitos, relacoes e axiomas prontas.
-Atores:		Usuario.
-Recursos:	Sistema, lista de conceitos, lista de relacoes, lista de axiomas.
-Episodios:
-- Faz-se uma copia da lista de conceitos.
-- Para cada elemento x da lista de conceitos
-* Cria-se uma nova lista contendo o elemento x.
-* Para cada elemento subsequente y
-. Compara as relacoes dos elementos x e y.
-. Caso possuam as mesmas relacoes, adiciona-se o elemento y a nova lista que ja contem x.
-. Retira-se y da lista de conceitos.
-* Retira-se x da lista de conceitos.
-* Caso a nova lista tenha mais de dois elementos, ou seja, caso x compartilhe as mesmas
-relacoes com outro termo
-. Procura por um elemento na lista de conceitos que faca referencia a todos os elementos
-da nova lista.
-. Caso exista tal elemento, montar hierarquia.
-. Caso nao exista, descobrir.
-* Verificar consistencia.
-- Restaurar lista de conceitos.
+Scenario: Organize ontology.
+Objective: Organize ontology.
+Context: Lists of concepts, relations and axioms ready.
+Actors: User.
+Features: System concepts list, list of relations, list of axioms.
+episodes:
+- It is a copy of the list of concepts.
+- For each element x in the list of concepts
+* It creates a new list containing the element x.
+* For each subsequent element y
+. Compares the relationships of the elements x and y.
+. If they have the same relations, add the element ya new list that already contains x.
+. Y is removed from the list of concepts.
+X * is removed from the list of concepts.
+* If the new list has more than two elements, ie, if x share the same
+relations with another term
+. Searches for an element in the list of concepts that knife refers to all elements
+the new list.
+. If there is such an element, set hierarchy.
+. If there is not, find out.
+* Check consistency.
+- Restore the list of concepts.
 */
 
             function organizar_ontologia($conceitos, $relacoes, $axiomas) {
@@ -421,24 +421,22 @@ da nova lista.
                     exit();
                 }
             }
-
 /*
-Cenario:  	Traduzir Léxico para Ontologia.
-Objetivo: 	Traduzir Léxico para Ontologia.
-Contexto: 	Existem listas de elementos do léxico organizadas por tipo, e estes elementos
-são consistentes.
-Atores:   	Usuário.
-Recursos: 	Sistema, listas de elementos do léxico organizadas por tipo, listas de elementos
-da ontologia.
-Episódios:
-- Criar lista de conceitos vazia.
-- Criar lista de relacoes vazia.
-- Criar lista de axiomas vazia.
-- Traduzir os termos do lexico classificados como sujeito e objeto.
-- Traduzir os termos do lexico classificados como verbo.
-- Traduzir os termos do lexico classificados como estado.
-- Organizar a ontologia.
-
+Scenario: Translate to ontology lexicon.
+Objective: Translate to Lexicon Ontology.
+Context: There are lists of elements of the lexicon organized by type, and these elements
+are consistent.
+Actors: User.
+Features: System elements of the lexicon lists organized by type, lists of elements
+ontology.
+episodes:
+- Create list of empty concepts.
+- Create empty list of relations.
+- Create empty list of axioms.
+- Translate the terms of lexical classified as subject and object.
+- Translate the terms of lexical classified as a verb.
+- Translate the terms of lexical classified as a state.
+- Organize the ontology.
 */
             function traduz() {
                 if (isset($_SESSION["lista_de_sujeito"]) && isset($_SESSION["lista_de_objeto"]) &&
