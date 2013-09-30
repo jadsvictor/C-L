@@ -126,7 +126,6 @@ class PHPMailer {
 
     function Send() {
         $header = "";
-        $body = "";
         $result = true;
 
         if ((count($this->to) + count($this->cc) + count($this->bcc)) < 1) {
@@ -146,23 +145,23 @@ class PHPMailer {
         if ($body == "") {
             return false;
         }
-
+        else
         // Choose the mailer
-        switch ($this->Mailer) {
-            case "sendmail":
-                $result = $this->SendmailSend($header, $body);
-                break;
-            case "mail":
-                $result = $this->MailSend($header, $body);
-                break;
-            case "smtp":
-                $result = $this->SmtpSend($header, $body);
-                break;
-            default:
-                $this->SetErrorMessage($this->Mailer . $this->Language("mailer_not_supported"));
-                $result = false;
-                break;
-        }
+            switch ($this->Mailer) {
+                case "sendmail":
+                    $result = $this->SendmailSend($header, $body);
+                    break;
+                case "mail":
+                    $result = $this->MailSend($header, $body);
+                    break;
+                case "smtp":
+                    $result = $this->SmtpSend($header, $body);
+                    break;
+                default:
+                    $this->SetErrorMessage($this->Mailer . $this->Language("mailer_not_supported"));
+                    $result = false;
+                    break;
+            }
 
         return $result;
     }
@@ -186,8 +185,8 @@ class PHPMailer {
             $this->SetErrorMessage($this->Language("execute") . $this->Sendmail);
             return false;
         }
-
-        return true;
+        else
+            return true;
     }
 
     function MailSend($header, $body) {
@@ -196,7 +195,8 @@ class PHPMailer {
             if ($i != 0) {
                 $to .= ", ";
             }
-            $to .= $this->to[$i][0];
+            else
+                $to .= $this->to[$i][0];
         }
 
         if ($this->Sender != "" && strlen(ini_get("safe_mode")) < 1) {
@@ -215,8 +215,8 @@ class PHPMailer {
             $this->SetErrorMessage($this->Language("instantiate"));
             return false;
         }
-
-        return true;
+        else
+            return true;
     }
 
     function SmtpSend($header, $body) {
@@ -307,9 +307,11 @@ class PHPMailer {
                         $connection = false;
                     }
                 }
-                $connection = true;
+                else
+                    $connection = true;
             }
-            $index++;
+            else
+                $index++;
         }
         if (!$connection)
             $this->SetErrorMessage($this->Language("connect_host"));
@@ -683,7 +685,7 @@ class PHPMailer {
             else
                 $path = $this->attachment[$i][0];
 
-            $filename = $this->attachment[$i][1];
+
             $name = $this->attachment[$i][2];
             $encoding = $this->attachment[$i][3];
             $type = $this->attachment[$i][4];
@@ -920,8 +922,6 @@ class PHPMailer {
     function ClearReplyTos() {
         $this->ReplyTo = array();
     }
-
-    *
 
     function ClearAllRecipients() {
         $this->to = array();
