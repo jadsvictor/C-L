@@ -1,9 +1,8 @@
 <?php
 
-// $id_lexico_atual = id do lexico atual, para que ele n�o crie um link para si mesmo
-// funcao que carrega o vetor com todos os titulos dos lexicos e seus sinonimos menos o titulo do
-// l�xico passado na variavel $id_lexico_atual e seus sinonimos
-// Fun��o que carrega vetor com todos os titulos e sinonimos de lexicos menos o de id id_lexico_atual
+// Function that loads the vector with all the titles of the lexicons and their synonyms least the title of the
+//Lexicon passed in the variable $ id_lexico_atual and their synonyms
+//Function that loads vector with all titles and synonyms in the lexicons of less id id_lexico_atual
 
 function carrega_vetor_lexicos($id_projeto, $id_lexico_atual, $semAtual) {
     $vetorDeLexicos = array();
@@ -50,11 +49,12 @@ function carrega_vetor_lexicos($id_projeto, $id_lexico_atual, $semAtual) {
     return $vetorDeLexicos;
 }
 
-// $id_cenario_atual = id do cenario atual, para que ele n�o crie um link para si mesmo
-// funcao que carrega o vetor com todos os titulos dos cenarios menos o titulo do cenario
-// passado na variavel $id_cenario_atual 
+//$ Id = id_cenario_atual the current scenario, so it does not create a link to itself
+//Function that loads the vector with all titles of scenarios under the title of the scenario
+//Passed in the variable $ id_cenario_atual
 
 function carrega_vetor_cenario($id_projeto, $id_cenario_atual, $semAtual) {
+    $vetorDeCenarios = 0;
     if (!isset($vetorDeCenarios)) {
         $vetorDeCenarios = array();
     }
@@ -82,8 +82,6 @@ function carrega_vetor_cenario($id_projeto, $id_cenario_atual, $semAtual) {
 
     return $vetorDeCenarios;
 }
-
-// Divide o array em dois
 
 function divide_array(&$vet, $ini, $fim, $tipo) {
     $i = $ini;
@@ -115,7 +113,7 @@ function divide_array(&$vet, $ini, $fim, $tipo) {
     return $i;
 }
 
-// Ordena o vetor
+// Sort the vector
 
 function quicksort(&$vet, $ini, $fim, $tipo) {
     if ($ini < $fim) {
@@ -125,11 +123,13 @@ function quicksort(&$vet, $ini, $fim, $tipo) {
     }
 }
 
-// Funcao que constroi os links de acordo com o texto, passado atrav�s do par�metro $texto, lexicos, passados
-// atrav�s do par�metro $vetorDeLexicos, e cenarios, passados atraves do parametro $vetorDeCenarios   
+//Feature that builds the links according to the text, passed through the parameter $ text, lexicons, past
+//Using parameter $ vetorDeLexicos and scenarios, passed through the parameter $ vetorDeCenarios  
 
 function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
     $copiaTexto = $texto;
+    $vetorAuxLexicos = 0;
+    $vetorAuxCenarios = 0;
     if (!isset($vetorAuxLexicos)) {
         $vetorAuxLexicos = array();
     }
@@ -143,7 +143,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
         $vetorDeLexicos = array();
     }
 
-    // Se o vetor de cen�rios estiver vazio ele s� ira procurar por refer�ncias a lexicos
+    // If the vector is empty scenario it will only look for references to lexical
 
 
     if (count($vetorDeCenarios) == 0) {
@@ -162,7 +162,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
         }
     } else {
 
-        // Se o vetor de cen�rios n�o estiver vazio ele ir� procurar por l�xicos e cen�rios
+        //If the vector of scenarios is not empty it will look for lexical and scenarios 
 
         $tamLexicos = count($vetorDeLexicos);
         $tamCenarios = count($vetorDeCenarios);
@@ -203,7 +203,8 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
                     $vetorAuxCenarios[$b] = $vetorDeCenarios[$j];
                     $b++;
                 }
-                $j++;
+                else
+                    $j++;
             } else if ($tamCenarios == $j) {
 
                 $nomeLexico = escapes_metacharacters($vetorDeLexicos[$i]->nome);
@@ -213,13 +214,15 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
                     $vetorAuxLexicos[$a] = $vetorDeLexicos[$i];
                     $a++;
                 }
-                $i++;
+                else
+                    $i++;
             }
-            $contador++;
+            else
+                $contador++;
         }
     }
 
-    // Adiciona os links para lexicos no texto 
+    // Add links to lexicons in text
 
     $indice = 0;
     $vetorAux = array();
@@ -243,7 +246,7 @@ function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
     }
 
 
-    // Adiciona os links para cen�rios no texto 
+    // Adds links to scenarios in the text 
 
     $vetorAuxCen = array();
     while ($indice < count($vetorAuxCenarios)) {
