@@ -72,7 +72,7 @@ mysql_close($connect_database);
 
         </style>
     </head>
-    <body>
+    <body> 
 
         <script language="javascript">
             window.location = "algoritmo.php";

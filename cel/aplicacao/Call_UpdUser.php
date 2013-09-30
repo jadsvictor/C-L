@@ -2,21 +2,21 @@
 session_start();
 
 include_once("bd.inc");
-
+ 
 $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 
-// Cen�rio - Alterar cadastro
+// Scenary - Change register
 //
-//Objetivo:	 Permitir ao usu�rio realizar altera��o nos seus dados cadastrais	
-//Contexto:	 Sistema aberto, Usu�rio ter acessado ao sistema e logado 
-//           Usu�rio deseja alterar seus dados cadastrais 
-//           Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-//Atores:	 Usu�rio, Sistema.	
-//Recursos:	 Interface	
-//Epis�dios: O sistema fornecer� para o usu�rio uma tela com os seguintes campos de texto,
-//           preenchidos com os dados do usu�rio,  para serem alterados:
-//           nome, email, login, senha e confirma��o da senha; e um bot�o de atualizar
-//           as informa��es fornecidas
+// Purpose: Allow the user to perform alteration in their records
+// Context: Open System, users have accessed the system and logged
+// User wants to change your registration
+// Pre-Conditions: User has accessed the system
+// Actors: user system.
+// Features: Interface
+// Episodes: The system provides the user a screen with the following text fields,
+// Filled with user data to be changed:
+// Name, email, login, password and confirmation password, and a button to update
+// The information provided
 
 $user_id = $_SESSION['id_usuario_corrente'];
 

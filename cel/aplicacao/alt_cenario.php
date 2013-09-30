@@ -35,7 +35,9 @@ if (isset($submit)) {
     </script>
 
     <?php
-} else {
+} 
+
+else {
     $project_name = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
     $selection = "SELECT * FROM cenario WHERE id_cenario = $id_cenario";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");

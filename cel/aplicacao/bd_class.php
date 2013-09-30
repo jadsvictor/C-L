@@ -47,7 +47,9 @@ class PGDB extends Abstract_DB {
         $this->db_linkid = bd_connect() or die("Erro na conex�o � BD : " . mysql_error());
         if ($this->db_linkid) {
             return $this->db_linkid;
-        } else {
+        } 
+        
+        else {
             return(FALSE);
         }
     }
@@ -60,15 +62,20 @@ class PGDB extends Abstract_DB {
 
 class QUERY {
 
-    var $dbobject;
+   
     var $ntuples;
     var $operationresult;
     var $resultset;
     var $currentrow = 0;
 
     function QUERY($pdbobject) {
-        if ($pdbobject)
+        if ($pdbobject){
             $this->associate($pdbobject);
+        }
+        
+        else{
+            //nothing to do
+        }
     }
 
     function associate($pdbobject) {
@@ -114,8 +121,10 @@ class QUERY {
             $this->resultset = $this->readrow();
             return $this->resultset;
         }
-        else
+        
+        else{
             return "LAST_RECORD_REACHED";
+        }
     }
 
     function goprevious() {
@@ -129,20 +138,38 @@ class QUERY {
     }
 
     function beginTransaction() {
-        if (!$this->execute("BEGIN"))
+        if (!$this->execute("BEGIN")){
             return false;
+        }
+     
+        else{
+         //nothing to do
+        }
+        
         return true;
     }
 
     function commitTransaction() {
-        if (!$this->execute("COMMIT"))
+        if (!$this->execute("COMMIT")){
             return false;
+        }
+        
+        else{
+         //nothing to do
+        }
+        
         return true;
     }
 
     function rollbackTransaction() {
-        if (!$this->execute("ROLLBACK"))
+        if (!$this->execute("ROLLBACK")){
             return false;
+        }
+        
+        else{
+         //nothing to do
+        }
+        
         return true;
     }
 

@@ -23,10 +23,18 @@ session_start();
             if (count($array1) != count($array2)) {
                 return FALSE;
             }
+            
+            else{
+            	//nothing to do
+            }
 
             foreach ($array1 as $key => $elem) {
                 if ($elem->verbo != $array2[$key]->verbo) {
                     return FALSE;
+                }
+                
+                else{
+                	//nothing to do
                 }
             }
             return TRUE;
@@ -75,19 +83,39 @@ episodes:
                     $_SESSION["salvar"] = "TRUE";
                     $_SESSION["conceito"] = new conceito($suj->nome, $suj->nocao);
                     $_SESSION["conceito"]->namespace = "proprio";
-                } else {
+                } 
+                
+                else {
                     $_SESSION["salvar"] = "FALSE";
                 }
+                
                 for (; $_SESSION["index2"] < count($suj->impacto); ++$_SESSION["index2"]) {
                     $imp = $suj->impacto[$_SESSION["index2"]];
-                    if (trim($imp) == "")
+                    if (trim($imp) == ""){
                         continue;
-                    if (!isset($_SESSION["verbos_selecionados"]))
+                    }
+                    
+                    else{
+                    	//nothing to do
+                    }
+                    
+                    if (!isset($_SESSION["verbos_selecionados"])){
                         $_SESSION["verbos_selecionados"] = array();
+                    }
+                    
+                    else{
+                    	//nothing to do
+                    }
+                    
                     if (!isset($_SESSION["impact"])) {
                         $_SESSION["impact"] = array();
                         $_SESSION["finish_insert"] = FALSE;
                     }
+                    
+                    else{
+                    	//nothing to do
+                    }
+                    
                     while (!$_SESSION["finish_insert"]) {
                         if (!isset($_SESSION["exist"])) {
                             asort($relacoes);
@@ -103,6 +131,11 @@ episodes:
                             <?php
                             exit();
                         }
+                        
+                         else{
+                    	//nothing to do
+                        }
+                        
                         if ($_POST["existe"] == "FALSE") {
 
                             $nome = strtolower($_POST["nome"]);
@@ -110,31 +143,62 @@ episodes:
                             if ((count($_SESSION["verbos_selecionados"]) != 0) && (array_search($nome, $_SESSION["verbos_selecionados"]) !== null)) {
                                 continue;
                             }
+                            
+                             else{
+                    	        //nothing to do
+                            }
                             $_SESSION["verbos_selecionados"][] = $nome;
                             $i = array_search($nome, $relacoes);
+                            
                             if ($i === false) {
                                 $_SESSION["impact"][] = (array_push($relacoes, $nome) - 1);
-                            } else {
+                            } 
+                            
+                            else {
                                 $_SESSION["impact"][] = $i;
                             }
-                        } else if ($_POST["indice"] != -1) {
+                            
+                        } 
+                        
+                        else if ($_POST["indice"] != -1) {
                             session_unregister("exist");
+                            
                             if ((count($_SESSION["verbos_selecionados"]) != 0) && array_search($relacoes[$_POST["indice"]], $_SESSION["verbos_selecionados"]) !== false) {
                                 continue;
                             }
+                            
+                             else{
+                    	      //nothing to do
+                            }
+                            
                             $_SESSION["verbos_selecionados"][] = $relacoes[$_POST["indice"]];
                             $_SESSION["impact"][] = $_POST["indice"];
-                        } else {
+                            
+                        } 
+                        
+                        else {
                             $_SESSION["finish_insert"] = TRUE;
                         }
                     }
+                    
                     if (!isset($_SESSION["ind"])) {
                         $_SESSION["ind"] = 0;
                     }
+                     
+                     else{
+                    	//nothing to do
+                    }
+                    
                     $_SESSION["verbos_selecionados"] = array();
                     for (; $_SESSION["ind"] < count($_SESSION["impact"]); ++$_SESSION["ind"]) {
-                        if (!isset($_SESSION["predicados_selecionados"]))
+                        if (!isset($_SESSION["predicados_selecionados"])){
                             $_SESSION["predicados_selecionados"] = array();
+                        }
+                        
+                         else{
+                    	//nothing to do
+                        }
+                        
                         $indice = $_SESSION["impact"][$_SESSION["ind"]];
                         $_SESSION["finish_relation"] = FALSE;
                         while (!$_SESSION["finish_relation"]) {
@@ -151,7 +215,9 @@ episodes:
                                 </SCRIPT>
                                 <?php
                                 exit();
-                            } else if (isset($_SESSION["nome2"])) {
+                            } 
+                            
+                            else if (isset($_SESSION["nome2"])) {
                                 session_unregister("nome2");
                                 session_unregister("nome3");
                                 session_unregister("insert_relation");
@@ -331,22 +397,35 @@ episodes:
                         <?php
                         exit();
                     }
+                    
                     if (!isset($_SESSION["translate"])) {
                         if ($_POST["main_subject"] == "TRUE") {
                             $_SESSION["translate"] = 1;
                             traduz_sujeito_objeto($aux, &$conceitos, &$relacoes, &$axiomas);
-                        } else {
+                        } 
+                        
+                        else {
                             $_SESSION["translate"] = 2;
                             traduz_verbos($aux, &$relacoes);
                         }
-                    } else if ($_SESSION["translate"] == 1) {
+                        
+                    }
+                     
+                    else if ($_SESSION["translate"] == 1) {
                         traduz_sujeito_objeto($aux, &$conceitos, &$relacoes);
-                    } else if ($_SESSION["translate"] == 2) {
+                    }
+                     
+                    else if ($_SESSION["translate"] == 2) {
                         traduz_verbos($aux, &$relacoes);
                     }
                     if (!verifica_consistencia()) {
                         exit();
                     }
+                    
+                    else{
+                    	//nothing to do
+                    }
+                    
                     session_unregister("main_subject");
                     session_unregister("translate");
                 }
@@ -394,6 +473,10 @@ the new list.
                         <?php
                         exit();
                     }
+                    
+                    else{
+                    	//nothing to do
+                    }
                     session_unregister("reference");
                     $achou = FALSE;
                     if (isset($_POST['pai'])) {
@@ -405,20 +488,38 @@ the new list.
                             if (isset($_POST[$key3])) {
                                 $filhos[] = $filho_nome;
                             }
+                            
+                            else{
+                    	     //nothing to do
+                           }
                         }
                         if (count($filhos) > 0) {
                             montar_hierarquia(&$conceitos[$key2], $filhos, $conceitos);
                             $achou = true;
                         }
-                    } else {
+                        
+                        else{
+                    	//nothing to do
+                        }
+                    } 
+                    
+                    else {
                         $finish_relation = true;
                     }
                     if (!$achou) {
                         
                     }
+                    
+                    else{
+                    	//nothing to do
+                    }                    
                 }
                 if (!verifica_consistencia()) {
                     exit();
+                }
+                
+                else{
+                    	//nothing to do
                 }
             }
 /*
@@ -458,17 +559,36 @@ episodes:
                     traduz_sujeito_objeto($lista_de_sujeito_e_objeto, &$_SESSION["lista_de_conceitos"], &$_SESSION["lista_de_relacoes"], &$_SESSION["lista_de_axiomas"]);
                     $_SESSION["funcao"] = "verbo";
                 }
+                
+                else{
+                    	//nothing to do
+                }
+                    
                 if ($_SESSION["funcao"] == "verbo") {
                     traduz_verbos($verbos, &$_SESSION["lista_de_relacoes"]);
                     $_SESSION["funcao"] = "estado";
                 }
+                
+                else{
+                    	//nothing to do
+                }
+                
                 if ($_SESSION["funcao"] == "estado") {
                     traduz_estados($estados, &$_SESSION["lista_de_conceitos"], &$_SESSION["lista_de_relacoes"], &$_SESSION["lista_de_axiomas"]);
                     $_SESSION["funcao"] = "organiza";
                 }
+                
+                else{
+                    	//nothing to do
+                }
+                
                 if ($_SESSION["funcao"] == "organiza") {
                     organizar_ontologia(&$_SESSION["lista_de_conceitos"], &$_SESSION["lista_de_relacoes"], &$_SESSION["lista_de_axiomas"]);
                     $_SESSION["funcao"] = "fim";
+                }
+                
+                else{
+                    	//nothing to do
                 }
 
                 echo 'O processo de gera��o de Ontologias foi conclu�do com sucesso!<br>

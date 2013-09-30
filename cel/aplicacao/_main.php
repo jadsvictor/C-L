@@ -96,13 +96,18 @@ chkUser("index.php");
                 <h3>Informaï¿½ï¿½es sobre o cenï¿½rio</h3>
 
                 <?php
-            } else {
+            }
+             else {
                 ?>
 
                 <h3>Informaï¿½ï¿½es sobre o lï¿½xico</h3>
 
                 <?php
             }
+            
+        else{
+        	//nothing to do
+        }
             ?>
 
             <table>
@@ -147,7 +152,9 @@ chkUser("index.php");
                     </tr>
 
                     <?php
-                } else {
+                } 
+                
+                else {
                     $selection = "SELECT id_lexico, nome, nocao, impacto
               FROM lexico
               WHERE id_lexico = $id";
@@ -189,7 +196,9 @@ chkUser("index.php");
                 <h3>Cenï¿½rios que referenciam este cenï¿½rio</h3>
 
                 <?php
-            } else {
+            }
+            
+            else {
                 ?>
 
                 <h3>Cenï¿½rios e termos do lï¿½xico que referenciam este termo</h3>
@@ -198,7 +207,9 @@ chkUser("index.php");
             }
 
             frame_inferior($c, $t, $id);
-        } elseif (isset($project_id)) {
+        } 
+        
+        elseif (isset($project_id)) {
              // Was passed a variable $ id_projeto. This variable should contain the id of a
              // Project that the User is registered. However, as the passage eh
              // Done using JavaScript (in heading.php), we check if this id really
@@ -237,7 +248,12 @@ chkUser("index.php");
 
                 <?php
             }
-        } else {        // SCRIPT CHAMADO PELO INDEX.PHP
+            else {
+            	//nothing to do
+            }
+        } 
+        
+        else {        // SCRIPT CHAMADO PELO INDEX.PHP
             ?>
 
             <p>Selecione um projeto acima, ou crie um novo projeto.</p>

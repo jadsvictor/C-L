@@ -36,10 +36,13 @@ $connect_database = bd_connect();
 <?php
 
 
-if (isset($_SESSION['lista_de_conceitos']))
+if (isset($_SESSION['lista_de_conceitos'])){
     $arv = $_SESSION['lista_de_conceitos'];
-else
+}
+
+else{
     $arv = array();
+}
 
 //conceitos
 foreach ($arv as $conc) {

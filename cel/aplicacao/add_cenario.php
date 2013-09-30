@@ -15,6 +15,9 @@ if (!isset($sucesso)) {
     $sucesso = "n";
 }
 
+else{
+	//nothing to do
+}
 
 $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 
@@ -64,7 +67,8 @@ if (isset($submit)) {
     </script>
 
     <?php
-} else {   
+} 
+	else {   
 	 // Script called trough the top menu
     $project_name = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
     ?>
@@ -148,6 +152,9 @@ if (isset($submit)) {
                 <p style="color: blue; font-weight: bold; text-align: center">Cen�rio inserido com sucesso!</p>
                 <?php
             }
+    else {
+    	//nothing to do
+    }
             ?>    
             <form action="" method="post">
                 <table>

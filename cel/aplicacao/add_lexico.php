@@ -13,6 +13,10 @@ if (!isset($sucesso)) {
     $sucesso = 'n';
 }
 
+else {
+	//nothing to do
+}
+
 chkUser("index.php");
 
 $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
@@ -21,16 +25,23 @@ $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 if (isset($submit)) {
 
     $ret = checarLexicoExistente($_SESSION['id_projeto_corrente'], $nome);
-    if (!isset($listSinonimo))
+    if (!isset($listSinonimo)){
         $listSinonimo = array();
-
+    }
+    
+    else {
+    	//nothing to do
+    }
+    
     $retSin = checarSinonimo($_SESSION['id_projeto_corrente'], $listSinonimo);
 
     if (($ret == true) AND ($retSin == true )) {
         $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
         inserirPedidoAdicionarLexico($project_id, $nome, $nocao, $impacto, 
                                      $id_usuario_corrente, $listSinonimo, $classificacao);
-    } else {
+    } 
+    
+    else {
         ?>
         <html><head><title>Projeto</title></head><body bgcolor="#FFFFFF">
                 <p style="color: red; font-weight: bold; text-align: center">Este s�mbolo ou sin�nimo j� existe!</p>
@@ -41,6 +52,7 @@ if (isset($submit)) {
         <?php
         return;
     }
+    
     $ip_value = CELConfig_ReadVar("HTTPD_ip");
     ?>
 
@@ -53,7 +65,9 @@ if (isset($submit)) {
 
     </script>   
     <?php
-} else {
+} 
+
+else {
     $selection = "SELECT nome FROM projeto WHERE id_projeto = $project_id";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
     $result = mysql_fetch_array($qrr);

@@ -37,7 +37,9 @@ if (isset($submit)) {
         $selection = "INSERT INTO participa (id_usuario, id_projeto, gerente)
                      VALUES ($id_usuario_corrente, $id_projeto_incluido, $gerente  )";
         mysql_query($selection) or die("Erro ao inserir na tabela participa");
-    } else {
+    } 
+    
+    else {
         ?>
         <html>
             <title>Erro</title>
@@ -58,7 +60,9 @@ if (isset($submit)) {
     </script>
 
     <?php
-} else {
+}
+ 
+else {
     ?>
 
     <html>

@@ -5,10 +5,9 @@ session_start();
 <?php
 include("funcoes_genericas.php");
 include_once("bd.inc");
+include("httprequest.inc");
 
 $primeira_vez = "true";
-
-include("httprequest.inc");
 
 if (isset($submit)) {
     $primeira_vez = "false";
@@ -16,12 +15,17 @@ if (isset($submit)) {
         $p_style = "color: red; font-weight: bold";
         $p_text = "Por favor, preencha todos os campos.";
         recarrega("?p_style=$p_style&p_text=$p_text&nome=$nome&email=$email&login=$login&senha=$password&senha_conf=$senha_conf&novo=$novo");
-    } else {
+    } 
+    
+    else {
+    	
         if ($password != $senha_conf) {
             $p_style = "color: red; font-weight: bold";
             $p_text = "Senhas diferentes. Favor preencher novamente as senhas.";
             recarrega("?p_style=$p_style&p_text=$p_text&nome=$nome&email=$email&login=$login&novo=$novo");
-        } else {
+        }
+        
+         else {
 
 // Scenary - Include independent user
 // Purpose: Allow a user who is not registered as an administrator, register
@@ -64,7 +68,9 @@ if (isset($submit)) {
 
                 <?php
                 recarrega("?novo=$novo");
-            } else {
+            } 
+            
+            else {
                 $nome = str_replace(">", " ", str_replace("<", " ", $nome));
                 $login = str_replace(">", " ", str_replace("<", " ", $login));
                 $email = str_replace(">", " ", str_replace("<", " ", $email));
@@ -76,8 +82,7 @@ if (isset($submit)) {
         }
     }
 } elseif (isset($cadastrado)) {
-    if ($novo == "true") {    
-    	
+    if ($novo == "true") {       	
 // scenary - Include independent user
 // Purpose: Allow a user who is not registered as an administrator, register
 // With the administrator profile
@@ -102,9 +107,9 @@ if (isset($submit)) {
         </script>
 
         <?php
-    } else {
-
-        
+    } 
+    
+    else {
         $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
         $id_usuario_incluido = simple_query("id_usuario", "usuario", "login = '$login'");
         $selection = "INSERT INTO participa (id_usuario, id_projeto)
@@ -124,10 +129,16 @@ if (isset($submit)) {
 
         <?php
     }
-} else {  
+} 
+
+else {  
     if (empty($p_style)) {
         $p_style = "color: green; font-weight: bold";
         $p_text = "Favor preencher os dados abaixo:";
+    }
+    
+    else{
+    	//nothing to do
     }
 
     if (true) {
@@ -136,6 +147,10 @@ if (isset($submit)) {
         $nome = "";
         $password = "";
         $senha_conf = "";
+    }
+    
+    else{
+    	//nothing to do
     }
     ?>
 

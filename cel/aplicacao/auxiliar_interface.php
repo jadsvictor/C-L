@@ -40,6 +40,11 @@ episodes:
                                 $indice = $key;
                                 break;
                             }
+                            
+                            else{
+                                 //nothing to do
+                            }
+                            
                         }
                         ?>
                         <form method="POST" action="algoritmo.php" id="exist_form">
@@ -51,6 +56,11 @@ episodes:
                                     echo "   - " . $verbo . "<br>";
                                 }
                             }
+                            
+                            else{
+                                  //nothing to do
+                            }
+                            
                             ?>
                             <b>Impacto:</b> <code>"<?= $name ?>"</code><br><br>
                             <b>A propriedade j� est� cadastrada na lista abaixo?</b><br>
@@ -148,8 +158,14 @@ episodes:
                         <?php
                         print("Impactos:<br>");
                         foreach ($impactos as $impacto) {
-                            if (trim($impacto) == "")
+                            if (trim($impacto) == ""){
                                 continue;
+                            }
+                            
+                            else{
+                                //nothing to do
+                            }
+                            
                             print(" - $impacto <br>");
                         }
                         print("O termo $termo vai transformar-se em:<br>");
@@ -298,13 +314,24 @@ Returns TRUE if references.
                         $tam = strlen($rel);
                         $pred = trim(strip_tags(substr($imp, $indice + $tam)));
                         $tam = strlen($pred);
+                        
                         if ($pred{$tam - 1} == ".") {
                             $pred{$tam - 1} = "\0";
                         }
+                        
+                        else{
+                           //nothing to do
+                        }
+                        
                         if (($pred{0} == "a" || $pred{0} == "o") && $pred{1} == ' ') {
                             $pred{0} = " ";
                             $pred = trim($pred);
                         }
+                        
+                        else{
+                           //nothing to do
+                        }
+                        
                         $indice2 = -1;
                         foreach ($list as $key => $palavra) {
                             if (trim($palavra->nome) !== "") {
@@ -313,8 +340,22 @@ Returns TRUE if references.
                                         $indice2 = $key;
                                         break;
                                     }
+                                    
+                                    else{
+                                       //nothing to do
+                                    }
+                                    
                                 }
+                         
+                                 else{
+                                   //nothing to do
+                                 }
                             }
+                           
+                           else{
+                           //nothing to do
+                           }
+                           
                         }
                         $indice3 = -1;
                         foreach ($_SESSION["lista_de_sujeito_e_objeto"] as $key => $palavra) {
@@ -334,6 +375,11 @@ Returns TRUE if references.
                                     echo "- " . $verbo . "<br>";
                                 }
                             }
+                            
+                            else{
+                                 //nothing to do
+                            }
+                            
                             ?>
                             <B>Impacto:</B><CODE> <?= $imp ?></CODE><br>
                             <BR>
@@ -343,8 +389,14 @@ Returns TRUE if references.
                                 foreach ($list as $key => $termo) {
                                     ?>
                                     <OPTION value='<?= $key ?>' <?php
-                                    if ($indice2 === $key)
+                                    if ($indice2 === $key){
                                         echo "selected"
+                                    }
+                                     
+                                    else{
+                                         //nothing to do
+                                    }
+                                    
                                         ?> > <?php echo $termo->nome ?></OPTION>
                                             <?php
                                         }
@@ -354,8 +406,15 @@ Returns TRUE if references.
 
                             <input type="radio" onClick="seExiste('TRUE');" value="TRUE"
                                    id="existe" name="existe" size="20" <?php
-                                   if ($indice2 !== -1)
+                                   
+                                   if ($indice2 !== -1){
                                        echo"checked"
+                                   }
+                                   
+                                   else{
+                                       //nothing to do
+                                   }
+                                   
                                        ?>> sim
                             <input type="radio" onClick="seExiste('FALSE');" value="FALSE"
                                    id="existe" name="existe" size="20" <?php if ($indice2 === -1) echo"checked" ?> > n�o <BR>
@@ -375,6 +434,11 @@ Returns TRUE if references.
                                             echo "selected";
                                             $selected = $termo->nome;
                                         }
+                                        
+                                         else{
+                                             //nothing to do
+                                        }
+                                        
                                         ?> ><?php echo $termo->nome ?></OPTION>
                                                 <?php
                                             }
@@ -436,12 +500,18 @@ Returns TRUE if references.
                                 }
 
     <?php
-    if ($indice2 !== -1)
+    if ($indice2 !== -1){
         echo "seExiste('TRUE');";
-    else
+    }
+    
+    else{
         echo "seExiste('FALSE');";
-    if ($selected !== false)
+    }
+    
+    if ($selected !== false){
         print("\n document.all.nome.value = '$selected';");
+    }
+                    }
     ?>
                             </script>
                         </form>
@@ -458,6 +528,11 @@ Returns TRUE if references.
                             }
                             echo "</p>";
                         }
+                        
+                        else{
+                            //nothing to do
+                        }
+                        
                         print "Existe algum termo disjunto do conceito <b>$nome</b> na lista abaixo ou no vocabul�rio m�nimo?";
                         ?>
                         <form id='rel_form' name='rel_form'  method="POST" action="algoritmo.php">
@@ -549,34 +624,52 @@ Returns TRUE if references.
                                 ?>
                                 <h3>Conceito: <?= $_SESSION["nome2"]->nome ?></h3><br>
                                 <?php
-                            } else if ($_SESSION['funcao'] == 'verbo') {
+                            } 
+                            
+                            else if ($_SESSION['funcao'] == 'verbo') {
                                 ?>
                                 <h3>Verbo: <?= $_SESSION["nome2"]->nome ?></h3><br>
                                 <?php
-                            } else if (isset($_SESSION["translate"])) {
+                            } 
+                            
+                            else if (isset($_SESSION["translate"])) {
                                 if ($_SESSION["translate"] == 1) {
                                     ?>
                                     <h3>Conceito: <?= $_SESSION["nome2"]->nome ?></h3><br>
                                     <?php
-                                } else {
+                                } 
+                                
+                                else {
                                     ?>
                                     <h3>Verbo: <?= $_SESSION["nome2"]->nome ?></h3><br>
                                     <?php
                                 }
                             }
                             exist($_SESSION["nome1"], &$_SESSION["lista"]);
-                        } else if ($_SESSION["job"] == "insert") {
+                        }
+                        
+                        else if ($_SESSION["job"] == "insert") {
                             insert($_SESSION["nome1"], &$_SESSION["lista"]);
-                        } else if ($_SESSION["job"] == "main_subject") {
+                        } 
+                        
+                        else if ($_SESSION["job"] == "main_subject") {
                             importancia_central($_SESSION["nome1"], $_SESSION['nome2']->impacto);
-                        } else if ($_SESSION["job"] == "reference") {
+                        }
+                        
+                        else if ($_SESSION["job"] == "reference") {
                             //faz_referencia($_SESSION["lista"][0], $_SESSION["lista"][1]);
                             faz_referencia($_SESSION["lista"], $_SESSION["nome1"]);
-                        } else if ($_SESSION["job"] == "type") {
+                        } 
+                        
+                        else if ($_SESSION["job"] == "type") {
                             insere_tipo($_SESSION["lista"]);
-                        } else if (isset($_SESSION["nome2"]) && $_SESSION["job"] == "insert_relation") {
+                        } 
+                        
+                        else if (isset($_SESSION["nome2"]) && $_SESSION["job"] == "insert_relation") {
                             insere_relacao($_SESSION["nome1"], $_SESSION["nome2"], $_SESSION["nome3"], $_SESSION["lista"]);
-                        } else if ($_SESSION["job"] == "disjoint") {
+                        } 
+                        
+                        else if ($_SESSION["job"] == "disjoint") {
                             disjuncao($_SESSION["nome1"], $_SESSION["lista"]);
                         }
                         ?>

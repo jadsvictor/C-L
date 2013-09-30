@@ -18,18 +18,27 @@ $database_conection = bd_connect() or die("Erro ao conectar ao SGBD");
 
 if (isset($submit)) {     
 	 
-    if (!isset($listSinonimo))
+    if (!isset($listSinonimo)){
         $listSinonimo = array();
+    }
+    
+    else{
+       	//nothing to do
+    }
         
 // strip the sinonimos case has a null.
     $count = count($listSinonimo);
     for ($i = 0; $i < $count; $i++) {
     	
         if ($listSinonimo[$i] == "") {
-        	
             $listSinonimo = null;
         }
+        
+        else{
+           	//nothing to do
+        }
     }
+    
     foreach ($listSinonimo as $key => $sinonimo) {
         $listSinonimo[$key] = str_replace(">", " ", str_replace("<", " ", $sinonimo));
     }
@@ -59,7 +68,9 @@ if (isset($submit)) {
             </script>
 
     <?php
-} else { 
+} 
+
+else { 
     $project_name = simple_query("nome", "projeto", "id_projeto = " . $_SESSION['id_projeto_corrente']);
     $selection = "SELECT * FROM lexico WHERE id_lexico = $id_lexico";
     $qrr = mysql_query($selection) or die("Erro ao executar a query");
