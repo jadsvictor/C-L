@@ -74,7 +74,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": $errstr ($errno)" . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         # sometimes the SMTP server takes a little longer to respond
@@ -113,7 +114,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         // Send encoded username
@@ -131,7 +133,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         // Send encoded password
@@ -149,10 +152,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-
-        return true;
+        else
+            return true;
     }
 
     function Connected() {
@@ -168,9 +172,11 @@ class SMTP {
                 $this->Close();
                 return false;
             }
-            return true; # everything looks good
+            else
+                return true;# everything looks good
         }
-        return false;
+        else
+            return false;
     }
 
     function Close() {
@@ -213,7 +219,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         # the server is ready to accept data!
@@ -227,7 +234,6 @@ class SMTP {
         # line. NOTE: this does not count towards are limit.
         # normalize the line breaks so we know the explode works
         $msg_data = str_replace("\r\n", "\n", $msg_data);
-        $msg_data = str_replace("\r", "\n", $msg_data);
         $lines = explode("\n", $msg_data);
 
         # we need to find a good way to determine is headers are
@@ -302,9 +308,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     function Expand($name) {
@@ -334,7 +342,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         # parse the reply and place in our array to return to user
@@ -368,11 +377,9 @@ class SMTP {
             if (!$this->SendHello("HELO", $host))
                 return false;
         }
-
-        return true;
+        else
+            return true;
     }
-
-    /
 
     function SendHello($hello, $host) {
         fputs($this->smtp_conn, $hello . " " . $host . $this->CRLFReplyLine);
@@ -393,7 +400,8 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
 
         $this->helo_rply = $rply;
@@ -433,10 +441,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-
-        return $rply;
+        else
+            return $rply;
     }
 
     function Mail($from) {
@@ -466,9 +475,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     /**
@@ -501,9 +512,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     function Quit($close_on_error = true) {
@@ -544,8 +557,8 @@ class SMTP {
         if (empty($e) || $close_on_error) {
             $this->Close();
         }
-
-        return $rval;
+        else
+            return $rval;
     }
 
     function Recipient($to) {
@@ -575,9 +588,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     function Reset() {
@@ -607,10 +622,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-
-        return true;
+        else
+            return true;
     }
 
     function Send($from) {
@@ -640,9 +656,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     function SendAndMail($from) {
@@ -672,9 +690,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     function SendOrMail($from) {
@@ -704,9 +724,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return true;
+        else
+            return true;
     }
 
     /**
@@ -750,9 +772,11 @@ class SMTP {
                 echo "SMTP -> ERROR: " . $this->error["error"] .
                 ": " . $rply . $this->CRLFReplyLine;
             }
-            return false;
+            else
+                return false;
         }
-        return $rply;
+        else
+            return $rply;
     }
 
 //                       INTERNAL FUNCTIONS                       *
