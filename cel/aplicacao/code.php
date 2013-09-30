@@ -3,36 +3,34 @@ session_start();
 
 
 if (isset($_GET['id_projeto'])) {
-$id_projeto = $_GET['id_projeto'];
+    $id_projeto = $_GET['id_projeto'];
 }
-
-include("funcoes_genericas.php");
+else
+    include("funcoes_genericas.php");
 include_once("bd.inc");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado 
-//$id_projeto = 2; 
+chkUser("index.php");
 ?>  
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 
 
 <?php
-// conecta ao SGBD 
+// cocnect SGBD 
 $r = bd_connect() or die("Erro ao conectar ao SGBD");
 
-// A variavel $id_projeto, se estiver setada, corresponde ao id do projeto que 
-// devera ser mostrado. Se ela nao estiver setada entao, por default, 
-// nao mostraremos projeto algum (esperaremos o usuario escolher um projeto). 
-// Como a passagem eh feita usando JavaScript (no heading.php), devemos checar 
-// se este id realmente corresponde a um projeto que o usuario tenha acesso 
-// (seguranca). 
+// The variable $ id_projeto, if set, corresponds to the id of the project
+// Should be shown. If she is not setada then, by default,
+// Do not show any project (wait the User choose a project).
+// How to pass eh done using JavaScript (in heading.php), we must check
+// If this id really corresponds to a project that has the User Access(Security).
 
 if (isset($id_projeto)) {
-check_proj_perm($_SESSION['id_usuario_corrente'], $id_projeto) or
-die("Permissao negada");
-$q = "SELECT nome FROM projeto WHERE id_projeto =" . (int)$_GET[$id_projeto];
-$qrr = mysql_query($q) or die("Erro ao enviar a query");
-$result = mysql_fetch_array($qrr);
-$nome_projeto = $result['nome'];
+    check_proj_perm($_SESSION['id_usuario_corrente'], $id_projeto) or
+            die("Permissao negada");
+    $q = "SELECT nome FROM projeto WHERE id_projeto =" . (int) $_GET[$id_projeto];
+    $qrr = mysql_query($q) or die("Erro ao enviar a query");
+    $result = mysql_fetch_array($qrr);
+    $nome_projeto = $result['nome'];
 }
 ?> 
 else {
@@ -46,7 +44,6 @@ else {
 
 <?php
 exit();
-}
 ?>  
 
 <html> 
@@ -80,7 +77,7 @@ exit();
         // for description of each option and their possible values. 
              
         MTMDefaultTarget = "text";
-        MTMenuText = "<?= $project_name ?>";
+        MTMenuText = "<?= $project_name = 0 ?>";
              
         /****************************************************************************** 
         * User-configurable list of icons.                                            * 
@@ -109,11 +106,13 @@ WHERE id_projeto = $project_id
 ORDER BY titulo";
 
 $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
-// Devemos retirar todas as tags HTML do titulo do cenario. Possivelmente 
-// havera tags de links (<a> </a>). Caso nao tiremos, havera erro ao 
-// mostra-lo no menu. Este search & replace retira qualquer coisa que 
-// seja da forma <qualquer_coisa_aqui>. Pode, inclusive, retirar trechos 
-// que nao sao tags HTML. 
+
+//We must remove all HTML tags from the title of the scenario. possibly
+//There will be links tags (<a> </ a>). If not put away, there will be error
+//Show it in the menu. This search & replace anything that removes
+//Is the way <qualquer_coisa_aqui>. It can even remove portions
+//That are not HTML tags.
+
 $search = "'<[\/\!]*?[^<>]*?>'si";
 $replace = "";
 while ($row = mysql_fetch_row($qrr)) {    // para cada cenario do projeto 
@@ -194,32 +193,29 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto
     }
     ?>
 
-           // - submenu 
+
            // mls_<?= $row[0] ?>.makeLastSubmenu(mlsrl_<?= $row[0] ?>); 
-           // - submenu 
            ml.makeLastSubmenu(mls_<?= $row[0] ?>);
 
     <?php
 }
 ?>
 
-       // -submenu 
+
 
        menu.makeLastSubmenu(ml);
 
-       // ONTOLGIA 
-       // + submenu 
+
 
        menu.addItem("Ontologia");
        var mo = null;
        mo = new MTMenu();
 
-       // -submenu 
+
        menu.makeLastSubmenu(mo);
 
 
-       // CONCEITO 
-       // ++ submenu 
+       // CONCEPT 
 
        mo.addItem("Conceitos");
        var moc = null;
@@ -227,9 +223,9 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada lexico do projeto
 
 <?php
 $selection = "SELECT id_conceito, nome  
- FROM conceito 
- WHERE id_projeto = $project_id  
- ORDER BY nome";
+FROM conceito 
+WHERE id_projeto = $project_id  
+ORDER BY nome";
 
 $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
 while ($row = mysql_fetch_row($qrr)) {  // para cada conceito do projeto 
@@ -262,14 +258,9 @@ while ($row = mysql_fetch_row($qrr)) {   // para cada rela��o do projeto
 }
 ?>
 
-       // --submenu    
+
        mo.makeLastSubmenu(mor);
 
-
-
-
-       // AXIOMAS 
-       // ++ submenu 
        mo.addItem("Axiomas");
        var moa = null;
        moa = new MTMenu();
