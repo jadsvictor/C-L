@@ -11,7 +11,6 @@
         include 'auxiliar_bd.php';
 
         $connect_database = bd_connect() or die("Erro na conex�o � BD : " . mysql_error());
-
         $query = "show tables";
         $result = mysql_query($query) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 
