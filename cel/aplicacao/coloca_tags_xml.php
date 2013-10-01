@@ -1,6 +1,6 @@
 <?php
 
-  // Modulo que poe as tags dos links no arquivo XML
+// Module that puts the tags in the XML file of links
 
 include ("coloca_links.php");
 
@@ -25,7 +25,6 @@ function pega_id_xml($str) {
 
 function troca_chaves_xml($str) {
     $conta_abertos = 0;
-    $conta_fehados = 0;
     $comeco = 0;
     $fim = 0;
     $x = 0;
@@ -33,7 +32,6 @@ function troca_chaves_xml($str) {
     $vet_id = 0;
     $link_original = 0;
     $link_novo = 0;
-    $buffer3 = '';
     $buffer = 0;
     $i = 0;
     $tam_str = strlen($str);
@@ -42,19 +40,21 @@ function troca_chaves_xml($str) {
         if ($str[$i] == '}') {
             $conta_abertos = $conta_abertos + 1;
         }
-        $i++;
+        else
+            $i++;
     }
     while ($i <= $tam_str) {
         if ($str[$i] == '}') {
             $conta_fechados = $conta_fechados + 1;
         }
-        $i++;
-    } 
-    
+        else
+            $i++;
+    }
+
     if ($conta_abertos == 0) {
         return $str;
     }
-    
+
     while ($i <= $tam_str) {
         if ($str[$i] == '{') {
             $buffer = $buffer + 1;
@@ -70,16 +70,15 @@ function troca_chaves_xml($str) {
                 $y++;
             }
         }
-        $i++;
+        else
+            $i++;
     };
-    
+
     while ($i < $x) { //x = numero de links reais - 1    
         $link = substr($str, $comeco[$i], $fim[$i] - $comeco[$i]);
         $link_original[$i] = $link;
         $link = str_replace('{', '', $link);
         $link = str_replace('}', '', $link);
-        $buffer2 = 0;
-        $conta = 0;
         $n = 0;
         $vet_id[$i] = pega_id_xml($link);
         $link = '**' . $link;
@@ -105,19 +104,20 @@ function troca_chaves_xml($str) {
             if ($marcador == 1) {
                 $link[$n] = '{';
             }
-            $n++;
+            else
+                $n++;
         }
         $link = str_replace('{', '', $link);
         $link = poe_tag_xml($link, $vet_id[$i]);
         $link_novo[$i] = $link;
         $i++;
     }
-    
+
     while ($i < $x) {
         $str = str_replace($link_original[$i], $link_novo[$i], $str);
         $i++;
     }
-    
+
     return $str;
 }
 
