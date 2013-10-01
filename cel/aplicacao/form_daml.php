@@ -19,11 +19,11 @@ $connect_database = bd_connect();
 
         <h2>Propriedades da ontologia:</h2> 
         <?php
-//Objetivo: Gerar Relat�rios DAML
+//Objective: Generate Reports DAML
 
         $today = getdate();
 
-// Recupera nome do usu�rio
+// Retrieves the user name
         $sql_user = "select nome from usuario where id_usuario='" . $_SESSION['id_usuario_corrente'] . "';";
         $query_user = mysql_query($sql_user) or die("Erro ao verificar usu�rio!" . mysql_error());
         $result = mysql_fetch_array($query_user);
