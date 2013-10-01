@@ -5,7 +5,7 @@
     </head>
 
     <script language="JavaScript">
-    <!--
+        <!--
         function TestarBranco(form)
         {
             login = form.login.value;
@@ -19,7 +19,6 @@
 
         }
 
-    //-->
     </SCRIPT>
     <p style="color: red; font-weight: bold; text-align: center">
         <img src="Images/Logo_CEL.jpg" width="180" height="100"><br/><br/>
@@ -30,7 +29,6 @@
             <div align="center">
 
                 <?php
-
                 ?>
 
                 <p style="color: green; font-weight: bold; text-align: center">Entre com seu Login:</p>

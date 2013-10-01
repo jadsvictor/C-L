@@ -20,10 +20,6 @@ while ($line = mysql_fetch_array($result, MYSQL_BOTH)) {
 }
 
 
-
-
-/* PROJETO que est� sendo traduzido pelo Jer�nimo (Adm_Imoveis) */
-
 $projetos = "select * from projeto where nome='Adm_Imoveis' order by id_projeto";
 $resultado = mysql_query($projetos) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
 print "<br><br><font color=#7c75b2 face=arial><h3>Projeto que est� sendo traduzido pelo Jer�nimo<h3></font>";
@@ -69,7 +65,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 }
 print "</table>";
 
-/* LEXICO */
+/* Lexicon */
 
 $resultados = "select * from lexico order by nome";
 $resultado = mysql_query($resultados) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
@@ -94,7 +90,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 print "</table>";
 
 
-/* ALGORITMO */
+/* Algorithm */
 
 $resultados = "select * from algoritmo";
 $resultado = mysql_query($resultados) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
@@ -112,7 +108,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 }
 print "</table>";
 
-/* CONCEITOS */
+/* CONCEPTS */
 
 $conceitos = "select * from conceito order by nome asc";
 $resultado = mysql_query($conceitos) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
@@ -135,7 +131,7 @@ print "</table>";
 
 
 
-/* RELA��ES */
+/* RELATIONSHIPS */
 
 $relacoes = "select * from relacao order by id_relacao";
 $resultado = mysql_query($relacoes) or
@@ -153,7 +149,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 print "</table>";
 
 
-/* HIERARQUIA */
+/* HIERARCHY */
 
 $hierarquia = "select * from hierarquia";
 $resultado = mysql_query($hierarquia) or
@@ -213,7 +209,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 print "</table>";
 
 
-/* USU�RIOS */
+/* USERS */
 
 $usuarios = "select * from usuario order by id_usuario";
 $resultado = mysql_query($usuarios) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
@@ -234,7 +230,7 @@ while ($line = mysql_fetch_array($resultado, MYSQL_BOTH)) {
 print "</table>";
 
 
-/* PARTICIPA */
+/* PARTICIPAPATION */
 
 $participa = "select * from participa order by id_projeto";
 $resultado = mysql_query($participa) or die("A consulta � BD falhou : " . mysql_error() . __LINE__);
