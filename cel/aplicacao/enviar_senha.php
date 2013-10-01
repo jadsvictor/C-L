@@ -2,16 +2,15 @@
 include("bd.inc");
 include("httprequest.inc");
 
-// Cen�rio - Lembrar senha 
-//Objetivo:	 Permitir o usu�rio cadastrado, que esqueceu sua senha,  receber  a mesma por email	
-//Contexto:	 Sistema est� aberto, Usu�rio esqueceu sua senha Usu�rio na tela de lembran�a de 
-//           senha. 
-//           Pr�-Condi��o: Usu�rio ter acessado ao sistema	
-//Atores:	 Usu�rio, Sistema	
-//Recursos:	 Banco de Dados	
-//Epis�dios: O sistema verifica se o login informado � cadastrado no banco de dados.     
-//           Se o login informado for cadastrado, sistema consulta no banco de dados qual 
-//           o email e senha do login informado.           
+//Scenario - Remember password
+//Purpose: Allow registered user, you forgot your password, you receive the same email
+//Context: System is open, User User Forgot password reminder on screen Password.
+//Precondition: User has accessed the system
+//Actors: User, System
+//Resource: Database
+//Episodes: The system checks if the entered login registered in the database.
+//If the login entered is registered, the system queries the database which
+//Email and password login informed.       
 
 $ConectaBanco = bd_connect() or die("Erro ao conectar ao SGBD");
 $login = 0;
@@ -38,9 +37,8 @@ $qrr = mysql_query($BuscaLoginBanco) or die("Erro ao executar a query");
         $nome = $row[1];
         $mail = $row[2];
         $login = $row[3];
-        $password = $row[4];
 
-        //Funcao que gera uma senha randomica de 6 caracteres
+        //Function that randomly generates a password of 6 characters
 
         function gerarandonstring($n) {
             $str = "ABCDEFGHIJKLMNOPQRSTUVXYWZabcdefghijklmnopqrstuvxywz0123456789";
@@ -52,13 +50,11 @@ $qrr = mysql_query($BuscaLoginBanco) or die("Erro ao executar a query");
             return $cod;
         }
 
-// Chamando a fun��o: gerarandonstring([quantidadedecaracteres])echo gerarandonstring(20);
-        // Gera uma nova senha rand�mica	
         $nova_senha = gerarandonstring(6);
-        //Criptografa senha
+
         $nova_senha_cript = md5($nova_senha);
 
-        // Substitui senha antiga pela nova senha no banco de dados
+        // replaces the old password new password in the database
 
         $AtualizaSenhaBanco = "update usuario set senha = '$nova_senha_cript' where login = '$login'";
         $ErroAtualizarSenhaBanco = mysql_query($AtualizaSenhaBanco) or
