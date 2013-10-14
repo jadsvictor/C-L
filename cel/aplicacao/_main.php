@@ -104,10 +104,7 @@ chkUser("index.php");
 
                 <?php
             }
-            
-        else{
-        	//nothing to do
-        }
+       
             ?>
 
             <table>
@@ -211,9 +208,9 @@ chkUser("index.php");
         
         elseif (isset($project_id)) {
              // Was passed a variable $ id_projeto. This variable should contain the id of a
-             // Project that the User is registered. However, as the passage eh
-             // Done using JavaScript (in heading.php), we check if this id really
-             // Corresponds to a project that the User has access (security).
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ // Project that the User is registered. However, as the passage eh
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ // Done using JavaScript (in heading.php), we check if this id really
+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ // Corresponds to a project that the User has access (security).
             check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
 
             $_SESSION['id_projeto_corrente'] = $project_id;

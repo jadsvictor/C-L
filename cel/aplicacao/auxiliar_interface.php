@@ -390,7 +390,7 @@ Returns TRUE if references.
                                     ?>
                                     <OPTION value='<?= $key ?>' <?php
                                     if ($indice2 === $key){
-                                        echo "selected"
+                                        echo "selected";
                                     }
                                      
                                     else{
@@ -408,7 +408,7 @@ Returns TRUE if references.
                                    id="existe" name="existe" size="20" <?php
                                    
                                    if ($indice2 !== -1){
-                                       echo"checked"
+                                       echo"checked";
                                    }
                                    
                                    else{
@@ -517,7 +517,7 @@ Returns TRUE if references.
                         </form>
                         <?php
                         $_SESSION['insert_relation'] = 1;
-                    }
+                    
 
                     function disjuncao($nome, $list) {
                         $_SESSION["disjoint"] = 1;

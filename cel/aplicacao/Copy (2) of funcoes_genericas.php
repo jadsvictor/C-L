@@ -48,7 +48,7 @@ if (!(function_exists("inclui_cenario"))) {
 }
 
 # Insere um lexico no banco de dados.
-# Recebe o id_projeto, nome, noção, impacto e os sinonimos. (1.1)
+# Recebe o id_projeto, nome, noï¿½ï¿½o, impacto e os sinonimos. (1.1)
 # Insere os valores do lexico na tabela LEXICO. (1.2)
 # Insere todos os sinonimos na tabela SINONIMO. (1.3)
 # Devolve o id_lexico. (1.4)
@@ -905,7 +905,7 @@ function checarCenarioExistente($projeto, $titulo) {
 # Para inserir um novo cenario ela deve receber os campos do novo
 # cenario.
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este cenario caso o criador não seja o gerente.
+# referente a este cenario caso o criador nï¿½o seja o gerente.
 # Arquivos que utilizam essa funcao:
 # add_cenario.php
 if (!(function_exists("inserirPedidoAdicionarCenario"))) {
@@ -956,7 +956,7 @@ if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 # Para alterar um cenario ela deve receber os campos do cenario
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador não seja o gerente.(2.1)
+# referente a este cenario caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_cenario.php
 if (!(function_exists("inserirPedidoAlterarCenario"))) {
@@ -1043,7 +1043,7 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
 # Para inserir um novo lexico ela deve receber os campos do novo
 # lexicos.
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador não seja o gerente.
+# referente a este lexico caso o criador nï¿½o seja o gerente.
 # Arquivos que utilizam essa funcao:
 # add_lexico.php
 if (!(function_exists("inserirPedidoAdicionarLexico"))) {
@@ -1097,7 +1097,7 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 # Para alterar um lexico ela deve receber os campos do lexicos
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerente do projeto
-# referente a este lexico caso o criador não seja o gerente.(2.1)
+# referente a este lexico caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_lexico.php
 if (!(function_exists("inserirPedidoAlterarLexico"))) {
@@ -1200,7 +1200,7 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
 # Para alterar um conceito ela deve receber os campos do conceito
 # jah modificados.(1.1)
 # Ao final ela manda um e-mail para o gerentes do projeto
-# referente a este cenario caso o criador não seja o gerente.(2.1)
+# referente a este cenario caso o criador nï¿½o seja o gerente.(2.1)
 # Arquivos que utilizam essa funcao:
 # alt_cenario.php
 if (!(function_exists("inserirPedidoAlterarCenario"))) {
@@ -1511,7 +1511,8 @@ if (!(function_exists("tratarPedidoRelacao"))) {
 #a esse projeto.Ela so verifica atualmente
 #se a pessoa e um gerente.
 if (!(function_exists("verificaGerente"))) {
-    verificaGerente($id_usuario){
+   // verificaGerente($id_usuario) <----------------ERRO JADS
+   {
 		$DB = new PGDB () ;
 		$select = new QUERY ($DB) ;
 		$select->execute("SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario") ;
@@ -1595,7 +1596,7 @@ function verificaGerente($id_usuario, $id_projeto) {
 # Recebe o id do projeto. (1.1)
 # Apaga os valores da tabela pedidocen que possuam o id do projeto enviado (1.2)
 # Apaga os valores da tabela pedidolex que possuam o id do projeto enviado (1.3)
-# Faz um SELECT para saber quais léxico pertencem ao projeto de id_projeto (1.4)
+# Faz um SELECT para saber quais lï¿½xico pertencem ao projeto de id_projeto (1.4)
 # Apaga os valores da tabela lextolex que possuam possuam lexico do projeto (1.5)
 # Apaga os valores da tabela centolex que possuam possuam lexico do projeto (1.6)
 # Apaga os valores da tabela sinonimo que possuam possuam o id do projeto (1.7)
