@@ -5,7 +5,7 @@ session_start();
 include("funcoes_genericas.php");
 
 
-chkUser("index.php");        
+checkUserAuthentication("index.php");        
 
 // Scenario: acess control
 // Scenario - User chooses project
