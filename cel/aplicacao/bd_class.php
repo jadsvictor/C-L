@@ -5,6 +5,7 @@ include_once("bd.inc");
 
 $ipNome = "IpBD =";
 $ipValor = CELConfig_ReadVar("BD_ip");
+
 $DBNAME = CELConfig_ReadVar("BD_ip");
 $DBUSER = CELConfig_ReadVar("BD_user");
 $DBPASSWD = CELConfig_ReadVar("BD_password");
@@ -13,9 +14,12 @@ $DBHOST = CELConfig_ReadVar("BD_host");
 $DBPORT = CELConfig_ReadVar("BD_porta");
 
 class Abstract_DB {
-
+##PRIVATE##
+    
     var $db_linkid = 0;
 
+##PUBLIC##
+    
     function open($dbname, $user, $pass, $host, $port) {
         
     }

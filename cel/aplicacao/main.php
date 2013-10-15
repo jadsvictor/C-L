@@ -1,939 +1,1058 @@
 <?php
+
 session_start();
+
 include_once("CELConfig/CELConfig.inc");
-
-//$_SESSION['site'] = 'http://pes.inf.puc-rio.br/pes03_1_1/Site/desenvolvimento/teste/';       
-//$_SESSION['site'] = 'http://139.82.24.189/cel_vf/aplicacao/teste/';
-/* URL of the directory containing the files DAML */
-$_SESSION['site'] = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo") . CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
-
-//$_SESSION['diretorio'] = "/home/local/pes/pes03_1_1/Site/desenvolvimento/teste/";        
-//$_SESSION['diretorio'] = "teste/";        
-/* Relative path to the directory containing the CEL files DAML */
-$_SESSION['diretorio'] = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
-
 include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("coloca_links.php");
 
+//URL of the directory containing the files DAML 
+$_SESSION['site'] = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo") . CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
+        
+//Caminho relativo ao CEL do diretorio contendo os arquivos de DAML
+$_SESSION['diretorio'] = CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");
 
-// Checks if the user has been authenticated
-chkUser("index.php");
+checkUserAuthentication("index.php");
 
-//Parameter receives the heading.php. No it will lock that variable not already 
-//been initialized
+/*
+Receives parameter heading.php. 
+If the variable is not initialized, the system will give error. Insert assertive.
+*/
+
 if (isset($_GET['id_projeto'])) {
-    $project_id = $_GET['id_projeto'];
-} else {
-    // $id_projeto = ""; 
+    
+    $idProject  = $_GET['id_projeto'];
+}
+else {
+    // Nothing should be done
 }
 
 if (!isset($_SESSION['id_projeto_corrente'])) {
 
     $_SESSION['id_projeto_corrente'] = "";
 }
+else{
+    //Nothing should be done
+}
+
 ?>    
 
 <html> 
-
-
-
     <head> 
         <LINK rel="stylesheet" type="text/css" href="style.css"> 
-        <script type="text/javascript1.3">
+        <script language="javascript1.3">
+            
 
-            // Functions that will be used when the script is called through his own or tree 
-            function reCarrega(URL) {
+ // Functions that will be used when the script is invoked through himself or tree 
+ function reLoad(URL) {
                 document.location.replace(URL);
-            }
-
-<?php
-// Scenario - Refresh Scenario
-// Purpose: Allow Inclusion, Change and Delete a scenario by a user
-// Context: User want to include a scenario not registered, change and / or delete
-// A scenario previously registered.
-// Precondition: Login
-// Actors: User, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episodes: The user clicks on the top menu option:
-// If the user, clicks Change then CHANGE SCENARIO
-?>
-
-            function altCenario(cenario) {
-                var url = 'alt_cenario.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_cenario=' + cenario;
-                var where = '_blank';
-                var window_spec = 'dependent,height=660,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Refresh Scenario
-// Purpose: Allow Inclusion, Change and Delete a scenario by a user
-// Context: User want to include a scenario not registered, change and / or delete
-// A scenario previously registered.
-// Precondition: Login
-// Actors: User, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episodes: The user clicks on the top menu option:
-// If user clicks Delete then DELETE SCENE
-?>
-
-            function rmvCenario(cenario) {
-                var url = 'rmv_cenario.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_cenario=' + cenario;
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenarios - Upgrade Lexicon
-// Purpose: Allow Included, Excluded Alteraoe a Lexicon for a user
-// Context: Usurio want to include a lexicon still in the register, amend and / or
-// Delete a scenario / lexicon previously registered.
-// Pre-condition: Login
-// Actors: Usurio, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episodes: the user clicks on the top menu option:
-// If user, click Change then CHANGE lexicon
-?>
-
-            function altLexico(lexico) {
-                var url = 'alt_lexico.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_lexico=' + lexico;
-                var where = '_blank';
-                var window_spec = 'dependent,height=573,width=570,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenarios - Upgrade Lexicon
-// Purpose: Allow Inclusion, Change and Delete a Lexicon by user
-// Context: User want to include a lexicon not registered, amend and / or
-// Delete a scenario / lexicon previously registered.
-// Precondition: Login
-// Actors: User, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episodes: The user clicks on the top menu option:
-// If user clicks Delete then DELETE LEXICON
-?>
-
-            function rmvLexico(lexico) {
-                var url = 'rmv_lexico.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_lexico=' + lexico;
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-            //Functions that will be used when the script is invoked through the heading.php 
-
-<?php
-// Scenario - Upgrade Scenario
-// Purpose: Allow Included, Excluded Alteraoe a Scenario for a user
-// Context: Usurio want to include a scenario in yet registered, change and / or delete
-// One scenario previously registered.
-// Pre-condition: Login
-// Actors: Usurio, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episdios: the user clicks on the top menu option:
-// If user click Change then CHANGE scenario
-?>
-
-            function altConceito(conceito) {
-                var url = 'alt_conceito.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_conceito=' + conceito;
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Upgrade Concept
-// Purpose: Allow Included, Excluded Alteraoe a Scenario for a user
-// Context: Usurio want to include a scenario in yet registered, change and / or delete
-// One scenario previously registered.
-// Pre-condition: Login
-// Actors: Usurio, Project Manager
-// Resources: System, top menu, the object to be modified
-// Episdios: the user clicks on the top menu option:
-// If user click Delete then DELETE scenario
-?>
-
-            function rmvConceito(conceito) {
-                var url = 'rmv_conceito.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_conceito=' + conceito;
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-            function rmvRelacao(relacao) {
-
-                var url = 'rmv_relacao.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_relacao=' + relacao;
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Preconditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project Admnistrator
-// Episodes: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing onscreen options:
-// Check-ordered change of scenerio (see Check applications change scenario);
-?>
-
-            function pedidoCenario() {
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'ver_pedido_cenario.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} else {
-    ?>
-                    var url = 'ver_pedido_cenario.php';
-    <?php
 }
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
 
 <?php
-//  Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project Administrator
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// - Check requests for alteration of terms of the lexicon
-// (Check to see requests for alteration of terms of the lexicon);
+
+/*
+Scenario: Update Scenario
+Objective: Allow inclusion, modification and deletion of a scenario by an user
+Context: User wants to include a scenario not registered, change or delete a registered scenario.
+Precondition: Login
+Actors: User and Project's Manager
+Resources: System, top menu and the object to be modified
+Episodes: The user clicks on the top menu option:
+           If user clicks the Change button, then CHANGE SCENARIO
+           If user clicks on Delete, then DELETE SCENARIO
+ */
+
 ?>
 
-            function pedidoLexico() {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'ver_pedido_lexico.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} else {
-    ?>
-                    var url = 'ver_pedido_lexico.php?'
-    <?php
+function changeScenario(cenario) {
+    
+        var url = 'alt_cenario.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_cenario=' + cenario;
+        var where = '_blank';
+        var window_spec = 'dependent,height=660,width=550,resizable,scrollbars,titlebar';
+    
+        open(url, where, window_spec);
 }
+
+<?php 
 ?>
 
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project Administrator
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// - Check requests for alteration of terms of the lexicon
-// (Check to see requests for alteration of terms of the lexicon);
-?>
-
-            function pedidoConceito() {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'ver_pedido_conceito.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} else {
-    ?>
-                    var url = 'ver_pedido_conceito.php?'
-    <?php
+function removeScenario(cenario) {
+    
+        var url = 'rmv_cenario.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_cenario=' + cenario;
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+    
+        open(url, where, window_spec);
 }
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-            function pedidoRelacao() {
 
 <?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'ver_pedido_relacao.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} else {
-    ?>
-                    var url = 'ver_pedido_relacao.php?'
-    <?php
+?>
+
+function changeConcept(conceito) {
+                
+        var url = 'alt_conceito.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_conceito=' + conceito;
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
 }
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
 
 <?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project doAdministrador
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// Add-usurio (at present) in this project (see Add Usurio);
 ?>
 
-            function addUsuario() {
-                var url = 'add_usuario.php';
-                var where = '_blank';
-                var window_spec = 'dependent,height=320,width=490,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project doAdministrador
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// J-Relate existing users with this design
-// (See Relate users with projects);
-?>
-
-            function relUsuario() {
-                var url = 'rel_usuario.php';
-                var where = '_blank';
-                var window_spec = 'dependent,height=380,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project doAdministrador
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// Generate-xml this project (see Generate XML reports); 
-?>
-
-            function geraXML()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'form_xml.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} else {
-    ?>
-                    var url = 'form_xml.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-            function recuperaXML()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'recuperarXML.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} 
-else {
-    ?>
-                    var url = 'recuperarXML.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-            function geraGrafo()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'gerarGrafo.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} 
-else {
-    ?>
-                    var url = 'gerarGrafo.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-
-<?php
-// Ontology
-// Goal: Generate project ontology
-?>
-            function geraOntologia()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'inicio.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} 
-else {
-    ?>
-                    var url = 'inicio.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = "";
-                open(url, where, window_spec);
-            }
-
-<?php
-// Ontology - DAML
-// Purpose: Generate daml ontology project
-?>
-            function geraDAML()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'form_daml.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} 
-else {
-    ?>
-                    var url = 'form_daml.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=375,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-<?php
-// Purpose: Retrieve historical ontology in DAML
-?>
-            function recuperaDAML()
-            {
-
-<?php
-if (isset($project_id)) {
-    ?>
-                    var url = 'recuperaDAML.php?id_projeto=' + '<?= $project_id ?>';
-    <?php
-} 
-else {
-    ?>
-                    var url = 'recuperaDAML.php?'
-    <?php
-}
-?>
-
-                var where = '_blank';
-                var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
-                open(url, where, window_spec);
-            }
-
-
-        </script> 
-        <script type="text/javascript" src="mtmtrack.js">
-        </script> 
-    </head> 
-    <body> 
-
-        <!--                     First Part                                     --> 
-
-<?php
-include("frame_inferior.php");
-
-// SCRIPT CALLED BY OWN main.php (OR THE TREE)
-if (isset($id) && isset($t)) {      
-    $vetorVazio = array();
-    if ($t == "c") {
-        print "<h3>Informa��es sobre o cen�rio</h3>";
-    } elseif ($t == "l") {
-        print "<h3>Informa��es sobre o s�mbolo</h3>";
-    } elseif ($t == "oc") {
-        print "<h3>Informa��es sobre o conceito</h3>";
-    } elseif ($t == "or") {
-        print "<h3>Informa��es sobre a rela��o</h3>";
-    } elseif ($t == "oa") {
-        print "<h3>Informa��es sobre o axioma</h3>";
-    }
-    ?>    
-            <table> 
-
-
-
-
-                <!--                     SECOND PART                         --> 
-
-
-    <?php
-    $c = bd_connect() or die("Erro ao conectar ao SGBD");
-    ?>   
-
-
-
-                <!-- SCENARIO --> 
-
-    <?php
-    // if scenario 
-    if ($t == "c") {        
-        $selection = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios, id_projeto    
-              FROM cenario    
-              WHERE id_cenario = $id";
-
-        $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
-        $result = mysql_fetch_array($qrr);
-
-        $c_project_id = $result['id_projeto'];
+function removeConcept(conceito) {
         
-        // load vector scenery
-        $scenarios_vector = carrega_vetor_cenario($c_project_id, $id, true); 
-        quicksort($scenarios_vector, 0, count($scenarios_vector) - 1, 'cenario');
+        var url = 'rmv_conceito.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_conceito=' + conceito;
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+function removeRelationship(relacao) {
+
+        var url = 'rmv_relacao.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_relacao=' + relacao;
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+
+/*
+Scenarios: Update Lexicon
+Objective: Allow inclusion, change and deletion of a lexicon by an user
+Context: User wants to include a lexicon not registered, change or
+exclude a scenario/lexicon registered.
+Precondition: Login
+Actors: User and Project's Manager
+Resources: System, top menu and the object to be modified
+Episodes: The user clicks on the top menu option:
+          If user click Change, then CHANGE LEXICON
+          If user clicks on Delete, then DELETE LEXICON
+ */
+?>
+
+function changeLexicon(lexico) {
+                
+        var url = 'alt_lexico.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_lexico=' + lexico;
+        var where = '_blank';
+        var window_spec = 'dependent,height=573,width=570,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+?>
+
+function removeLexicon(lexico) {
+                
+        var url = 'rmv_lexico.php?id_projeto=' + '<?= $_SESSION['id_projeto_corrente'] ?>' + '&id_lexico=' + lexico;
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+// These functions that will be used when the script is invoked through the heading.php 
+
+<?php
+
+/*
+Scenario - Administrator chooses project
+Objective: Allow the administrator to choose a project.
+Context: The administrator wants to choose a design.
+Preconditions: Login and be the administrator of the selected project.
+Actors: Administrator
+Resources: Project's Administrator
+Episodes: The administrator selects from a list of projects, a project of which he is director.
+Showing on-screen options:
+    - Check requests for change scenario
+    - Check order change terms of the lexicon
+ */ 
+?>
+
+function requestScenario() {
         
-        // load vector lexicons
-        $lexicons_vector = carrega_vetor_lexicos($c_project_id, 0, false); 
-        quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
-        ?>    
+        <?php
+        
+        if (isset($idProject )) {
+       
+            ?>
+            var url = 'ver_pedido_cenario.php?id_projeto=' + '<?= $idProject  ?>';
+            <?php
+        }
+        else {
+            ?>
+            var url = 'ver_pedido_cenario.php';
+            <?php
+        }
+        
+        ?>
 
-                    <tr> 
-                        <th>Titulo:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['titulo'], $lexicons_vector, $vetorVazio)); ?>
-                        </td> 
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
 
-                    </tr> 
-                    <tr> 
-                        <th>Objetivo:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['objetivo'], $lexicons_vector, $vetorVazio)); ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Contexto:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['contexto'], $lexicons_vector, $scenarios_vector)); ?>		 
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Atores:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['atores'], $lexicons_vector, $vetorVazio)); ?>
-                        </td>  
-                    </tr> 
-                    <tr> 
-                        <th>Recursos:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['recursos'], $lexicons_vector, $vetorVazio)); ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Exce��o:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['excecao'], $lexicons_vector, $vetorVazio)); ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Epis�dios:</th><td CLASS="Estilo">
-        <?php echo nl2br(monta_links($result['episodios'], $lexicons_vector, $scenarios_vector)); ?>
+<?php
 
-                        </td> 
-                    </tr> 
-                </TABLE> 
-                <BR> 
-                <TABLE> 
-                    <tr> 
-                        <td CLASS="Estilo" height="40" valign=MIDDLE> 
-                            <a href="#" onClick="altCenario(<?= $result['id_cenario'] ?>);">Alterar Cen�rio</a> 
-                            </td> 
-                        <td CLASS="Estilo"  valign=MIDDLE> 
-                            <a href="#" onClick="rmvCenario(<?= $result['id_cenario'] ?>);">Remover Cen�rio</a> 
-                            </td> 
-                    </tr> 
+?>
 
-
-                    <!-- LEXICON --> 
-
-                <?php
-            } elseif ($t == "l") {
-
-                $selection = "SELECT id_lexico, nome, nocao, impacto, tipo, id_projeto    
-              FROM lexico    
-              WHERE id_lexico = $id";
-
-                $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
-                $result = mysql_fetch_array($qrr);
-
-                $l_project_id = $result['id_projeto'];
-
-                $lexicons_vector = carrega_vetor_lexicos($l_project_id, $id, true);
-
-                quicksort($lexicons_vector, 0, count($lexicons_vector) - 1, 'lexico');
-                ?>    
-                    <tr> 
-                        <th>Nome:</th><td CLASS="Estilo"><?php echo $result['nome']; ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>No��o:</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['nocao'], $lexicons_vector, $vetorVazio)); ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Classifica��o:</th><td CLASS="Estilo"><?= nl2br($result['tipo']) ?>
-                        </td> 
-                    </tr> 
-                    <tr> 
-                        <th>Impacto(s):</th><td CLASS="Estilo"><?php echo nl2br(monta_links($result['impacto'], $lexicons_vector, $vetorVazio)); ?> 
-                        </td>
-                    </tr> 
-                    <tr> 
-                        <th>Sin�nimo(s):</th> 
-
-                    <?php
-                    //sinonimos 
-                    $project_id = $_SESSION['id_projeto_corrente'];
-                    $qSynonymous = "SELECT * FROM sinonimo WHERE id_lexico = $id";
-                    $qrr = mysql_query($qSynonymous) or die("Erro ao enviar a query de Sinonimos" . mysql_error());
-
-                    $tempS = array();
-
-                    while ($resultSynonymous = mysql_fetch_array($qrr)) {
-                        $tempS[] = $resultSynonymous['nome'];
-                    }
-                    ?>    
-
-                        <td CLASS="Estilo">
-
-                            <?php
-                            $count = count($tempS);
-
-                            for ($i = 0; $i < $count; $i++) {
-                                if ($i == $count - 1) {
-                                    echo $tempS[$i] . ".";
-                                } else {
-                                    echo $tempS[$i] . ", ";
-                                }
-                            }
-                            ?>    
-
-                        </td> 
-
-                    </tr> 
-                </TABLE> 
-                <BR> 
-                <TABLE> 
-                    <tr> 
-                        <td CLASS="Estilo" height="40" valign="middle"> 
-                            <a href="#" onClick="altLexico(<?= $result['id_lexico'] ?>);">Alterar S�mbolo</a> 
-                            </td> 
-                        <td CLASS="Estilo" valign="middle"> 
-                            <a href="#" onClick="rmvLexico(<?= $result['id_lexico'] ?>);">Remover S�mbolo</a> 
-                            </td> 
-                    </tr> 
-
-
-                    <!-- ONTOLOGIA - CONCEITO --> 
+function requestLexicon() {
 
         <?php
-    } elseif ($t == "oc") {        // se for cenario 
-        $selection = "SELECT id_conceito, nome, descricao   
-              FROM   conceito   
-              WHERE  id_conceito = $id";
-
-        $qrr_selection = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
-        $result = mysql_fetch_array($qrr_selection);
-        ?>    
-
-                    <tr> 
-                        <th>Nome:</th><td CLASS="Estilo"><?= $result['nome'] ?></td> 
-                    </tr> 
-                    <tr> 
-                        <th>Descri��o:</th><td CLASS="Estilo"><?= nl2br($result['descricao']) ?></td> 
-                    </tr> 
-                </TABLE> 
-                <BR> 
-                <TABLE> 
-                    <tr> 
-                        <td CLASS="Estilo" height="40" valign=MIDDLE>                     
-                            </td> 
-                        <td CLASS="Estilo"  valign=MIDDLE> 
-                            <a href="#" onClick="rmvConceito(<?= $result['id_conceito'] ?>);">Remover Conceito</a> 
-                            </td> 
-                    </tr> 
-
-
-
-
-                    <!-- ONTOLOGY - RELATIONS --> 
-
-                    <?php
+            
+        if (isset($idProject )) {
+    
+            ?>
+            var url = 'ver_pedido_lexico.php?id_projeto=' + '<?= $idProject  ?>';
+            <?php
+        } 
+        else {
+            ?>
                     
-                  // se for cenario 
-                } elseif ($t == "or") {        
-                    $selection = "SELECT id_relacao, nome   
-              FROM relacao   
-              WHERE id_relacao = $id";
-                    $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao !!" . mysql_error());
-                    $result = mysql_fetch_array($qrr);
-                    ?>    
+            var url = 'ver_pedido_lexico.php?';
+            <?php
+        }
 
-                    <tr> 
-                        <th>Nome:</th><td CLASS="Estilo"><?= $result['nome'] ?></td> 
-                    </tr> 
+        ?>
 
-                </TABLE> 
-                <BR> 
-                <TABLE> 
-                    <tr> 
-                        <td CLASS="Estilo" height="40" valign=MIDDLE>                   
-                            </td>
-                        <td CLASS="Estilo"  valign=MIDDLE> 
-                            <a href="#" onClick="rmvRelacao(<?= $result['id_relacao'] ?>);">Remover Rela��o</a> 
-                            </td> 
-                    </tr> 
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+?>
+
+function requestConcept() {
+
+<?php
+        if (isset($idProject )) {
+            ?>
+            
+            var url = 'ver_pedido_conceito.php?id_projeto=' + '<?= $idProject  ?>';
+            
+            <?php
+        }
+        else {
+        ?>
+            var url = 'ver_pedido_conceito.php?';
+        <?php
+        }
+        
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+function requestRelationship() {
+
+        <?php
+        
+        if (isset($idProject )) {
+    
+            ?>        
+            var url = 'ver_pedido_relacao.php?id_projeto=' + '<?= $idProject  ?>';
+            <?php
+            
+        } 
+        else {
+              
+            ?>
+            var url = 'ver_pedido_relacao.php?';
+            <?php
+        }
+        
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=300,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+
+/* 
+Scenario - Administrator chooses project
+Objective: Allow the administrator to choose a project.
+Context: The administrator wants to choose a design.
+Preconditions: Login and be the administrator of the selected project.
+Actors: Administrator
+Resources: Project Administrator
+Episodes: The administrator selects from a list of projects, a project of which he is director.
+Showing on-screen options:
+         - Add user (non-existent) in this project
+         - Relate existing users in this project
+         - Generate xml of the project 
+ */ 
+?>
+
+function addUser() {
+                
+        var url = 'add_usuario.php';
+        var where = '_blank';
+        var window_spec = 'dependent,height=320,width=490,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+<?php
+
+?>
+
+function relateUsers() {
+                
+        var url = 'rel_usuario.php';
+        var where = '_blank';
+        var window_spec = 'dependent,height=380,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+ 
+?>
+
+function generateXML(){
+
+        <?php
+        if (isset($idProject )) {
+    
+            ?>
+            var url = 'form_xml.php?id_projeto=' + '<?= $idProject  ?>';
+    
+            <?php
+        }
+        else {
+    
+            ?>
+            var url = 'form_xml.php?';
+            <?php
+        }
+
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+function recuperateXML(){
+
+        <?php
+
+        if (isset($idProject )) {
+    
+            ?>
+            var url = 'recuperarXML.php?id_projeto=' + '<?= $idProject  ?>';
+            <?php
+        }
+        else {
+        
+            ?>
+             
+            var url = 'recuperarXML.php?';
+   
+            <?php
+        }
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+function generateGraph(){
+
+        <?php
+
+        if (isset($idProject )) {
+        
+            ?>
+            var url = 'gerarGrafo.php?id_projeto=' + '<?= $idProject  ?>';
+            <?php
+        }
+        else {
+    
+            ?>
+            var url = 'gerarGrafo.php?';
+            <?php
+        }
+        
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+/*
+Ontology
+Objective: Generate ontology of the project
+*/
+?>
+
+function generateOntology(){
+
+        <?php
+        
+        if (isset($idProject )) {
+    
+            ?>
+            var url = 'inicio.php?id_projeto=' + '<?= $idProject  ?>';    
+            <?php
+        }
+        else {
+        
+            ?>
+            var url = 'inicio.php?';    
+            <?php
+        }
+        
+        ?>
+
+        var where = '_blank';
+        var window_spec = "";
+                
+        open(url, where, window_spec);
+}
+
+<?php
+/*
+Ontology - DAML
+Objective: Generate DAML projetct's ontology 
+ */
+?>
+function generateDAML(){
+
+        <?php
+
+        if (isset($idProject )) {
+    
+            ?>
+            var url = 'form_daml.php?id_projeto=' + '<?= $idProject  ?>';    
+            <?php
+        }
+        else {
+            
+            ?>
+            var url = 'form_daml.php?';            
+            <?php
+        }
+        
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=375,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+<?php
+ 
+?>
+
+function recuperateDAML(){
+
+        <?php
+        
+        if (isset($idProject )) {
+        
+            ?>
+            var url = 'recuperaDAML.php?id_projeto=' + '<?= $idProject  ?>';    
+            <?php
+        }
+        else {
+        
+            ?>
+            var url = 'recuperaDAML.php?';        
+            <?php
+        }
+
+        ?>
+
+        var where = '_blank';
+        var window_spec = 'dependent,height=330,width=550,resizable,scrollbars,titlebar';
+                
+        open(url, where, window_spec);
+}
+
+        </script> 
+        <script type="text/javascript" src="mtmtrack.js"></script> 
+    </head> 
+ <body> 
+
+<?php
+
+include("frame_inferior.php");
+
+// Script called by itself main.php (or the tree) 
+
+$term = "indefinido";
 
 
-
-
-                        <?php
-                    }
-                    ?>   
-
-            </table> 
-            <br> 
-
-
-            <!--                     THIRD PART                             --> 
-
-
-                        <?php
-                        if ($t == "c") {
-                            print "<h3>Cen�rios que referenciam este cen�rio</h3>";
-                        } elseif ($t == "l") {
-                            print "<h3>Cen�rios e termos do l�xico que referenciam este termo</h3>";
-                        } elseif ($t == "oc") {
-                            print "<h3>Rela��es do conceito</h3>";
-                        } elseif ($t == "or") {
-                            print "<h3>Conceitos referentes � rela��o</h3>";
-                        } elseif ($t == "oa") {
-                            print "<h3>Axioma</h3>";
-                        }
-                        ?>   
-
-
-
-
-
-            <!--                     PART FOUR                            --> 
-
+if (isset($id) && isset($term)) {      
+    
+    $emptyVector = array();
+    
+    switch ($term){
+        
+        case "c":       
+            print "<h3>Informa&ccedil;&otilde;es sobre o cen&aacute;rio</h3>";
+            break;
+        case "l":
+            print "<h3>Informa&ccedil;&otilde;es sobre o s&iacute;mbolo</h3>";
+            break;
+        case "oc":
+            print "<h3>Informa&ccedil;&otilde;es sobre o conceito</h3>";
+            break;
+        case "or":
+            print "<h3>Informa&ccedil;&otilde;es sobre a rela&ccedil;&atilde;o</h3>";
+            break;
+        case "oa":
+            print "<h3>Informa&ccedil;&otilde;es sobre o axioma</h3>";
+            break;
+        default:
+            //Nothing should be done
+ 
+    }
+    
+    ?>    
+    <table> 
 
     <?php
-    frame_inferior($c, $t, $id);
-  // SCRIPT CHAMADO PELO HEADING.PHP 
-} elseif (isset($project_id)) {         
-    //Was passed a variable $ id_projeto. This variable should contain the id of a
-    // Project that the User is registered. However, as the passage eh
-    // Done using JavaScript (in heading.php), we check if this id really
-    // Corresponds to a project that the User has access (security). 
-    check_proj_perm($_SESSION['id_usuario_corrente'], $project_id) or die("Permissao negada");
+    
+    $SgbdConnect = bd_connect() or die("Erro ao conectar ao SGBD");
+    
+    ?>   
 
-    // Set a session variable corresponding to the current project 
-    $_SESSION['id_projeto_corrente'] = $project_id;
-    ?>    
+    <?php
+    if ($term == "c") {     
+        
+        $commandSQL = "SELECT id_cenario, titulo, objetivo, contexto,
+                       atores, recursos, excecao, episodios, id_projeto    
+                       FROM cenario    
+                       WHERE id_cenario = $id";
 
-            <table style="text-align:center"> 
+        $requestResultSQL = mysql_query($commandSQL) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+        
+        $resultArray = mysql_fetch_array($requestResultSQL);
+
+        $idScenarioProject = $resultArray['id_projeto'];
+
+        $scenariosVector = loadScenariosVector($idScenarioProject, $id, true); 
+       
+        quicksort($scenariosVector, 0, count($scenariosVector) - 1, 'cenario');
+
+        $lexiconVector = load_ArrayLexicon($idScenarioProject, 0, false); 
+        
+        quicksort($lexiconVector, 0, count($lexiconVector) - 1, 'lexico');
+        
+        ?>    
+
+        <tr> 
+            <th>T&iacute;tulo:</th><td CLASS="Estilo">
+                            
+                <?php echo nl2br(mountLinks($resultArray['titulo'], $lexiconVector, $emptyVector)); 
+                ?>
+            </td> 
+
+        </tr> 
+                    
+        <tr> 
+            
+           <th>Objetivo:</th><td CLASS="Estilo">
+               
+                <?php echo nl2br(mountLinks($resultArray['objetivo'], $lexiconVector, $emptyVector));
+                
+                ?>
+           </td> 
+        </tr> 
+        
+        <tr> 
+             <th>Contexto:</th><td CLASS="Estilo">
+                 
+                   <?php echo nl2br(mountLinks($resultArray['contexto'], $lexiconVector, $scenariosVector)); ?>		 
+             </td> 
+       </tr> 
+       
+        <tr> 
+              <th>Atores:</th><td CLASS="Estilo">
+                  
+                    <?php echo nl2br(mountLinks($resultArray['atores'], $lexiconVector, $emptyVector));
+                    
+                    ?>
+              </td>  
+        </tr> 
+        
+        <tr> 
+              <th>Recursos:</th><td CLASS="Estilo">
+                  
+                <?php echo nl2br(mountLinks($resultArray['recursos'], $lexiconVector, $emptyVector));
+                
+                ?>
+                        </td> 
+        </tr> 
+        
+        <tr> 
+               <th>Exce&ccedil;&atilde;o:</th><td CLASS="Estilo">
+                   
+                <?php echo nl2br(mountLinks($resultArray['excecao'], $lexiconVector, $emptyVector));
+                
+                ?>
+                        </td> 
+        </tr> 
+        
+        <tr> 
+                <th>Epis&oacute;dios:</th><td CLASS="Estilo">
+                <?php echo nl2br(mountLinks($resultArray['episodios'], $lexiconVector, $scenariosVector)); 
+                
+                ?>
+
+                       </td> 
+       </tr> 
+       </TABLE> 
+          <BR> 
+             <TABLE> 
                 <tr> 
-                    <th>Projeto:</th> 
-                    <td CLASS="Estilo"><?= simple_query("nome", "projeto", "id_projeto = $project_id") ?></td> 
+                   <td CLASS="Estilo" height="40" valign=MIDDLE> 
+                      <a href="#" onClick="changeScenario(<?= $resultArray['id_cenario'] ?>);">Alterar Cen&aacute;rio</a> 
+                      </th> 
+                    <td CLASS="Estilo"  valign=MIDDLE> 
+                       <a href="#" onClick="removeScenario(<?= $resultArray['id_cenario'] ?>);">Remover Cen&aacute;rio</a> 
+                      </th> 
                 </tr> 
-                <tr> 
-                    <th>Data de cria��o:</th> 
-                <?php
-                $date = simple_query("data_criacao", "projeto", "id_projeto = $project_id");
-                ?>    
 
+
+
+
+                <?php
+    }
+    
+    else if ($term == "l") {
+
+        $commandSQL = "SELECT id_lexico, nome, nocao, impacto, tipo, id_projeto    
+                       FROM lexico    
+                       WHERE id_lexico = $id";
+
+        $requestResultSQL = mysql_query($commandSQL) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+         
+        $resultArray = mysql_fetch_array($requestResultSQL);
+               
+        $idLexiconProject = $resultArray['id_projeto'];
+     
+        $lexiconVector = load_ArrayLexicon($idLexiconProject, $id, true);
+
+        quicksort($lexiconVector, 0, count($lexiconVector) - 1, 'lexico');
+                
+        ?>    
+             <tr> 
+                  <th>Nome:</th><td CLASS="Estilo"><?php echo $resultArray['nome']; ?>
+                  </td> 
+             </tr>
+             
+             <tr> 
+                  <th>No&ccedil;&atilde;o:</th><td CLASS="Estilo"><?php echo nl2br(mountLinks($resultArray['nocao'], $lexiconVector, $emptyVector)); ?>
+                  </td> 
+             </tr>
+             
+             <tr> 
+                  <th>Classifica&ccedil;&atilde;o:</th><td CLASS="Estilo"><?= nl2br($resultArray['tipo']) ?>
+                  </td> 
+             </tr> 
+             
+             <tr> 
+                  <th>Impacto(s):</th><td CLASS="Estilo"><?php echo nl2br(mountLinks($resultArray['impacto'], $lexiconVector, $emptyVector)); ?> 
+                  </td>
+             </tr> 
+             
+             <tr> 
+                   <th>Sin&ocirc;nimo(s):</th> 
+
+            <?php
+          
+            
+       $idProject  = $_SESSION['id_projeto_corrente'];
+      
+       $querySynonym = "SELECT * FROM sinonimo WHERE id_lexico = $id";
+                    
+       $requestResultSQL = mysql_query($querySynonym) or die("Erro ao enviar a query de Sinonimos" . mysql_error());
+          
+       $tempSynonym = array(); //Seria um vetor de sinônimo temporário?
+
+       while ($resultSinonimo = mysql_fetch_array($requestResultSQL)) {
+                        
+           $tempSynonym[] = $resultSinonimo['nome'];
+  
+       }
+       
+       ?>    
+
+           <td CLASS="Estilo">
+
+       <?php
+                      
+       $count = count($tempSynonym);
+                           
+       for ($i = 0; $i < $count; $i++) {
+                                
+           if ($i == $count - 1) {
+                                    
+               echo $tempSynonym[$i].".";
+                                
+           }
+           else {
+                                    
+               echo $tempSynonym[$i].", ";
+                                
+               
+           }
+       }
+                            
+       ?>    
+
+                        
+           </td> 
+
+                    
+             </tr>    
+             </TABLE>                
+          <BR>                 
+          <TABLE>                     
+              <tr> 
+                  
+                  <td CLASS="Estilo" height="40" valign="middle">                             
+                      <a href="#" onClick="changeLexicon(<?= $resultArray['id_lexico'] ?>);">Alterar S&iacute;mbolo</a>                            
+                      </th> 
+                       
+                  <td CLASS="Estilo" valign="middle"> 
+                            
+                      <a href="#" onClick="removeLexicon(<?= $resultArray['id_lexico'] ?>);">Remover S&iacute;mbolo</a> 
+                            
+                      </th>            
+              </tr> 
+
+
+        <?php
+    }
+    
+    else if ($term == "oc") {        
+        
+        $commandSQL = "SELECT id_conceito, nome, descricao   
+                       FROM   conceito   
+                       WHERE  id_conceito = $id";
+
+        $requestResultSQL = mysql_query($commandSQL) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+        
+        $resultArray = mysql_fetch_array($requestResultSQL);
+        
+        ?>    
+
+                    
+              <tr>                        
+                  <th>Nome:</th><td CLASS="Estilo"><?= $resultArray['nome'] ?></td>                     
+              </tr> 
+                    
+              <tr>                        
+                  <th>Descri&ccedil;&atilde;o:</th><td CLASS="Estilo"><?= nl2br($resultArray['descricao']) ?></td>                    
+              </tr> 
+                
+          </TABLE>                
+          <BR>                
+          <TABLE> 
+                    
+              <tr>                       
+                  <td CLASS="Estilo" height="40" valign=MIDDLE>                                                 
+                      </th> 
+                        
+                  <td CLASS="Estilo"  valign=MIDDLE> 
+                            
+                      <a href="#" onClick="removeConcept(<?= $resultArray['id_conceito'] ?>);">Remover Conceito</a>                           
+                      </th> 
+              </tr> 
+
+
+                    <?php
+     }
+     elseif ($term == "or") {        
+                    
+         $commandSQL = "SELECT id_relacao, nome   
+                        FROM relacao   
+                        WHERE id_relacao = $id";
+                   
+         $requestResultSQL = mysql_query($commandSQL) or die("Erro ao enviar a query de selecao !!" . mysql_error());
+                    
+         $resultArray = mysql_fetch_array($requestResultSQL);
+                    
+         ?>    
+
+                    
+              <tr>          
+                  <th>Nome:</th><td CLASS="Estilo"><?= $resultArray['nome'] ?></td>                     
+              </tr> 
+                
+          </TABLE>                
+          <BR>                 
+          <TABLE> 
+                    
+              <tr>                        
+                  <td CLASS="Estilo" height="40" valign=MIDDLE>                                              
+                      </th>
+                        
+                  <td CLASS="Estilo"  valign=MIDDLE> 
+                            
+                      <a href="#" onClick="removeRelationship(<?= $resultArray['id_relacao'] ?>);">Remover Rela&ccedil;&atilde;o</a>                             
+                      </th>                     
+              </tr> 
+      
+                  <?php
+     }
+     else   {
+         //Nothing to do
+     }
+                    
+     ?>   
+
+         </table> 
+            
+          <br> 
+                  
+                <?php
+      
+      switch ($term){
+          
+          case "c":
+              print "<h3>Cen&aacute;rios que referenciam este cen&aacute;rio</h3>";
+              break;
+          case "l":
+              print "<h3>Cen&aacute;rios e termos do léxico que referenciam este termo</h3>";
+              break;
+          case "oc":
+              print "<h3>Rela&ccedil;&otilde;es do conceito</h3>";
+              break;
+          case "or":
+              print "<h3>Conceitos referentes à rela&ccedil;&atilde;o</h3>";
+              break;
+          case "oa":
+              print "<h3>Axioma</h3>";
+              break;
+          default:
+            //Nothing should be done
+      }
+                        
+      ?>  
+       <?php
+    
+      bottom_frame($SgbdConnect, $term, $id);
+}
+else if (isset($idProject )) {
+    
+/*
+Script called by heading.php
+Was passed a variable $ id_projeto.
+This variable should contain the identifier of a project that the user is registered. 
+However, as the passage is done using JavaScript (in heading.php), 
+we should check if this identifier corresponds to a project that the user has access (security).
+Insert assertive.
+*/ 
+    
+     permissionCheckToProject($_SESSION['id_usuario_corrente'], $idProject ) or die("Permissao negada");
+
+    // Setting a session variable in the current project 
+    
+     $_SESSION['id_projeto_corrente'] = $idProject ;
+    
+     ?>      
+          <table ALIGN=CENTER>                
+              <tr>                    
+                  <th>Projeto:</th>                     
+                  <td CLASS="Estilo"><?= simple_query("nome", "projeto", "id_projeto = $idProject ") ?></td>                
+              </tr> 
+                
+              <tr> 
+                    <th>Data de cria&ccedil;&atilde;o:</th> 
+                        <?php
+                        
+                        
+     $date = simple_query("data_criacao", "projeto", "id_projeto = $idProject ");
+                
+                        ?>    
                     <td CLASS="Estilo"><?= formataData($date) ?></td> 
 
                 </tr> 
                 <tr> 
-                    <th>Descri��o:</th> 
-                    <td CLASS="Estilo"><?= nl2br(simple_query("descricao", "projeto", "id_projeto = $project_id")) ?></td> 
+                    <th>Descri&ccedil;&atilde;o:</th> 
+                    <td CLASS="Estilo"><?= nl2br(simple_query("descricao", "projeto", "id_projeto = $idProject ")) ?></td> 
                 </tr> 
             </table> 
 
     <?php
-// Scenario - Choosing Project
-// Purpose: Allow Administrator / Usurio choose a design.
-// Context: The Administrator / Usurio want to choose a design.
-// Pre-conditions: Login Become Administrator
-// Actors: Administrator Usurio
-// Resources: registered users
-// Episdios: If the User select from the list of projects a project of which he is
-// Administrator, see Administrator chooses Project.
-// Otherwise, see Usurio choose Project.
-// Check if the User Administrator eh this project
-    if (is_admin($_SESSION['id_usuario_corrente'], $project_id)) {
+    
+    /*
+    Scenario - Choosing Project
+    Objective: Allow the administrator/user to choose a project.
+    Context: The administrator/user wants to choose a project.
+    Preconditions: Login and be administrator 
+    Actors: Administrator and User
+    Resources: Registered Users
+    Episodes: If the user select from the list of projects, a project of which he is an administrator,
+    see Administrator chooses project, otherwise, see User chooses project.
+    */
+ 
+    //Checks if the user eh administrator of this project  
+    
+    if (is_admin($_SESSION['id_usuario_corrente'], $idProject )) {
         ?>    
+                
+          <br>         
+          <table ALIGN=CENTER> 
+                    
+              <tr>                                        
+                  <th>Você é um administrador deste projeto:</th> 
 
-                <br> 
-                <table style="text-align:center"> 
-                    <tr> 
-                        <th>Voc� � um administrador deste projeto:</th> 
-
-                    <?php
-// Scenario - Project Administrator chooses
-// Purpose: Allow the administrator to choose a project.
-// Context: The administrator wants to choose a design.
-// Pre-conditions: Login Become administrator selected project.
-// Actors: Administrator
-// Resources: Project doAdministrador
-// Episdios: The administrator selects the list of projects a project of which he is
-// Administrator.
-// Appearing on the screen of the options:
-// Check-applications for alteration of scenario (see Check requests for alteration
-// The scenario);
-// - Check requests for alteration of terms of the lexicon
-// - (Check to see requests for alteration of terms of the lexicon);
-// - Add-usurio (at present) in this project (see Add Usurio);
-// - J-Relate existing users with this design
-// - (See Relate users with projects);
-// - Generate-xml this project (see Generate XML reports); 
-                    ?>    
-                    </TR>
-
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="addUsuario();">Adicionar usu�rio (n�o cadastrado) neste projeto</a></td> 
-                    </TR> 
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="relUsuario();">Adicionar usu�rios j� existentes neste projeto</a></td> 
-                    </TR>   
-
-                    <TR> 
-                        <td CLASS="Estilo">&nbsp;</td> 
-                    </TR> 
-
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="pedidoCenario();">Verificar pedidos de altera��o de Cen�rios</a></td> 
-                    </TR> 
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="pedidoLexico();">Verificar pedidos de altera��o de termos do L�xico</a></td> 
-                    </TR>
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="pedidoConceito();">Verificar pedidos de altera��o de Conceitos</a></td> 
-                    </TR> 
-
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="pedidoRelacao();">Verificar pedidos de altera��o de Rela��es</a></td> 
-                    </TR>
-
-
-                    <TR> 
-                        <td CLASS="Estilo">&nbsp;</td> 
-                    </TR> 
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="geraGrafo();" >Gerar grafo deste projeto</a></td>
-                    </TR>       
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="geraXML();">Gerar XML deste projeto</a></td> 
-                    </TR> 
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="recuperaXML();">Recuperar XML deste projeto</a></td> 
-                    </TR> 
-
-                    <TR> 
-                        <td CLASS="Estilo">&nbsp;</td> 
-                    </TR> 
-
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="geraOntologia();">Gerar ontologia deste projeto</a></td> 
-                    </TR>            
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="geraDAML();">Gerar DAML da ontologia do projeto</a></td> 
-                    </TR> 
-                    <TR> 
-                        <td CLASS="Estilo"><a href="#" onClick="recuperaDAML();">Hist�rico em DAML da ontologia do projeto</a></td> 
-                    </TR>           
-                    <TR> 
-                        <td CLASS="Estilo"><a href="http://www.daml.org/validator/" target="new">*Validador de Ontologias na Web</a></td> 
-                    </TR>
-                    <TR> 
-                        <td CLASS="Estilo"><a href="http://www.daml.org/2001/03/dumpont/" target="new">*Visualizador de Ontologias na Web</a></td> 
-                    </TR>
-                    <TR> 
-                        <td CLASS="Estilo">&nbsp;</td> 
-                    </TR>
-                    <TR> 
-                        <td CLASS="Estilo"><font size="1">*Para usar Ontologias Geradas pelo C&L: </font></td>               
-                    </TR>
-                    <TR> 
-                        <td CLASS="Estilo">   <font size="1">Hist�rico em DAML da ontologia do projeto -> Botao Direito do Mouse -> Copiar Atalho</font></td>             
-                    </TR>
-                </table>
-
-
-                <?php
-            } else {
+                    
+                      <?php
+/*
+Scenario: Administrator chooses project
+Objective: Allow the administrator to choose a project.
+Context: The administrator wants to choose a project.
+Preconditions: Login and be the administrator of the selected project.
+Actors: Administrator
+Resources: Project's Administrator
+Episodes: The administrator selects the list of projects a project of which he is director.
+Showing on-screen options:
+    - Check requests for change scenario
+    - Check order change terms of the lexicon
+    - Add user (non-existent) in this project
+    - Relate existing users with this design
+    - Generate xml this project (see Generate XML reports);
+ 
+ */ 
+                    
+                      ?>    
+                    
+              </TR>               
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="addUser();">Adicionar usu&aacute;rio (n&atilde;o cadastrado) neste projeto</a></td>                    
+              </TR> 
+                    
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="relateUsers();">Adicionar usu&aacute;rios j&aacute; existentes neste projeto</a></td>                    
+              </TR>   
+                  
+              <TR>                      
+                  <td CLASS="Estilo">&nbsp;</td>                    
+              </TR> 
+                   
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="requestScenario();">Verificar pedidos de altera&ccedil;&atilde;o de Cen&aacute;rios</a></td>                    
+              </TR> 
+                    
+              <TR>                       
+                  <td CLASS="Estilo"><a href="#" onClick="requestLexicon();">Verificar pedidos de altera&ccedil;&atilde;o de termos do L&eacute;xico</a></td>                     
+              </TR>
+                    
+              <TR>                       
+                  <td CLASS="Estilo"><a href="#" onClick="requestConcept();">Verificar pedidos de altera&ccedil;&atilde;o de Conceitos</a></td>                  
+              </TR> 
+                   
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="requestRelationship();">Verificar pedidos de altera&ccedil;&atilde;o de Rela&ccedil;&otilde;es</a></td>                    
+              </TR>
+                   
+              <TR>                       
+                  <td CLASS="Estilo">&nbsp;</td>                    
+              </TR> 
+                   
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="generateGraph();" >Gerar grafo deste projeto</a></td>                   
+              </TR>       
+                    
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="generateXML();">Gerar XML deste projeto</a></td>                   
+              </TR> 
+                    
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="recuperateXML();">Recuperar XML deste projeto</a></td>                    
+              </TR> 
+              
+              <TR>                         
+                  <td CLASS="Estilo">&nbsp;</td>                    
+              </TR> 
+                   
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="generateOntology();">Gerar ontologia deste projeto</a></td>                     
+              </TR>            
+                    
+              <TR>                        
+                  <td CLASS="Estilo"><a href="#" onClick="generateDAML();">Gerar DAML da ontologia do projeto</a></td>                     
+              </TR> 
+                    
+              <TR>                      
+                  <td CLASS="Estilo"><a href="#" onClick="recuperateDAML();">Hist&oacute;rico em DAML da ontologia do projeto</a></td>                    
+              </TR>           
+                    
+              <TR>                         
+                  <td CLASS="Estilo"><a href="http://www.daml.org/validator/" target="new">*Validador de Ontologias na Web</a></td>                    
+              </TR>
+                    
+              <TR>                         
+                  <td CLASS="Estilo"><a href="http://www.daml.org/2001/03/dumpont/" target="new">*Visualizador de Ontologias na Web</a></td>                    
+              </TR>
+                    
+              <TR>                         
+                  <td CLASS="Estilo">&nbsp;</td>                     
+              </TR>
+                    
+              <TR>                        
+                  <td CLASS="Estilo"><font size="1">*Para usar Ontologias Geradas pelo C&L: </font></td>                                   
+              </TR>
+                    
+              <TR>                         
+                  <td CLASS="Estilo">   <font size="1">Hist&oacute;rico em DAML da ontologia do projeto -> Botao Direito do Mouse -> Copiar Atalho</font></td>                                
+              </TR>
+                
+          </table>
+           
+              <?php
+     }
+     else {
                 ?>	
                 <br>
-                <table style="text-align:center"> 
+                <table ALIGN=CENTER> 
                     <tr> 
-                        <th>Voc� n�o � um administrador deste projeto:</th> 	
+                        <th>Voc&ecirc; n&atilde;o &eacute; um administrador deste projeto:</th> 	
                     </tr>	
                     <tr> 
-                        <td CLASS="Estilo"><a href="#" onClick="geraGrafo();" >Gerar grafo deste projeto</a></td>
+                        <td CLASS="Estilo"><a href="#" onClick="generateGraph();" >Gerar grafo deste projeto</a></td>
                     </tr>  
                 </table>			
                 <?php
             }
-        } else {        // SCRIPT CALLED BY index.php 
-            ?>    
-
-            <p>Select a project above, or create a new project.</p> 
-
+} 
+  //Script called by index.php (Generate XML reports)
+else {      
+            ?>  
+                
+            <p>Selecione um projeto acima, ou crie um novo projeto.</p> 
+            
                     <?php
-                }
+}
                 ?>    
-        <i><a href="showSource.php?file=main.php">See the source!</a></i> 
+        <i><a href="showSource.php?file=main.php">Veja o c&oacute;digo fonte!</a></i> 
     </body> 
 
 </html> 
