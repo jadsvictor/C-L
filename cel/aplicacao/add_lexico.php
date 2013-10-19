@@ -17,7 +17,7 @@ else {
 	//nothing to do
 }
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 
 $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 

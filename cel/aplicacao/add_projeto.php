@@ -4,7 +4,7 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 
 // This script is only called when a solicitation of inclusion
 // New project, or when a New User register on the system
