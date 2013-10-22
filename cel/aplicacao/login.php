@@ -29,9 +29,10 @@ $SgbdConnect = bd_connect() or die("Erro ao conectar ao SGBD");
 
 if ($submit == 'Entrar') {
     
-    $criptPassword = md5($password);
+    //$criptPassword = md5($password);
     $commandSQL = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$criptPassword'";
     $requestResultSQL = mysql_query($commandSQL) or die("Erro ao executar a query");
+    echo('$criptPassword');
 
     if (!mysql_num_rows($requestResultSQL)) {
         ?>

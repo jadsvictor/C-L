@@ -9,13 +9,12 @@ function bd_connect()
 	$BDpassword = CELConfig_ReadVar("BD_password") ;
 	$BDdatabase = CELConfig_ReadVar("BD_database") ;
 
-	$SgbdConnectStatus = mysql_connect( $ipValor , $BDuser  , $BDpassword ) or die( "Erro na conex�o ao BD : " . mysql_error() ) ;
-
-	if( $SgbdConnectStatus && mysql_select_db($BDdatabase) )
-		return($SgbdConnectStatus);
+	$r = mysql_connect( $ipValor , $BDuser , $BDpassword ) or die( "Erro na conexão ao BD : " . mysql_error() ) ;
+	
+	if( $r && mysql_select_db($BDdatabase) )
+		return($r);
         else
 		return(FALSE);
 }
 
 ?>
-
