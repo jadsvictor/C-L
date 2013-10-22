@@ -1,30 +1,29 @@
 <?php
 /***************************************************************
- * M�dulo de Configura��o do CEL e seus Plugins.               *
+ * Módulo de Configuração do CEL e seus Plugins.               *
  * Arquivos: CELConfig.inc , config2.conf                      *
  * Autor:    Alex Marques Campos                               *
  * Data:     setembro de 2003                                  *
- * Vers�o:   0.1                                               *
+ * Versão:   0.1                                               *
  ***************************************************************/
 
 	
-/* Esta fun��o retorna o valor contido na variavel $var, registrada no arquivo $config_file */
+/* Esta função retorna o valor contido na variavel $var, registrada no arquivo $config_file */
 function CELConfig_ReadVar( $var )
 {
-	$config_file = "C:/Users/jads/Documents/NetBeansProjects/C-L/cel/aplicacao/CELConfig/config2.conf" ;
-      
+	$config_file = "CELConfig/config2.conf" ;
 
-	/* Parse do arquivo de configura��es, sem as se��es */
+	/* Parse do arquivo de configurações, sem as seções */
 	$array_configuracoes = parse_ini_file( $config_file ) ;
         /* print_r($array_configuracoes); */
 
-	/* Parse do arquivo de configura��es, com as se��es */
+	/* Parse do arquivo de configurações, com as seções */
 	/*
 		$array_configuracoes_por_secoes = parse_ini_file( $config_file , TRUE ) ;
 		print_r($array_configuracoes_por_secoes) ;
 	*/
 
-	/* Se a variavel n�o estiver incluida no arquivo de configura��es... */
+	/* Se a variavel não estiver incluida no arquivo de configurações... */
 	if ( !array_key_exists( $var , $array_configuracoes ) )
 	{
 	    /* ... exiba uma mensagem e termine o script atual */
@@ -36,7 +35,7 @@ function CELConfig_ReadVar( $var )
 
 	// print( "$var = $array_configuracoes[$var] <BR>\n" ) ; 	/* DEBUG */
 
-	return $array_configuracoes[$var] ;   /* retorna o conte�do da vari�vel */
+	return $array_configuracoes[$var] ;   /* retorna o conteúdo da variável */
 }
 
 function CELConfig_DisplayVars()
