@@ -17,6 +17,8 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
+include("functionsLexic/inserir_Pedido_Remover_Lexico.php");
+
 chkUser("index.php");  
 
 $id_project = 0;

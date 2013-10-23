@@ -12,6 +12,7 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 include("functionsBD/simple_query.php");
+include ("functionsLexic/inserir_Pedido_Alterar_Lexico.php");
 
 chkUser("index.php");
 

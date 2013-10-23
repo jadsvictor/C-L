@@ -18,6 +18,7 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 chkUser("index.php");   
+include("functionsLexic/inserir_Pedido_Remover_Relacao.php");
 
 $id_relation = 0;
 inserirPedidoRemoverRelacao($_SESSION['id_projeto_corrente'], $id_relation, $_SESSION['id_usuario_corrente']);

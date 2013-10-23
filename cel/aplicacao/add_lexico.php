@@ -3,6 +3,9 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 include("functionsBD/check_User_Authentication.php");
+include ("functionsLexic/checar_Lexico_Existente.php");
+include ("functionsLexic/checar_Sinonimo.php");
+include ("functionsLexic/inserir_Pedido_Adicionar_Lexico.php");
 
 // Add_lexico.php: This script registers a new term in the lexicon of the project.
 // Is passed, through the URL, a variable $ id_projeto that

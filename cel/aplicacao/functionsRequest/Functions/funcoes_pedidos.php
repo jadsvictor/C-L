@@ -2,6 +2,11 @@
 include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
+include("functionsLexic/adicionar_lexico.php");
+include("functionsLexic/altera_Lexico.php");
+include("functionsLexic/inserir_Pedido_Remover_Relacao.php");
+include("functionsLexic/remove_Lexico.php");
+include("functionsLexic/remove_Relacao.php");
 
 #
 ###################################################################
