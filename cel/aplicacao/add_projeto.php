@@ -3,6 +3,9 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
+include("functionsBD/check_User_Authentication.php");
+include ("functionsProject/includeProject.php");
+
 
 checkUserAuthentication("index.php");
 

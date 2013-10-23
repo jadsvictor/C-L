@@ -1,6 +1,17 @@
 <?php
 
-class IncludeProject {
+include_once("bd.inc");
+include_once("bd_class.php");
+include_once("seguranca.php");
+
+###################################################################
+# Insere um projeto no banco de dados.
+# Recebe o nome e descricao. (1.1)
+# Verifica se este usuario ja possui um projeto com esse nome. (1.2)
+# Caso nao possua, insere os valores na tabela PROJETO. (1.3)
+# Devolve o id_cprojeto. (1.4)
+#
+###################################################################
 
     function inclui_projeto($nome, $descricao) {
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
@@ -46,7 +57,5 @@ class IncludeProject {
 
         return $result[0];
     }
-
-}
 
 ?>

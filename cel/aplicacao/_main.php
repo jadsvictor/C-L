@@ -1,7 +1,11 @@
 <?php
 session_start();
 
+include("functionsBD/simple_query.php");
 include("funcoes_genericas.php");
+include ("functionsPage/recarrega.php");
+include ("functionsProject/check_proj_perm.php");
+include("functionsBD/is_admin.php");
 
 chkUser("index.php");
 ?>

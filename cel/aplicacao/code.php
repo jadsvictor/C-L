@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+include ("functionsProject/check_proj_perm.php");
 
 if (isset($_GET['id_projeto'])) {
     $id_projeto = $_GET['id_projeto'];

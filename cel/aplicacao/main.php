@@ -6,6 +6,10 @@ include_once("CELConfig/CELConfig.inc");
 include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("coloca_links.php");
+include("functionsBD/simple_query.php");
+include_once("functionsBD/fomata_data.php");
+include("functionsBD/check_User_Authentication.php");
+include("functionsBD/is_admin.php");
 
 //URL of the directory containing the files DAML 
 $_SESSION['site'] = "http://" . CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo") . CELConfig_ReadVar("DAML_dir_relativo_ao_CEL");

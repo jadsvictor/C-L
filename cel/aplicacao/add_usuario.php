@@ -6,6 +6,9 @@ session_start();
 include("funcoes_genericas.php");
 include_once("bd.inc");
 include("httprequest.inc");
+include("functionsBD/simple_query.php");
+include ("functionsPage/recarrega.php");
+
 
 $primeira_vez = "true";
 

@@ -3,11 +3,10 @@ include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
 
-
 /* chkUser(): checa se o usu�rio acessando foi autenticado (presen�a da vari�vel de sess�o
   $id_usuario_corrente). Caso ele j� tenha sido autenticado, continua-se com a execu��o do
   script. Caso contr�rio, abre-se uma janela de logon. */
-if (!(function_exists("checkUserAuthentication"))) {
+/*if (!(function_exists("checkUserAuthentication"))) {
 
     function checkUserAuthentication($url) {
 
@@ -25,7 +24,7 @@ if (!(function_exists("checkUserAuthentication"))) {
         }
     }
 
-}
+}*/ 
 
 
 ###################################################################
@@ -186,6 +185,7 @@ if (!(function_exists("breakpoint"))) {
 
 }*/
 
+/*
 if (!(function_exists("simple_query"))) {
 
     funcTion simple_query($field, $table, $where) {
@@ -196,7 +196,7 @@ if (!(function_exists("simple_query"))) {
         return $result[0];
     }
 
-}
+}*/
 
 
 // Para a correta inclusao de um cenario, uma serie de procedimentos
@@ -1757,7 +1757,7 @@ if (!(function_exists("tratarPedidoRelacao"))) {
 #a esse projeto.Ela so verifica atualmente
 #se a pessoa e um gerente.
 #############################################
-if (!(function_exists("verificaGerente"))) {
+/*if (!(function_exists("verificaGerente"))) {
 
     function verificaGerente($id_usuario) {
         $DB = new PGDB ();
@@ -1827,7 +1827,7 @@ if (!(function_exists("check_proj_perm"))) {
 # Se o resultArray for nulo: devolvemos False(0);(1.4)
 ###################################################################
 
-function verificaGerente($id_usuario, $id_projeto) {
+/*function verificaGerente($id_usuario, $id_projeto) {
     $ret = 0;
     $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
     $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
@@ -1838,7 +1838,7 @@ function verificaGerente($id_usuario, $id_projeto) {
         $ret = 1;
     }
     return $ret;
-}
+}*/
 
 ###################################################################
 # Remove um determinado projeto da base de dados

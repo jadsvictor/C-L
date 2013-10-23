@@ -6,6 +6,8 @@ include_once("coloca_links.php");
 include("httprequest.inc");
 include_once("bd.inc");
 include_once("seguranca.php");
+include ("functionsPage/recarrega.php");
+
 
 // Checa se o usuario foi autenticado
 

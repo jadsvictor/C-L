@@ -3,7 +3,9 @@
 session_start();
 
 include("funcoes_genericas.php");
-
+include ("functionsBD/verifica_gerente.php");
+include("functionsBD/check_User_Authentication.php");
+include ("functionsProject/check_proj_perm.php");
 
 checkUserAuthentication("index.php");        
 

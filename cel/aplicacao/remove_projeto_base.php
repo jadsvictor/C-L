@@ -2,6 +2,7 @@
     <head>
         <title>Remover Projeto</title>
 
+    
         <?php
 //Cenário  -  Remover Projeto da base
 //Objetivo:	   Efetuar a remoção de um projeto da base de dados
@@ -13,7 +14,8 @@
 //Episódios:       O sistema apaga todos os dados referentes ao determinado projeto da sua base de dados.
 
         session_start();
-
+        
+        include("functionsProject/remove_projeto.php");
         include("funcoes_genericas.php");
         include_once("CELConfig/CELConfig.inc");
 

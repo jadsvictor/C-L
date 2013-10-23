@@ -17,6 +17,7 @@ session_start();
 include("funcoes_genericas.php");
 include("httprequest.inc");
 include("bd.inc");
+include("functionsBD/simple_query.php");
 
 chkUser("index.php");
 

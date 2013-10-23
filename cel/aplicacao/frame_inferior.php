@@ -1,5 +1,9 @@
 <?php
 
+include("functionsBD/check_User_Authentication.php");
+include ("functionsPage/recarrega.php");
+
+
 checkUserAuthentication("index.php");        // Cenario: controle de acesso 
 // frame_inferior.php 
 // Dada a base, o tipo "c", "l", "oc", "or" e "oa" e o 

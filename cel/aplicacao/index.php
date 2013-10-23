@@ -1,6 +1,9 @@
 <?php
+
+
+include("functionsBD/check_User_Authentication.php");
+
 session_start();
-include("funcoes_genericas.php");
 checkUserAuthentication("index.php");        
 
 // Scenario: Acess control
