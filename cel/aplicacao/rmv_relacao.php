@@ -17,7 +17,9 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
-chkUser("index.php");   
+include("functionsBD/check_User_Authentication.php");
+
+checkUserAuthentication("index.php");   
 include("functionsLexic/inserir_Pedido_Remover_Relacao.php");
 
 $id_relation = 0;

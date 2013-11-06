@@ -9,8 +9,9 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
 include("functionsBD/simple_query.php");
+include("functionsBD/check_User_Authentication.php");
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 
 if (!isset($sucesso)) {
     $sucesso = "n";

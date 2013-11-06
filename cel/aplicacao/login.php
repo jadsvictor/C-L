@@ -30,36 +30,36 @@ $SgbdConnect = bd_connect() or die("Erro ao conectar ao SGBD");
 if ( isset($_POST['submit'])) {
     
     $login = $_POST['login'];
-    $password = $_POST['senha'];
+    //$password = $_POST['senha'];
     
-    $criptPassword = md5($_POST['password']);
+    $criptPassword = md5($password);
     
     $commandSQL = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$criptPassword'";
     $requestResultSQL = mysql_query($commandSQL) or die("Erro ao executar a query");
-    echo('$criptPassword');
+    //echo('$criptPassword');
 
     if (!mysql_num_rows($requestResultSQL)) {
         ?>
         <script language="javascript1.3">
-            document.location.replace('login.php?wrong=true&url=<?= $url ?>');
+            document.location.replace('login.php?wrong=true&url=<?=$url?>');
         </script>
 
         <?php
         
-        $wrong = $_get["wrong"];
+        $wrong = $_GET["wrong"];
     }
     else {
 
         $row = mysql_fetch_row($requestResultSQL);
         $id_usuario_corrente = $row[0];
 
-        $_SESSION["id_usuario_corrente"];
+        $_SESSION['id_usuario_corrente'] = "$row[0]";
         //session_register("id_usuario_corrente");
         
         ?>
         
         <script language="javascript1.3">
-            opener.document.location.replace('<?= $url ?>');
+            opener.document.location.replace('<?=$url?>');
             self.close();
         </script>
 
@@ -102,7 +102,7 @@ else {
          <div align="center">
             <table cellpadding="5">
                 <tr><td>Login:</td><td><input maxlength="32" name="login" size="24" type="text"></td></tr>
-                <tr><td>Senha:</td><td><input maxlength="32" name="senha" size="24" type="password"></td></tr>
+                <tr><td>Senha:</td><td><input maxlength="32" name="password" size="24" type="password"></td></tr>
                 <tr><td height="10"></td></tr>
                 <tr><td align="center" colspan="2"><input name="submit" type="submit" value="Entrar"></td></tr>
             </table>

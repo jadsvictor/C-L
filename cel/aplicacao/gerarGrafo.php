@@ -6,9 +6,10 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
+include("functionsBD/check_User_Authentication.php");
 
 // Check if the user was authenticated
-chkUser("index.php");        
+checkUserAuthentication("index.php");        
 
 $XML = "";
 ?>

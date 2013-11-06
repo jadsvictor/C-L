@@ -18,8 +18,9 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include("bd.inc");
 include("functionsBD/simple_query.php");
+include("functionsBD/check_User_Authentication.php");
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 
 $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
 if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))

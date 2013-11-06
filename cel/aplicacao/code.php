@@ -2,6 +2,8 @@
 session_start();
 
 include ("functionsProject/check_proj_perm.php");
+include("functionsBD/check_User_Authentication.php");
+
 
 if (isset($_GET['id_projeto'])) {
     $id_projeto = $_GET['id_projeto'];
@@ -10,7 +12,7 @@ else
     include("funcoes_genericas.php");
 include_once("bd.inc");
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 ?>  
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"> 

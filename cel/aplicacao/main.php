@@ -51,7 +51,7 @@ else{
             
 
  // Functions that will be used when the script is invoked through himself or tree 
- function reLoad(URL) {
+ function reCarrega(URL) {
                 document.location.replace(URL);
 }
 

@@ -4,9 +4,10 @@ include("coloca_tags_xml.php");
 include("funcoes_genericas.php");
 include("httprequest.inc");
 include_once("bd.inc");
+include("functionsBD/check_User_Authentication.php");
 
 // Check if the user was autenticated
-chkUser("index.php");    
+checkUserAuthentication("index.php");    
 
 // Test if user wnats a formated visualization or not
 if (isset($_POST['flag'])) {

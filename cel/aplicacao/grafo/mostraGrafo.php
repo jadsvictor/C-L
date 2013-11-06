@@ -5,8 +5,9 @@ $xml_banco_file = "GrafoTmp.xml";
 session_start();
 include("../bd_class.php");
 include("../funcoes_genericas.php");
+include("functionsBD/check_User_Authentication.php");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+checkUserAuthentication("index.php");        // Checa se o usuario foi autenticado
 
 extract($_GET);
    

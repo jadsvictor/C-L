@@ -2,8 +2,9 @@
 session_start();
 
 include("funcoes_genericas.php");
+include("functionsBD/check_User_Authentication.php");
 
-chkUser("index.php");        // Checa se o usuario foi autenticado
+checkUserAuthentication("index.php");        // Checa se o usuario foi autenticado
 ?>
 
 <html>

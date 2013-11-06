@@ -4,7 +4,7 @@
 
     function checkUserAuthentication($url) {
 
-        if(!(isset($_SESSION["id_usuario_correntegit"])))  {
+        if(!(isset($_SESSION["id_usuario_corrente"])))  {
            
             ?>
             <script language="javascript1.3">

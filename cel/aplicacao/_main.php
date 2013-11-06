@@ -6,8 +6,9 @@ include("funcoes_genericas.php");
 include ("functionsPage/recarrega.php");
 include ("functionsProject/check_proj_perm.php");
 include("functionsBD/is_admin.php");
+include("functionsBD/check_User_Authentication.php");
 
-chkUser("index.php");
+checkUserAuthentication("index.php");
 ?>
 
 <html>

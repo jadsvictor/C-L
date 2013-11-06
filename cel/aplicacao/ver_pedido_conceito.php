@@ -22,8 +22,9 @@
 
         include("funcoes_genericas.php");
         include("httprequest.inc");
+        include("functionsBD/check_User_Authentication.php");
 
-        chkUser("index.php");
+        checkUserAuthentication("index.php");
         if (isset($submit)) {
             $dataBase = new PGDB ();
             $update_request_concept = new QUERY($dataBase);

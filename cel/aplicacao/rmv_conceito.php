@@ -17,7 +17,9 @@ session_start();
 
 include("funcoes_genericas.php");
 include("httprequest.inc");
-chkUser("index.php");  
+include("functionsBD/check_User_Authentication.php");
+
+checkUserAuthentication("index.php");  
 
 $id_concept = 0;
 inserirPedidoRemoverConceito($_SESSION['id_projeto_corrente'], $id_concept, $_SESSION['id_usuario_corrente']);

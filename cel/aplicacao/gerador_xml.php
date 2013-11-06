@@ -7,11 +7,10 @@ include("httprequest.inc");
 include_once("bd.inc");
 include_once("seguranca.php");
 include ("functionsPage/recarrega.php");
-
+include("functionsBD/check_User_Authentication.php");
 
 // Checa se o usuario foi autenticado
-
-chkUser("index.php");        
+checkUserAuthentication("index.php");        
 
 
 if (isset($_POST['flag'])) {
