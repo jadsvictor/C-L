@@ -1,8 +1,6 @@
 <?php
 session_start();
-?>
 
-<?php
 include("funcoes_genericas.php");
 include_once("bd.inc");
 include("httprequest.inc");
@@ -12,8 +10,15 @@ include ("functionsPage/recarrega.php");
 
 $primeira_vez = "true";
 
-if (isset($submit)) {
-    $primeira_vez = "false";
+if (isset($_POST['submit'])) { 
+    
+    $primeira_vez= "false";
+    $nome = $_POST['nome'];
+    $login = $_POST['login'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $senha_conf = $_POST['senha_conf'];
+
     if ($nome == "" || $email == "" || $login == "" || $password == "" || $senha_conf == "") {
         $p_style = "color: red; font-weight: bold";
         $p_text = "Por favor, preencha todos os campos.";
@@ -77,6 +82,8 @@ if (isset($submit)) {
                 $nome = str_replace(">", " ", str_replace("<", " ", $nome));
                 $login = str_replace(">", " ", str_replace("<", " ", $login));
                 $email = str_replace(">", " ", str_replace("<", " ", $email));
+                
+                // Encrypting the password
                 $password = md5($password);
                 $selection = "INSERT INTO usuario (nome, login, email, senha) VALUES ('$nome', '$login', '$email', '$password')";
                 mysql_query($selection) or die("Erro ao cadastrar o usuario");
@@ -84,7 +91,7 @@ if (isset($submit)) {
             }
         }
     }
-} elseif (isset($cadastrado)) {
+} else if (isset($cadastrado)) {
     if ($novo == "true") {       	
 // scenary - Include independent user
 // Purpose: Allow a user who is not registered as an administrator, register
@@ -169,7 +176,7 @@ else {
                 {
                     email = form.email.value;
                     i = email.indexOf("@");
-                    if (i === -1)
+                    if (i == -1)
                     {
                         alert('Aten��o: o E-mail digitado n�o � v�lido.');
                         return false;
@@ -200,17 +207,27 @@ else {
             <form action="?novo=<?= $novo ?>" method="post">
                 <table>
                     <tr>
-                        <td>Nome:</td><td colspan="3"><input name="nome" maxlength="255" size="48" type="text" value="<?= $nome ?>"></td>
+                        <td>Nome:</td>
+                        <td colspan="3"><input name="nome" maxlength="255" size="48" 
+                                               type="text" value="<?= $nome ?>"></td>
                     </tr>
                     <tr>
-                        <td>E-mail:</td><td colspan="3"><input name="email" maxlength="64" size="48" type="text" value="<?= $email ?>" OnBlur="checkEmail(this);"></td>
+                        <td>E-mail:</td>
+                        <td colspan="3"><input name="email" maxlength="64" size="48" 
+                                               type="text" value="<?= $email ?>" OnBlur="checkEmail(this);"></td>
                     </tr>
                     <tr>
-                        <td>Login:</td><td><input name="login" maxlength="32" size="24" type="text" value="<?= $login ?>"></td>
+                        <td>Login:</td>
+                        <td><input name="login" maxlength="32" size="24" type="text" 
+                                   value="<?= $login ?>"></td>
                     </tr>
                     <tr>
-                        <td>Senha:</td><td><input name="senha" maxlength="32" size="16" type="password" value="<?= $password ?>"></td>
-                        <td>Senha (confirma��o):</td><td><input name="senha_conf" maxlength="32" size="16" type="password" value=""></td>
+                        <td>Senha:</td>
+                        <td><input name="password" maxlength="32" size="16" type="password"
+                                   value="<?= $password ?>"></td>
+                        <td>Senha (confirmacao):</td>
+                        <td><input name="senha_conf" maxlength="32" size="16" 
+                                   type="password" value=""></td>
                     </tr>
                     <tr>
 
@@ -232,7 +249,7 @@ else {
                     </tr>
                 </table>
             </form>
-            <br><i><a href="showSource.php?file=add_usuario.php">Veja o c�digo fonte!</a></i>
+            <br><i><a href="showSource.php?file=add_usuario.php">Veja o codigo fonte!</a></i>
         </body>
     </html>
 

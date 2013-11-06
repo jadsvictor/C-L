@@ -27,9 +27,13 @@ include("httprequest.inc");
 
 $SgbdConnect = bd_connect() or die("Erro ao conectar ao SGBD");
 
-if ($submit == 'Entrar') {
+if ( isset($_POST['submit'])) {
     
-    //$criptPassword = md5($password);
+    $login = $_POST['login'];
+    $password = $_POST['senha'];
+    
+    $criptPassword = md5($_POST['password']);
+    
     $commandSQL = "SELECT id_usuario FROM usuario WHERE login='$login' AND senha='$criptPassword'";
     $requestResultSQL = mysql_query($commandSQL) or die("Erro ao executar a query");
     echo('$criptPassword');
