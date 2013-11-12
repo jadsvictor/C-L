@@ -81,7 +81,45 @@ if (isset($submit)) {
         </head>
         <body>
             <script language="JavaScript">
-             
+             <!--
+                 function TestarBranco(form)
+                 {
+                     titulo = form.titulo.value;
+                     objetivo = form.objetivo.value;
+                     contexto = form.contexto.value;
+ 
+                     if ((titulo === ""))
+                     {
+                         alert("Por favor, digite o titulo do cenário.");
+                         form.titulo.focus();
+                        return false;
+                     } else {
+                         padrao = /[\\\/\?"<>:|]/;
+                         OK = padrao.exec(titulo);
+                         if (OK)
+                         {
+                             window.alert("O título do cenário não pode conter nenhum \n\
+                                           dos seguintes caracteres:   / \\ : ? \" < > |");
+                             form.titulo.focus();
+                             return false;
+                         }
+                     }
+ 
+                    if ((objetivo === ""))
+                     {
+                         alert("Por favor, digite o objetivo do cenário.");
+                         form.objetivo.focus();
+                         return false;
+                     }
+ 
+                     if ((contexto === ""))
+                     {
+                         alert("Por favor, digite o contexto do cenário.");
+                         form.contexto.focus();
+                         return false;
+                     }
+                 }
+                 //-->
 
     <?php
 // Scenary - Include Scenary
