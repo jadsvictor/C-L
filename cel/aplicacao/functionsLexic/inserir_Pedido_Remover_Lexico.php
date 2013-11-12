@@ -18,6 +18,14 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
+        
+        assert($DB!=null);
+		assert($insere!=null);
+		assert($select!=null);
+		assert($select2!=null);
+		assert($id_projeto!=null);
+		assert($id_lexico!=null);
+		assert($id_usuario!=null);
 
         $qr = mysql_query("SELECT * FROM participa WHERE gerente = 1 
             AND id_usuario =" . _GET('$id_usuario') . " 

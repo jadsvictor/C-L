@@ -16,8 +16,18 @@
             <?php
             exit();
         }
-    }
+        
+        else {
+        	
+        	//nothing to do        	
+        }
+    } 
     
  }
+ 
+ else {
+        	
+        //nothing to do        	
+}
 
 ?>

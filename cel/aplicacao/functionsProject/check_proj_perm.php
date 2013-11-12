@@ -4,7 +4,7 @@ include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
 
-// Retorna TRUE ssse $id_usuario tem permissao sobre $id_projeto
+// Retorna TRUE se $id_usuario tem permissao sobre $id_projeto
 if (!(function_exists("check_proj_perm"))) {
 
     function check_proj_perm($id_usuario, $id_projeto) {

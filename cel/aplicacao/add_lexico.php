@@ -182,7 +182,7 @@ else {
 
             </SCRIPT>
 
-            <h4>Adicionar Sï¿½mbolo</h4>
+            <h4>Adicionar Símbolo</h4>
             <br>
     <?php
     if ($sucesso == "s") {

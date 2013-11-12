@@ -78,10 +78,10 @@ if (!(function_exists("adicionar_lexico"))) {
                              VALUES (" . $result2['id_cenario'] . ", $id_incluido)";
 
                         mysql_query($q) or die("Erro ao enviar a query de INSERT 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-                    } //if
-                }//if                
-            }//while            
-        } //for
+                    } 
+                }               
+            }            
+        } 
 
 
         $qlo = "SELECT id_lexico, nome, nocao, impacto, tipo
@@ -152,10 +152,10 @@ if (!(function_exists("adicionar_lexico"))) {
                          VALUES (" . $resultl['id_lexico'] . ", $id_incluido)";
 
                         mysql_query($q) or die("Erro ao enviar a query de insert no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-                    }//if
-                }    //if
-            }//while
-        }//for
+                    }
+                }   
+            }
+        }
         //sinonimos ja existentes
 
         $qSinonimos = "SELECT nome, id_lexico FROM sinonimo WHERE id_projeto = $id_projeto AND id_lexico != $id_incluido AND id_pedidolex = 0";

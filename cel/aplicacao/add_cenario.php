@@ -81,45 +81,7 @@ if (isset($submit)) {
         </head>
         <body>
             <script language="JavaScript">
-                <!--
-                function TestarBranco(form)
-                {
-                    titulo = form.titulo.value;
-                    objetivo = form.objetivo.value;
-                    contexto = form.contexto.value;
-
-                    if ((titulo === ""))
-                    {
-                        alert("Por favor, digite o titulo do cenï¿½rio.");
-                        form.titulo.focus();
-                        return false;
-                    } else {
-                        padrao = /[\\\/\?"<>:|]/;
-                        OK = padrao.exec(titulo);
-                        if (OK)
-                        {
-                            window.alert("O tï¿½tulo do cenï¿½rio nï¿½o pode conter nenhum \n\
-                                          dos seguintes caracteres:   / \\ : ? \" < > |");
-                            form.titulo.focus();
-                            return false;
-                        }
-                    }
-
-                    if ((objetivo === ""))
-                    {
-                        alert("Por favor, digite o objetivo do cenï¿½rio.");
-                        form.objetivo.focus();
-                        return false;
-                    }
-
-                    if ((contexto === ""))
-                    {
-                        alert("Por favor, digite o contexto do cenï¿½rio.");
-                        form.contexto.focus();
-                        return false;
-                    }
-                }
-                //-->
+             
 
     <?php
 // Scenary - Include Scenary
@@ -146,12 +108,12 @@ if (isset($submit)) {
 
             </SCRIPT>
 
-            <h4>Adicionar Cenï¿½rio</h4>
+            <h4>Adicionar Cenário</h4>
             <br>
     <?php
     if ($sucesso == "s") {
         ?>
-                <p style="color: blue; font-weight: bold; text-align: center">Cenï¿½rio inserido com sucesso!</p>
+                <p style="color: blue; font-weight: bold; text-align: center">Cenário inserido com sucesso!</p>
                 <?php
             }
     else {

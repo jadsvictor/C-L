@@ -19,6 +19,20 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
+        
+        assert($DB!=null);
+		assert($insere!=null);
+		assert($select!=null);
+		assert($select2!=null);
+		assert($id_projeto!=null);
+		assert($id_lexico!=null);
+		assert($nome!=null);
+		assert($nocao!=null);
+		assert($impacto!=null);
+		assert($justificativa!=null);
+		assert($id_usuario!=null);
+		assert($sinonimos!=null);
+		assert($classificacao!=null);
 
         $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario AND id_projeto = $id_projeto";
         $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
