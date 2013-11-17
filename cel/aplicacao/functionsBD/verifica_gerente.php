@@ -14,6 +14,14 @@ include_once("seguranca.php");
 ###################################################################
 
 function verificaGerente($id_usuario, $id_projeto) {
+     //test if a variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($id_usuario));
+        
+        //test if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_usuario != NULL);
+    
     $ret = 0;
     $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
     $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
