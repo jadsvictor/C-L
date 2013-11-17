@@ -16,7 +16,7 @@ include_once("seguranca.php");
     function inclui_projeto($nome, $descricao) {
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //verifica se usuario ja existe
-        $qrv = mysql_query("SELECT * FROM users WHERE name = '" . mysql_real_escape_string($_GET["name"]) . "'");
+        $qrv = mysql_query("SELECT * FROM users WHERE name = '" . mysql_real_escape_string($_GET["nome"]) . "'");
 
         //$result = mysql_fetch_row($qvr);
         $resultArray = mysql_fetch_array($qvr);

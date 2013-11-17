@@ -104,7 +104,7 @@ else {
                         <td><input maxlength="128" name="nome" size="48" type="text"></td>
                     </tr>
                     <tr>
-                        <td>Descri��o:</td>
+                        <td>Descricao:</td>
                         <td><textarea cols="48" name="descricao" rows="4"></textarea></td>
                     <tr>
                         <td align="center" colspan="2" height="60"><input name="submit" 
