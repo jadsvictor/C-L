@@ -8,6 +8,14 @@ include_once("seguranca.php");
 if (!(function_exists("is_admin"))) {
 
     function is_admin($id_usuario, $id_projeto) {
+        //test if a variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($id_usuario));
+        
+        //test if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_usuario != NULL);
+        
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         $q = "SELECT * FROM participa WHERE id_usuario =" . (int)$_GET[$id_usuario] . "
             AND id_projeto = " . (int)$_GET[$id_projeto] . "
