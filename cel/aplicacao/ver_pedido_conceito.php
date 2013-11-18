@@ -3,21 +3,23 @@
         <title>Pedidos de alteracao dos Conceitos</title>
 
         <?php
-//Cenario - Verificar pedidos de alteracao de conceitos
-//Objetivo:	Permitir ao administrador gerenciar os pedidos de alteracao de conceitos.
-//Contexto:	Gerente deseja visualizar os pedidos de alteracao de conceitos.
-//              Pre-Condicao: Login, projeto cadastrado.
-//Atores:	Administrador
-//Recursos:	Sistema, banco de dados.
-//Episodios:    O administrador clica na opcao de Verificar pedidos de alteracao de cenarios.
-//Restricao:    Somente o Administrador do projeto pode ter essa funcao visivel.
-//              O sistema fornece para o administrador uma tela onde podera visualizar o historico
-//              de todas as alteracoes pendentes ou nao para os cenarios.
-//              Para novos pedidos de inclusao ou alteracao de cenarios,
-//              o sistema permite que o administrador opte por Aprovar ou Remover.
-//              Para os pedidos de inclusao ou alteracao ja aprovados,
-//              o sistema somente habilita a opcao remover para o administrador.
-//              Para efetivar as selecoes de aprovacao e remocao, basta clicar em Processar.
+        
+// Scenario - Check requests for alteration of concepts
+// Purpose : Allow the administrator to manage requests for alteration of concepts .
+// Context : Manager wish to view the applications for alteration of concepts .
+// Pre - Condition: Login , registered design .
+// Actors : Administrator
+// Resources : System database.
+// Episodes : The administrator clicks the option of Check applications for alteration of scenarios .
+// Restriction: Only the Project Manager may have this function visible .
+// The system provides for a screen where the administrator will be able to view the historical
+// All pending or alterations not to Scenario .
+// For new applications for inclusion or alteration of scenarios ,
+// The system allows the administrator chooses Approve or Remove.
+// For applications for inclusion or alteration already approved ,
+// The system only enables the option to remove the administrator .
+// To carry selections approval and removal , simply click Process .
+
         session_start();
 
         include("funcoes_genericas.php");
