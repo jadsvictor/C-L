@@ -14,6 +14,27 @@ include_once("seguranca.php");
 if (!(function_exists("inclui_cenario"))) {
 
     function inclui_cenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($titulo != NULL);
+        assert($objetivo != NULL);
+        assert($contexto!= NULL);
+        assert($atores != NULL);
+        assert($recursos != NULL);
+        assert($excecao != NULL);
+        assert($episodios != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($titulo));
+        assert(is_string($objetivo));
+        assert(is_string($contexto));
+        assert(is_string($atores));
+        assert(is_string($recursos));
+        assert(is_string($excecao));
+        assert(is_string($episodios));        
+   
         //global $r;      // Conexao com a base de dados
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         $data = date("Y-m-d");
@@ -55,6 +76,27 @@ if (!(function_exists("inclui_cenario"))) {
 if (!(function_exists("adicionar_cenario"))) {
 
     function adicionar_cenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios) {
+    
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($titulo != NULL);
+        assert($objetivo != NULL);
+        assert($contexto!= NULL);
+        assert($atores != NULL);
+        assert($recursos != NULL);
+        assert($excecao != NULL);
+        assert($episodios != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($titulo));
+        assert(is_string($objetivo));
+        assert(is_string($contexto));
+        assert(is_string($atores));
+        assert(is_string($recursos));
+        assert(is_string($excecao));
+        assert(is_string($episodios));
+        
         // Conecta ao SGBD
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         // Inclui o cenario na base de dados (sem transformar os campos, sem criar os relacionamentos)
@@ -180,6 +222,15 @@ if (!(function_exists("adicionar_cenario"))) {
 if (!(function_exists("removeCenario"))) {
 
     function removeCenario($id_projeto, $id_cenario) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_cenario != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string(id_cenario));
+        
         $DB = new PGDB ();
         $sql1 = new QUERY($DB);
         $sql2 = new QUERY($DB);
@@ -207,6 +258,27 @@ if (!(function_exists("removeCenario"))) {
 if (!(function_exists("alteraCenario"))) {
 
     function alteraCenario($id_projeto, $id_cenario, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($titulo != NULL);
+        assert($objetivo != NULL);
+        assert($contexto!= NULL);
+        assert($atores != NULL);
+        assert($recursos != NULL);
+        assert($excecao != NULL);
+        assert($episodios != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($titulo));
+        assert(is_string($objetivo));
+        assert(is_string($contexto));
+        assert(is_string($atores));
+        assert(is_string($recursos));
+        assert(is_string($excecao));
+        assert(is_string($episodios));
+        
         $DB = new PGDB ();
         $sql1 = new QUERY($DB);
         $sql2 = new QUERY($DB);
@@ -345,6 +417,15 @@ if (!(function_exists("alteraCenario"))) {
 if (!(function_exists("removeConceito"))) {
 
     function removeConceito($id_projeto, $id_conceito) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_conceito != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($id_conceito));
+        
         $DB = new PGDB ();
         $sql = new QUERY($DB);
         $sql2 = new QUERY($DB);
@@ -423,6 +504,15 @@ if (!(function_exists("removeConceito"))) {
 # retorna true caso nao exista ou false caso exista (1.3)
 ###################################################################
 function checarCenarioExistente($projeto, $titulo) {
+    
+    //tests if the variable is not null
+    assert($projeto != NULL);
+    assert($titulo != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($projeto));
+    assert(is_string($titulo));
+    
     $naoexiste = false;
 
     $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
@@ -448,6 +538,29 @@ function checarCenarioExistente($projeto, $titulo) {
 if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 
     function inserirPedidoAdicionarCenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios, $id_usuario) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($titulo != NULL);
+        assert($objetivo != NULL);
+        assert($contexto!= NULL);
+        assert($atores != NULL);
+        assert($recursos != NULL);
+        assert($excecao != NULL);
+        assert($episodios != NULL);
+        assert($id_usuario != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($titulo));
+        assert(is_string($objetivo));
+        assert(is_string($contexto));
+        assert(is_string($atores));
+        assert(is_string($recursos));
+        assert(is_string($excecao));
+        assert(is_string($episodios));
+        assert(is_string($id_usuario));
+        
         $DB = new PGDB();
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
@@ -493,6 +606,17 @@ if (!(function_exists("inserirPedidoAdicionarCenario"))) {
 if (!(function_exists("inserirPedidoRemoverCenario"))) {
 
     function inserirPedidoRemoverCenario($id_projeto, $id_cenario, $id_usuario) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_cenario != NULL);
+        assert($id_usuario != NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($id_cenario));
+        assert(is_string($id_usuario));
+        
         $DB = new PGDB();
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
@@ -541,6 +665,25 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
 if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
     function inserirPedidoAlterarConceito($id_projeto, $id_conceito, $nome, $descricao, $namespace, $justificativa, $id_usuario) {
+        
+        //tests if the variable is not null
+        assert($id_projeto != NULL);
+        assert($id_conceito != NULL);
+        assert($nome != NULL);
+        assert($descricao != NULL);
+        assert($namespace != NULL);
+        assert($justificativa != NULL);
+        assert($id_usuario!= NULL);
+        
+        //tests if the variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($id_conceito));
+        assert(is_string($nome));
+        assert(is_string($descricao));
+        assert(is_string($namespace));
+        assert(is_string($justificativa));
+        assert(is_string($id_usuario));        
+        
         $DB = new PGDB();
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
