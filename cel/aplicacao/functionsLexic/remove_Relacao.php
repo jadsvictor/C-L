@@ -11,8 +11,8 @@ if (!(function_exists("removeRelacao"))) {
 
         $sql6 = new QUERY($DB);
 
+		assert($id_relacao != null);
 		assert($id_projeto != null);
-		assert($id_relacao != null);		
 		
         # Remove o conceito escolhido
         $sql6->execute("DELETE FROM relacao WHERE id_relacao = $id_relacao");
