@@ -9,7 +9,8 @@ if (!(function_exists("removeLexico"))) {
     function removeLexico($id_projeto, $id_lexico) {
         $DB = new PGDB ();
         $delete = new QUERY($DB);
-
+		
+		//test if the variable is not null
 		assert($id_lexico != null);	
 		assert($id_projeto != null);	
 		

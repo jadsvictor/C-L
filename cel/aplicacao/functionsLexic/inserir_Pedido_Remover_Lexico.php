@@ -19,6 +19,7 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
         
+        //test if the variable is not null
         assert($insere!=null);
         assert($DB!=null);
 		assert($select!=null);

@@ -20,6 +20,7 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
         $relacao = $select->gofirst();
         $nome = $relacao['nome'];
         
+        //test if the variable is not null
         assert($insere!=null);
         assert($DB!=null);
 		assert($select!=null);

@@ -11,6 +11,7 @@ if (!(function_exists("removeRelacao"))) {
 
         $sql6 = new QUERY($DB);
 
+        //test if the variable is not null
 		assert($id_relacao != null);
 		assert($id_projeto != null);
 		
