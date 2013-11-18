@@ -20,8 +20,8 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
         $relacao = $select->gofirst();
         $nome = $relacao['nome'];
         
+        assert($insere!=null);
         assert($DB!=null);
-		assert($insere!=null);
 		assert($select!=null);
 		assert($select2!=null);
 		assert($id_projeto!=null);
