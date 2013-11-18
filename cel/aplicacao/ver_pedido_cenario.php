@@ -15,7 +15,7 @@
 // Restriction: Only the Project Manager may have this function visible.
 // The system provides the administrator a screen where you can view the history
 // All pending changes or not for the scenarios .
-/ / For new applications included the £ or change scenarios ,
+// For new applications included the ï¿½ or change scenarios ,
 // The system allows the administrator chooses Approve or Remove.
 // For requests to add or change already approved ,
 // The system only enables the option to remove the administrator .
