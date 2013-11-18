@@ -98,24 +98,48 @@ class PHPMailer {
     // RECIPIENT METHODS
 
     function AddAddress($address, $name = "") {
+        assert($address =! Null);
+        assert($name =! Null);
+        
+        assert(is_string($address));
+        assert(is_string($name));
+        
         $cur = count($this->to);
         $this->to[$cur][0] = trim($address);
         $this->to[$cur][1] = $name;
     }
 
     function AddCC($address, $name = "") {
+        assert($address =! Null);
+        assert($name =! Null);
+        
+        assert(is_string($address));
+        assert(is_string($name));
+        
         $cur = count($this->cc);
         $this->cc[$cur][0] = trim($address);
         $this->cc[$cur][1] = $name;
     }
 
     function AddBCC($address, $name = "") {
+        assert($address =! Null);
+        assert($name =! Null);
+        
+        assert(is_string($address));
+        assert(is_string($name));
+        
         $cur = count($this->bcc);
         $this->bcc[$cur][0] = trim($address);
         $this->bcc[$cur][1] = $name;
     }
 
     function AddReplyTo($address, $name = "") {
+        assert($address =! Null);
+        assert($name =! Null);
+        
+        assert(is_string($address));
+        assert(is_string($name));
+       
         $cur = count($this->ReplyTo);
         $this->ReplyTo[$cur][0] = trim($address);
         $this->ReplyTo[$cur][1] = $name;
@@ -167,6 +191,12 @@ class PHPMailer {
     }
 
     function SendmailSend($header, $body) {
+        assert($header =! Null);
+        assert($body =! Null);
+        
+        assert(is_string($header));
+        assert(is_string($body));
+        
         if ($this->Sender != "")
             $sendmail = sprintf("%s -oi -f %s -t", $this->Sendmail, $this->Sender);
         else
@@ -220,6 +250,12 @@ class PHPMailer {
     }
 
     function SmtpSend($header, $body) {
+        assert($header =! Null);
+        assert($body =! Null);
+        
+        assert(is_string($header));
+        assert(is_string($body));
+        
         include_once($this->PluginDir . "class.smtp.php");
         $error = "";
         $bad_rcpt = array();
@@ -353,6 +389,12 @@ class PHPMailer {
      * @return string
      */
     function AddrAppend($type, $addr) {
+        assert($type =! Null);
+        assert($addr =! Null);
+        
+        assert(is_string($type));
+        assert(is_int($addr));
+        
         $addr_str = $type . ": ";
         $addr_str .= $this->AddrFormat($addr[0]);
         if (count($addr) > 1) {
@@ -365,6 +407,10 @@ class PHPMailer {
     }
 
     function AddrFormat($addr) {
+        assert($addr =! Null);
+        
+        assert(is_int($addr));
+        
         if (empty($addr[1]))
             $formatted = $addr[0];
         else {
@@ -592,6 +638,11 @@ class PHPMailer {
     }
 
     function GetBoundary($boundary, $charSet, $contentType, $encoding) {
+        assert($boundary =! Null);
+        assert($charset =! Null);
+        assert($contentType =! Null);
+        assert($encoding =! Null);        
+        
         $result = "";
         if ($charSet == "") {
             $charSet = $this->CharSet;
@@ -613,6 +664,8 @@ class PHPMailer {
     }
 
     function EndBoundary($boundary) {
+        assert($boundary =! Null);
+         
         return $this->LE . "--" . $boundary . "--" . $this->LE;
     }
 
@@ -630,10 +683,21 @@ class PHPMailer {
     }
 
     function HeaderLine($name, $value) {
+        assert($name =! Null);
+        assert($value =! Null);
+        
+        assert(is_string($name));
+        assert(is_int($value));
+        
         return $name . ": " . $value . $this->LE;
     }
 
-    function TextLine($value) {
+    function TextLine($value) 
+    {
+        assert($value =! Null);
+        
+        assert(is_int($value));
+        
         return $value . $this->LE;
     }
 
@@ -723,6 +787,8 @@ class PHPMailer {
     }
 
     function EncodeFile($path, $encoding = "base64") {
+        assert($path =! Null);
+        
         if (!@$fd = fopen($path, "rb")) {
             $this->SetErrorMessage($this->Language("file_open") . $path);
             return "";
@@ -738,6 +804,8 @@ class PHPMailer {
     }
 
     function EncodeString($str, $encoding = "base64") {
+        assert($str =! Null);
+        
         $encoded = "";
         switch (strtolower($encoding)) {
             case "base64":
@@ -812,6 +880,8 @@ class PHPMailer {
     }
 
     function EncodeQP($str) {
+        assert($str =! Null);
+        
         $encoded = $this->FixEOL($str);
         if (substr($encoded, -(strlen($this->LE))) != $this->LE)
             $encoded .= $this->LE;
@@ -940,6 +1010,9 @@ class PHPMailer {
     // MISCELLANEOUS METHODS
 
     function SetErrorMessage($msg) {
+        assert($msg =! Null);
+        assert(is_string($msg));
+        
         $this->error_count++;
         $this->ErrorInfo = $msg;
     }
@@ -985,6 +1058,8 @@ class PHPMailer {
     }
 
     function Language($key) {
+        assert($key =! Null);
+        
         if (count($this->language) < 1)
             $this->SetLanguage("en"); // set the default language
 
