@@ -5,9 +5,11 @@ include_once("coloca_links.php");
 // RIDING THE RELATIONS USED IN SIDE MENU
 
 function monta_relacoes($project_id) {
+	
+	//test if the variable is not null
+	assert ($project_id!= null);
+	
     // Deletes all relations existing tables centocen, centolex and lextolex
-
-   
     // Redo the relationships of the tables centocen, centolex and lextolex
     // selects all scenarios
 
@@ -112,6 +114,12 @@ function monta_relacoes($project_id) {
 // brand relationships from lexical to lexical
 
 function lexico_para_lexico($id_lexico, $text, $vetor_lexicos) {
+	
+		//test if the variable is not null
+		assert ($id_lexico!= null);
+		assert ($text!= null);
+		assert ($vetor_lexicos!= null);
+	
     $number = 0;
     while ($number < count($vetor_lexicos)) {
         $regex = "/(\s|\b)(" . $vetor_lexicos[$number]->nome . ")(\s|\b)/i";
@@ -129,6 +137,12 @@ function lexico_para_lexico($id_lexico, $text, $vetor_lexicos) {
 // Brand relationships from scenarios to lexical
 
 function cenario_para_lexico($id_cenario, $text, $vetor_lexicos) {
+	
+	//test if the variable is not null
+	assert ($id_cenario!= null);
+	assert ($text!= null);
+	assert ($vetor_lexicos!= null);
+	
     $number = 0;
     $j = 0;
     while ($number < count($vetor_lexicos)) {
@@ -143,6 +157,12 @@ function cenario_para_lexico($id_cenario, $text, $vetor_lexicos) {
 // Brand relationships scenarios for scenarios
 
 function cenario_para_cenario($id_cenario, $text, $vetor_cenarios) {
+	
+	//test if the variable is not null
+	assert ($id_cenario!= null);
+	assert ($text!= null);
+	assert ($vetor_cenarios!= null);
+	
     $number = 0;
     $j= 0;
     while ($number < count($vetor_cenarios)) {
@@ -157,6 +177,13 @@ function cenario_para_cenario($id_cenario, $text, $vetor_cenarios) {
 //Mark the relations from scenario to scenario and setting for lexicon in the same text
 
 function cenario_para_lexico_cenario_para_cenario($scenario_id, $text, $lexicons_vector, $scenarios_vector) {
+	
+	//test if the variable is not null
+	assert ($scenario_id!= null);
+	assert ($text!= null);
+	assert ($lexicons_vector!= null);
+	assert ($scenarios_vector!= null);
+	
     $i = 0;
     $j = 0;
     $k = 0;
@@ -188,6 +215,12 @@ function cenario_para_lexico_cenario_para_cenario($scenario_id, $text, $lexicons
 // $ Tipo_from whom this type of referencing (whether lexical or scenario)
 
 function adiciona_relacionamento($id_from, $type_from, $text) {
+	
+	//test if the variable is not null
+	assert ($id_from!= null);
+	assert ($type_from!= null);
+	assert ($text!= null);
+	
     // index of bulleted text
     $index = 0; 
     // Check if the tags should be added
