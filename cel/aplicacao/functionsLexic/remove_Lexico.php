@@ -10,8 +10,8 @@ if (!(function_exists("removeLexico"))) {
         $DB = new PGDB ();
         $delete = new QUERY($DB);
 
-		assert($id_projeto != null);
-		assert($id_lexico != null);		
+		assert($id_lexico != null);	
+		assert($id_projeto != null);	
 		
         # Remove o relacionamento entre o lexico a ser removido
         # e outros lexicos que o referenciam
