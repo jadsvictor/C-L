@@ -52,6 +52,17 @@ episodes:
 * Add the key as a subconceito concept.
 */
         function montar_hierarquia($conc, $nova_lista, $list) {
+            
+            //tests if the variable is not null
+            assert($conc != NULL);
+            assert($nova_lista != NULL);
+            assert($list != NULL);
+            
+            //tests if the variable has the correcttype
+            assert(is_string($conc));
+            assert(is_string($nova_lista));
+            assert(is_string($list));
+            
             foreach ($nova_lista as $subcon) {
                 $key = existe_conceito($subcon, $list);
                 $conc->subconceitos[] = $subcon;
@@ -77,6 +88,19 @@ episodes:
 * Check consistency.
 */
         function traduz_sujeito_objeto($lista_de_sujeito_e_objeto, $conceitos, $relacoes, $axiomas) {
+            
+            //tests if the variable is not null
+            assert($lista_de_sujeito_e_objeto != NULL);
+            assert($conceitos != NULL);
+            assert($relacoes != NULL);
+            assert($axiomas != NULL);
+            
+            //tests if the variable has the correct type
+            assert(is_string($lista_de_sujeito_e_objeto));
+            assert(is_string($conceitos));
+            assert(is_string($relacoes));
+            assert(is_string($axiomas));
+            
             for (; $_SESSION["index1"] < count($lista_de_sujeito_e_objeto); ++$_SESSION["index1"]) {
                 $suj = $lista_de_sujeito_e_objeto[$_SESSION["index1"]];
                 if (!isset($_SESSION["conceito"])) {
@@ -336,6 +360,15 @@ episodes:
 * Check consistency.
 */
         function traduz_verbos($verbos, $relacoes) {
+            
+            //tests if the variable is not null
+            assert($verbos != NULL);
+            assert($relacoes != NULL);
+            
+            //tests if the variable has the correct type
+            assert(is_string($verbos));
+            assert(is_string($relacoes));
+            
             for (; $_SESSION["index3"] < count($verbos); ++$_SESSION["index3"]) {
                 $verbo = $verbos[$_SESSION["index3"]];
                 if (!isset($_SESSION["exist"])) {
@@ -382,6 +415,19 @@ episodes:
 * Check consistency.
 */
         function traduz_estados($estados, $conceitos, $relacoes, $axiomas) {
+            
+            //tests if the variable is not null
+            assert($estados != NULL);
+            assert($conceitos != NULL);
+            assert($relacoes != NULL);
+            assert($axiomas != NULL);
+            
+            //tests if the variable has the correct type
+            assert(is_string($estados));
+            assert(is_string($conceitos));
+            assert(is_string($relacoes));
+            assert(is_string($axiomas));
+            
             for (; $_SESSION["index4"] < count($estados); ++$_SESSION["index4"]) {
                 $estado = $estados[$_SESSION["index4"]];
                 $aux = array($estado);
@@ -458,6 +504,17 @@ the new list.
 */
 
             function organizar_ontologia($conceitos, $relacoes, $axiomas) {
+                
+                //tests if the variable is not null
+                assert($conceitos != NULL);
+                assert($relacoes != NULL);
+                assert($axiomas != NULL);
+                
+                //teste if the variable has the correct type
+                assert(is_string($conceitos));
+                assert(is_string($relacoes));
+                assert(is_string($axiomas));
+                
                 $_SESSION["salvar"] = "TRUE";
                 $finish_relation = FALSE;
                 while (!$finish_relation) {
