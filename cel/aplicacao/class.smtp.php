@@ -42,6 +42,14 @@ class SMTP {
     //                    CONNECTION FUNCTIONS                  *
 
     function Connect($host, $port = 0, $tval = 30) {
+        assert($host =! NULL);
+        assert($port =! Null);
+        assert($tval =! Null);
+        
+        assert(is_int($host));
+        assert(is_int($port));
+        assert(is_int($tval));
+        
         # set the error val to null so there is no confusion
         $this->error = null;
 
@@ -99,6 +107,12 @@ class SMTP {
     }
 
     function Authenticate($username, $password) {
+        assert($username =! Null);
+        assert($password =! Null);
+        
+        assert(is_string($username));
+        assert(is_string($password));
+        
         // Start authentication
         fputs($this->smtp_conn, "AUTH LOGIN" . $this->CRLFReplyLine);
 
@@ -316,6 +330,10 @@ class SMTP {
     }
 
     function Expand($name) {
+        
+        assert($name =! Null);
+        assert(is_string($name));
+        
         $this->error = null; # so no confusion is caused
 
         if (!$this->connected()) {
@@ -356,6 +374,9 @@ class SMTP {
     }
 
     function Hello($host = "") {
+        assert($host =! Null);
+        assert(is_int($host));
+        
         $this->error = null; # so no confusion is caused
 
         if (!$this->connected()) {
@@ -449,6 +470,9 @@ class SMTP {
     }
 
     function Mail($from) {
+        assert($from =! Null);
+        assert(is_string($from));
+        
         $this->error = null; # so no confusion is caused
 
         if (!$this->connected()) {
