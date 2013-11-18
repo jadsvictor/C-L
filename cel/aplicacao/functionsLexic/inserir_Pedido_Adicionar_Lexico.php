@@ -15,28 +15,53 @@ include("functionsLexic/adicionar_lexico.php");
 if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 
     function inserirPedidoAdicionarLexico($id_projeto, $nome, $nocao, $impacto, $id_usuario, $sinonimos, $classificacao) {
-
-        $DB = new PGDB();
-        $insere = new QUERY($DB);
-        $select = new QUERY($DB);
-        $select2 = new QUERY($DB);
-       
+       //test if a variable has the correct type
+        assert(is_string($id_projeto));
+        assert(is_string($nome));
+        assert(is_string($nocao));
+        assert(is_string($impacto));
+        assert(is_string($id_usuario));
+        assert(is_string($sinonimos));
+        assert(is_string($classificacao));
         //test if the variable is not null
-      	assert($insere!=null); 
-        assert($DB!=null);
-		assert($select!=null);
-		assert($select2!=null);
-		assert($id_projeto!=null);
-		assert($nome!=null);
-		assert($nocao!=null);
-		assert($impacto!=null);
-		assert($id_usuario!=null);
-		assert($sinonimos!=null);
-		assert($classificacao!=null);
+      	assert($id_projeto!=null);
+	assert($nome!=null);
+	assert($nocao!=null);
+	assert($impacto!=null);
+	assert($id_usuario!=null);
+	assert($sinonimos!=null);
+	assert($classificacao!=null);
 
+        
+        
+        $DB = new PGDB();
+        //test if the variable is not null
+        assert($DB != NULL);
+        
+        $insere = new QUERY($DB);
+        //test if the variable is not null
+        assert($insere!=null);
+        
+        $select = new QUERY($DB);
+        //test if the variable is not null
+        assert($select!=null);
+        
+        $select2 = new QUERY($DB);
+        //test if the variable is not null
+        assert($select2!=null);
+       
+      
         $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario AND id_projeto = $id_projeto";
+        //test if the variable is not null
+        assert($q != NULL);
+        
         $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        //test if the variable is not null
+        assert($qr != NULL);
+        
         $resultArray = mysql_fetch_array($qr);
+        //test if the variable is not null
+        assert($resultArray != NULL);
 
 
         if ($resultArray == false) { //nao e gerente
