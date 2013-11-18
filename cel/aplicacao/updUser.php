@@ -34,7 +34,10 @@ else
 // User clicks the button to update
 
         $password_cript = md5($password);
-
+		
+		//test if a variable has the correct type
+		assert (is_string($password_cript));
+	
         mysql_query("UPDATE usuario SET  nome = ' " . mysql_real_escape_string($_GET["nome"]) . "'" . "
         , login = ' " . mysql_real_escape_string($_GET["login"]) . "'" . " 
         , email = ' " . mysql_real_escape_string($_GET["email"]) . "'" . " 
