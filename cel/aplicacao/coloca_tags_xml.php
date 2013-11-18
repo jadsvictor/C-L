@@ -5,13 +5,17 @@
 include ("coloca_links.php");
 
 function poe_tag_xml($str) {
-
+    assert($str =! Null);
+    assert(is_string($str));
+    
     $r = "<link ref=\"$str\">$str </link>";
     return $r;
 }
 
 function pega_id_xml($str) {
-
+    assert($str =! Null);
+    assert(is_string($str));
+    
     $j = 0;
     $i = 0;
     while ($str[$i] != '*') {
@@ -24,6 +28,9 @@ function pega_id_xml($str) {
 }
 
 function troca_chaves_xml($str) {
+    assert($str =! Null);
+    assert(is_string($str));
+    
     $conta_abertos = 0;
     $comeco = 0;
     $fim = 0;
@@ -122,7 +129,14 @@ function troca_chaves_xml($str) {
 }
 
 function faz_links_XML($texto, $vetor_lex, $vetor_cen) {
-
+    assert($texto = ! Null);
+    assert($vetor_lex = ! Null);
+    assert($vetor_cen =! Null);
+    
+    assert(is_string($texto));
+    assert(is_string($vetor_lex));
+    assert(is_string($vetor_cen));
+    
     marca_texto($texto, $vetor_cen, "cenario");
     marca_texto_cenario($texto, $vetor_lex, $vetor_cen);
 

@@ -5,6 +5,7 @@
 //Function that loads vector with all titles and synonyms in the lexicons of less id id_lexico_atual
 
 function carrega_vetor_lexicos($id_projeto, $id_lexico_atual, $semAtual) {
+    
     $vetorDeLexicos = array();
     if ($semAtual) {
         $queryLexicos = "SELECT id_lexico, nome    
@@ -84,6 +85,11 @@ function carrega_vetor_cenario($id_projeto, $id_cenario_atual, $semAtual) {
 }
 
 function divide_array(&$vet, $ini, $fim, $tipo) {
+    assert($vet =! Null);
+    assert($ini =! Null);
+    assert($fim =! Null);
+    assert($tipo =! Null);
+    
     $i = $ini;
     $j = $fim;
     $dir = 1;
@@ -116,6 +122,11 @@ function divide_array(&$vet, $ini, $fim, $tipo) {
 // Sort the vector
 
 function quicksort(&$vet, $ini, $fim, $tipo) {
+    assert($vet =! Null);
+    assert($ini =! Null);
+    assert($fim =! Null);
+    assert($tipo =! Null);
+    
     if ($ini < $fim) {
         $k = divide_array($vet, $ini, $fim, $tipo);
         quicksort($vet, $ini, $k - 1, $tipo);
@@ -127,6 +138,12 @@ function quicksort(&$vet, $ini, $fim, $tipo) {
 //Using parameter $ vetorDeLexicos and scenarios, passed through the parameter $ vetorDeCenarios  
 
 function monta_links($texto, $vetorDeLexicos, $vetorDeCenarios) {
+    assert($vetorDeCenarios =! Null);
+    assert($vetorDeLexicos =! NULL);
+    assert($texto =! Null);
+    
+    assert(is_string($texto));
+    
     $copiaTexto = $texto;
     $vetorAuxLexicos = 0;
     $vetorAuxCenarios = 0;
