@@ -8,6 +8,7 @@ include_once("seguranca.php");
 if (!(function_exists("is_admin"))) {
 
     function is_admin($id_usuario, $id_projeto) {
+      
         //test if a variable has the correct type
         assert(is_string($id_projeto));
         assert(is_string($id_usuario));
