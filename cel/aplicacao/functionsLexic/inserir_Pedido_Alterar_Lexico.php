@@ -20,8 +20,8 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
         
+        assert($insere!=null);
         assert($DB!=null);
-		assert($insere!=null);
 		assert($select!=null);
 		assert($select2!=null);
 		assert($id_projeto!=null);
