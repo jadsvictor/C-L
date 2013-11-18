@@ -5,21 +5,21 @@
         </title>
 
         <?php
-// Cenário - Verificar pedidos de alteração de cenários
-//Objetivo:	Permitir ao administrador gerenciar os pedidos de alteração de cenários.
-//Contexto:	Gerente deseja visualizar os pedidos de alteração de cenários.
-//              Pré-Condição: Login, projeto cadastrado.
-//Atores:	Administrador
-//Recursos:	Sistema, banco de dados.
-//Episódios: O administrador clica na opção de Verificar pedidos de alteração de cenários.
-//           Restrição: Somente o Administrador do projeto pode ter essa função visível.
-//           O sistema fornece para o administrador uma tela onde poderá visualizar o histórico
-//           de todas as alterações pendentes ou não para os cenários.
-//           Para novos pedidos de inclusão ou alteração de cenários,
-//           o sistema permite que o administrador opte por Aprovar ou Remover.
-//           Para os pedidos de inclusão ou alteração já aprovados,
-//           o sistema somente habilita a opção remover para o administrador.
-//           Para efetivar as seleções de aprovação e remoção, basta clicar em Processar.
+// Setting - Check order change scenarios
+// Purpose : Allow the administrator to manage requests for change scenarios .
+// Context : Manager wish to view the applications change scenarios .
+// Precondition : Login , registered design .
+// Actors : Administrator
+// Resources : System database.
+// Episodes : The administrator clicks the option Check applications change scenarios .
+// Restriction: Only the Project Manager may have this function visible.
+// The system provides the administrator a screen where you can view the history
+// All pending changes or not for the scenarios .
+/ / For new applications included the � or change scenarios ,
+// The system allows the administrator chooses Approve or Remove.
+// For requests to add or change already approved ,
+// The system only enables the option to remove the administrator .
+// To commit the selections approval and removal , simply click Process .
         session_start();
 
         include("funcoes_genericas.php");
