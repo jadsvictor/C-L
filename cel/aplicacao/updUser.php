@@ -22,16 +22,16 @@ else
     <body>
 
         <?php
-// Cenario - Alterar cadastro
+// Scenario - Changing registration
 //
-//Objetivo:  Permitir ao usuario realizar alteracao nos seus dados cadastrais	
-//Contexto:  Sistema aberto, Usuario ter acessado ao sistema e logado 
-//           Usuario deseja alterar seus dados cadastrais 
-//           Pre-Condicao: Usuario ter acessado ao sistema	
-//Atores:    Usuario, Sistema.	
-//Recursos:  Interface	
-//Episodios: O usuario altera os dados desejados
-// 	     Usuario clica no botao de atualizar
+// Purpose: Allow User to make alteration in their records
+// Context: Open System, User have accessed the system and logged
+// User want to change your registration
+// Pre-Condition: User has accessed the system
+// Actors: User, System.
+// Features: Interface
+// Episodes: The User alters the desired data
+// User clicks the button to update
 
         $password_cript = md5($password);
 
