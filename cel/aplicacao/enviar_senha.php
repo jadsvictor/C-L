@@ -41,6 +41,9 @@ $qrr = mysql_query($BuscaLoginBanco) or die("Erro ao executar a query");
         //Function that randomly generates a password of 6 characters
 
         function gerarandonstring($n) {
+            assert($n =! Null);
+            assert(is_int($n));
+            
             $str = "ABCDEFGHIJKLMNOPQRSTUVXYWZabcdefghijklmnopqrstuvxywz0123456789";
             $cod = "";
             for ($a = 0; $a < $n; $a++) {
