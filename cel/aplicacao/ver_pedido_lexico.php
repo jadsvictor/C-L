@@ -3,22 +3,22 @@
         <title>Pedido Lexico</title>
 
         <?php
-// Cenario - Verificar pedidos de alteracao de termos do lexico
-//Objetivo:	Permitir ao administrador gerenciar os pedidos de alteracao de termos do lexico.
-//Contexto:	Gerente deseja visualizar os pedidos de alteracao de termos do lexico.
-//              Pre-Condicao: Login, projeto cadastrado.
-//Atores:	Administrador
-//Recursos:	Sistema, banco de dados.
-//Episodios:    O administrador clica na opcao de Verificar pedidos de alteracao de termos do lexico.
-//Restricao:    Somente o Administrador do projeto pode ter essa funcao visivel.
-//              O sistema fornece para o administrador uma tela onde podera visualizar o historico
-//              de todas as alteracoes pendentes ou nao para os termos do lexico.
-//              Para novos pedidos de inclusao ou alteracao de termos do lexico,
-//              O sistema permite que o administrador opte por Aprovar ou Remover.
-//              Para os pedidos de inclusao ou alteracao ja aprovados,
-//              o sistema somente habilita a opcao remover para o administrador.
-//              Para efetivar as selecoes de aprovacao e remocao, o administrador deve clicar em Processar.
-
+        
+// Scenario - Check requests for alteration of terms of lexical
+// Purpose : Allow the administrator to manage requests for alteration of terms in the lexicon .
+// Context : Manager wish to view the applications for alteration of terms of the lexicon .
+// Pre - Condition: Login , registered design .
+// Actors : Administrator
+// Resources : System database.
+// Episodes : The administrator clicks the option of Check applications for alteration of terms of the lexicon .
+// Restriction: Only the Project Manager may have this function visible .
+// The system provides for a screen where the administrator will be able to view the historical
+// All pending or not alterations to the terms of the lexicon .
+// For new applications for inclusion or alteration of terms of the lexicon ,
+// The system allows the administrator chooses Approve or Remove.
+// For applications for inclusion or alteration already approved ,
+// The system only enables the option to remove the administrator .
+// To carry selections approval and removal , the administrator must click Process .
 
         session_start();
 
