@@ -20,9 +20,9 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
-        
+       
+      	assert($insere!=null); 
         assert($DB!=null);
-		assert($insere!=null);
 		assert($select!=null);
 		assert($select2!=null);
 		assert($id_projeto!=null);
