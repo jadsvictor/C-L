@@ -6,6 +6,16 @@
 
 function carrega_vetor_lexicos($id_projeto, $id_lexico_atual, $semAtual) {
     
+    //testes if the variable is not null
+    assert($id_projeto != NULL);
+    assert($id_lexico_atual != NULL);
+    assert($semAtual != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($id_projeto));
+    assert(is_string($id_lexico_atual));
+    assert(is_string($semAtual));
+    
     $vetorDeLexicos = array();
     if ($semAtual) {
         $queryLexicos = "SELECT id_lexico, nome    
@@ -55,6 +65,17 @@ function carrega_vetor_lexicos($id_projeto, $id_lexico_atual, $semAtual) {
 //Passed in the variable $ id_cenario_atual
 
 function carrega_vetor_cenario($id_projeto, $id_cenario_atual, $semAtual) {
+    
+    //tests if the variable is not null
+    assert($id_projeto != NULL);
+    assert($id_cenario_atual_cenario_atual != NULL);
+    assert($semAtual != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($id_projeto));
+    assert(is_string($id_cenario_atual));
+    assert(is_string($semAtual));
+
     $vetorDeCenarios = 0;
     if (!isset($vetorDeCenarios)) {
         $vetorDeCenarios = array();
