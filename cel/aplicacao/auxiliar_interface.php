@@ -34,6 +34,15 @@ episodes:
 - Update true or false, if true put the index together, false if the index and ignored.
 */
                     function exist($name, $list) {
+                        
+                    //tests if the variable is not null
+                    assert($name != NULL);
+                    assert($list != NULL);
+    
+                    //tests if the variable has the correct type
+                    assert(is_string($name));
+                    assert(is_string($list));
+                    
                         $indice = -1;
                         foreach ($list as $key => $palavra) {
                             if (strstr($name, $palavra)) {
@@ -153,6 +162,15 @@ episodes:
 - Returns TRUE if the importance and central.
 */
                     function importancia_central($termo, $impactos) {
+                        
+                    //tests if the variable is not null
+                    assert($termo != NULL);
+                    assert($impactos != NULL);
+    
+                    //tests if the variable has the correct type
+                    assert(is_string($termo));
+                    assert(is_string($impactos));
+                        
                         ?>
                         <h3>Termo: <?= $termo ?></h3><br>
                         <?php
@@ -192,6 +210,15 @@ episodes:
 Returns TRUE if references.
 */
                     function faz_referencia($conceitos, $subconceitos) {
+                        
+                    //tests if the variable is not null
+                    assert($conceitos != NULL);
+                    assert($subconceitos != NULL);
+    
+                    //tests if the variable has the correct type
+                    assert(is_string($conceitos));
+                    assert(is_string($subconceitos));
+                    
                         ?>
 
                         <form method="POST" action="algoritmo.php" id="reference_form" 
@@ -280,6 +307,13 @@ Returns TRUE if references.
 					*/
 					
                     function insere_tipo($list) {
+                        
+                        //tests if the variable is not null
+                    assert($list != NULL);
+    
+                    //tests if the variable has the correct type
+                    assert(is_string($list));
+
                         $_SESSION["tipos"] = 2;
                         ?>
                         <form method="POST" action="auxiliar_bd.php">
@@ -309,6 +343,19 @@ Returns TRUE if references.
                     }
 
                     function insere_relacao($rel, $conc, $imp, $list) {
+                        
+                    //tests if the variable is not null
+                    assert($rel != NULL);
+                    assert($conc != NULL);
+                    assert($imp != NULL);
+                    assert($list != NULL);
+    
+                    //tests if the variable has the correct type
+                    assert(is_string($rel));
+                    assert(is_string($conc));
+                    assert(is_string($imp));
+                    assert(is_string($list));
+                    
                         $_SESSION["insert_relation"] = 1;
                         $indice = strpos($imp, $rel);
                         $tam = strlen($rel);
@@ -520,6 +567,15 @@ Returns TRUE if references.
                     
 
                     function disjuncao($nome, $list) {
+                        
+                    //tests if the variable is not null
+                    assert($nome != NULL);
+                    assert($list != NULL);
+                    
+                    //tests if the variable has the correct type
+                    assert(is_string($nome));
+                    assert(is_string($list));
+                        
                         $_SESSION["disjoint"] = 1;
                         if (count($_SESSION["axiomas_selecionados"]) != 0) {
                             echo "Termos disjunos j� discriminados para esse conceito:<p>";
