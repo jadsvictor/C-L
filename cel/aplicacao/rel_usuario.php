@@ -5,12 +5,12 @@
             </title>
 
 <?php
-// Cenario - Relacionar usuarios ao projeto
-// Objetivo:  Permitir ao Administrador relacionar novos usuarios cadastrados ao projeto selecionado.
-// Contexto:  O Administrador deseja relacionar novos usuarios cadastrados ao projeto selecionado.
-//            Pre-Condicoes: Ser administrador do projeto que deseja relacionar os usuarios
-// Atores:    Administrador
-// Recursos:  Usuarios cadastrados
+// Scenario - Users' Relate to the project
+// Purpose: Allow the Administrator to relate new users registered to the selected project.
+// Context: The Administrator want to relate new registered users to the selected project.
+// Preconditions: Being the project manager who want to relate the users
+// Actors: Administrator
+// Features: Registered Users
 
 session_start();
 
@@ -129,9 +129,10 @@ if (isset($submit)) {
 
                                     <?php
                                 }
-// Episodio 2: Excluindo usuario(s) do projeto: o administrador seleciona os usuarios cadastrados 
-//            (ja existentes) da lista Participantes (usuarios que pertencem a este projeto) 
-//            e clica no botao -> . 
+                                
+ // Episode 2: Deleting User (s) of the project: the administrator selects the registered users
+ // (Already existing) List of Participants (users that belong to this project)
+ // And clicking the button ->.
                                 ?>
 
                             </select>
@@ -164,9 +165,10 @@ if (isset($submit)) {
 
                                     <?php
                                 }
-// Episodio 3: Incluindo usuario(s) ao projeto: o administrador seleciona os usuarios cadastrados 
-//           (ja existentes) da lista de usuarios que nao pertencem a este projeto e 
-//           clica no botao <- . 
+                                
+ // Episode 3: Including User (s) to the project: the administrator selects the registered users
+ // (Already existing) from the list of users who do not belong to this project and
+ // Clicking the button <-.
                                 ?>
                             </select>
                         </td>
