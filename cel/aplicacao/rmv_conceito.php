@@ -1,8 +1,8 @@
 <?php
-// Cenário -  Excluir Conceito 
+// Cen�rio -  Excluir Conceito 
 //Objetivo:	Permitir ao Usuário Excluir um conceito que esteja ativo
 //Contexto:	Usuário deseja excluir um conceito
-//              Pré-Condição: Login, cenário cadastrado no sistema
+//              Pré-Condição: Login, Cen�rio cadastrado no sistema
 //Atores:	Usuário, Sistema
 //Recursos:	Dados informados
 //Episódios:	O sistema fornecerá uma tela para o usuário justificar a necessidade daquela
