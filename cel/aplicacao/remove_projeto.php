@@ -1,11 +1,10 @@
 <?php
-//Cenário  -  Remover Projeto 
-
-//Objetivo:	   Permitir ao Administrador do projeto remover um projeto
-//Contexto:	   Um Administrador de projeto deseja remover um determinado projeto da base de dados
-//                 Pré-Condição: Login, Ser administrador do projeto selecionado.  
-//Atores:	   Administrador
-//Recursos:	   Sistema, dados do projeto, base de dados
+// Setting - Remove Project
+// Purpose: Allow Project Manager to remove a project
+// Context: A Project Management want to remove a particular project database
+// Preconditions: Login Become the selected project administrator.
+// Actors: Administrator
+/ / Resource: System design data, database
 
 session_start();
 
@@ -46,8 +45,9 @@ $project_description = $resultArrayProject[3];
         width="29%";
        }
 <?php
-// Episodio 2: O sistema disponibiliza uma tela para o administrador ter certeza 
-// de que esta removendo o projeto correto.
+
+// Episode 2: The system provides a screen for the administrator to make sure
+// That this removing the correct project.
 ?>
        _egg_logo_guid()
         <table>
@@ -64,13 +64,15 @@ $project_description = $resultArrayProject[3];
         </table>
         <br><br>
 <?php
-//Episodio 3:  O Administrador clica no link de remoção.
+
+// Episode 3: The Administrator clicks on the unsubscribe link.
 ?>
   <h1 style="text-align:center;">Cuidado!O projeto sera apagado para todos seus usuarios!</h1>
     <p><br>
     </p>
 <?php
-//Episodio 4: O sistema chama a página que removerá o projeto do banco de dados.
+
+// Episode 4: The system calls the page that will remove the project from the database..
 ?>
     <h1 style="text-align:center;"><a href="remove_projeto_base.php">Apagar o projeto</a></h1> 
     <p>
