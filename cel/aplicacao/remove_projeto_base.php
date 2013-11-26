@@ -4,14 +4,14 @@
 
     
         <?php
-//Cenário  -  Remover Projeto da base
-//Objetivo:	   Efetuar a remoção de um projeto da base de dados
-//Contexto:	   Um Administrador de projeto deseja remover um determinado projeto da base de dados
-//                 Pré-Condição: Login, Ser administrador do projeto selecionado, 
-//                 ter selecionado o projeto para remoção em remove_projeto.php.  
-//Atores:	   Administrador
-//Recursos:	   Sistema, dados do projeto, base de dados
-//Episódios:       O sistema apaga todos os dados referentes ao determinado projeto da sua base de dados.
+// Setting - Remove the base design
+// Purpose: Perform removal of a project database
+// Context: A Project Management want to remove a particular project database
+// Preconditions: Login Become the selected project administrator,
+// Get the selected project for removal in remove_projeto.php.
+// Actors: Administrator
+// Resource: System design data, database
+// Episodes: The system deletes all data relating to your particular project database.
 
         session_start();
         
