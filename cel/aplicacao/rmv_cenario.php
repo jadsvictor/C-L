@@ -1,17 +1,17 @@
 <?php
-// Cenário -  Excluir Cenário 
-//Objetivo:	Permitir ao Usuário Excluir um cenário que esteja ativo
-//Contexto:	Usuário deseja excluir um cenário
-//              Pré-Condição: Login, cenário cadastrado no sistema
-//Atores:	Usuário, Sistema
-//Recursos:	Dados informados
-//Episódios:	O sistema fornecerá uma tela para o usuário justificar a necessidade daquela
-//              exclusão para que o administrador possa ler e aprovar ou não a mesma.
-//              Esta tela também conterá um botão para a confirmação da exclusão.
-//Restrição:    Depois de clicar no botão, o sistema verifica se todos os campos foram preenchidos 
-//Exceção:	Se todos os campos não foram preenchidos, retorna para o usuário uma mensagem
-//              avisando que todos os campos devem ser preenchidos e um botão de voltar 
-//              para a pagina anterior.
+// Setting - Delete Scenario
+// Purpose: Allow User to Delete a scenario that is active
+// Context: User want to delete a Scenario
+// Preconditions: Login, Scenario registered in the system
+// Actors: User, System
+// Resource: Data informed
+// Episodes: The system will provide a screen for the user to justify the need for that
+// Exclusion so that the administrator can read and approve or disapprove the same.
+// This will also contain a button to confirm Exclusion.
+// Restrictions: After clicking the button, the system checks whether all fields were filled
+// Exception: If all the pounds in the Fields were filled, returns to the User a message
+// Warning that all fields must be completed and a button to return the
+// To the previous page.
 
 session_start();
 
