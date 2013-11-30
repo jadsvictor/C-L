@@ -17,7 +17,7 @@
             echo "ERRO NA CONEXAO AO BD <br>";
 
 
-       $query_concept = "create table conceito (id_conceito int(11) not null AUTO_INCREMENT,
+        $query_concept = "create table conceito (id_conceito int(11) not null AUTO_INCREMENT,
                                         nome varchar(250) not null ,
                                         descricao varchar(250) not null,
 										pai int(11),
