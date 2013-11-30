@@ -7,7 +7,7 @@ include_once("bd.inc");
 include("functionsBD/check_User_Authentication.php");
 
 // Check if the user was autenticated
-checkUserAuthentication("index.php");    
+checkUserAuthentication("index.php");
 
 // Test if user wnats a formated visualization or not
 if (isset($_POST['flag'])) {
@@ -239,8 +239,8 @@ if (!mysql_num_rows($qrrVerify)) {
             <p style="color: red; font-weight: bold; text-align: center">Essa versao ja existe!</p>
             <br>
             <br>
-        <h1 style="text-align:center;"><a href="JavaScript:window.history.go(-1)">Voltar</a></h1>
-    </body></html>
+            <h1 style="text-align:center;"><a href="JavaScript:window.history.go(-1)">Voltar</a></h1>
+        </body></html>
 
     <?php
 }
