@@ -2,13 +2,14 @@
 
 include_once("monta_relacoes.php");
 include_once("coloca_links.php");
+
 // RIDING THE RELATIONS USED IN SIDE MENU
 
 function monta_relacoes($project_id) {
-	
-	//test if the variable is not null
-	assert ($project_id!= null);
-	
+
+    //test if the variable is not null
+    assert($project_id != null);
+
     // Deletes all relations existing tables centocen, centolex and lextolex
     // Redo the relationships of the tables centocen, centolex and lextolex
     // selects all scenarios
@@ -18,9 +19,9 @@ function monta_relacoes($project_id) {
 	          WHERE id_projeto = $project_id
 	          ORDER BY CHAR_LENGTH(titulo) DESC";
     $qrr_select_scene = mysql_query($select_scene) or die("Erro ao enviar a query");
-    
+
     // For all scenarios
-    while ($result = mysql_fetch_array($qrr_select_scene)) {  
+    while ($result = mysql_fetch_array($qrr_select_scene)) {
         $current_scenario_id = $result['id_cenario'];
 
         // Ride vector title of scenarios
@@ -90,7 +91,7 @@ function monta_relacoes($project_id) {
 	          ORDER BY CHAR_LENGTH(nome) DESC";
     $qrr_select_lexicon = mysql_query($select_lexicon) or die("Erro ao enviar a query");
 
-    while ($result = mysql_fetch_array($qrr_select_lexicon)) { 
+    while ($result = mysql_fetch_array($qrr_select_lexicon)) {
         $current_lexicon_id = $result['id_lexico'];
 
         $lexicons_vector = carrega_vetor($project_id, $current_lexicon_id);
@@ -114,12 +115,12 @@ function monta_relacoes($project_id) {
 // brand relationships from lexical to lexical
 
 function lexico_para_lexico($id_lexico, $text, $vetor_lexicos) {
-	
-		//test if the variable is not null
-		assert ($id_lexico!= null);
-		assert ($text!= null);
-		assert ($vetor_lexicos!= null);
-	
+
+    //test if the variable is not null
+    assert($id_lexico != null);
+    assert($text != null);
+    assert($vetor_lexicos != null);
+
     $number = 0;
     while ($number < count($vetor_lexicos)) {
         $regex = "/(\s|\b)(" . $vetor_lexicos[$number]->nome . ")(\s|\b)/i";
@@ -137,53 +138,51 @@ function lexico_para_lexico($id_lexico, $text, $vetor_lexicos) {
 // Brand relationships from scenarios to lexical
 
 function cenario_para_lexico($id_cenario, $text, $vetor_lexicos) {
-	
-	//test if the variable is not null
-	assert ($id_cenario!= null);
-	assert ($text!= null);
-	assert ($vetor_lexicos!= null);
-	
+
+    //test if the variable is not null
+    assert($id_cenario != null);
+    assert($text != null);
+    assert($vetor_lexicos != null);
+
     $number = 0;
     $j = 0;
     while ($number < count($vetor_lexicos)) {
         $regex = "/(\s|\b)(" . $vetor_lexicos[$number]->nome . ")(\s|\b)/i";
         $text = preg_replace($regex, "$1{l" . $vetor_lexicos[$j]->id_lexico . "**$2" . "}$3", $text);
         $number++;
-        
-        }
+    }
     return $text;
 }
 
 // Brand relationships scenarios for scenarios
 
 function cenario_para_cenario($id_cenario, $text, $vetor_cenarios) {
-	
-	//test if the variable is not null
-	assert ($id_cenario!= null);
-	assert ($text!= null);
-	assert ($vetor_cenarios!= null);
-	
+
+    //test if the variable is not null
+    assert($id_cenario != null);
+    assert($text != null);
+    assert($vetor_cenarios != null);
+
     $number = 0;
-    $j= 0;
+    $j = 0;
     while ($number < count($vetor_cenarios)) {
         $regex = "/(\s|\b)(" . $vetor_cenarios[$number]->titulo . ")(\s|\b)/i";
         $text = preg_replace($regex, "$1{c" . $vetor_cenarios[$j]->id_cenario . "**$2" . "}$3", $text);
-        $number++; 
-        
-        }
+        $number++;
+    }
     return $text;
 }
 
 //Mark the relations from scenario to scenario and setting for lexicon in the same text
 
 function cenario_para_lexico_cenario_para_cenario($scenario_id, $text, $lexicons_vector, $scenarios_vector) {
-	
-	//test if the variable is not null
-	assert ($scenario_id!= null);
-	assert ($text!= null);
-	assert ($lexicons_vector!= null);
-	assert ($scenarios_vector!= null);
-	
+
+    //test if the variable is not null
+    assert($scenario_id != null);
+    assert($text != null);
+    assert($lexicons_vector != null);
+    assert($scenarios_vector != null);
+
     $i = 0;
     $j = 0;
     $k = 0;
@@ -215,22 +214,22 @@ function cenario_para_lexico_cenario_para_cenario($scenario_id, $text, $lexicons
 // $ Tipo_from whom this type of referencing (whether lexical or scenario)
 
 function adiciona_relacionamento($id_from, $type_from, $text) {
-	
-	//test if the variable is not null
-	assert ($id_from!= null);
-	assert ($type_from!= null);
-	assert ($text!= null);
-	
+
+    //test if the variable is not null
+    assert($id_from != null);
+    assert($type_from != null);
+    assert($text != null);
+
     // index of bulleted text
-    $index = 0; 
+    $index = 0;
     // Check if the tags should be added
-    $parser = 0; 
+    $parser = 0;
 
     while ($index < strlen(&$text)) {
         if ($text[$index] == "{") {
             $parser++;
             // add the text link - opening
-            if ($parser == 1) { 
+            if ($parser == 1) {
                 $id_to = "";
                 $index++;
                 $type = $text[$index];
@@ -245,11 +244,10 @@ function adiciona_relacionamento($id_from, $type_from, $text) {
                     if (strcasecmp($type_from, 'lexico') == 0) {
                         //adds relationship lexicon to lexicon
                         echo '<script language="javascript">confirm(" ' . $id_from . ' - ' . $id_to . 'l�xico para l�xico")</script>';
-                      // Origin is a scenario (id_cenario -> id_lexico)
+                        // Origin is a scenario (id_cenario -> id_lexico)
                     } else if (strcasecmp($type_from, 'cenario') == 0) {
                         //adds ratio setting for lexical
                         echo '<script language="javascript">confirm(" ' . $id_from . ' - ' . $id_to . 'cen�rio para l�xico")</script>';
-                        
                     }
                 }
                 // Target a scenario (id_cenario_to)
