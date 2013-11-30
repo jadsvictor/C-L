@@ -2,23 +2,23 @@
 
 include("functionsLexic/inclui_lexico.php");
 
-// Para a correta inclusao de um termo no lexico, uma serie de procedimentos
-// precisam ser tomados (relativos ao requisito 'navegacao circular'):
+// For correct inclusion of a term in the lexicon, a series of procedures
+// Need to be taken (relating to requirement 'circular navigation'):
 //
-// 1. Incluir o novo termo na base de dados;
-// 2. Para todos os cenarios daquele projeto:
-//      2.1. Procurar em titulo, objetivo, contexto, recursos, atores, episodios
-//           por ocorrencias do termo incluido ou de seus sinonimos;
-//      2.2. Para os campos em que forem encontradas ocorrencias:
-//              2.2.1. Incluir entrada na tabela 'centolex';
-// 3. Para todos termos do lexico daquele projeto (menos o recem-inserido):
-//      3.1. Procurar em nocao, impacto por ocorrencias do termo inserido ou de seus sinonimos;
-//      3.2. Para os campos em que forem encontradas ocorrencias:
-//              3.2.1. Incluir entrada na tabela 'lextolex';
-//      3.3. Procurar em nocao, impacto do termo inserido por
-//           ocorrencias de termos do lexico do mesmo projeto;
-//      3.4. Se achar alguma ocorrencia:
-//              3.4.1. Incluir entrada na table 'lextolex';
+// 1. Including the new term in the database;
+// 2. For all scenarios that project:
+//      2.1. Search in: title, purpose, context, resources, actors, 
+//      episodes for occurrences of the enclosed term or its synonyms;
+//      2.2. For fields where occurrences are found:
+//              2.2.1. Include table entry 'centolex';
+// 3. For all the lexical terms that project (minus the newly inserted):
+//      3.1. Browse notion, impact by occurrences of the word or its synonyms inserted;
+//      3.2. For fields where occurrences are found:
+//              3.2.1. Include entry in 'lextolex' table;
+//      3.3. Browse notion, impact of term occurrences in terms entered by the lexicon 
+//      of the same project;
+//      3.4. If you find any occurrence:
+//              3.4.1. Include entry in 'lextolex' table;
 
 if (!(function_exists("adicionar_lexico"))) {
 
@@ -40,7 +40,7 @@ if (!(function_exists("adicionar_lexico"))) {
         assert(is_string($classificacao));
         
         
-        $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $connect_database = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
         $id_incluido = inclui_lexico($id_projeto, $nome, $nocao, $impacto, $sinonimos, $classificacao); // (1)
 
