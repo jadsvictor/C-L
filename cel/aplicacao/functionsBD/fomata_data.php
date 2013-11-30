@@ -5,23 +5,22 @@ include_once("bd_class.php");
 include_once("seguranca.php");
 
 #############################################
-# Formata Data
-# Recebe YYY-DD-MM
-# Retorna DD-MM-YYYY
+# Formats the date
+# Receives YYY-DD-MM
+# Returns DD-MM-YYYY
 #############################################
 if (!(function_exists("formataData"))) {
 
-    function formataData($data) {
+    function formataData($date) {
 
-	//test if the variable is not null
-	assert($data!=null);
+        //test if the variable is not null
+        assert($date != null);
 
-        $novaData = substr($data, 8, 9) .
-                substr($data, 4, 4) .
-                substr($data, 0, 4);
-        return $novaData;
+        $newDate = substr($date, 8, 9) .
+                substr($date, 4, 4) .
+                substr($date, 0, 4);
+        return $newDate;
     }
 
 }
-
 ?>
