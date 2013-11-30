@@ -3,7 +3,6 @@
         <title>Pedido Lexico</title>
 
         <?php
-        
 // Scenario - Check requests for alteration of terms of lexical
 // Purpose : Allow the administrator to manage requests for alteration of terms in the lexicon .
 // Context : Manager wish to view the applications for alteration of terms of the lexicon .
@@ -36,7 +35,7 @@
                 $update_request_lexicon->execute("update pedidolex set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoLexico($request[$count]);
             }
-            
+
             $delete_request_lexicon = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_lexicon->execute("delete from pedidolex where id_pedido  = $remove[$count]");
@@ -63,14 +62,14 @@
             <?php
             $dataBase = new PGDB ();
             $select_request_lexicon = new QUERY($dataBase);
-            
+
             $select_synonymous = new QUERY($dataBase);
             $select_request_lexicon->execute("SELECT * FROM pedidolex where id_projeto = $project_id");
             if ($select_request_lexicon->getntuples() == 0) {
                 echo "<BR>Nenhum pedido.<BR>";
             } else {
                 $record = $select_request_lexicon->gofirst();
-                while ($record != 'LAST_RECORD_REACHED') {                    
+                while ($record != 'LAST_RECORD_REACHED') {
                     $id_request = $record['id_pedido'];
                     $select_synonymous->execute("SELECT nome FROM sinonimo WHERE id_pedidolex = $id_request");
                     $select_user = new QUERY($dataBase);

@@ -20,7 +20,6 @@ session_start();
 
 session_destroy();
 session_unset();
-
 ?>
 
 <html>
@@ -34,12 +33,12 @@ session_unset();
 
         function logoff()
         {
-            location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
+        location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
         }
 
 
-    //window.close();
-    //location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
+        //window.close();
+        //location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
     </script>
 </html>
 

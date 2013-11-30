@@ -6,10 +6,11 @@ function escapes_metacharacters($string) {
 }
 
 function prepares_data($string) {
-  
+
     // Remove blank spaces from the beginning and end of string
-    // $ string = trim ($ string);
-    // Replaces by & amp; (so not a problem generating the XML)
+    ï¿½ï¿½ï¿½ï¿½// $ string = trim ($ string);
+    ï¿½ï¿½ï¿½ï¿½// Replaces by & amp;
+    (so not a problem generating the XML)
     $string = ereg_replace("&", "&amp;", $string);
 
     // Remove html tags and php string

@@ -1,8 +1,8 @@
 <?php
-// Cen�rio -  Excluir Conceito 
+// Cen�rio -  Excluir Conceito 
 //Objetivo:	Permitir ao Usuário Excluir um conceito que esteja ativo
 //Contexto:	Usuário deseja excluir um conceito
-//              Pré-Condição: Login, Cen�rio cadastrado no sistema
+//              Pré-Condição: Login, Cen�rio cadastrado no sistema
 //Atores:	Usuário, Sistema
 //Recursos:	Dados informados
 //Episódios:	O sistema fornecerá uma tela para o usuário justificar a necessidade daquela
@@ -19,7 +19,7 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include("functionsBD/check_User_Authentication.php");
 
-checkUserAuthentication("index.php");  
+checkUserAuthentication("index.php");
 
 $id_concept = 0;
 inserirPedidoRemoverConceito($_SESSION['id_projeto_corrente'], $id_concept, $_SESSION['id_usuario_corrente']);

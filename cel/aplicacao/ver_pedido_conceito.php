@@ -3,7 +3,6 @@
         <title>Pedidos de alteracao dos Conceitos</title>
 
         <?php
-        
 // Scenario - Check requests for alteration of concepts
 // Purpose : Allow the administrator to manage requests for alteration of concepts .
 // Context : Manager wish to view the applications for alteration of concepts .
@@ -34,7 +33,7 @@
                 $update_request_concept->execute("update pedidocon set aprovado= 1 where id_pedido = $request[$count]");
                 tratarPedidoConceito($request[$count]);
             }
-            
+
             $delete_request_concept = new QUERY($dataBase);
             for ($count = 0; $count < sizeof($remove); $count++) {
                 $delete_request_concept->execute("delete from pedidocon where id_pedido = $remove[$count]");
@@ -65,14 +64,14 @@
 
             <?php
             $dataBase = new PGDB ();
-            $select_request_concept = new QUERY($dataBase);           
+            $select_request_concept = new QUERY($dataBase);
             $select_request_concept->execute("SELECT * FROM pedidocon WHERE id_projeto = $id_project");
             if ($select_request_concept->getntuples() == 0) {
                 echo "<BR>Nenhum pedido.<BR>";
             } else {
                 $record = $select_request_concept->gofirst();
                 while ($record != 'LAST_RECORD_REACHED') {
-                    $id_user = $record['id_usuario'];                                       
+                    $id_user = $record['id_usuario'];
                     $select_user = new QUERY($dataBase);
                     $select_user->execute("SELECT * FROM usuario WHERE id_usuario = $id_user");
                     $user = $select_user->gofirst();
@@ -89,12 +88,12 @@
                             <?= $record['nome'] ?>
                             </font>
                         </h3> <?
-                        if (!strcasecmp($requested_type, 'alterar')) {
-                            echo"para conceito abaixo:</h3>";
-                        } else {
-                            echo"</h3>";
-                        }
-                        ?>
+                            if (!strcasecmp($requested_type, 'alterar')) {
+                                echo"para conceito abaixo:</h3>";
+                            } else {
+                                echo"</h3>";
+                            }
+                            ?>
                         <table>
                             <td><b>Nome:</b></td>
                             <td><?= $record['nome'] ?></td>
