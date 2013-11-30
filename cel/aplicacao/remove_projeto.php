@@ -4,7 +4,7 @@
 // Context: A Project Management want to remove a particular project database
 // Preconditions: Login Become the selected project administrator.
 // Actors: Administrator
-/ / Resource: System design data, database
+// Resource: System design data, database
 
 session_start();
 
