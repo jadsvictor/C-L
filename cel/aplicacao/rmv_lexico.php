@@ -20,7 +20,7 @@ include("httprequest.inc");
 include("functionsLexic/inserir_Pedido_Remover_Lexico.php");
 include("functionsBD/check_User_Authentication.php");
 
-checkUserAuthentication("index.php");  
+checkUserAuthentication("index.php");
 
 $id_project = 0;
 $id_lexicon = 0;

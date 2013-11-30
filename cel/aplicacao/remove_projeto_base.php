@@ -2,7 +2,7 @@
     <head>
         <title>Remover Projeto</title>
 
-    
+
         <?php
 // Setting - Remove the base design
 // Purpose: Perform removal of a project database
@@ -14,7 +14,7 @@
 // Episodes: The system deletes all data relating to your particular project database.
 
         session_start();
-        
+
         include("functionsProject/remove_projeto.php");
         include("funcoes_genericas.php");
         include_once("CELConfig/CELConfig.inc");
@@ -27,7 +27,7 @@
         <script type ="text/javascript1.3">
             function logoff()
             {
-                location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
+            location.href = "http://<?php print( CELConfig_ReadVar("HTTPD_ip") . "/" . CELConfig_ReadVar("CEL_dir_relativo")); ?>index.php";
             }
         </script>
     </head>  

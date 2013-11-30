@@ -42,10 +42,10 @@ include("bd.inc");
         td{
         width="29%";
         }
-<?php
+        <?php
 // Episode 2: The system provides a screen for the administrator to make sure
 // That this removing the correct project.
-?>
+        ?>
         _egg_logo_guid()
         <table>
             <tr> 
@@ -60,9 +60,9 @@ include("bd.inc");
             </tr>
         </table>
         <br><br>
-<?php
+        <?php
 // Episode 3: The Administrator clicks on the unsubscribe link.
-?>
+        ?>
         <h1 style="text-align:center;">Cuidado!O projeto sera apagado para todos seus usuarios!</h1>
         <p><br>
         </p>

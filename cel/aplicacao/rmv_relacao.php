@@ -19,7 +19,7 @@ include("funcoes_genericas.php");
 include("httprequest.inc");
 include("functionsBD/check_User_Authentication.php");
 
-checkUserAuthentication("index.php");   
+checkUserAuthentication("index.php");
 include("functionsLexic/inserir_Pedido_Remover_Relacao.php");
 
 $id_relation = 0;
