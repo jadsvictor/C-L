@@ -4,9 +4,9 @@ include 'bd.inc';
 
 $connect_database = bd_connect();
 if ($connect_database && mysql_select_db(CELConfig_ReadVar("BD_database")))
-            echo "SUCESSO NA CONEXAO AO BD <br>";
-        else
-            echo "ERRO NA CONEXAO AO BD <br>";
+    echo "SUCESSO NA CONEXAO AO BD <br>";
+else
+    echo "ERRO NA CONEXAO AO BD <br>";
 
 
 $query_lexicon = "update lexico set tipo =  NULL;";
