@@ -20,9 +20,8 @@ function frame_inferior($tipo, $id) {
     $replace = "";
 
 
-    if ($tipo == "c") {            // Se for cenario 
-        // Seleciona os cen�rios que referenciam o cen�rio 
-        // com o id passado. 
+    if ($tipo == "c") {           
+        
         $qry_cenario = "SELECT id_cenario, titulo 
                             FROM   cenario, centocen 
                             WHERE  id_cenario = id_cenario_from 
