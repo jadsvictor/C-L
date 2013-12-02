@@ -131,7 +131,7 @@ function grava_conceitos($fp, $url, $lista_de_conceitos, $criador) {
     return TRUE;
 }
 
-// Objetivo:        Gravar as relacoes no arquivo DAML
+// Purpose:        Save the file in relations DAML
 
 function grava_relacoes($PonteiroArquivoDAML, $lista_de_relacoes, $criador) {
     foreach ($lista_de_relacoes as $relacao) {

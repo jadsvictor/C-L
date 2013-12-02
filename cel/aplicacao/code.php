@@ -105,7 +105,7 @@ exit();
 <?php
 $selection = "SELECT id_cenario, titulo  
 FROM cenario  
-WHERE id_projeto = $project_id  
+WHERE id_projeto = $project_id
 ORDER BY titulo";
 
 $qrr = mysql_query($selection) or die("Erro ao enviar a query de selecao");
