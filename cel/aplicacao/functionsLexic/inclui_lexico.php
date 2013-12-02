@@ -1,4 +1,5 @@
 <?php
+
 include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
@@ -29,11 +30,11 @@ if (!(function_exists("inclui_lexico"))) {
         assert(is_string($impacto));
         assert(is_string($sinonimos));
         assert(is_string($classificacao));
-        
+
         $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //test if the variable is not null
         assert($r != NULL);
-        
+
         $data = date("Y-m-d");
         //test if the variable is not null
         assert($data != NULL);
@@ -44,7 +45,7 @@ if (!(function_exists("inclui_lexico"))) {
 			  '" . prepares_data($nocao) . "', '" . prepares_data($impacto) . "', '$classificacao')";
         //test if the variable is not null
         assert($q != NULL);
-        
+
         mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
         //sinonimo
@@ -53,8 +54,11 @@ if (!(function_exists("inclui_lexico"))) {
         assert($newLexId != NULL);
 
 
-        if (!is_array($sinonimos))
+        if (!is_array($sinonimos)) {
             $sinonimos = array();
+        } else {
+            //nothing to do
+        }
 
         foreach ($sinonimos as $novoSin) {
             $q = "INSERT INTO sinonimo (id_lexico, nome, id_projeto)
@@ -67,18 +71,19 @@ if (!(function_exists("inclui_lexico"))) {
         $q = "SELECT max(id_lexico) FROM lexico";
         //test if the variable is not null
         assert($q != NULL);
-        
+
         $qrr = mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //test if the variable is not null
         assert($qrr != NULL);
-        
+
         $result = mysql_fetch_row($qrr);
         //test if the variable is not null
-        assert($result!= NULL);
-        
+        assert($result != NULL);
+
         return $result[0];
     }
 
+} else {
+    //nothing to do
 }
-
 ?>
