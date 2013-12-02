@@ -1,4 +1,5 @@
 <?php
+
 include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
@@ -21,17 +22,17 @@ include("functionsLexic/remove_Relacao.php");
 if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 
     function inserirPedidoRemoverRelacao($id_projeto, $id_relacao, $id_usuario) {
-        
+
         //tests if the variable is not null
-        assert ($id_projeto != NULL);
-        assert ($id_relacao != NULL);
-        assert ($id_usuario != NULL);
-        
+        assert($id_projeto != NULL);
+        assert($id_relacao != NULL);
+        assert($id_usuario != NULL);
+
         //tests if the variable has de correct type
-        assert (is_string($id_projeto));
-        assert (is_string($id_relacao));
-        assert (is_string($id_usuario));
-        
+        assert(is_string($id_projeto));
+        assert(is_string($id_relacao));
+        assert(is_string($id_usuario));
+
         $DB = new PGDB ();
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
@@ -62,6 +63,8 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
         }
     }
 
+} else {
+    //nothing to do
 }
 
 ###################################################################
@@ -76,13 +79,13 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 if (!(function_exists("tratarPedidoCenario"))) {
 
     function tratarPedidoCenario($id_pedido) {
-        
+
         //tests if the variable is not null
-        assert ($id_pedido != NULL);
-        
+        assert($id_pedido != NULL);
+
         //testes if teh variable has the correct type
-        assert (is_string($id_pedido));
-        
+        assert(is_string($id_pedido));
+
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -112,6 +115,8 @@ if (!(function_exists("tratarPedidoCenario"))) {
                     $id_cenario = $record['id_cenario'];
                     removeCenario($id_projeto, $id_cenario);
                     //$delete->execute ("DELETE FROM pedidocen WHERE id_cenario = $id_cenario") ;
+                } else {
+                    //nothing to do
                 }
                 adicionar_cenario($id_projeto, $titulo, $objetivo, $contexto, $atores, $recursos, $excecao, $episodios);
             }
@@ -119,6 +124,8 @@ if (!(function_exists("tratarPedidoCenario"))) {
         }
     }
 
+} else {
+    //nothing to do
 }
 ###################################################################
 # Processa um pedido identificado pelo seu id.
@@ -132,13 +139,13 @@ if (!(function_exists("tratarPedidoCenario"))) {
 if (!(function_exists("tratarPedidoLexico"))) {
 
     function tratarPedidoLexico($id_pedido) {
-        
+
         //tests if the variable is not null
-        assert ($id_pedido != NULL);
-        
+        assert($id_pedido != NULL);
+
         //testes if the variable has the correct type
-        assert (is_string($id_pedido));
-        
+        assert(is_string($id_pedido));
+
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -170,26 +177,35 @@ if (!(function_exists("tratarPedidoLexico"))) {
                         $sinonimos[] = $sinonimo["nome"];
                         $sinonimo = $selectSin->gonext();
                     }
+                } else {
+                    //nothing to do
                 }
 
                 if (!strcasecmp($tipoPedido, 'alterar')) {
                     $id_lexico = $record['id_lexico'];
                     alteraLexico($id_projeto, $id_lexico, $nome, $nocao, $impacto, $sinonimos, $classificacao);
-                } else if (($idLexicoConflitante = adicionar_lexico($id_projeto, $nome, $nocao, $impacto, $sinonimos, $classificacao)) <= 0) {
-                    $idLexicoConflitante = -1 * $idLexicoConflitante;
-
-                    $selectLexConflitante->execute("SELECT nome FROM lexico WHERE id_lexico = " . $idLexicoConflitante);
-
-                    $row = $selectLexConflitante->gofirst();
-
-                    return $row["nome"];
+                } else {
+                    if (($idLexicoConflitante = adicionar_lexico($id_projeto, $nome, $nocao, $impacto, $sinonimos, $classificacao)) <= 0) {
+                        $idLexicoConflitante = -1 * $idLexicoConflitante;
+                    } else {
+                        //nothing to do
+                    }
                 }
+
+                $selectLexConflitante->execute("SELECT nome FROM lexico WHERE id_lexico = " . $idLexicoConflitante);
+
+                $row = $selectLexConflitante->gofirst();
+
+                return $row["nome"];
             }
-            return null;
         }
+        return null;
     }
 
+} else {
+    //nothing to do
 }
+
 ###################################################################
 # Processa um pedido identificado pelo seu id.
 # Recebe o id do pedido.(1.1)
@@ -202,13 +218,13 @@ if (!(function_exists("tratarPedidoLexico"))) {
 if (!(function_exists("tratarPedidoConceito"))) {
 
     function tratarPedidoConceito($id_pedido) {
-        
+
         //testes if the variable is not null
-        assert ($id_pedido!= NULL);
-        
+        assert($id_pedido != NULL);
+
         //testes if the variable has the correct type
-        assert (is_string($id_pedido));
-        
+        assert(is_string($id_pedido));
+
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -232,12 +248,16 @@ if (!(function_exists("tratarPedidoConceito"))) {
                 if (!strcasecmp($tipoPedido, 'alterar')) {
                     $id_cenario = $record['id_conceito'];
                     removeConceito($id_projeto, $id_conceito);
+                } else {
+                    //nothing to do
                 }
                 adicionar_conceito($id_projeto, $nome, $descricao, $namespace);
             }
         }
     }
 
+} else {
+    //nothing to do
 }
 
 ###################################################################
@@ -252,13 +272,13 @@ if (!(function_exists("tratarPedidoConceito"))) {
 if (!(function_exists("tratarPedidoRelacao"))) {
 
     function tratarPedidoRelacao($id_pedido) {
-        
+
         //tests if the variable is not null
-        assert ($id_pedido != NULL);
-        
+        assert($id_pedido != NULL);
+
         //testes if the variable has the correct type
-        assert (is_string($id_pedido));
-        
+        assert(is_string($id_pedido));
+
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -280,11 +300,15 @@ if (!(function_exists("tratarPedidoRelacao"))) {
                 if (!strcasecmp($tipoPedido, 'alterar')) {
                     $id_relacao = $record['id_relacao'];
                     removeRelacao($id_projeto, $id_relacao);
+                } else {
+                    //nothing to do
                 }
                 adicionar_relacao($id_projeto, $nome);
             }
         }
     }
 
+} else {
+    //nothing to do
 }
 ?>
