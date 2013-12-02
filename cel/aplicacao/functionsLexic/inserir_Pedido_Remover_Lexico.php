@@ -1,4 +1,5 @@
 <?php
+
 ###################################################################
 # Funcao faz um insert na tabela de pedido.
 # Para remover um lexico ela deve receber
@@ -18,23 +19,23 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
-        
+
         //test if the variable is not null
-        assert($insere!=null);
-        assert($DB!=null);
-		assert($select!=null);
-		assert($select2!=null);
-		assert($id_projeto!=null);
-		assert($id_lexico!=null);
-		assert($id_usuario!=null);
+        assert($insere != null);
+        assert($DB != null);
+        assert($select != null);
+        assert($select2 != null);
+        assert($id_projeto != null);
+        assert($id_lexico != null);
+        assert($id_usuario != null);
 
         $qr = mysql_query("SELECT * FROM participa WHERE gerente = 1 
             AND id_usuario =" . _GET('$id_usuario') . " 
             AND id_projeto =" . _GET('$id_projeto')) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-       
+
         $resultArray = mysql_fetch_array($qr);
 
-        if ($resultArray == false) { //nao e gerente
+        if ($resultArray == false) {
 
             $select->execute("SELECT * FROM lexico WHERE id_lexico = $id_lexico");
             $lexico = $select->gofirst();
@@ -65,5 +66,7 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         }
     }
 
+} else {
+    //nothing to do
 }
 ?>

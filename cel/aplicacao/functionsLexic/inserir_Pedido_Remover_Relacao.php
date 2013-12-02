@@ -12,29 +12,29 @@
 if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 
     function inserirPedidoRemoverRelacao($id_projeto, $id_relacao, $id_usuario) {
-      $DB = new PGDB ();
-      $insere = new QUERY($DB);
-      $select = new QUERY($DB);
-       $select2 = new QUERY($DB);
+        $DB = new PGDB ();
+        $insere = new QUERY($DB);
+        $select = new QUERY($DB);
+        $select2 = new QUERY($DB);
         $select->execute("SELECT * FROM relacao WHERE id_relacao = $id_relacao");
         $relacao = $select->gofirst();
         $nome = $relacao['nome'];
-        
+
         //test if the variable is not null
-        assert($insere!=null);
-        assert($DB!=null);
-		assert($select!=null);
-		assert($select2!=null);
-		assert($id_projeto!=null);
-		assert($id_relacao!=null);
-		assert($id_usuario!=null);
-		
+        assert($insere != null);
+        assert($DB != null);
+        assert($select != null);
+        assert($select2 != null);
+        assert($id_projeto != null);
+        assert($id_relacao != null);
+        assert($id_usuario != null);
+
         $insere->execute("INSERT INTO pedidorel (id_projeto,id_relacao,nome,id_usuario,tipo_pedido,aprovado) VALUES ($id_projeto,$id_relacao,'$nome',$id_usuario,'remover',0)");
         $select->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
         $select2->execute("SELECT * FROM participa WHERE gerente = 1 and id_projeto = $id_projeto");
 
-		
-			
+
+
         if ($select->getntuples() == 0 && $select2->getntuples() == 0) {
             echo "<BR> [ERRO]Pedido nao foi comunicado por e-mail.";
         } else {
@@ -53,5 +53,7 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
         }
     }
 
+} else {
+    //nothing to do
 }
 ?>

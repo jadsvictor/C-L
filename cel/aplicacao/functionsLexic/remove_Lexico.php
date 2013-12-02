@@ -9,11 +9,11 @@ if (!(function_exists("removeLexico"))) {
     function removeLexico($id_projeto, $id_lexico) {
         $DB = new PGDB ();
         $delete = new QUERY($DB);
-		
-		//test if the variable is not null
-		assert($id_lexico != null);	
-		assert($id_projeto != null);	
-		
+
+        //test if the variable is not null
+        assert($id_lexico != null);
+        assert($id_projeto != null);
+
         # Remove o relacionamento entre o lexico a ser removido
         # e outros lexicos que o referenciam
         $delete->execute("DELETE FROM lextolex WHERE id_lexico_from = $id_lexico");
@@ -23,9 +23,11 @@ if (!(function_exists("removeLexico"))) {
         # Remove o lexico escolhido
         $delete->execute("DELETE FROM sinonimo WHERE id_lexico = $id_lexico");
         $delete->execute("DELETE FROM lexico WHERE id_lexico = $id_lexico");
-        
+
         assert($id_lexico = null);
     }
 
+} else {
+    //nothing to do
 }
 ?>
