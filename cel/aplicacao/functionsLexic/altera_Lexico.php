@@ -15,7 +15,7 @@ if (!(function_exists("alteraLexico"))) {
         assert($impacto != NULL);
         assert($sinonimos != NULL);
         assert($classificacao != NULL);
-        
+
         //test if a variable has the correct type
         assert(is_string($id_projeto));
         assert(is_string($id_lexico));
@@ -24,7 +24,7 @@ if (!(function_exists("alteraLexico"))) {
         assert(is_string($impacto));
         assert(is_string($sinonimos));
         assert(is_string($classificacao));
-       
+
         $DB = new PGDB ();
         $delete = new QUERY($DB);
 
@@ -47,7 +47,6 @@ if (!(function_exists("alteraLexico"))) {
 
         # Fim altera lexico escolhido
         ### VERIFICACAO DE OCORRENCIA EM CENARIOS ###
-        
         # Verifica se h� alguma ocorrencia do titulo do lexico nos cenarios existentes no banco
         $qr = "SELECT id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios
               FROM cenario
@@ -58,14 +57,14 @@ if (!(function_exists("alteraLexico"))) {
         $qrr = mysql_query($qr) or die("Erro ao enviar a query de SELECT 1<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //test if the variable is not null
         assert($qrr != NULL);
-        
+
         while ($result = mysql_fetch_array($qrr)) {    // 2  - Para todos os cenarios
             $nomeEscapado = escapes_metacharacters($nome);
             //test if the variable is not null
             assert($nomeEscapado != NULL);
             //test if a variable has the correct type
             assert(is_string($nomeEscapado));
-            
+
             $regex = "/(\s|\b)(" . $nomeEscapado . ")(\s|\b)/i";
             //test if the variable is not null
             assert($regex != NULL);
@@ -80,45 +79,37 @@ if (!(function_exists("alteraLexico"))) {
                     (preg_match($regex, $result['episodios']) != 0)) { //2.2
                 $q = "INSERT INTO centolex (id_cenario, id_lexico)
                      VALUES (" . $result['id_cenario'] . ", $id_lexico)"; //2.2.1
-                 //test if the variable is not null
-                 assert($q != NULL);
-            
+                //test if the variable is not null
+                assert($q != NULL);
+
                 mysql_query($q) or die("Erro ao enviar a query de INSERT 1<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+            } else {
+                //nothing to do
             }
         }
         # Fim da verificacao
-        
         # Verifica se h� alguma ocorrencia de algum dos sinonimos do lexico nos cenarios existentes no banco
         //&sininonimos = sinonimos do novo lexico
         $count = count($sinonimos);
         for ($i = 0; $i < $count; $i++) {//Para cada sinonimo
             $qrr = mysql_query($qr) or die("Erro ao enviar a query de SELECT 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-             //test if the variable is not null
+            //test if the variable is not null
             assert($qrr != NULL);
-           
-            while ($result2 = mysql_fetch_array($qrr)) {// para cada cenario
 
+            while ($result2 = mysql_fetch_array($qrr)) {// para cada cenario
                 $nomeSinonimoEscapado = escapes_metacharacters($sinonimos[$i]);
                 //test if the variable is not null
                 assert($nomeSinonimoEscapado != NULL);
                 //test if a variable has the correct type
                 assert(is_string($nomeSinonimoEscapado));
-                
+
                 $regex = "/(\s|\b)(" . $nomeSinonimoEscapado . ")(\s|\b)/i";
-                 //test if the variable is not null
+                //test if the variable is not null
                 assert($regex != NULL);
                 //test if a variable has the correct type
                 assert(is_string($regex));
-
-                if ((preg_match($regex, $result2['objetivo']) != 0) ||
-                        (preg_match($regex, $result2['contexto']) != 0) ||
-                        (preg_match($regex, $result2['atores']) != 0) ||
-                        (preg_match($regex, $result2['recursos']) != 0) ||
-                        (preg_match($regex, $result2['excecao']) != 0) ||
-                        (preg_match($regex, $result2['episodios']) != 0)) {
-                }               
-            }           
-        } 
+            }
+        }
         # Fim da verificacao
         ########
         ### VERIFICACAO DE OCORRENCIA EM LEXICOS
@@ -130,23 +121,23 @@ if (!(function_exists("alteraLexico"))) {
                FROM lexico
                WHERE id_projeto = $id_projeto
                AND id_lexico <> $id_lexico";
-         //test if the variable is not null
-         assert($qlo != NULL);
-            
+        //test if the variable is not null
+        assert($qlo != NULL);
+
         $qrr = mysql_query($qlo) or die("Erro ao enviar a query de SELECT no LEXICO<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //test if the variable is not null
         assert($qrr != NULL);
-            
+
         while ($result = mysql_fetch_array($qrr)) { // para cada lexico exceto o que esta sendo alterado    // (3)
             # Verifica a ocorrencia do titulo do lexico alterado no texto dos outros lexicos
             $nomeEscapado = escapes_metacharacters($nome);
-             //test if the variable is not null
+            //test if the variable is not null
             assert($nomeEscapado != NULL);
             //test if a variable has the correct type
             assert(is_string($nomeEscapado));
-            
+
             $regex = "/(\s|\b)(" . $nomeEscapado . ")(\s|\b)/i";
-             //test if the variable is not null
+            //test if the variable is not null
             assert($regex != NULL);
             //test if a variable has the correct type
             assert(is_string($regex));
@@ -155,22 +146,24 @@ if (!(function_exists("alteraLexico"))) {
                     (preg_match($regex, $result['impacto']) != 0)) {
                 $q = "INSERT INTO lextolex (id_lexico_from, id_lexico_to)
                       	VALUES (" . $result['id_lexico'] . ", $id_lexico)";
-                 //test if the variable is not null
-                 assert($q != NULL);
-                             
+                //test if the variable is not null
+                assert($q != NULL);
+
                 mysql_query($q) or die("Erro ao enviar a query de INSERT no lextolex 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+            } else {
+                //nothing to do
             }
 
             # Verifica a ocorrencia do titulo dos outros lexicos no texto do lexico alterado
 
             $nomeEscapado = escapes_metacharacters($result['nome']);
-             //test if the variable is not null
+            //test if the variable is not null
             assert($nomeEscapado != NULL);
             //test if a variable has the correct type
             assert(is_string($nomeEscapado));
-            
+
             $regex = "/(\s|\b)(" . $nomeEscapado . ")(\s|\b)/i";
-             //test if the variable is not null
+            //test if the variable is not null
             assert($regex != NULL);
             //test if a variable has the correct type
             assert(is_string($regex));
@@ -179,37 +172,38 @@ if (!(function_exists("alteraLexico"))) {
                     (preg_match($regex, $impacto) != 0)) {   // (3.3)        
                 $q = "INSERT INTO lextolex (id_lexico_from, id_lexico_to) 
                 		VALUES ($id_lexico, " . $result['id_lexico'] . ")";
-                 //test if the variable is not null
+                //test if the variable is not null
                 assert($q != NULL);
-           
+
                 mysql_query($q) or die("Erro ao enviar a query de insert no centocen<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+            } else {
+                //nothing to do
             }
-        }// while
+        }
         # Fim da verificao por titulo
 
         $ql = "SELECT id_lexico, nome, nocao, impacto
               FROM lexico
               WHERE id_projeto = $id_projeto
               AND id_lexico <> $id_lexico";
-         //test if the variable is not null
-         assert($ql != NULL);
-          
+        //test if the variable is not null
+        assert($ql != NULL);
+
         # Verifica a ocorrencia dos sinonimos do lexico alterado nos outros lexicos
 
         $count = count($sinonimos);
         for ($i = 0; $i < $count; $i++) {// para cada sinonimo do lexico alterado
-
             $qrr = mysql_query($ql) or die("Erro ao enviar a query de select no lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
             //test if the variable is not null
             assert($qrr != NULL);
-            
+
             while ($resultl = mysql_fetch_array($qrr)) {// para cada lexico exceto o alterado
                 $nomeSinonimoEscapado = escapes_metacharacters($sinonimos[$i]);
                 //test if the variable is not null
                 assert($nomeSinonimoEscapado != NULL);
                 //test if a variable has the correct type
                 assert(is_string($nomeSinonimoEscapado));
-                
+
                 $regex = "/(\s|\b)(" . $nomeSinonimoEscapado . ")(\s|\b)/i";
                 //test if the variable is not null
                 assert($regex != NULL);
@@ -225,20 +219,24 @@ if (!(function_exists("alteraLexico"))) {
                     $qverif = "SELECT * FROM lextolex where id_lexico_from=" . $resultl['id_lexico'] . " and id_lexico_to=$id_lexico";
                     //test if the variable is not null
                     assert($qverif != NULL);
-            
+
                     echo("Query: " . $qverif . "<br>");
                     $resultado = mysql_query($qverif) or die("Erro ao enviar query de select no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
                     //test if the variable is not null
                     assert($resultado != NULL);
-            
+
                     if (!resultado) {
                         $q = "INSERT INTO lextolex (id_lexico_from, id_lexico_to)
 	                     VALUES (" . $resultl['id_lexico'] . ", $id_lexico)";
                         //test if the variable is not null
                         assert($q != NULL);
-           
+
                         mysql_query($q) or die("Erro ao enviar a query de insert(sinonimo2) no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+                    } else {
+                        //nothing to do
                     }
+                } else {
+                    //nothing to do
                 }
             }
         }
@@ -249,13 +247,13 @@ if (!(function_exists("alteraLexico"))) {
         		WHERE id_projeto = $id_projeto 
         		AND id_lexico <> $id_lexico 
         		AND id_pedidolex = 0";
-         //test if the variable is not null
-         assert($qSinonimos != NULL);
-           
+        //test if the variable is not null
+        assert($qSinonimos != NULL);
+
         $qrrSinonimos = mysql_query($qSinonimos) or die("Erro ao enviar a query de select no sinonimo<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         //test if the variable is not null
         assert($qrrSinonimos != NULL);
-          
+
         $nomesSinonimos = array();
         $id_lexicoSinonimo = array();
 
@@ -265,7 +263,7 @@ if (!(function_exists("alteraLexico"))) {
             assert($nomeSinonimoEscapado != NULL);
             //test if a variable has the correct type
             assert(is_string($nomeSinonimoEscapado));
-            
+
             $regex = "/(\s|\b)(" . $nomeSinonimoEscapado . ")(\s|\b)/i";
             //test if the variable is not null
             assert($regex != NULL);
@@ -277,40 +275,49 @@ if (!(function_exists("alteraLexico"))) {
 
                 // Verifica  se a relacao encontrada ja se encontra no banco de dados. Se tiver nao faz nada, senao cadastra uma nopva relacao
                 $qv = "SELECT * FROM lextolex where id_lexico_from=$id_lexico and id_lexico_to=" . $rowSinonimo['id_lexico'];
-                 //test if the variable is not null
+                //test if the variable is not null
                 assert($qv != NULL);
-            
+
                 $resultado = mysql_query($qv) or die("Erro ao enviar query de select no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
                 //test if the variable is not null
                 assert($resultado != NULL);
-          
+
                 if (!resultado) {
                     $q = "INSERT INTO lextolex (id_lexico_from, id_lexico_to)
 	                     VALUES ($id_lexico, " . $rowSinonimo['id_lexico'] . ")";
                     //test if the variable is not null
                     assert($q != NULL);
-           
+
                     mysql_query($q) or die("Erro ao enviar a query de insert(sinonimo) no lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+                } else {
+                    // nothing to do
                 }
+            } else {
+                // nothing to do
             }
-        }
 
-        # Cadastra os sinonimos novamente
+            # Cadastra os sinonimos novamente
 
-        if (!is_array($sinonimos))
-            $sinonimos = array();
+            if (!is_array($sinonimos)) {
+                $sinonimos = array();
+            } else {
+                //nothing to do
+            }
 
-        foreach ($sinonimos as $novoSin) {
-            $q = "INSERT INTO sinonimo (id_lexico, nome, id_projeto)
+            foreach ($sinonimos as $novoSin) {
+                $q = "INSERT INTO sinonimo (id_lexico, nome, id_projeto)
                 VALUES ($id_lexico, '" . prepares_data(strtolower($novoSin)) . "', $id_projeto)";
-            //test if the variable is not null
-            assert($q != NULL);
-            
-            mysql_query($q, $r) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        }
+                //test if the variable is not null
+                assert($q != NULL);
 
-        # Fim - cadastro de sinonimos        
+                mysql_query($q, $r) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+            }
+
+            # Fim - cadastro de sinonimos        
+        }
     }
 
+} else {
+    //nothing to do
 }
 ?>
