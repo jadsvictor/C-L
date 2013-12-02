@@ -1,17 +1,17 @@
 <?php
-//Cenários -  Excluir Léxico 
-//Objetivo:	Permitir ao Usuário Excluir uma palavra do léxico que esteja ativa
-//Contexto:	Usuário deseja excluir uma palavra do léxico
-//              Pré-Condição: Login, palavra do léxico cadastrada no sistema 
-//Atores:	Usuário, Sistema
-//Recursos:	Dados informados
-//Episódios:	O sistema fornecerá uma tela para o usuário justificar a necessidade
-//              daquela exclusão para que o administrador possa ler e aprovar ou não.
-//              Esta tela também conterá um botão para a confirmação da exclusão.
-//Restrição:    Depois de clicado o botão o sistema verifica se todos os campos foram preenchidos 
-//Exceção:	Se todos os campos não foram preenchidos, retorna para o usuário 
-//              uma mensagem avisando que todos os campos devem ser preenchidos 
-//              e um botão de voltar para a pagina anterior.
+// Scenarios - Delete Lexicon
+// Purpose: Allow User to Delete a word from the lexicon that is active
+// Context: User want to delete a word from the lexicon
+// Precondition: login word lexicon registered in the system
+// Actors: User, System
+// Resource: Data informed
+// Episodes: The system will provide a screen for the user to justify the need
+// That exclusion so that the administrator can read and approve or not.
+// This will also contain a button to confirm the deletion.
+// Restriction: After you clicked the button, the system checks whether all fields were filled
+// Exception: If all fields are empty, returns to the user
+// A message that all fields must be filled
+// And a button to return to the previous page.
 
 session_start();
 
@@ -20,7 +20,7 @@ include("httprequest.inc");
 include("functionsLexic/inserir_Pedido_Remover_Lexico.php");
 include("functionsBD/check_User_Authentication.php");
 
-checkUserAuthentication("index.php");  
+checkUserAuthentication("index.php");
 
 $id_project = 0;
 $id_lexicon = 0;

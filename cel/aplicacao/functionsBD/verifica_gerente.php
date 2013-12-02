@@ -5,31 +5,32 @@ include_once("bd_class.php");
 include_once("seguranca.php");
 
 ###################################################################
-# Verifica se um determinado usuario e gerente de um determinado
-# projeto
-# Recebe o id do projeto. (1.1)
-# Faz um select para pegar o resultArray da tabela Participa.(1.2)
-# Se o resultArray for nao nulo: devolvemos TRUE(1);(1.3)
-# Se o resultArray for nulo: devolvemos False(0);(1.4)
+# Checks whether a User and a project manager
+# Gets the id of the project (1.1)
+# Makes a select to get the resultArray "Participa" in table.(1.2)
+# If result_array is not null: returned TRUE(1);(1.3)
+# If result_array is null: returned FALSE(0);(1.4)
 ###################################################################
 
-function verificaGerente($id_usuario, $id_projeto) {
-     //test if a variable has the correct type
-        assert(is_string($id_projeto));
-        assert(is_string($id_usuario));
-        
-        //test if the variable is not null
-        assert($id_projeto != NULL);
-        assert($id_usuario != NULL);
-    
-    $ret = 0;
-    $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
-    $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-    $resultArray = mysql_fetch_array($qr);
+function verificaGerente($id_user, $id_project) {
+    //test if a variable has the correct type
+    assert(is_string($id_project));
+    assert(is_string($id_user));
 
-    if ($resultArray != false) {
+    //test if the variable is not null
+    assert($id_project != NULL);
+    assert($id_user != NULL);
+
+    $ret = 0;
+    $select = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" . (int) $_GET[$id_user] . "AND id_projeto =" . (int) $_GET[$id_project];
+    $result_select = mysql_query($select) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $result_array = mysql_fetch_array($result_select);
+
+    if ($result_array != false) {
 
         $ret = 1;
+    } else {
+        //nothing to do
     }
     return $ret;
 }

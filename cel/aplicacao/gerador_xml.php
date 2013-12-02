@@ -10,7 +10,7 @@ include ("functionsPage/recarrega.php");
 include("functionsBD/check_User_Authentication.php");
 
 // Checa se o usuario foi autenticado
-checkUserAuthentication("index.php");        
+checkUserAuthentication("index.php");
 
 
 if (isset($_POST['flag'])) {
@@ -401,10 +401,10 @@ if (!mysql_num_rows($qrrVerify)) {
 } else {
     ?>
     <html><head><title>Projct</teitle></head><body bgcolor="#FFFFFF">
-            <p style="color: red; font-weight: bold; text-align: center">This version already exists!</p>
-            <br>
-            <br>
-        <center><a href="JavaScript:window.history.go(-1)">Back</a></center>
+        <p style="color: red; font-weight: bold; text-align: center">This version already exists!</p>
+        <br>
+        <br>
+    <center><a href="JavaScript:window.history.go(-1)">Back</a></center>
     </body></html>
 
     <?php

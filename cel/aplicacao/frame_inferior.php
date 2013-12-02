@@ -1,5 +1,4 @@
 <?php
-
 include("functionsBD/check_User_Authentication.php");
 include ("functionsPage/recarrega.php");
 
@@ -11,12 +10,12 @@ checkUserAuthentication("index.php");        // Cenario: controle de acesso
 // no frame. 
 
 function frame_inferior($tipo, $id) {
-    assert($tipo =! Null);
-    assert($id =! Null);
-    
+    assert($tipo = !Null);
+    assert($id = !Null);
+
     assert(is_string($tipo));
     assert(is_string($id));
-    
+
     $search = "'<[\/\!]*?[^<>]*?>'si";
     $replace = "";
 

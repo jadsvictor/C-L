@@ -22,6 +22,20 @@ class Abstract_DB {
     
     function open($dbname, $user, $pass, $host, $port) {
         
+    //tests if the variable is not null
+    assert($dbname != NULL);
+    assert($user != NULL);
+    assert($pass != NULL);
+    assert($host != NULL);
+    assert($port != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($dbname));
+    assert(is_string($user));
+    assert(is_string($pass));
+    assert(is_string($host));
+    assert(is_string($port));
+        
     }
 
     function close() {
@@ -48,6 +62,21 @@ class PGDB extends Abstract_DB {
     }
 
     function open($dbname, $user, $passwd, $host, $port) {
+        
+    //tests if the variable is not null
+    assert($dbname != NULL);
+    assert($user != NULL);
+    assert($passwd != NULL);
+    assert($host != NULL);
+    assert($port != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($dbname));
+    assert(is_string($user));
+    assert(is_string($passwd));
+    assert(is_string($host));
+    assert(is_string($port));
+    
         $this->db_linkid = bd_connect() or die("Erro na conex�o � BD : " . mysql_error());
         if ($this->db_linkid) {
             return $this->db_linkid;
@@ -73,6 +102,13 @@ class QUERY {
     var $currentrow = 0;
 
     function QUERY($pdbobject) {
+        
+    //tests if the variable is not null
+    assert($pdbobject != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($pdbobject));
+    
         if ($pdbobject){
             $this->associate($pdbobject);
         }
@@ -83,10 +119,24 @@ class QUERY {
     }
 
     function associate($pdbobject) {
+        
+    //tests if the variable is not null
+    assert($pdbobject != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($pdbobject));
+    
         $this->dbobject = $pdbobject;
     }
 
     function execute($querystring) {
+        
+    //tests if the variable is not null
+    assert($querystring != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($querystring));
+    
         $this->operationresult = mysql_query($querystring) or die(mysql_error() . "<br>" . $querystring);
         return $this->operationresult;
     }
@@ -97,6 +147,13 @@ class QUERY {
     }
 
     function getfieldname($fieldnumber) {
+        
+    //tests if the variable is not null
+    assert($fieldnumber != NULL);
+    
+    //tests if the variable has the correct type
+    assert(is_string($fieldnumber));
+    
         return mysql_fieldname($this->operationresult, $fieldnumber);
     }
 

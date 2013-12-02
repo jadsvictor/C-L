@@ -16,7 +16,7 @@
                 echo "SUCESSO NA CONEXAO AO BD <br>";
             else
                 echo "ERRO NA CONEXAO AO BD <br>";
-            
+
             $filename = "teste.txt";
 
             if (!$handle = fopen($filename, 'w')) {

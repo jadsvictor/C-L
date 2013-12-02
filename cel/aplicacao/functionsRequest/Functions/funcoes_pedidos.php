@@ -21,6 +21,17 @@ include("functionsLexic/remove_Relacao.php");
 if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 
     function inserirPedidoRemoverRelacao($id_projeto, $id_relacao, $id_usuario) {
+        
+        //tests if the variable is not null
+        assert ($id_projeto != NULL);
+        assert ($id_relacao != NULL);
+        assert ($id_usuario != NULL);
+        
+        //tests if the variable has de correct type
+        assert (is_string($id_projeto));
+        assert (is_string($id_relacao));
+        assert (is_string($id_usuario));
+        
         $DB = new PGDB ();
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
@@ -65,6 +76,13 @@ if (!(function_exists("inserirPedidoRemoverRelacao"))) {
 if (!(function_exists("tratarPedidoCenario"))) {
 
     function tratarPedidoCenario($id_pedido) {
+        
+        //tests if the variable is not null
+        assert ($id_pedido != NULL);
+        
+        //testes if teh variable has the correct type
+        assert (is_string($id_pedido));
+        
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -114,6 +132,13 @@ if (!(function_exists("tratarPedidoCenario"))) {
 if (!(function_exists("tratarPedidoLexico"))) {
 
     function tratarPedidoLexico($id_pedido) {
+        
+        //tests if the variable is not null
+        assert ($id_pedido != NULL);
+        
+        //testes if the variable has the correct type
+        assert (is_string($id_pedido));
+        
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -177,6 +202,13 @@ if (!(function_exists("tratarPedidoLexico"))) {
 if (!(function_exists("tratarPedidoConceito"))) {
 
     function tratarPedidoConceito($id_pedido) {
+        
+        //testes if the variable is not null
+        assert ($id_pedido!= NULL);
+        
+        //testes if the variable has the correct type
+        assert (is_string($id_pedido));
+        
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);
@@ -220,6 +252,13 @@ if (!(function_exists("tratarPedidoConceito"))) {
 if (!(function_exists("tratarPedidoRelacao"))) {
 
     function tratarPedidoRelacao($id_pedido) {
+        
+        //tests if the variable is not null
+        assert ($id_pedido != NULL);
+        
+        //testes if the variable has the correct type
+        assert (is_string($id_pedido));
+        
         $DB = new PGDB ();
         $select = new QUERY($DB);
         $delete = new QUERY($DB);

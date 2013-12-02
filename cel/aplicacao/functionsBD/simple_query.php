@@ -11,19 +11,21 @@ if (!(function_exists("simple_query"))) {
         assert($field != NULL);
         assert($table != NULL);
         assert($where != NULL);
-                
+
         //test if a variable has the correct type
         assert(is_string($field));
         assert(is_string($table));
         assert(is_string($where));
-        
-        
-        $r = bd_connect() or die("Erro ao conectar ao SGBD");
-        $q = "SELECT $field FROM $table WHERE $where";
-        $qrr = mysql_query($q) or die("Erro ao enviar a query");
-        $result = mysql_fetch_row($qrr);
-        return $result[0];
+
+
+        $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
+        $select_field = "SELECT $field FROM $table WHERE $where";
+        $result_select_field = mysql_query($select_field) or die("Erro ao enviar a query");
+        $result_array = mysql_fetch_row($result_select_field);
+        return $result_array[0];
     }
 
+} else {
+    //nothing to do
 }
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 include_once("bd.inc");
 include_once("bd_class.php");
 include_once("seguranca.php");
@@ -6,25 +7,25 @@ include_once("seguranca.php");
 /* chkUser(): checa se o usu�rio acessando foi autenticado (presen�a da vari�vel de sess�o
   $id_usuario_corrente). Caso ele j� tenha sido autenticado, continua-se com a execu��o do
   script. Caso contr�rio, abre-se uma janela de logon. */
-/*if (!(function_exists("checkUserAuthentication"))) {
+/* if (!(function_exists("checkUserAuthentication"))) {
 
-    function checkUserAuthentication($url) {
+  function checkUserAuthentication($url) {
 
-        if( isset($_SESSION["id_usuario_correntegit"]))  {
-           
-            ?>
-            <script language="javascript1.3">
-                
-                open('login.php?url=<?= $url ?>', 'login', 'dependent,height=430,width=490,resizable,scrollbars,titlebar');
-  
-            </script>
+  if( isset($_SESSION["id_usuario_correntegit"]))  {
 
-            <?php
-            exit();
-        }
-    }
+  ?>
+  <script language="javascript1.3">
 
-}*/ 
+  open('login.php?url=<?= $url ?>', 'login', 'dependent,height=430,width=490,resizable,scrollbars,titlebar');
+
+  </script>
+
+  <?php
+  exit();
+  }
+  }
+
+  } */
 
 
 ###################################################################
@@ -103,100 +104,100 @@ if (!(function_exists("inclui_lexico"))) {
 # Devolve o id_cprojeto. (1.4)
 #
 ###################################################################
-/*if (!(function_exists("inclui_projeto"))) {
+/* if (!(function_exists("inclui_projeto"))) {
 
-    function inclui_projeto($nome, $descricao) {
-        $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        //verifica se usuario ja existe
-        $qrv = mysql_query("SELECT * FROM users WHERE name = '"  .  mysql_real_escape_string($_GET["name"])  .  "'");
-        
-        //$result = mysql_fetch_row($qvr);
-        $resultArray = mysql_fetch_array($qvr);
+  function inclui_projeto($nome, $descricao) {
+  $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  //verifica se usuario ja existe
+  $qrv = mysql_query("SELECT * FROM users WHERE name = '"  .  mysql_real_escape_string($_GET["name"])  .  "'");
 
-
-        if ($resultArray != false) {
-            //verifica se o nome existente corresponde a um projeto que este usuario participa
-            $id_projeto_repetido = $resultArray['id_projeto'];
-
-            $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
-
-            $qvu = "SELECT * FROM participa WHERE id_projeto = '$id_projeto_repetido' AND id_usuario = '$id_usuario_corrente' ";
-
-            $qvuv = mysql_query($qvu) or die("Erro ao enviar a query de SELECT no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
-            $resultArray = mysql_fetch_row($qvuv);
-
-            if ($resultArray[0] != null) {
-                return -1;
-            }
-        }
-
-        $q = "SELECT MAX(id_projeto) FROM projeto";
-        $qrr = mysql_query($q) or die("Erro ao enviar a query de MAX ID<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        $result = mysql_fetch_row($qrr);
-
-        if ($result[0] == false) {
-            $result[0] = 1;
-        } else {
-            $result[0]++;
-        }
-        $data = date("Y-m-d");
-
-        $qr = "INSERT INTO projeto (id_projeto, nome, data_criacao, descricao)
-                  VALUES ($result[0],'" . prepares_data($nome) . "','$data' , '" . prepares_data($descricao) . "')";
-
-        mysql_query($qr) or die("Erro ao enviar a query INSERT<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
-        return $result[0];
-    }
-
-}
+  //$result = mysql_fetch_row($qvr);
+  $resultArray = mysql_fetch_array($qvr);
 
 
-if (!(function_exists("recarrega"))) {
+  if ($resultArray != false) {
+  //verifica se o nome existente corresponde a um projeto que este usuario participa
+  $id_projeto_repetido = $resultArray['id_projeto'];
 
-    function recarrega($url) {
-        ?>
+  $id_usuario_corrente = $_SESSION['id_usuario_corrente'];
 
-        <script language="javascript1.3">
+  $qvu = "SELECT * FROM participa WHERE id_projeto = '$id_projeto_repetido' AND id_usuario = '$id_usuario_corrente' ";
 
-            location.replace('<?= $url ?>');
+  $qvuv = mysql_query($qvu) or die("Erro ao enviar a query de SELECT no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
-        </script>
+  $resultArray = mysql_fetch_row($qvuv);
 
-        <?php
-    }
+  if ($resultArray[0] != null) {
+  return -1;
+  }
+  }
 
-}
+  $q = "SELECT MAX(id_projeto) FROM projeto";
+  $qrr = mysql_query($q) or die("Erro ao enviar a query de MAX ID<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  $result = mysql_fetch_row($qrr);
 
-if (!(function_exists("breakpoint"))) {
+  if ($result[0] == false) {
+  $result[0] = 1;
+  } else {
+  $result[0]++;
+  }
+  $data = date("Y-m-d");
 
-    function breakpoint($num) {
-        ?>
+  $qr = "INSERT INTO projeto (id_projeto, nome, data_criacao, descricao)
+  VALUES ($result[0],'" . prepares_data($nome) . "','$data' , '" . prepares_data($descricao) . "')";
 
-        <script language="javascript1.3">
+  mysql_query($qr) or die("Erro ao enviar a query INSERT<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
-            alert('<?= $num ?>');
+  return $result[0];
+  }
 
-        </script>
+  }
 
-        <?php
-    }
 
-}*/
+  if (!(function_exists("recarrega"))) {
+
+  function recarrega($url) {
+  ?>
+
+  <script language="javascript1.3">
+
+  location.replace('<?= $url ?>');
+
+  </script>
+
+  <?php
+  }
+
+  }
+
+  if (!(function_exists("breakpoint"))) {
+
+  function breakpoint($num) {
+  ?>
+
+  <script language="javascript1.3">
+
+  alert('<?= $num ?>');
+
+  </script>
+
+  <?php
+  }
+
+  } */
 
 /*
-if (!(function_exists("simple_query"))) {
+  if (!(function_exists("simple_query"))) {
 
-    funcTion simple_query($field, $table, $where) {
-        $r = bd_connect() or die("Erro ao conectar ao SGBD");
-        $q = "SELECT $field FROM $table WHERE $where";
-        $qrr = mysql_query($q) or die("Erro ao enviar a query");
-        $result = mysql_fetch_row($qrr);
-        return $result[0];
-    }
+  funcTion simple_query($field, $table, $where) {
+  $r = bd_connect() or die("Erro ao conectar ao SGBD");
+  $q = "SELECT $field FROM $table WHERE $where";
+  $qrr = mysql_query($q) or die("Erro ao enviar a query");
+  $result = mysql_fetch_row($qrr);
+  return $result[0];
+  }
 
-}*/
+  } */
 
 
 // Para a correta inclusao de um cenario, uma serie de procedimentos
@@ -771,7 +772,6 @@ if (!(function_exists("alteraLexico"))) {
         for ($i = 0; $i < $count; $i++) {//Para cada sinonimo
             $qrr = mysql_query($qr) or die("Erro ao enviar a query de SELECT 2<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
             while ($result2 = mysql_fetch_array($qrr)) {// para cada cenario
-
                 $nomeSinonimoEscapado = escapes_metacharacters($sinonimos[$i]);
                 $regex = "/(\s|\b)(" . $nomeSinonimoEscapado . ")(\s|\b)/i";
 
@@ -838,7 +838,6 @@ if (!(function_exists("alteraLexico"))) {
 
         $count = count($sinonimos);
         for ($i = 0; $i < $count; $i++) {// para cada sinonimo do lexico alterado
-
             $qrr = mysql_query($ql) or die("Erro ao enviar a query de select no lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
             while ($resultl = mysql_fetch_array($qrr)) {// para cada lexico exceto o alterado
                 $nomeSinonimoEscapado = escapes_metacharacters($sinonimos[$i]);
@@ -1166,7 +1165,6 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
 
         if ($resultArray == false) { //nao e gerente
-
             $insere->execute("INSERT INTO pedidocen (id_projeto, id_cenario, titulo, objetivo, contexto, atores, recursos, excecao, episodios, id_usuario, tipo_pedido, aprovado, justificativa) VALUES ($id_projeto, $id_cenario, '$titulo', '$objetivo', '$contexto', '$atores', '$recursos', '$excecao', '$episodios', $id_usuario, 'alterar', 0, '$justificativa')");
             $select->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
             $select2->execute("SELECT * FROM participa WHERE gerente = 1 AND id_projeto = $id_projeto");
@@ -1207,7 +1205,7 @@ if (!(function_exists("inserirPedidoRemoverCenario"))) {
         $select2 = new QUERY($DB);
 
         $qr = mysql_query("SELECT * FROM participa WHERE gerente = 1 
-            AND id_usuario =" . _GET('$id_usuario') ." 
+            AND id_usuario =" . _GET('$id_usuario') . " 
             AND id_projeto =" . _GET('$id_projeto')) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         $resultArray = mysql_fetch_array($qr);
 
@@ -1261,7 +1259,6 @@ if (!(function_exists("inserirPedidoAdicionarLexico"))) {
 
 
         if ($resultArray == false) { //nao e gerente
-
             $insere->execute("INSERT INTO pedidolex (id_projeto,nome,nocao,impacto,tipo,id_usuario,tipo_pedido,aprovado) VALUES ($id_projeto,'$nome','$nocao','$impacto','$classificacao',$id_usuario,'inserir',0)");
 
             $newId = $insere->getLastId();
@@ -1327,7 +1324,6 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
 
 
         if ($resultArray == false) { //nao e gerente
-
             $insere->execute("INSERT INTO pedidolex (id_projeto,id_lexico,nome,nocao,impacto,id_usuario,tipo_pedido,aprovado,justificativa, tipo) VALUES ($id_projeto,$id_lexico,'$nome','$nocao','$impacto',$id_usuario,'alterar',0,'$justificativa', '$classificacao')");
 
             $newPedidoId = $insere->getLastId();
@@ -1384,11 +1380,10 @@ if (!(function_exists("inserirPedidoRemoverLexico"))) {
         $qr = mysql_query("SELECT * FROM participa WHERE gerente = 1 
             AND id_usuario =" . _GET('$id_usuario') . " 
             AND id_projeto =" . _GET('$id_projeto')) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-       
+
         $resultArray = mysql_fetch_array($qr);
 
         if ($resultArray == false) { //nao e gerente
-
             $select->execute("SELECT * FROM lexico WHERE id_lexico = $id_lexico");
             $lexico = $select->gofirst();
             $nome = $lexico['nome'];
@@ -1443,7 +1438,6 @@ if (!(function_exists("inserirPedidoAlterarCenario"))) {
 
 
         if ($resultArray == false) { //nao e gerente
-
             $insere->execute("INSERT INTO pedidocon (id_projeto, id_conceito, nome, descricao, namespace, id_usuario, tipo_pedido, aprovado, justificativa) VALUES ($id_projeto, $id_conceito, '$nome', '$descricao', '$namespace', $id_usuario, 'alterar', 0, '$justificativa')");
             $select->execute("SELECT * FROM usuario WHERE id_usuario = $id_usuario");
             $select2->execute("SELECT * FROM participa WHERE gerente = 1 AND id_projeto = $id_projeto");
@@ -1757,88 +1751,88 @@ if (!(function_exists("tratarPedidoRelacao"))) {
 #a esse projeto.Ela so verifica atualmente
 #se a pessoa e um gerente.
 #############################################
-/*if (!(function_exists("verificaGerente"))) {
+/* if (!(function_exists("verificaGerente"))) {
 
-    function verificaGerente($id_usuario) {
-        $DB = new PGDB ();
-        $select = new QUERY($DB);
-        $select->execute("SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario");
-        if ($select->getntuples() == 0) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
+  function verificaGerente($id_usuario) {
+  $DB = new PGDB ();
+  $select = new QUERY($DB);
+  $select->execute("SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario");
+  if ($select->getntuples() == 0) {
+  return 0;
+  } else {
+  return 1;
+  }
+  }
 
-}
+  }
 
-#############################################
-# Formata Data
-# Recebe YYY-DD-MM
-# Retorna DD-MM-YYYY
-#############################################
-if (!(function_exists("formataData"))) {
+  #############################################
+  # Formata Data
+  # Recebe YYY-DD-MM
+  # Retorna DD-MM-YYYY
+  #############################################
+  if (!(function_exists("formataData"))) {
 
-    function formataData($data) {
+  function formataData($data) {
 
-        $novaData = substr($data, 8, 9) .
-                substr($data, 4, 4) .
-                substr($data, 0, 4);
-        return $novaData;
-    }
+  $novaData = substr($data, 8, 9) .
+  substr($data, 4, 4) .
+  substr($data, 0, 4);
+  return $novaData;
+  }
 
-}
-
-
+  }
 
 
 
-// Retorna TRUE ssse $id_usuario eh admin de $id_projeto
-if (!(function_exists("is_admin"))) {
 
-    function is_admin($id_usuario, $id_projeto) {
-        $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        $q = "SELECT * FROM participa WHERE id_usuario =" . (int)$_GET[$id_usuario] . "
-            AND id_projeto = " . (int)$_GET[$id_projeto] . "
-              AND gerente = 1";
-        $qrr = mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        return (1 == mysql_num_rows($qrr));
-    }
 
-}
+  // Retorna TRUE ssse $id_usuario eh admin de $id_projeto
+  if (!(function_exists("is_admin"))) {
 
-// Retorna TRUE ssse $id_usuario tem permissao sobre $id_projeto
-if (!(function_exists("check_proj_perm"))) {
+  function is_admin($id_usuario, $id_projeto) {
+  $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  $q = "SELECT * FROM participa WHERE id_usuario =" . (int)$_GET[$id_usuario] . "
+  AND id_projeto = " . (int)$_GET[$id_projeto] . "
+  AND gerente = 1";
+  $qrr = mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  return (1 == mysql_num_rows($qrr));
+  }
 
-    function check_proj_perm($id_usuario, $id_projeto) {
-        $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        $q = "SELECT * FROM participa WHERE id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
-        $qrr = mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-        return (1 == mysql_num_rows($qrr));
-    }
+  }
 
-}
-###################################################################
-# Verifica se um determinado usuario e gerente de um determinado
-# projeto
-# Recebe o id do projeto. (1.1)
-# Faz um select para pegar o resultArray da tabela Participa.(1.2)
-# Se o resultArray for nao nulo: devolvemos TRUE(1);(1.3)
-# Se o resultArray for nulo: devolvemos False(0);(1.4)
-###################################################################
+  // Retorna TRUE ssse $id_usuario tem permissao sobre $id_projeto
+  if (!(function_exists("check_proj_perm"))) {
 
-/*function verificaGerente($id_usuario, $id_projeto) {
-    $ret = 0;
-    $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
-    $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-    $resultArray = mysql_fetch_array($qr);
+  function check_proj_perm($id_usuario, $id_projeto) {
+  $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  $q = "SELECT * FROM participa WHERE id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
+  $qrr = mysql_query($q) or die("Erro ao enviar a query<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  return (1 == mysql_num_rows($qrr));
+  }
 
-    if ($resultArray != false) {
+  }
+  ###################################################################
+  # Verifica se um determinado usuario e gerente de um determinado
+  # projeto
+  # Recebe o id do projeto. (1.1)
+  # Faz um select para pegar o resultArray da tabela Participa.(1.2)
+  # Se o resultArray for nao nulo: devolvemos TRUE(1);(1.3)
+  # Se o resultArray for nulo: devolvemos False(0);(1.4)
+  ###################################################################
 
-        $ret = 1;
-    }
-    return $ret;
-}*/
+  /*function verificaGerente($id_usuario, $id_projeto) {
+  $ret = 0;
+  $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario =" .  (int)$_GET[$id_usuario] .  "AND id_projeto ="  .  (int)$_GET[$id_projeto];
+  $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+  $resultArray = mysql_fetch_array($qr);
+
+  if ($resultArray != false) {
+
+  $ret = 1;
+  }
+  return $ret;
+  } */
 
 ###################################################################
 # Remove um determinado projeto da base de dados
@@ -1924,4 +1918,5 @@ function removeProjeto($id_projeto) {
     $qv = "Delete FROM projeto WHERE id_projeto = '$id_projeto' ";
     $deletaProjeto = mysql_query($qv) or die("Erro ao apagar no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 }
+
 ?>

@@ -24,68 +24,104 @@ include_once("seguranca.php");
 #
 ###################################################################
 function removeProjeto($id_projeto) {
+    //test if the variable is not null
+    assert($id_projeto != NULL);
+    //test if a variable has the correct type
+    assert(is_string($id_projeto));
+    
     $r = bd_connect() or die("Erro ao conectar ao SGBD<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //Remove os pedidos de cenario
-    $qv = "Delete FROM pedidocen WHERE id_projeto = '$id_projeto' ";
-    $deletaPedidoCenario = mysql_query($qv) or die("Erro ao apagar pedidos de cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaPedidoCenario = "Delete FROM pedidocen WHERE id_projeto = '$id_projeto' ";
+        //test if the variable is not null
+        assert($deletaPedidoCenario != NULL);
+    mysql_query($deletaPedidoCenario) or die("Erro ao apagar pedidos de cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //Remove os pedidos de lexico
-    $qv = "Delete FROM pedidolex WHERE id_projeto = '$id_projeto' ";
-    $deletaPedidoLexico = mysql_query($qv) or die("Erro ao apagar pedidos do lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaPedidoLexico = "Delete FROM pedidolex WHERE id_projeto = '$id_projeto' ";
+        //test if the variable is not null
+        assert($deletaPedidoLexico != NULL);
+    mysql_query($deletaPedidoLexico) or die("Erro ao apagar pedidos do lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //Remove os lexicos //verificar lextolex!!!
-    $qv = "SELECT * FROM lexico WHERE id_projeto = '$id_projeto' ";
-    $qvr = mysql_query($qv) or die("Erro ao enviar a query de select no lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
-    while ($result = mysql_fetch_array($qvr)) {
+    $deletaLex = "SELECT * FROM lexico WHERE id_projeto = '$id_projeto' ";
+        //test if the variable is not null
+        assert($deletaLex != NULL);
+    $resultadoDeletaLexico = mysql_query($deletaLex) or die("Erro ao enviar a query de select no lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        //test if the variable is not null
+        assert($resultadoDeletaLexico != NULL);
+        
+    while ($result = mysql_fetch_array($resultadoDeletaLexico)) {
         $id_lexico = $result['id_lexico']; //seleciona um lexico
 
-        $qv = "Delete FROM lextolex WHERE id_lexico_from = '$id_lexico' OR id_lexico_to = '$id_lexico' ";
-        $deletaLextoLe = mysql_query($qv) or die("Erro ao apagar pedidos do lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $deletaLexToLex = "Delete FROM lextolex WHERE id_lexico_from = '$id_lexico' OR id_lexico_to = '$id_lexico' ";
+            //test if the variable is not null
+            assert($deletaLexToLex != NULL);
+        mysql_query($deletaLexToLex) or die("Erro ao apagar pedidos do lextolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
-        $qv = "Delete FROM centolex WHERE id_lexico = '$id_lexico'";
-        $deletacentolex = mysql_query($qv) or die("Erro ao apagar pedidos do centolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $deletaCenToLex = "Delete FROM centolex WHERE id_lexico = '$id_lexico'";
+            //test if the variable is not null
+            assert($deletaCenToLex != NULL);
+        mysql_query($deletaCenToLex) or die("Erro ao apagar pedidos do centolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
-        //$qv = "Delete FROM sinonimo WHERE id_lexico = '$id_lexico'";
-        //$deletacentolex = mysql_query($qv) or die("Erro ao apagar sinonimo<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
-        $qv = "Delete FROM sinonimo WHERE id_projeto = '$id_projeto'";
-        $deletacentolex = mysql_query($qv) or die("Erro ao apagar sinonimo<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $deletaSinonimo = "Delete FROM sinonimo WHERE id_projeto = '$id_projeto'";
+           //test if the variable is not null
+            assert($deletaSinonimo != NULL);
+        mysql_query($deletaSinonimo) or die("Erro ao apagar sinonimo<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
     }
 
-    $qv = "Delete FROM lexico WHERE id_projeto = '$id_projeto' ";
-    $deletaLexico = mysql_query($qv) or die("Erro ao apagar pedidos do lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaLexico = "Delete FROM lexico WHERE id_projeto = '$id_projeto' ";
+        //test if the variable is not null
+        assert($deletaLexico != NULL);
+    mysql_query($deletaLexico) or die("Erro ao apagar pedidos do lexico<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //remove os cenarios
-    $qv = "SELECT * FROM cenario WHERE id_projeto = '$id_projeto' ";
-    $qvr = mysql_query($qv) or die("Erro ao enviar a query de select no cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-    $resultArrayCenario = mysql_fetch_array($qvr);
+    $removeCenario = "SELECT * FROM cenario WHERE id_projeto = '$id_projeto' ";
+            //test if the variable is not null
+            assert($removeCenario != NULL);
+    $resultRemoveCenario = mysql_query($removeCenario) or die("Erro ao enviar a query de select no cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+            //test if the variable is not null
+            assert($resultRemoveCenario != NULL);
+  
+    while ($resultArrayCenario = mysql_fetch_array($resultRemoveCenario)) {
+        //test if the variable is not null
+        assert($resultArrayCenario != NULL);
+            
+        $id_lexico = $resultArrayCenario['id_cenario']; //seleciona um lexico
 
-    while ($result = mysql_fetch_array($qvr)) {
-        $id_lexico = $result['id_cenario']; //seleciona um lexico
+        $deletaCentoCen = "Delete FROM centocen WHERE id_cenario_from = '$id_cenario' OR id_cenario_to = '$id_cenario' ";
+            //test if the variable is not null
+            assert($deletaCentoCen != NULL);
+        mysql_query($deletaCentoCen) or die("Erro ao apagar pedidos do centocen<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
-        $qv = "Delete FROM centocen WHERE id_cenario_from = '$id_cenario' OR id_cenario_to = '$id_cenario' ";
-        $deletaCentoCen = mysql_query($qv) or die("Erro ao apagar pedidos do centocen<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
-
-        $qv = "Delete FROM centolex WHERE id_cenario = '$id_cenario'";
-        $deletaLextoLe = mysql_query($qv) or die("Erro ao apagar pedidos do centolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+        $deletaLextoLex = "Delete FROM centolex WHERE id_cenario = '$id_cenario'";
+            //test if the variable is not null
+            assert($deletaLextoLex != NULL);
+        mysql_query($deletaLextoLex) or die("Erro ao apagar pedidos do centolex<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
     }
 
-    $qv = "Delete FROM cenario WHERE id_projeto = '$id_projeto' ";
-    $deletaLexico = mysql_query($qv) or die("Erro ao apagar pedidos do cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaLexico  = "Delete FROM cenario WHERE id_projeto = '$id_projeto' ";
+            //test if the variable is not null
+            assert($deletaLexico != NULL);
+    mysql_query($deletaLexico) or die("Erro ao apagar pedidos do cenario<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //remover participantes
-    $qv = "Delete FROM participa WHERE id_projeto = '$id_projeto' ";
-    $deletaParticipantes = mysql_query($qv) or die("Erro ao apagar no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaParticipantes = "Delete FROM participa WHERE id_projeto = '$id_projeto' ";
+            //test if the variable is not null
+            assert($deletaParticipantes != NULL);
+    mysql_query($deletaParticipantes) or die("Erro ao apagar no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //remover publicacao
-    $qv = "Delete FROM publicacao WHERE id_projeto = '$id_projeto' ";
-    $deletaPublicacao = mysql_query($qv) or die("Erro ao apagar no publicacao<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaPublicacao = "Delete FROM publicacao WHERE id_projeto = '$id_projeto' ";
+            //test if the variable is not null
+            assert($deletaPublicacao != NULL);
+    mysql_query($deletaPublicacao) or die("Erro ao apagar no publicacao<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 
     //remover projeto
-    $qv = "Delete FROM projeto WHERE id_projeto = '$id_projeto' ";
-    $deletaProjeto = mysql_query($qv) or die("Erro ao apagar no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
+    $deletaProjeto = "Delete FROM projeto WHERE id_projeto = '$id_projeto' ";
+            //test if the variable is not null
+            assert($deletaProjeto != NULL);
+    mysql_query($deletaProjeto) or die("Erro ao apagar no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
 }
 
 ?>

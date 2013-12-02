@@ -6,7 +6,7 @@ include("httprequest.inc");
 include("functionsBD/check_User_Authentication.php");
 
 // Check if the User is authenticated
-checkUserAuthentication("index.php");        
+checkUserAuthentication("index.php");
 
 bd_connect() or die("Erro ao conectar ao SGBD");
 
