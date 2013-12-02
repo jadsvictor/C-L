@@ -11,13 +11,13 @@ if (!(function_exists("simple_query"))) {
         assert($field != NULL);
         assert($table != NULL);
         assert($where != NULL);
-                
+
         //test if a variable has the correct type
         assert(is_string($field));
         assert(is_string($table));
         assert(is_string($where));
-        
-        
+
+
         $connect_database = bd_connect() or die("Erro ao conectar ao SGBD");
         $select_field = "SELECT $field FROM $table WHERE $where";
         $result_select_field = mysql_query($select_field) or die("Erro ao enviar a query");
@@ -25,5 +25,7 @@ if (!(function_exists("simple_query"))) {
         return $result_array[0];
     }
 
+} else {
+    //nothing to do
 }
 ?>

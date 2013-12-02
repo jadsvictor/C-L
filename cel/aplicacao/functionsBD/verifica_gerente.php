@@ -29,6 +29,8 @@ function verificaGerente($id_user, $id_project) {
     if ($result_array != false) {
 
         $ret = 1;
+    } else {
+        //nothing to do
     }
     return $ret;
 }

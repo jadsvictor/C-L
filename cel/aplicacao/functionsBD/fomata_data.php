@@ -22,5 +22,7 @@ if (!(function_exists("formataData"))) {
         return $newDate;
     }
 
+} else {
+    //nothing to do
 }
 ?>

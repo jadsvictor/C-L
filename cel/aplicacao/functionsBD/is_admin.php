@@ -25,5 +25,7 @@ if (!(function_exists("is_admin"))) {
         return (1 == mysql_num_rows($result_select));
     }
 
+} else {
+    //nothing to do
 }
 ?>
