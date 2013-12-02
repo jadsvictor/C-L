@@ -19,28 +19,28 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
         $insere = new QUERY($DB);
         $select = new QUERY($DB);
         $select2 = new QUERY($DB);
-        
+
         //test if the variable is not null
-        assert($insere!=null);
-        assert($DB!=null);
-		assert($select!=null);
-		assert($select2!=null);
-		assert($id_projeto!=null);
-		assert($id_lexico!=null);
-		assert($nome!=null);
-		assert($nocao!=null);
-		assert($impacto!=null);
-		assert($justificativa!=null);
-		assert($id_usuario!=null);
-		assert($sinonimos!=null);
-		assert($classificacao!=null);
+        assert($insere != null);
+        assert($DB != null);
+        assert($select != null);
+        assert($select2 != null);
+        assert($id_projeto != null);
+        assert($id_lexico != null);
+        assert($nome != null);
+        assert($nocao != null);
+        assert($impacto != null);
+        assert($justificativa != null);
+        assert($id_usuario != null);
+        assert($sinonimos != null);
+        assert($classificacao != null);
 
         $q = "SELECT * FROM participa WHERE gerente = 1 AND id_usuario = $id_usuario AND id_projeto = $id_projeto";
         $qr = mysql_query($q) or die("Erro ao enviar a query de select no participa<br>" . mysql_error() . "<br>" . __FILE__ . __LINE__);
         $resultArray = mysql_fetch_array($qr);
 
 
-        if ($resultArray == false) { //nao e gerente
+        if ($resultArray == false) {
 
             $insere->execute("INSERT INTO pedidolex (id_projeto,id_lexico,nome,nocao,impacto,id_usuario,tipo_pedido,aprovado,justificativa, tipo) VALUES ($id_projeto,$id_lexico,'$nome','$nocao','$impacto',$id_usuario,'alterar',0,'$justificativa', '$classificacao')");
 
@@ -77,5 +77,7 @@ if (!(function_exists("inserirPedidoAlterarLexico"))) {
         }
     }
 
+} else {
+    //nothing to do
 }
 ?>
